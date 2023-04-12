@@ -1,0 +1,66 @@
+.button {
+    background: #1e90ff;
+    border-radius: 8px;
+    color: white;
+    width: 30vw;
+    margin-top: 20vh;
+    padding: .5vh 0px .5vh 0px;
+    text-align: center;
+    box-shadow: 2px 2px 4px #888;
+}
+
+.button-container {
+    margin-top: 1px;
+    display: flex;
+    /* background: blue; */
+    width: 100vw;
+    justify-content: space-around;
+    align-item: center;
+}
+
+
+.weather-choose-container {
+    background: rgba(100, 100, 100, 0.1);
+    border-radius: 25px;
+    color: white;
+    width: 10vw;
+    height: 12vh;
+    margin-top: 20vh;
+    padding: .5vh 0px .5vh 0px;
+    text-align: center;
+}
+
+.weather-choose-container-focus {
+    background: rgb(30,144,255);
+    background: linear-gradient(180deg, rgba(30,144,255,1) 0%, rgba(2,0,36,1) 100%);
+    border-radius: 25px;
+    color: white;
+    width: 10vw;
+    height: 12vh;
+    margin-top: 20vh;
+    padding: .5vh 0px .5vh 0px;
+    text-align: center;
+}
+
+
+.weather-rhombus-container {
+    width: 20vw;
+    position: absolute;
+    left: 20vw;
+    height: 18vh;
+    background: rgba(100, 100, 100, 1);
+    z-index: 2;
+    transform: rotate(90deg, 0, 90deg) scale(1, -1);
+    border-radius: 25px 0px 0px 0px;
+}
+
+.weather-rhombus-container-bottom {
+    transform: skew(20deg);
+    position: absolute;
+    left: 4.1vw;
+    width: 20vw;
+    height: 20vh;
+    background: rgba(100, 100, 100);
+    transform: skew(-20deg);
+    border-radius: 25px;
+}

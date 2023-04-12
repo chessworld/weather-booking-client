@@ -46,6 +46,7 @@ const App: React.FC = () => {
                         <Route exact path="/tab1">
                             <Tab1 />
                         </Route>
+
                         <Route exact path="/tab2">
                             <Tab2 />
                         </Route>
@@ -73,7 +74,7 @@ const App: React.FC = () => {
                 </IonTabs>
             </IonReactRouter>
         </IonApp>
-    )
+    );
 };
 
 export default App;
