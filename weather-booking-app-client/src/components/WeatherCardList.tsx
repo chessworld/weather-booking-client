@@ -1,5 +1,6 @@
-import { IonList, IonCardHeader, IonItem, IonCardContent, IonCardTitle, IonCardSubtitle, IonCard } from '@ionic/react';
+import { IonList, IonCardHeader, IonItem, IonCardContent, IonCardTitle, IonCardSubtitle, IonCard, IonImg } from '@ionic/react';
 import './WeatherCardList.css'
+import sunImage from '../assets/Icons/Sun.png'
 
 type map = {
     id: number,
@@ -18,10 +19,12 @@ const WeatherCardList: React.FC<IWeatherCardList> = (props) => {
             <div className="cardContainer" style={{}}>
                 {props.data.map(({ id, title, subtitle, content }: map) => (
                     <IonItem key={id}>
-                        <IonCard style={{width: '50vw', padding: '10px'}}>
+                        <IonCard style={{width: '80vw', padding: '10px'}}>
                             <IonCardHeader>
-                                <img src='../assets/Icons/Rain.png'></img>
-                <IonCardTitle>{title}</IonCardTitle>
+                                <div className='imageContainer'>
+                                    <IonImg src={sunImage}/>
+                                </div>
+                                <IonCardTitle>{title}</IonCardTitle>
                                 <IonCardSubtitle>{subtitle}</IonCardSubtitle>
                             </IonCardHeader>
                             <IonCardContent>{content}</IonCardContent>
