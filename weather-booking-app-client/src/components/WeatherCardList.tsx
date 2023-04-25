@@ -13,6 +13,7 @@ function WeatherCardList(props: any) {
           <IonItem key={id}>
             <IonCard>
               <IonCardHeader>
+                <img src='../assets/Icons/Rain.png'></img>
                 <IonCardTitle>{title}</IonCardTitle>
                 <IonCardSubtitle>{subtitle}</IonCardSubtitle>
               </IonCardHeader>
