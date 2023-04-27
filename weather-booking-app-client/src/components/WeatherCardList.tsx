@@ -4,9 +4,9 @@ import sunImage from '../assets/Icons/Sun.png'
 
 type map = {
     id: number,
-    title: string,
-    subtitle: string,
-    content: string
+    location: string,
+    date: string,
+    weather: string
 }
 
 interface IWeatherCardList {
@@ -17,17 +17,17 @@ const WeatherCardList: React.FC<IWeatherCardList> = (props) => {
     return (
         <IonList>
             <div className="cardContainer" style={{}}>
-                {props.data.map(({ id, title, subtitle, content }: map) => (
+                {props.data.map(({ id, location, date, weather }: map) => (
                     <IonItem key={id}>
                         <IonCard style={{width: '80vw', padding: '10px'}}>
                             <IonCardHeader>
                                 <div className='imageContainer'>
                                     <IonImg src={sunImage}/>
                                 </div>
-                                <IonCardTitle>{title}</IonCardTitle>
-                                <IonCardSubtitle>{subtitle}</IonCardSubtitle>
+                                <IonCardTitle>{location}</IonCardTitle>
+                                <IonCardSubtitle>{date}</IonCardSubtitle>
                             </IonCardHeader>
-                            <IonCardContent>{content}</IonCardContent>
+                            <IonCardContent>{weather}</IonCardContent>
                         </IonCard>
                     </IonItem>
                 ))}

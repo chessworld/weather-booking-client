@@ -1,23 +1,88 @@
-import { IonContent, IonHeader, IonPage, IonTitle, IonToolbar } from '@ionic/react';
-import ExploreContainer from '../components/ExploreContainer';
-import WeatherCardList from '../components/WeatherCardList';
-import './Tab2.css';
+import {
+  IonContent,
+  IonHeader,
+  IonPage,
+  IonTitle,
+  IonToolbar,
+  IonTabBar,
+  IonTabButton,
+  IonLabel,
+  IonTabs,
+  IonRouterOutlet,
+} from "@ionic/react";
+import ExploreContainer from "../components/ExploreContainer";
+import WeatherCardList from "../components/WeatherCardList";
+import "./Tab2.css";
+import { useState } from "react";
+import { Redirect } from "react-router";
 
 const Tab2: React.FC = () => {
-  const dummyData = [
-    { id: 1, title: 'Card 1', subtitle: 'Subtitle 1', content: 'Content 1' },
-    { id: 2, title: 'Card 2', subtitle: 'Subtitle 2', content: 'Content 2' },
-    { id: 3, title: 'Card 3', subtitle: 'Subtitle 3', content: 'Content 3' },
+  const [selectedTab, setSelectedTab] = useState("upcoming");
+
+  const handleTabChange = (tab: string) => {
+    setSelectedTab(tab);
+  };
+
+  const dummyDataUpcoming = [
+    {
+      id: 1,
+      location: "Monash University",
+      date: "Monday, 10 July",
+      weather: "Sunny, Warm, No Wind",
+    },
+    {
+      id: 2,
+      location: "Clayton, VIC",
+      date: "Saturday, 1 April",
+      weather: "Sunny, Hot, No Wind",
+    },
+    {
+      id: 3,
+      location: "Glen Waverley, VIC",
+      date: "Thursday, 27 April",
+      weather: "Rainy, Cold, Wind",
+    },
   ];
+  const dummyDataCompleted = [
+    {
+      id: 1,
+      location: "Monash University",
+      date: "Monday, 10 July",
+      weather: "Sunny, Warm, No Wind",
+    },
+  ];
+
   return (
     <IonPage>
       <IonHeader>
         <IonToolbar>
-          <IonTitle>Tab 2</IonTitle>
+          <IonTitle>Your Bookings</IonTitle>
         </IonToolbar>
       </IonHeader>
+        <IonTabBar slot="top">
+          <IonTabButton
+            tab="upcoming"
+            onClick={() => handleTabChange("upcoming")}
+            selected={selectedTab === "upcoming"}
+          >
+            <IonLabel>Upcoming</IonLabel>
+          </IonTabButton>
+
+          <IonTabButton
+            tab="completed"
+            onClick={() => handleTabChange("completed")}
+            selected={selectedTab === "completed"}
+          >
+            <IonLabel>Completed</IonLabel>
+          </IonTabButton>
+
+          {/* <IonTabButton tab="library" href="/library">
+                <IonIcon icon={library} />
+                <IonLabel>Library</IonLabel>
+              </IonTabButton> */}
+        </IonTabBar>
       <IonContent fullscreen>
-          <WeatherCardList data={dummyData} />
+      {selectedTab === "upcoming" ? <WeatherCardList data={dummyDataUpcoming} /> : <WeatherCardList data={dummyDataCompleted} />}
       </IonContent>
     </IonPage>
   );
