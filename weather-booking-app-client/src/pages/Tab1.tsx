@@ -1,5 +1,6 @@
 import { Component } from 'react';
 import { IonContent, IonRange, IonPage, IonTitle, IonToolbar, IonicSafeString } from '@ionic/react';
+import WeatherHud from '../components/BookingPage/WeatherHud';
 import ExploreContainer from '../components/ExploreContainer';
 import './Tab1.css';
 
@@ -34,12 +35,12 @@ class Tab1 extends Component<AbcProps, AbcState> {
     }
 
     componentDidMount(): void {
-
+        /* this.drawRhombus(); */
     }
 
     componentDidUpdate(prevProps: Readonly<{}>, prevState: Readonly<{}>, snapshot?: any): void {
-
     }
+
 
     render() {
         return (
@@ -79,10 +80,8 @@ class Tab1 extends Component<AbcProps, AbcState> {
                         <IonRange className="weather-slider"></IonRange>
                     </div>
 
-                    {/* <div className="weather-rhombus-container">
-                        <div className="weather-rhombus-container-bottom">
-                        </div>
-                    </div> */}
+                    <WeatherHud />
+
                 </IonContent>
             </IonPage>
         );
