@@ -1,3 +1,8 @@
+:root {
+    --hud-width: 50vw;
+    --hud-height: 18vh;
+}
+
 .hud-container {
     display: flex;
     flex-direction: column;
@@ -6,6 +11,51 @@
 }
 
 #weather-hud {
-    width: 42vw;
-    height: 24vh;
+    width: var(--hud-width);
+    height: var(--hud-height);
+    z-index: 0;
+}
+
+.hud-contents {
+    position: absolute;
+    width: var(--hud-width);
+    height: var(--hud-height);
+    z-index: 2;
+}
+
+
+.weather-hud-grid {
+    display: grid;
+    grid-template-columns: auto auto auto;
+    gap: .5em;
+    /* background-color: #2196F3; */
+    padding: 10px;
+}
+
+.item1 {
+    text-align: center;
+    font-size: 1.7em;
+    color: #FFF;
+    grid-column-start: 0;
+    grid-column-end: 2;
+    text-align: center;
+}
+
+.item2 {
+    text-align: center;
+    font-size: 1.4em;
+    color: #FFF;
+    grid-column-start: 0;
+    grid-column-end: 2;
+    text-align: center;
+}
+
+.item3 {
+    margin-top: -7vh;
+    z-index: 3;
+}
+
+.hud-container {
+    display: flex;
+    flex-direction: column;
 }

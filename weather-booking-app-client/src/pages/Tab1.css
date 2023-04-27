@@ -35,9 +35,9 @@
 
 .weather-choose-option {
     background: rgba(100, 100, 100, 0.1);
-    border-radius: 25px;
+    border-radius: 3.5em;
     color: white;
-    width: 13vw;
+    width: 12vw;
     height: 12vh;
     margin-top: 8vh;
     padding: .5vh 0px .5vh 0px;
@@ -88,16 +88,4 @@
     margin-top: 5vh;
     flex-direction: column;
     align-items: center;
-}
-
-.hud-container {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    margin-top: 5vh;
-}
-
-#weather-hud {
-    width: 42vw;
-    height: 24vh;
 }
