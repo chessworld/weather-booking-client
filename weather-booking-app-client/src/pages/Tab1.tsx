@@ -4,6 +4,10 @@ import WeatherHud from '../components/BookingPage/WeatherHud';
 import ExploreContainer from '../components/ExploreContainer';
 import './Tab1.css';
 
+import Sunny from '../assets/Icons/Sun.png';
+import Rain from '../assets/Icons/Rain.png';
+import Cloud from '../assets/Icons/Cloud.png';
+
 interface AbcState {
     [category: string]: any;
     date: string;
@@ -30,7 +34,21 @@ class Tab1 extends Component<AbcProps, AbcState> {
                 { name: "Windy" },
                 { name: "Stormy" }
             ],
-            selectedWeatherOption: 3
+            temperatureOptions: [
+                { name: "Freezing" },
+                { name: "Cool" },
+                { name: "Mild" },
+                { name: "Warm" },
+                { name: "Hot" }
+            ],
+            windOptions: [
+                { name: "No Wind" },
+                { name: "Calm" },
+                { name: "Windy" },
+                { name: "Gusty" }
+            ],
+            selectedWeatherOption: 0,
+            selectedWindOption: 0
         };
     }
 
@@ -46,10 +64,12 @@ class Tab1 extends Component<AbcProps, AbcState> {
         return (
             <IonPage>
                 <IonContent fullscreen className="ion-padding">
+
                     <div className="button-container">
                         <div className="button">
                             {this.state.date}
                         </div>
+
                         <div className="button">
                             {this.state.location}
                         </div>
@@ -63,6 +83,13 @@ class Tab1 extends Component<AbcProps, AbcState> {
                                         <div
                                             className={`weather-choose-option ${i == this.state.selectedWeatherOption && 'weather-choose-option weather-choose-option-focus'}`}
                                         >
+                                            {
+                                                option.name == 'Sunny' ?
+                                                    (<img src={Sunny} style={{ width: "10vw" }} />)
+                                                    : option.name == 'Rainy' ?
+                                                        (<img src={Rain} style={{ width: "7vw", height: 'auto' }} />)
+                                                        : (<img src={Cloud} style={{ width: "40vw", height: 'auto' }} />)
+                                            }
                                         </div>
                                         <span className="weather-choose-text">{option.name}</span>
                                     </div>
@@ -74,16 +101,48 @@ class Tab1 extends Component<AbcProps, AbcState> {
 
                     <div className="slider-container">
                         <span className="weather-slider-text">Temperature</span>
-                        <IonRange className="weather-slider"></IonRange>
+
+                        <IonRange
+                            className="weather-slider"
+                            ticks={true}
+                            snaps={true}
+                            min={0}
+                            max={
+                                this.state.temperatureOptions.length - 1
+                            }
+                            onIonChange={(e: any) => {
+                                this.setState(prev => {
+                                    return { ...prev, selectedTemperatureOption: e.detail.value };
+                                })
+                            }}
+                        ></IonRange>
 
                         <span className="weather-slider-text">Wind</span>
-                        <IonRange className="weather-slider"></IonRange>
+
+                        <IonRange
+                            className="weather-slider"
+                            ticks={true}
+                            snaps={true}
+                            min={0}
+                            onIonChange={(e: any) => {
+                                this.setState(prev => {
+                                    return { ...prev, selectedWindOption: e.detail.value };
+                                })
+                            }}
+                            max={
+                                this.state.windOptions.length - 1
+                            }
+                        ></IonRange>
                     </div>
 
-                    <WeatherHud />
+                    <WeatherHud weatherData={this.state} />
+
+                    <div className="button-container">
+                        <div className="book-button" style={{ marginTop: '2vh' }}>Book</div>
+                    </div>
 
                 </IonContent>
-            </IonPage>
+            </IonPage >
         );
     }
 };

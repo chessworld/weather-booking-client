@@ -4,14 +4,19 @@
 
 
 .button {
+    display: flex;
+    justify-content: center;
+    align-items: center;
     background: #1e90ff;
     border-radius: 8px;
     color: white;
-    width: 30vw;
+    width: 35vw;
     margin-top: 5vh;
     padding: 1vh 0px 1vh 0px;
     text-align: center;
     box-shadow: 2px 2px 4px #888;
+    font-size: 1.3em;
+    font-weight: 500;
 }
 
 .button-container {
@@ -24,6 +29,7 @@
 .weather-choose-container {
     display: flex;
     flex-direction: column;
+    justify-content: center;
     align-items: center;
 }
 
@@ -34,7 +40,10 @@
 }
 
 .weather-choose-option {
+    display: flex;
     background: rgba(100, 100, 100, 0.1);
+    justify-content: center;
+    align-items: center;
     border-radius: 3.5em;
     color: white;
     width: 12vw;
@@ -88,4 +97,27 @@
     margin-top: 5vh;
     flex-direction: column;
     align-items: center;
+}
+
+.book-button {
+    background: rgb(30,144,255);
+    color: white;
+    padding: 20px;
+    border-radius: 8px;
+    width: 20vw;
+    text-align: center;
+    font-size: 1.3em;
+    font-weight: 600;
+}
+
+
+ion-range {
+    --bar-background: #a2d2ff;
+    --bar-background-active: #000;
+    --bar-height: 8px;
+    --bar-border-radius: 8px;
+    --knob-background: #888;
+    --knob-size: 40px;
+    --pin-background: #eee;
+    --pin-color: #fff;
 }

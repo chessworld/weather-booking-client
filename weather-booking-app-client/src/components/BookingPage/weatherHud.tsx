@@ -6,113 +6,141 @@ import Cloud from '../../assets/Icons/Cloud.png';
 import Sunny from '../../assets/Icons/Sun.png';
 
 interface AbcState {
-weather: string,
-windCondition: string,
-temperatureRange: [number, number],
-temperatureUnit: string
+    weather: string,
+    windCondition: string,
+    temperatureRange: [number, number],
+    temperatureUnit: string
 }
 
 interface AbcProps {
-[category: string]: any;
+    [category: string]: any;
 }
 
 class WeatherHud extends Component<AbcProps, AbcState> {
-constructor(props) {
-    super(props)
-    this.state = {
-        weather: 'Sunny',
-        windCondition: 'No Wind',
-        temperatureRange: [20, 25],
-        temperatureUnit: 'C'
+    constructor(props: any) {
+        super(props)
+        this.state = {
+            weather: 'Sunny',
+            windCondition: 'No Wind',
+            temperatureRange: [20, 25],
+            temperatureUnit: 'C'
+        }
     }
-}
 
-drawRhombus() {
-    var c: any = document.getElementById("weather-hud");
+    drawRhombus() {
+        var c: any = document.getElementById("weather-hud");
 
-    const styles = window.getComputedStyle(c);
+        const styles = window.getComputedStyle(c);
 
-    const width = parseInt(styles.getPropertyValue('width').replace(/[^\d]/g, ''));
-    const height = parseInt(styles.getPropertyValue('height').replace(/[^\d]/g, ''));
+        const width = parseInt(styles.getPropertyValue('width').replace(/[^\d]/g, ''));
+        const height = parseInt(styles.getPropertyValue('height').replace(/[^\d]/g, ''));
 
-    var ctx = c.getContext("2d");
+        var ctx = c.getContext("2d");
 
-    /* alert(width + " " + height); */
+        /* alert(width + " " + height); */
 
-    var w = c.width;
-    var h = c.height;
+        var w = c.width;
+        var h = c.height;
 
-    var gradient = ctx.createLinearGradient(0, 0, 0, h);
+        var gradient = ctx.createLinearGradient(0, 0, 0, h);
 
-    gradient.addColorStop(0, 'rgb(30,144,255)');
-    gradient.addColorStop(1, 'rgba(2,0,36,1)');
+        gradient.addColorStop(0, 'rgb(30,144,255)');
+        gradient.addColorStop(1, 'rgba(2,0,36,1)');
 
-    // draw the rhombus
-    ctx.fillStyle = gradient;
-    ctx.beginPath();
+        // draw the rhombus
+        ctx.fillStyle = gradient;
+        ctx.beginPath();
 
-    const radius = 30;
-    const slant = 0.9;
+        const radius = 30;
+        const slant = 0.9;
 
-    ctx.moveTo(radius, 0);
-    ctx.lineTo(w - radius, 0);
-    ctx.arcTo(w, 0, w, radius, radius);
+        ctx.moveTo(radius, 0);
+        ctx.lineTo(w - radius, 0);
+        ctx.arcTo(w, 0, w, radius, radius);
 
-    ctx.lineTo(w, h * slant - radius);
-    ctx.arcTo(w, h * slant, w - radius, h * slant, radius);
+        ctx.lineTo(w, h * slant - radius);
+        ctx.arcTo(w, h * slant, w - radius, h * slant, radius);
 
-    ctx.lineTo(radius, h);
-    ctx.arcTo(0, h, 0, h - radius, radius);
-    ctx.arcTo(0, h, 0, h - radius, radius);
+        ctx.lineTo(radius, h);
+        ctx.arcTo(0, h, 0, h - radius, radius);
+        ctx.arcTo(0, h, 0, h - radius, radius);
 
-    ctx.lineTo(0, radius);
-    ctx.arcTo(0, 0, radius, 0, radius);
+        ctx.lineTo(0, radius);
+        ctx.arcTo(0, 0, radius, 0, radius);
 
-    ctx.closePath();
-    ctx.fill();
-}
+        ctx.closePath();
+        ctx.fill();
+    }
 
-componentDidMount(): void {
-    this.drawRhombus();
-}
+    componentDidMount(): void {
+        this.drawRhombus();
+    }
 
-render() {
-    return (
-        <div>
-            <div className="hud-container">
-                <div className="hud-contents">
-                    <h2 style={{color: 'white', fontSize: '4em', textAlign: 'center'}}>
-                    {this.state.temperatureRange[0]}° to { this.state.temperatureRange[1] }°C
-                    </h2>
+    componentDidUpdate(prevProps: Readonly<{}>, prevState: Readonly<{}>, snapshot?: any): void {
+        var windOption = this.props.weatherData.windOptions[this.props.weatherData.selectedWindOption];
+        var temperatureOption = this.props.weatherData.temperatureOptions[this.props.weatherData.selectedTemperatureOption];
+        console.log(temperatureOption.name)
+        console.log(windOption.name);
+    }
 
-                    <div className="weather-hud-grid">
-                        <div class="item1">
+    render() {
+        return (
+            <div>
+                <div className="hud-container">
+                    <div className="hud-contents">
+                        <h2 style={{ color: 'white', fontSize: '4em', textAlign: 'center' }}>
+
+                            {/* {this.state.temperatureRange[0]}° to { this.state.temperatureRange[1] }°C */}
+
                             {
-                                this.state.weather == 'Rainy' ?
-                                'Showers' :
-                                this.state.weather
+                                this.props.weatherData.temperatureOptions[this.props.weatherData.selectedTemperatureOption]
+                                && (
+                                    this.props.weatherData.temperatureOptions[this.props.weatherData.selectedTemperatureOption].name == 'Freezing'
+                                        ? '-10° - 0°'
+                                        : this.props.weatherData.temperatureOptions[this.props.weatherData.selectedTemperatureOption].name == 'Cool'
+                                            ? '0° - 10°'
+                                            : this.props.weatherData.temperatureOptions[this.props.weatherData.selectedTemperatureOption].name == 'Mild'
+                                                ? '10° - 20°'
+                                                : this.props.weatherData.temperatureOptions[this.props.weatherData.selectedTemperatureOption].name == 'Warm'
+                                                    ? '20° - 30°'
+                                                    : this.props.weatherData.temperatureOptions[this.props.weatherData.selectedTemperatureOption].name == 'Hot'
+                                                        ? '30° - 50°' : ''
+
+                                )
                             }
-                        </div>
 
-                        <div class="item2">
-                            {this.state.windCondition}
-                        </div>
+                        </h2>
 
+                        <div className="weather-hud-grid">
+                            <div className="item1">
+                                {
+                                    this.state.weather == 'Rainy' ?
+                                        'Showers' :
+                                        this.state.weather
+                                }
+                            </div>
+
+                            <div className="item2">
+                                {
+                                    this.props.weatherData.windOptions[this.props.weatherData.selectedWindOption].name
+                                }
+                            </div>
+
+                        </div>
                     </div>
+
+                    <canvas id="weather-hud">
+                        canvas not supported
+                    </canvas>
+
+                    <div className="item3">
+                        <img src={Sunny} style={{ width: "25vw" }} />
+                    </div>
+
                 </div>
-
-                <canvas id="weather-hud">
-                    canvas not supported
-                </canvas>
-
-                <div class="item3">
-                    <img src={Sunny} style={{width: "25vw"}} />
-                </div>
-
             </div>
-        </div>
-    )
-}
+        )
+    }
 }
 
 export default WeatherHud;
