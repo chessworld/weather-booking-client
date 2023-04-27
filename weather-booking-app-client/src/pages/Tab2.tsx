@@ -14,7 +14,6 @@ import ExploreContainer from "../components/ExploreContainer";
 import WeatherCardList from "../components/WeatherCardList";
 import "./Tab2.css";
 import { useState } from "react";
-import { Redirect } from "react-router";
 
 const Tab2: React.FC = () => {
   const [selectedTab, setSelectedTab] = useState("upcoming");
