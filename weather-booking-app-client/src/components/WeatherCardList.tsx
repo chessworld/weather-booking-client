@@ -16,10 +16,10 @@ interface IWeatherCardList {
 const WeatherCardList: React.FC<IWeatherCardList> = (props) => {
     return (
         <IonList>
-            <div className="cardContainer" style={{}}>
+            <div className="cardContainer">
                 {props.data.map(({ id, location, date, weather }: map) => (
                     <IonItem key={id}>
-                        <IonCard style={{width: '80vw', padding: '10px'}}>
+                        <IonCard className='weatherBookingCard'>
                             <IonCardHeader>
                                 <div className='imageContainer'>
                                     <IonImg src={sunImage}/>

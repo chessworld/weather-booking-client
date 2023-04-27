@@ -6,7 +6,13 @@
 }
 
 .imageContainer {
-    display: flex;
+    display: inline-flex;
     flex-direction: row;
-    align-items: center
+    align-items: center;
+    width: fit-content;
+}
+
+.weatherBookingCard {
+    width: 90vw;
+    padding: 10px;
 }

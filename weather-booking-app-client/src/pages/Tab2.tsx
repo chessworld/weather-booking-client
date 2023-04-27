@@ -46,9 +46,9 @@ const Tab2: React.FC = () => {
   const dummyDataCompleted = [
     {
       id: 1,
-      location: "Monash University",
-      date: "Monday, 10 July",
-      weather: "Sunny, Warm, No Wind",
+      location: "Home",
+      date: "Sunday, 13 November",
+      weather: "Cloudy, Mild, No Wind",
     },
   ];
 
