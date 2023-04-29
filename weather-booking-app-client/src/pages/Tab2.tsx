@@ -14,12 +14,18 @@ import ExploreContainer from "../components/ExploreContainer";
 import WeatherCardList from "../components/WeatherCardList";
 import "./Tab2.css";
 import { useState } from "react";
+import BookingDetails from "../components/BookingDetails";
 
 const Tab2: React.FC = () => {
   const [selectedTab, setSelectedTab] = useState("upcoming");
+  const [selectedBooking, setSelectedBooking] = useState(null);
 
   const handleTabChange = (tab: string) => {
     setSelectedTab(tab);
+  };
+
+  const handleBookingClick = (booking: any) => {
+    setSelectedBooking(booking);
   };
 
   const dummyDataUpcoming = [
@@ -58,30 +64,45 @@ const Tab2: React.FC = () => {
           <IonTitle>Your Bookings</IonTitle>
         </IonToolbar>
       </IonHeader>
-        <IonTabBar slot="top">
-          <IonTabButton
-            tab="upcoming"
-            onClick={() => handleTabChange("upcoming")}
-            selected={selectedTab === "upcoming"}
-          >
-            <IonLabel>Upcoming</IonLabel>
-          </IonTabButton>
+      <IonTabBar slot="top">
+        <IonTabButton
+          tab="upcoming"
+          onClick={() => handleTabChange("upcoming")}
+          selected={selectedTab === "upcoming"}
+        >
+          <IonLabel>Upcoming</IonLabel>
+        </IonTabButton>
 
-          <IonTabButton
-            tab="completed"
-            onClick={() => handleTabChange("completed")}
-            selected={selectedTab === "completed"}
-          >
-            <IonLabel>Completed</IonLabel>
-          </IonTabButton>
+        <IonTabButton
+          tab="completed"
+          onClick={() => handleTabChange("completed")}
+          selected={selectedTab === "completed"}
+        >
+          <IonLabel>Completed</IonLabel>
+        </IonTabButton>
 
-          {/* <IonTabButton tab="library" href="/library">
+        {/* <IonTabButton tab="library" href="/library">
                 <IonIcon icon={library} />
                 <IonLabel>Library</IonLabel>
               </IonTabButton> */}
-        </IonTabBar>
+      </IonTabBar>
       <IonContent fullscreen>
-      {selectedTab === "upcoming" ? <WeatherCardList data={dummyDataUpcoming} /> : <WeatherCardList data={dummyDataCompleted} />}
+        {selectedBooking ? (
+          <BookingDetails
+            data={dummyDataUpcoming[selectedBooking-1]}
+            closeBookingDetail={handleBookingClick}
+          />
+        ) : selectedTab === "upcoming" ? (
+          <WeatherCardList
+            data={dummyDataUpcoming}
+            openBookingDetail={handleBookingClick}
+          />
+        ) : (
+          <WeatherCardList
+            data={dummyDataCompleted}
+            openBookingDetail={handleBookingClick}
+          />
+        )}
       </IonContent>
     </IonPage>
   );

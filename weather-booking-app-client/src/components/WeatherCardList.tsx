@@ -13,6 +13,7 @@ import "./WeatherCardList.css";
 import sunImage from "../assets/Icons/Sun.png";
 import BookingDetails from "./BookingDetails";
 import { Route } from "react-router";
+import { Link } from "react-router-dom";
 
 type map = {
   id: number;
@@ -22,19 +23,17 @@ type map = {
 };
 
 interface IWeatherCardList {
+  openBookingDetail: (booking: any) => void;
   data: map[];
 }
 
 const WeatherCardList: React.FC<IWeatherCardList> = (props) => {
   return (
     <div>
-      <IonRouterOutlet>
-        <Route path="/booking-details/:id" render={(props) => <BookingDetails {...props}/>}/>
-      </IonRouterOutlet>
       <IonList>
         <div className="cardContainer">
           {props.data.map(({ id, location, date, weather }: map) => (
-            <IonItem key={id} href={"/booking-details/" + id}>
+            <IonItem key={id} onClick={() => props.openBookingDetail(id)}>
               <IonCard className="weatherBookingCard">
                 <IonCardHeader>
                   <div className="imageContainer">
