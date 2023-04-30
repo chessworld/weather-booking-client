@@ -1,7 +1,8 @@
-import { Component } from 'react';
-import { IonContent, IonRange, IonPage, IonTitle, IonToolbar, IonicSafeString } from '@ionic/react';
+import React from 'react';
 import WeatherHud from '../components/BookingPage/WeatherHud';
-import ExploreContainer from '../components/ExploreContainer';
+import { Component } from 'react';
+import { IonContent, IonRange, IonPage } from '@ionic/react';
+import Background from '../components/Screen/Background';
 import './Tab1.css';
 
 import Sunny from '../assets/Icons/Sun.png';
@@ -63,7 +64,8 @@ class Tab1 extends Component<AbcProps, AbcState> {
     render() {
         return (
             <IonPage>
-                <IonContent fullscreen className="ion-padding">
+                {/* <IonContent fullscreen className="ion-no-padding"> */}
+                <Background>
 
                     <div className="button-container">
                         <div className="button">
@@ -137,11 +139,13 @@ class Tab1 extends Component<AbcProps, AbcState> {
 
                     <WeatherHud weatherData={this.state} />
 
-                    <div className="button-container">
-                        <div className="book-button" style={{ marginTop: '2vh' }}>Book</div>
+                    <div className="button-container" style={{marginBottom: 'vh', marginTop: '10vh'}}>
+                        <div className="book-button">
+                            Book
+                        </div>
                     </div>
 
-                </IonContent>
+                </Background>
             </IonPage >
         );
     }

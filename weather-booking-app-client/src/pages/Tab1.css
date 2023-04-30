@@ -1,5 +1,8 @@
 :root {
     --slider-width: 70vw;
+    --weather-choose-option-max-width: 80px;
+    --weather-choose-option-min-width: 55px;
+    --weather-choose-option-max-height: 120px;
 }
 
 
@@ -7,23 +10,24 @@
     display: flex;
     justify-content: center;
     align-items: center;
-    background: #1e90ff;
+    background: #004FB5;
     border-radius: 8px;
     color: white;
     width: 35vw;
-    margin-top: 5vh;
     padding: 1vh 0px 1vh 0px;
     text-align: center;
     box-shadow: 2px 2px 4px #888;
-    font-size: 1.3em;
+    font-size: 3vw;
     font-weight: 500;
 }
 
 .button-container {
     display: flex;
-    /* background: blue; */
     flex-direction: row;
+    padding: 0px !important;
     justify-content: space-evenly;
+    align-items: flex-start;
+    margin: 2vh 0 2vh 0;
 }
 
 .weather-choose-container {
@@ -34,21 +38,24 @@
 }
 
 .weather-choose-text {
-    font-size: 1.2rem;
+    font-size: 2.8vw;
     font-weight: bold;
     margin-top: 1vh;
 }
 
 .weather-choose-option {
     display: flex;
-    background: rgba(100, 100, 100, 0.1);
+    background: rgba(255, 253, 253, 0.15);
+    backdrop-filter: blur(2px);
     justify-content: center;
     align-items: center;
+    max-width: var(--weather-choose-option-max-width);
+    min-width: var(--weather-choose-option-min-width);
+    max-height: var(--weather-choose-option-max-height);
     border-radius: 3.5em;
     color: white;
-    width: 12vw;
-    height: 12vh;
-    margin-top: 8vh;
+    width: 8vw;
+    height: 20vh;
     padding: .5vh 0px .5vh 0px;
     text-align: center;
 }
@@ -100,16 +107,22 @@
 }
 
 .book-button {
-    background: rgb(30,144,255);
     color: white;
+    background: #004FB5;
     padding: 20px;
     border-radius: 8px;
     width: 20vw;
     text-align: center;
-    font-size: 1.3em;
+    font-size: 2.8vw;
     font-weight: 600;
 }
 
+ion-content {
+    --background: transparent;
+    --background: linear-gradient(180deg, #A8C8ED 0%, rgba(118, 115, 220, 0.4) 100%), #FFFFFF;
+    --padding-top: 100px;
+    --offset-top: 0;
+}
 
 ion-range {
     --bar-background: #a2d2ff;

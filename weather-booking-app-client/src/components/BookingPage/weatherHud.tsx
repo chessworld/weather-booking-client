@@ -1,8 +1,5 @@
 import { Component } from 'react';
-import { IonContent, IonRange, IonPage, IonTitle, IonToolbar, IonicSafeString } from '@ionic/react';
-import ExploreContainer from '../components/ExploreContainer';
 import './WeatherHud.css';
-import Cloud from '../../assets/Icons/Cloud.png';
 import Sunny from '../../assets/Icons/Sun.png';
 
 interface AbcState {
@@ -17,7 +14,7 @@ interface AbcProps {
 }
 
 class WeatherHud extends Component<AbcProps, AbcState> {
-    constructor(props: any) {
+    constructor(props: AbcProps) {
         super(props)
         this.state = {
             weather: 'Sunny',
@@ -77,10 +74,8 @@ class WeatherHud extends Component<AbcProps, AbcState> {
     }
 
     componentDidUpdate(prevProps: Readonly<{}>, prevState: Readonly<{}>, snapshot?: any): void {
-        var windOption = this.props.weatherData.windOptions[this.props.weatherData.selectedWindOption];
-        var temperatureOption = this.props.weatherData.temperatureOptions[this.props.weatherData.selectedTemperatureOption];
-        console.log(temperatureOption.name)
-        console.log(windOption.name);
+        /* var windOption = this.props.weatherData.windOptions[this.props.weatherData.selectedWindOption];
+* var temperatureOption = this.props.weatherData.temperatureOptions[this.props.weatherData.selectedTemperatureOption]; */
     }
 
     render() {
@@ -88,25 +83,24 @@ class WeatherHud extends Component<AbcProps, AbcState> {
             <div>
                 <div className="hud-container">
                     <div className="hud-contents">
-                        <h2 style={{ color: 'white', fontSize: '4em', textAlign: 'center' }}>
+                        <h2 className="hud-temperature-text" >
 
                             {/* {this.state.temperatureRange[0]}° to { this.state.temperatureRange[1] }°C */}
 
                             {
                                 this.props.weatherData.temperatureOptions[this.props.weatherData.selectedTemperatureOption]
-                                && (
-                                    this.props.weatherData.temperatureOptions[this.props.weatherData.selectedTemperatureOption].name == 'Freezing'
-                                        ? '-10° - 0°'
-                                        : this.props.weatherData.temperatureOptions[this.props.weatherData.selectedTemperatureOption].name == 'Cool'
-                                            ? '0° - 10°'
-                                            : this.props.weatherData.temperatureOptions[this.props.weatherData.selectedTemperatureOption].name == 'Mild'
-                                                ? '10° - 20°'
-                                                : this.props.weatherData.temperatureOptions[this.props.weatherData.selectedTemperatureOption].name == 'Warm'
-                                                    ? '20° - 30°'
-                                                    : this.props.weatherData.temperatureOptions[this.props.weatherData.selectedTemperatureOption].name == 'Hot'
-                                                        ? '30° - 50°' : ''
-
-                                )
+                                    ? (
+                                        this.props.weatherData.temperatureOptions[this.props.weatherData.selectedTemperatureOption].name == 'Freezing'
+                                            ? '-10° - 0°'
+                                            : this.props.weatherData.temperatureOptions[this.props.weatherData.selectedTemperatureOption].name == 'Cool'
+                                                ? '0° - 10°'
+                                                : this.props.weatherData.temperatureOptions[this.props.weatherData.selectedTemperatureOption].name == 'Mild'
+                                                    ? '10° - 20°'
+                                                    : this.props.weatherData.temperatureOptions[this.props.weatherData.selectedTemperatureOption].name == 'Warm'
+                                                        ? '20° - 30°'
+                                                        : this.props.weatherData.temperatureOptions[this.props.weatherData.selectedTemperatureOption].name == 'Hot'
+                                                            ? '30° - 50°' : ''
+                                    ) : '20° - 30°'
                             }
 
                         </h2>
@@ -126,16 +120,19 @@ class WeatherHud extends Component<AbcProps, AbcState> {
                                 }
                             </div>
 
+                            <div className="item3">
+                                <img src={Sunny} style={{ width: "28vw" }} />
+                            </div>
+
+                            <div className="item4">
+                            </div>
+
                         </div>
                     </div>
 
                     <canvas id="weather-hud">
                         canvas not supported
                     </canvas>
-
-                    <div className="item3">
-                        <img src={Sunny} style={{ width: "25vw" }} />
-                    </div>
 
                 </div>
             </div>
