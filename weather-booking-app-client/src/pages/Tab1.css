@@ -119,17 +119,23 @@
 
 ion-content {
     --background: transparent;
-    --background: linear-gradient(180deg, #A8C8ED 0%, rgba(118, 115, 220, 0.4) 100%), #FFFFFF;
+    --background: linear-gradient(
+        180deg,
+        #A8C8ED 0%,
+        rgba(118, 115, 220, 0.4)
+            100%
+    ), #FFFFFF;
     --padding-top: 100px;
     --offset-top: 0;
 }
 
 ion-range {
-    --bar-background: #a2d2ff;
+    /* --bar-background: #E6E0F6; */
+    --bar-background: rgba(230,224,246, .5);
     --bar-background-active: #000;
     --bar-height: 8px;
     --bar-border-radius: 8px;
-    --knob-background: #888;
+    --knob-background: #FFF;
     --knob-size: 40px;
     --pin-background: #eee;
     --pin-color: #fff;

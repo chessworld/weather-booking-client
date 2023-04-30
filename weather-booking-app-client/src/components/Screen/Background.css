@@ -1,5 +1,5 @@
 ion-content {
     --background: transparent;
     --background: linear-gradient(180deg, #A8C8ED 0%, rgba(118, 115, 220, 0.4) 100%), #FFFFFF;
-    --offset-top: 0;
+    /* --offset-top: 0; */
 }
