@@ -9,7 +9,9 @@ interface AbcState {
     weather: string,
     windCondition: string,
     temperatureRange: [number, number],
-    temperatureUnit: string
+    temperatureUnit: string,
+    hudContext?: any,
+    hudHeight?: number
 }
 
 interface AbcProps {
@@ -23,36 +25,38 @@ class WeatherHud extends Component<AbcProps, AbcState> {
             weather: 'Sunny',
             windCondition: 'No Wind',
             temperatureRange: [20, 25],
-            temperatureUnit: 'C'
+            temperatureUnit: 'C',
+            /* hudContext: document.getElementById("weather-hud") && document.getElementById("weather-hud").getContext("2d"), */
         }
     }
 
-    drawRhombus() {
-        var c: any = document.getElementById("weather-hud");
+    getHudBackgroundGradient(ctx: any, height: number, weather?: string): any {
+        var gradient = ctx.createLinearGradient(0, 0, 0, height);
 
-        const styles = window.getComputedStyle(c);
+        if (weather == 'Sunny') {
+            gradient.addColorStop(1, 'rgba(150,100,100,.5)');
+            gradient.addColorStop(0, 'rgba(200,195,34,.7)');
+        } else if (weather == 'Cloudy') {
+            gradient.addColorStop(1, 'rgba(20,20,20,.2)');
+            gradient.addColorStop(0, 'rgba(100,100,100,.2)');
+        } else {
+            gradient.addColorStop(0, 'rgb(30,144,255)');
+            gradient.addColorStop(1, 'rgba(2,0,36,1)');
 
-        const width = parseInt(styles.getPropertyValue('width').replace(/[^\d]/g, ''));
-        const height = parseInt(styles.getPropertyValue('height').replace(/[^\d]/g, ''));
+        }
 
-        var ctx = c.getContext("2d");
+        return gradient;
+    }
 
-        /* alert(width + " " + height); */
-
+    getHudContextDimentions(c: any): [number, number] {
         var w = c.width;
         var h = c.height;
 
-        var gradient = ctx.createLinearGradient(0, 0, 0, h);
+        return [w, h];
+    }
 
-        gradient.addColorStop(0, 'rgb(30,144,255)');
-        gradient.addColorStop(1, 'rgba(2,0,36,1)');
-
-        // draw the rhombus
-        ctx.fillStyle = gradient;
+    drawRhombusForHud(ctx: any, radius: number, slant: number, h: number, w: number): void {
         ctx.beginPath();
-
-        const radius = 30;
-        const slant = 0.9;
 
         ctx.moveTo(radius, 0);
         ctx.lineTo(w - radius, 0);
@@ -72,14 +76,45 @@ class WeatherHud extends Component<AbcProps, AbcState> {
         ctx.fill();
     }
 
+    drawHud(weather?: string) {
+        var c: any = document.getElementById("weather-hud");
+
+
+        var ctx = c.getContext("2d");
+
+
+        const [w, h] = this.getHudContextDimentions(c);
+
+        ctx.clearRect(0, 0, w, h);
+
+        var gradient = this.getHudBackgroundGradient(ctx, h, weather);
+
+
+        ctx.fillStyle = gradient;
+
+        const radius = 30;
+        const slant = 0.9;
+
+        this.drawRhombusForHud(ctx, radius, slant, h, w);
+
+        this.setState(prev => {
+            return {
+                ...prev,
+                hudContext: ctx,
+                hudHeight: h
+            }
+        });
+    }
+
     componentDidMount(): void {
-        this.drawRhombus();
+        this.drawHud();
     }
 
     componentDidUpdate(prevProps: Readonly<{}>, prevState: Readonly<{}>, snapshot?: any): void {
-        /* var windOption = this.props.weatherData.windOptions[this.props.weatherData.selectedWindOption];
-* var temperatureOption = this.props.weatherData.temperatureOptions[this.props.weatherData.selectedTemperatureOption]; */
-        console.log(this.props.weatherData.selectedWeatherOption);
+        /* console.log(this.props.weatherData.weatherOptions[this.props.weatherData.selectedWeatherOption].name) */
+        if (prevProps !== this.props) {
+            this.drawHud(this.props.weatherData.weatherOptions[this.props.weatherData.selectedWeatherOption].name);
+        }
     }
 
     render() {
@@ -127,7 +162,9 @@ class WeatherHud extends Component<AbcProps, AbcState> {
                             <div className="item3">
                                 <img src={
                                     this.props.weatherData.weatherOptions[this.props.weatherData.selectedWeatherOption].image
-                                } style={{ width: "28vw" }} />
+                                }
+                                    style={{ width: "28vw" }}
+                                />
                             </div>
 
                             <div className="item4">

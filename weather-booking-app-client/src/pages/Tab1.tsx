@@ -5,9 +5,11 @@ import { IonRange, IonPage } from '@ionic/react';
 import Background from '../components/Screen/Background';
 import './Tab1.css';
 
-import Sunny from '../assets/Icons/Sun.png';
-import Rain from '../assets/Icons/Rain.png';
-import Cloud from '../assets/Icons/Cloud.png';
+import Sunny from '../assets/Icons/slight_touch_happyday.png';
+import Rain from '../assets/Icons/rainy.png';
+import Cloud from '../assets/Icons/cloudy.png';
+import Windy from '../assets/Icons/sparkle_storm.png';
+import Stormy from '../assets/Icons/thnderstorm.png';
 
 interface AbcState {
     [category: string]: any;
@@ -32,8 +34,8 @@ class Tab1 extends Component<AbcProps, AbcState> {
                 { name: "Cloudy", image: Cloud },
                 { name: "Sunny", image: Sunny },
                 { name: "Rainy", image: Rain },
-                { name: "Windy", image: Rain },
-                { name: "Stormy", image: Rain }
+                { name: "Windy", image: Windy },
+                { name: "Stormy", image: Stormy }
             ],
             temperatureOptions: [
                 { name: "Freezing" },
