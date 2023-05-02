@@ -31,7 +31,7 @@ const WeatherCardList: React.FC<IWeatherCardList> = (props) => {
     return (
         <div>
             <IonList>
-                <div className="cardContainer">
+                <div className="cardContainer" style={{background: 'transparent'}}>
                     {
                         props.data.map(({ id, location, date, weather }: map) => (
                             <IonItem key={id} onClick={() => props.openBookingDetail(id)}>
