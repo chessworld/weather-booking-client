@@ -1,0 +1,15 @@
+#+Title: What did I do in the past weeks
+
+* Communicated with David and team to understand the app.
+* Came up with the potential solution architecture (typescript ,react, ionic, django and postegresql)
+* Created repositories
+* Initiated project and boostrap code for ionic frontend
+* Initiated project and boostrap code for django backend
+* Contributed to figma wireframe
+* Small contribution to erd diagram for backend models
+* Created `order booking page`
+  * Created sliders for weather temperature and wind.
+  * Create choose weather type
+  * Create a rhombus to display the current booked weather on booking page.
+* Helped dale create and style cards on home page.
+* Help create some APIs on backend   .
