@@ -58,11 +58,18 @@
     height: 20vh;
     padding: .5vh 0px .5vh 0px;
     text-align: center;
+    transition: background .4s ease-in-out;
+}
+
+
+.weather-choose-option:hover {
+    background: rgba(255, 255, 255, 0.5);
 }
 
 .weather-choose-option-focus {
-    background: rgb(30,144,255);
-    background: linear-gradient(180deg, rgba(30,144,255,1) 0%, rgba(2,0,36,1) 100%);
+    /* background: rgb(30,144,255); */
+    /* background: linear-gradient(180deg, rgba(30,144,255,1) 0%, rgba(2,0,36,1) 100%); */
+    background: rgba(220, 220, 220, 0.5);
 }
 
 

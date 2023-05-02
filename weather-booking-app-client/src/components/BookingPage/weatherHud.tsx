@@ -1,6 +1,9 @@
 import { Component } from 'react';
 import './WeatherHud.css';
+
 import Sunny from '../../assets/Icons/Sun.png';
+import Rain from '../../assets/Icons/Rain.png';
+import Cloud from '../../assets/Icons/Cloud.png';
 
 interface AbcState {
     weather: string,
@@ -76,6 +79,7 @@ class WeatherHud extends Component<AbcProps, AbcState> {
     componentDidUpdate(prevProps: Readonly<{}>, prevState: Readonly<{}>, snapshot?: any): void {
         /* var windOption = this.props.weatherData.windOptions[this.props.weatherData.selectedWindOption];
 * var temperatureOption = this.props.weatherData.temperatureOptions[this.props.weatherData.selectedTemperatureOption]; */
+        console.log(this.props.weatherData.selectedWeatherOption);
     }
 
     render() {
@@ -121,7 +125,9 @@ class WeatherHud extends Component<AbcProps, AbcState> {
                             </div>
 
                             <div className="item3">
-                                <img src={Sunny} style={{ width: "28vw" }} />
+                                <img src={
+                                    this.props.weatherData.weatherOptions[this.props.weatherData.selectedWeatherOption].image
+                                } style={{ width: "28vw" }} />
                             </div>
 
                             <div className="item4">

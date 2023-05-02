@@ -1,7 +1,7 @@
 import React from 'react';
 import WeatherHud from '../components/BookingPage/WeatherHud';
 import { Component } from 'react';
-import { IonContent, IonRange, IonPage } from '@ionic/react';
+import { IonRange, IonPage } from '@ionic/react';
 import Background from '../components/Screen/Background';
 import './Tab1.css';
 
@@ -13,7 +13,7 @@ interface AbcState {
     [category: string]: any;
     date: string;
     location: string;
-    weatherOptions: { name: string }[];
+    weatherOptions: { name: string, image?: any }[];
     selectedWeatherOption: number
 }
 
@@ -29,11 +29,11 @@ class Tab1 extends Component<AbcProps, AbcState> {
             date: props.date || 'Monday 10 July',
             location: 'Monash University, 3800',
             weatherOptions: [
-                { name: "Cloudy" },
-                { name: "Sunny" },
-                { name: "Rainy" },
-                { name: "Windy" },
-                { name: "Stormy" }
+                { name: "Cloudy", image: Cloud },
+                { name: "Sunny", image: Sunny },
+                { name: "Rainy", image: Rain },
+                { name: "Windy", image: Rain },
+                { name: "Stormy", image: Rain }
             ],
             temperatureOptions: [
                 { name: "Freezing" },
@@ -60,6 +60,14 @@ class Tab1 extends Component<AbcProps, AbcState> {
     componentDidUpdate(prevProps: Readonly<{}>, prevState: Readonly<{}>, snapshot?: any): void {
     }
 
+    handleWeatherSelectionUpdate(weatherSelectionNumber: number) {
+        this.setState(prev => {
+            return {
+                ...prev,
+                selectedWeatherOption: weatherSelectionNumber
+            }
+        });
+    }
 
     render() {
         return (
@@ -81,17 +89,15 @@ class Tab1 extends Component<AbcProps, AbcState> {
                         {
                             this.state.weatherOptions.map((option: any, i: number) => {
                                 return (
-                                    <div className="weather-choose-container" key={`weather-choose-${i}`} >
+                                    <div className="weather-choose-container" key={`${i}`}
+                                        onClick={() => {
+                                            this.handleWeatherSelectionUpdate(i);
+                                        }}
+                                    >
                                         <div
                                             className={`weather-choose-option ${i == this.state.selectedWeatherOption && 'weather-choose-option weather-choose-option-focus'}`}
                                         >
-                                            {
-                                                option.name == 'Sunny' ?
-                                                    (<img src={Sunny} style={{ width: "10vw" }} />)
-                                                    : option.name == 'Rainy' ?
-                                                        (<img src={Rain} style={{ width: "7vw", height: 'auto' }} />)
-                                                        : (<img src={Cloud} style={{ width: "40vw", height: 'auto' }} />)
-                                            }
+                                        <img src={option.image} style={{ width: "10vw" }} />
                                         </div>
                                         <span className="weather-choose-text">{option.name}</span>
                                     </div>
@@ -139,7 +145,7 @@ class Tab1 extends Component<AbcProps, AbcState> {
 
                     <WeatherHud weatherData={this.state} />
 
-                    <div className="button-container" style={{marginBottom: 'vh', marginTop: '10vh'}}>
+                    <div className="button-container" style={{ marginBottom: 'vh', marginTop: '10vh' }}>
                         <div className="book-button">
                             Book
                         </div>
