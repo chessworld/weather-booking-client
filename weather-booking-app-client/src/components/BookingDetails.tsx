@@ -20,7 +20,7 @@ const BookingDetails: React.FC<IWeatherCardList> = (props) => {
     return (
         <div>
             <IonButton onClick={() => props.closeBookingDetail(null)}>
-                <IonIcon name={chevronBackOutline}></IonIcon>
+                <IonIcon icon={chevronBackOutline} slot="icon-only"></IonIcon>
             </IonButton>
             <h1>Booking Details</h1>
             <h2>{props.data.location}</h2>
