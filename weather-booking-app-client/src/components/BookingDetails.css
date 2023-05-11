@@ -1,0 +1,28 @@
+.booking-details-card {
+  background: transparent !important;
+  outline-style: solid;
+  width: 90vw;
+  /* padding: 5px 1px; */
+  /* margin: 1vh 0 1vh 0; */
+  box-shadow: 1px 2px 5px #888 !important;
+  color: #888;
+}
+
+.booking-details-title {
+  font-weight: 700;
+  font-size: 5vw;
+  margin: 0.5vh 0 0.5vh 0;
+  padding: 0px 15px;
+}
+
+.booking-details-img {
+  width: 20vw;
+  height: auto;
+}
+
+/* .img-container {
+  display: inline-block;
+  flex-direction: column;
+  align-items: center;
+  width: fit-content;
+} */
