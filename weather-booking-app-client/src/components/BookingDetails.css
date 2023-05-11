@@ -26,3 +26,32 @@
   align-items: center;
   width: fit-content;
 } */
+
+.booking-details-toolbar {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  padding: 0px 15px;
+}
+
+.enjoy-weather-card {
+  text-align: center;
+  border-radius: 20px;
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
+  width: 65%;
+  padding: 10px;
+}
+
+.share-card {
+  text-align: center;
+  border-radius: 10px;
+  width: 75vw;
+  margin-top: 20px;
+}
+
+.share-button {
+  -ms-transform: translate(50%, 0%);
+  transform: translate(50%, 0%);
+}

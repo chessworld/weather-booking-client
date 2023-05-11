@@ -59,28 +59,32 @@ const Tab2: React.FC = () => {
 
   return (
     <IonPage>
-      <IonHeader>
-        <IonToolbar>
-          <IonTitle>Your Bookings</IonTitle>
-        </IonToolbar>
-      </IonHeader>
-      <IonTabBar slot="top">
-        <IonTabButton
-          tab="upcoming"
-          onClick={() => handleTabChange("upcoming")}
-          selected={selectedTab === "upcoming"}
-        >
-          <IonLabel>Upcoming</IonLabel>
-        </IonTabButton>
+      {!selectedBooking && (
+        <IonHeader>
+          <IonToolbar>
+            <IonTitle>Your Bookings</IonTitle>
+          </IonToolbar>
+        </IonHeader>
+      )}
+      {!selectedBooking && (
+        <IonTabBar slot="top">
+          <IonTabButton
+            tab="upcoming"
+            onClick={() => handleTabChange("upcoming")}
+            selected={selectedTab === "upcoming"}
+          >
+            <IonLabel>Upcoming</IonLabel>
+          </IonTabButton>
 
-        <IonTabButton
-          tab="completed"
-          onClick={() => handleTabChange("completed")}
-          selected={selectedTab === "completed"}
-        >
-          <IonLabel>Completed</IonLabel>
-        </IonTabButton>
-      </IonTabBar>
+          <IonTabButton
+            tab="completed"
+            onClick={() => handleTabChange("completed")}
+            selected={selectedTab === "completed"}
+          >
+            <IonLabel>Completed</IonLabel>
+          </IonTabButton>
+        </IonTabBar>
+      )}
       <IonContent fullscreen>
         {selectedBooking ? (
           <BookingDetails

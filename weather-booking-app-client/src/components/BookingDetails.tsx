@@ -7,9 +7,11 @@ import {
   IonCardHeader,
   IonCardSubtitle,
   IonCardTitle,
+  IonHeader,
   IonIcon,
   IonImg,
   IonTitle,
+  IonToolbar,
 } from "@ionic/react";
 import { chevronBackOutline } from "ionicons/icons";
 import sunImage from "../assets/Icons/Sun.png";
@@ -29,11 +31,21 @@ interface IWeatherCardList {
 const BookingDetails: React.FC<IWeatherCardList> = (props) => {
   return (
     <div>
-      <IonButton onClick={() => props.closeBookingDetail(null)}>
-        <IonIcon icon={chevronBackOutline} slot="icon-only"></IonIcon>
-      </IonButton>
+      <IonHeader>
+        <IonToolbar className="booking-details-toolbar">
+          <IonButton
+            onClick={() => props.closeBookingDetail(null)}
+            style={{ display: "inline-block" }}
+          >
+            <IonIcon icon={chevronBackOutline} slot="icon-only"></IonIcon>
+          </IonButton>
+          <IonTitle style={{ display: "inline-block" }}>
+            Booking Details
+          </IonTitle>
+        </IonToolbar>
+      </IonHeader>
 
-      <h1 className="booking-details-title">Booking Details</h1>
+      {/* <h1 className="booking-details-title">Booking Details</h1> */}
       <IonCard className="booking-details-card">
         <IonCardHeader>
           <IonCardTitle>{props.data.location}</IonCardTitle>
@@ -44,6 +56,26 @@ const BookingDetails: React.FC<IWeatherCardList> = (props) => {
           <div className="img-container">
             <IonImg className="booking-details-img" src={sunImage} />
           </div>
+          <IonCard className="enjoy-weather-card">
+            <IonTitle style={{ fontSize: "14px", fontWeight: "bolder" }}>
+              Enjoy your weather!
+            </IonTitle>
+          </IonCard>
+
+          <IonCard className="share-card">
+            <IonTitle
+              style={{
+                display: "inline",
+                fontSize: "14px",
+                fontWeight: "bolder",
+              }}
+            >
+              Share your booking with friends
+            </IonTitle>
+            <IonButton className="share-button" href="https://ko-fi.com/">
+              Share Now!
+            </IonButton>
+          </IonCard>
         </IonCardContent>
       </IonCard>
     </div>
