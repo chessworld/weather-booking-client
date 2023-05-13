@@ -97,11 +97,14 @@ class Tab1 extends Component<AbcProps, AbcState> {
                                         }}
                                     >
                                         <div
-                                            className={`weather-choose-option ${i == this.state.selectedWeatherOption && 'weather-choose-option weather-choose-option-focus'}`}
+                                            className={`weather-choose-option ${i == this.state.selectedWeatherOption
+                                                && 'weather-choose-option weather-choose-option-focus'}`}
                                         >
-                                        <img src={option.image} style={{ width: "10vw" }} />
+                                            <img src={option.image} style={{ width: "10vw" }} />
                                         </div>
-                                        <span className="weather-choose-text">{option.name}</span>
+                                        <span className="weather-choose-text">
+                                            {option.name}
+                                        </span>
                                     </div>
                                 )
                             })
@@ -110,8 +113,9 @@ class Tab1 extends Component<AbcProps, AbcState> {
                     </div>
 
                     <div className="slider-container">
-                        <span className="weather-slider-text">Temperature</span>
-
+                        <span className="weather-slider-text">
+                            Temperature
+                        </span>
                         <IonRange
                             className="weather-slider"
                             ticks={true}
@@ -122,7 +126,10 @@ class Tab1 extends Component<AbcProps, AbcState> {
                             }
                             onIonChange={(e: any) => {
                                 this.setState(prev => {
-                                    return { ...prev, selectedTemperatureOption: e.detail.value };
+                                    return {
+                                        ...prev,
+                                        selectedTemperatureOption: e.detail.value
+                                    };
                                 })
                             }}
                         ></IonRange>
@@ -147,12 +154,17 @@ class Tab1 extends Component<AbcProps, AbcState> {
 
                     <WeatherHud weatherData={this.state} />
 
-                    <div className="button-container" style={{ marginBottom: 'vh', marginTop: '10vh' }}>
+                    <div
+                        className="button-container"
+                        style={{
+                            marginBottom: 'vh',
+                            marginTop: '10vh'
+                        }}>
+
                         <div className="book-button">
                             Book
                         </div>
                     </div>
-
                 </Background>
             </IonPage >
         );
