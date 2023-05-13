@@ -9,7 +9,9 @@ import Surfing from '../assets/Icons/surfing.png';
 import FlyingKite from '../assets/Icons/flying-kite.png';
 import EngagementRing from '../assets/Icons/engagement-rings.png';
 import Picnic from '../assets/Icons/Picnic.png';
-import BookButton from '../assets/Icons/onboarding-book-button.png/';
+import BookButton from '../assets/Icons/onboarding-book-button.png';
+import Cup from '../assets/Icons/Cup.png';
+import Weather from '../assets/Icons/sun_cloud_rain.png';
 
 interface EventTarget {
     style: {
@@ -51,7 +53,7 @@ interface AbcProps {
 * }) */
 
 class OnboardingPage extends Component<AbcProps, AbcState> {
-    constructor(props) {
+    constructor(props: AbcProps) {
         super(props);
 
         //use usestring from react spring to animate the pages
@@ -63,29 +65,54 @@ class OnboardingPage extends Component<AbcProps, AbcState> {
             pages: [
                 (
                     <>
-                    <div className="onboarding-page-image-container">
-                        <img src={EngagementRing} />
-                        <img src={Picnic} />
-                    </div>
-                    <div className="onboarding-page-text">
-                        Do you have a special occasion coming up?
-                    </div>
-                    <div className="onboarding-page-image-container">
-                        <img src={Surfing} />
-                        <img src={FlyingKite} />
-                    </div>
+                        <div className="onboarding-page-image-container">
+                            <img src={EngagementRing} />
+                            <img src={Picnic} />
+                        </div>
+                        <div className="onboarding-page-text">
+                            Do you have a special occasion coming up?
+                        </div>
+                        <div className="onboarding-page-image-container">
+                            <img src={Surfing} />
+                            <img src={FlyingKite} />
+                        </div>
                     </>
                 ), (
                     <>
-                    <div className="onboarding-page-text">
-                        Need a certain weather...?
-                    </div>
-                    <div className="onboarding-page-image-container">
-                        <img src={BookButton} />
-                    </div>
-                    <div className="onboarding-page-text">
-                        The book it!
-                </div>
+                        <div className="onboarding-page-text">
+                            Need a certain weather...?
+                        </div>
+                        <div className="onboarding-page-image-container">
+                            <img onTouchEnd={() => alert("Take yo to booking page")} src={BookButton} />
+                        </div>
+                        <div className="onboarding-page-text">
+                            The book it!
+                        </div>
+                    </>
+                ),
+                (
+                    <>
+                        <div className="onboarding-page-text">
+                            Buy us a coffee if we fullfill your weather needs
+                        </div>
+                        <div className="onboarding-page-image-container">
+                            <img onTouchEnd={() => alert("Take yo to coffee page")} src={Cup} />
+                        </div>
+                        <div className="onboarding-page-text">
+                            https://ko-fi.com
+                        </div>
+                    </>
+                ),
+                (
+                    <>
+                        <div className="onboarding-page-image-container">
+                            <img onTouchEnd={() => alert("Weather!")} src={Weather} />
+                        </div>
+                        <div className="onboarding-page-text">
+                            <div className="onboarding-page-button">
+                                Book Now
+                            </div>
+                        </div>
                     </>
                 )
             ]
@@ -96,7 +123,7 @@ class OnboardingPage extends Component<AbcProps, AbcState> {
         this.startHandleScroll = this.startHandleScroll.bind(this);
     }
 
-    startHandleScroll(e: any){
+    startHandleScroll(e: any) {
         this.setState({
             ...this.state,
             lastTouchMousePositionX: e.touches[0].clientX,
@@ -107,25 +134,26 @@ class OnboardingPage extends Component<AbcProps, AbcState> {
         this.state.currentPage && this.state.currentPage.current.addEventListener('touchmove', this.handleScroll);
     }
 
-    handleScroll(e: SyntheticEvent) : void {
+    handleScroll(e: SyntheticEvent): void {
         if (Object.keys(this.state).includes("lastTouchMousePositionX") && !this.state.hasMovedPagesThisTouch) {
             this.state.lastTouchMousePositionX
                 && e.touches[0].clientX - this.state.lastTouchMousePositionX > 50
-                && this.moveToNextPage()
+                && this.moveToPrevPage()
 
             this.state.lastTouchMousePositionX
                 && e.touches[0].clientX - this.state.lastTouchMousePositionX < -50
-                && this.moveToPrevPage()
+                && this.moveToNextPage()
 
-            const currentValue: number = parseInt(e.currentTarget.style.left ? e.currentTarget.style.left.replace(/^123/, ''): '0');
+            const currentValue: number = parseInt(e.currentTarget.style.left ? e.currentTarget.style.left.replace(/^123/, '') : '0');
             e.currentTarget.style.left = this.state.lastTouchMousePositionX ? `${currentValue + (e.touches[0].clientX - this.state.lastTouchMousePositionX)}vw` : ``;
         }
     };
 
-    setCurrentSlidePosition() : void {
+    setCurrentSlidePosition(): void {
     }
 
     stopHandleScroll(): void {
+        // @ts-ignore
         window.removeEventListener('touchmove', this.handleScroll);
         this.setState({
             ...this.state,
@@ -156,7 +184,9 @@ class OnboardingPage extends Component<AbcProps, AbcState> {
         this.setState(prev => {
             return {
                 ...prev,
-                currentPageNumber: Math.abs((prev.currentPageNumber - 1) % this.state.pages.length),
+                currentPageNumber: (prev.currentPageNumber - 1) % this.state.pages.length < 0
+                    ? this.state.pages.length - 1
+                    : (prev.currentPageNumber - 1) % this.state.pages.length,
                 hasMovedPagesThisTouch: true,
                 lastTouchMousePositionX: undefined
             }
@@ -178,7 +208,7 @@ class OnboardingPage extends Component<AbcProps, AbcState> {
                                             className="onboading-page-slide"
                                             onTouchStart={this.startHandleScroll}
                                             onTouchEnd={this.stopHandleScroll}
-                                            style={{left: 0, position: 'absolute'}}
+                                            style={{ left: 0, position: 'absolute' }}
                                         >
                                             {page}
                                         </div>
@@ -201,7 +231,6 @@ class OnboardingPage extends Component<AbcProps, AbcState> {
                             }
                         </div>
                     </div>
-                    )
                 </Background>
             </IonPage>
         )

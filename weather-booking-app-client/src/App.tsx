@@ -63,8 +63,9 @@ const App: React.FC = () => {
                         </Route>
                         <Route path="/booking-details" component={BookingDetails}/>
                     </IonRouterOutlet>
+
                     <IonTabBar slot="bottom">
-                        <IonTabButton tab="tab1" href="/tab1">
+                        {/* <IonTabButton tab="tab1" href="/tab1">
                             <IonIcon aria-hidden="true" icon={triangle} />
                             <IonLabel>Tab 1</IonLabel>
                         </IonTabButton>
@@ -75,7 +76,7 @@ const App: React.FC = () => {
                         <IonTabButton tab="tab3" href="/tab3">
                             <IonIcon aria-hidden="true" icon={square} />
                             <IonLabel>Tab 3</IonLabel>
-                        </IonTabButton>
+                        </IonTabButton> */}
                     </IonTabBar>
                 </IonTabs>
             </IonReactRouter>
