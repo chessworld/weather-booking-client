@@ -4,6 +4,7 @@ import Background from '../components/Screen/Background';
 import { IonPage } from '@ionic/react';
 import './OnboardingPage.css';
 
+
 import Surfing from '../assets/Icons/surfing.png';
 import FlyingKite from '../assets/Icons/flying-kite.png';
 import EngagementRing from '../assets/Icons/engagement-rings.png';
@@ -21,10 +22,17 @@ interface AbcProps {
     [category: string]: any;
 }
 
+/* const springs: any = useSpring({
+*     from: { opacity: 0, transform: 'translate3d(100%,0,0)' },
+*     to: { opacity: 1, transform: 'translate3d(0%,0,0)' },
+* }) */
 
 class OnboardingPage extends Component<AbcProps, AbcState> {
     constructor(props) {
         super(props);
+
+        //use usestring from react spring to animate the pages
+
         this.state = {
             currentPage: 0,
             hasMovedPagesThisTouch: false,
@@ -60,7 +68,18 @@ class OnboardingPage extends Component<AbcProps, AbcState> {
         }
 
         this.handleScroll = this.handleScroll.bind(this);
-        this.resetScroll = this.resetScroll.bind(this);
+        this.stopHandleScroll = this.stopHandleScroll.bind(this);
+        this.startHandleScroll = this.startHandleScroll.bind(this);
+    }
+
+    startHandleScroll(e: any){
+        this.setState({
+            ...this.state,
+            lastTouchMousePositionX: e.touches[0].clientX,
+            hasMovedPagesThisTouch: false
+        });
+
+        window.addEventListener('touchmove', this.handleScroll);
     }
 
     handleScroll(e: any) {
@@ -74,16 +93,13 @@ class OnboardingPage extends Component<AbcProps, AbcState> {
                 && this.moveToPrevPage()
         }
 
-        this.setState({
-            lastTouchMousePositionX: e.touches[0].clientX
-        });
-
     };
 
-    resetScroll() {
+    stopHandleScroll() {
+        window.removeEventListener('touchmove', this.handleScroll);
         this.setState({
+            ...this.state,
             lastTouchMousePositionX: undefined,
-            hasMovedPagesThisTouch: false
         });
     }
 
@@ -99,8 +115,8 @@ class OnboardingPage extends Component<AbcProps, AbcState> {
     }
 
     componentDidUpdate() {
-        console.log(this.state.currentPage);
-        console.log(this.state.lastTouchMousePositionX);
+        /* console.log(this.state.currentPage);
+* console.log(this.state.lastTouchMousePositionX); */
     }
 
     moveToPrevPage() {
@@ -118,22 +134,20 @@ class OnboardingPage extends Component<AbcProps, AbcState> {
         return (
             <IonPage>
                 <Background>
-                    <div className="carousel" draggable={true} onTouchMove={this.handleScroll} onTouchStart={this.resetScroll}>
+                    <div className="carousel"> <div className="onboarding-page-container">
+                        {
+                            this.state.pages.map((page, index) => {
+                                if (this.state.currentPage === index) {
+                                    return (
+                                        <div key={index} onTouchStart={this.startHandleScroll} onTouchEnd={this.stopHandleScroll} >
+                                            {page}
+                                        </div>
+                                    )
+                                }
+                            })
+                        }
+                    </div>
 
-                        <div className="onboarding-page-container">
-                            {
-                                this.state.pages.map((page, index) => {
-                                    if (this.state.currentPage === index) {
-                                        return (
-                                            <div key={index}>
-                                                {page}
-                                            </div>
-                                        )
-                                    }
-                                })
-                            }
-
-                        </div>
                         {/* Page indicators */}
                         <div className="page-indicator-container">
                             {
@@ -147,6 +161,7 @@ class OnboardingPage extends Component<AbcProps, AbcState> {
                             }
                         </div>
                     </div>
+                    )
                 </Background>
             </IonPage>
         )
