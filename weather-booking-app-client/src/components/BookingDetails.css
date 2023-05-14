@@ -49,6 +49,10 @@
   border-radius: 10px;
   width: 75vw;
   margin-top: 20px;
+  background-image: url("../assets/share_now.png");
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: cover;
 }
 
 .share-button {
