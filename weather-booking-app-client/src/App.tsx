@@ -10,7 +10,7 @@ import {
     setupIonicReact
 } from '@ionic/react';
 import { IonReactRouter } from '@ionic/react-router';
-import { ellipse, square, triangle } from 'ionicons/icons';
+import { person, book, addCircleSharp } from 'ionicons/icons';
 import Tab1 from './pages/Tab1';
 import Tab2 from './pages/Tab2';
 import Tab3 from './pages/Tab3';
@@ -55,22 +55,19 @@ const App: React.FC = () => {
                             <Tab3 />
                         </Route>
                         <Route exact path="/">
-                            <Redirect to="/tab1" />
+                            <Redirect to="/tab2" />
                         </Route>
                         <Route path="/booking-details" component={BookingDetails}/>
                     </IonRouterOutlet>
                     <IonTabBar slot="bottom">
-                        <IonTabButton tab="tab1" href="/tab1">
-                            <IonIcon aria-hidden="true" icon={triangle} />
-                            <IonLabel>Tab 1</IonLabel>
-                        </IonTabButton>
                         <IonTabButton tab="tab2" href="/tab2">
-                            <IonIcon aria-hidden="true" icon={ellipse} />
-                            <IonLabel>Tab 2</IonLabel>
+                            <IonIcon aria-hidden="true" icon={book} />
+                        </IonTabButton>
+                        <IonTabButton tab="tab1" href="/tab1">
+                            <IonIcon aria-hidden="true" icon={addCircleSharp} size="large"/>
                         </IonTabButton>
                         <IonTabButton tab="tab3" href="/tab3">
-                            <IonIcon aria-hidden="true" icon={square} />
-                            <IonLabel>Tab 3</IonLabel>
+                            <IonIcon aria-hidden="true" icon={person} />
                         </IonTabButton>
                     </IonTabBar>
                 </IonTabs>
