@@ -13,7 +13,11 @@ import {
   IonTitle,
   IonToolbar,
 } from "@ionic/react";
-import { chevronBackOutline } from "ionicons/icons";
+import {
+  chevronBackOutline,
+  thumbsUpSharp,
+  thumbsDownSharp,
+} from "ionicons/icons";
 import sunImage from "../assets/Icons/slight_touch_happyday.png";
 
 type map = {
@@ -28,7 +32,7 @@ interface IWeatherCardList {
   data: map;
 }
 
-const BookingDetails: React.FC<IWeatherCardList> = (props) => {
+const BookingDetailsCompleted: React.FC<IWeatherCardList> = (props) => {
   return (
     <div>
       <IonHeader>
@@ -42,7 +46,7 @@ const BookingDetails: React.FC<IWeatherCardList> = (props) => {
         </IonToolbar>
       </IonHeader>
 
-      <h1 className="booking-details-title">Booking Details</h1>
+      <h1 className="booking-details-title"> Booking Details</h1>
       <IonCard className="booking-details-card">
         <IonCardContent>
           <div className="booking-details-content">
@@ -83,8 +87,36 @@ const BookingDetails: React.FC<IWeatherCardList> = (props) => {
           </IonCard>
         </IonCardContent>
       </IonCard>
+
+      <h1 className="booking-details-title"> Feedback</h1>
+      <IonCard className="booking-details-card">
+        <IonCardContent>
+          <IonCard className="enjoy-weather-card" id="feedback-card">
+            <IonTitle className="enjoy-weather-content" id="feedback-content">
+              Did you enjoy your weather?
+            </IonTitle>
+            <IonIcon icon={thumbsUpSharp}></IonIcon>
+            <IonIcon icon={thumbsDownSharp}></IonIcon>
+          </IonCard>
+
+          <IonCard className="coffee-card">
+            <IonTitle
+              style={{
+                display: "inline",
+                fontSize: "14px",
+                fontWeight: "bolder",
+              }}
+            >
+              Buy us a coffee
+            </IonTitle>
+            <IonButton className="share-button" href="https://ko-fi.com/">
+              Donate
+            </IonButton>
+          </IonCard>
+        </IonCardContent>
+      </IonCard>
     </div>
   );
 };
 
-export default BookingDetails;
+export default BookingDetailsCompleted;

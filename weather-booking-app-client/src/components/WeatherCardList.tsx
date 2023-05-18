@@ -17,6 +17,7 @@ type map = {
 interface IWeatherCardList {
   openBookingDetail: (booking: any) => void;
   data: map[];
+  upcoming: boolean;
 }
 
 const WeatherCardList: React.FC<IWeatherCardList> = (props) => {

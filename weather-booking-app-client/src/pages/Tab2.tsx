@@ -16,6 +16,7 @@ import WeatherCardList from "../components/WeatherCardList";
 import "./Tab2.css";
 import { useState } from "react";
 import BookingDetails from "../components/BookingDetails";
+import BookingDetailsCompleted from "../components/BookingDetailsCompleted";
 import coffee from "../assets/coffee.png";
 const Tab2: React.FC = () => {
   const [selectedTab, setSelectedTab] = useState("upcoming");
@@ -87,21 +88,28 @@ const Tab2: React.FC = () => {
         </IonTabBar>
       )}
       <IonContent fullscreen>
-        {selectedBooking ? (
+        {selectedBooking && selectedTab === "upcoming" ? (
           <BookingDetails
             data={dummyDataUpcoming[selectedBooking - 1]}
+            closeBookingDetail={handleBookingClick}
+          />
+        ) : selectedBooking && selectedTab === "completed" ? (
+          <BookingDetailsCompleted
+            data={dummyDataCompleted[selectedBooking - 1]}
             closeBookingDetail={handleBookingClick}
           />
         ) : selectedTab === "upcoming" ? (
           <WeatherCardList
             data={dummyDataUpcoming}
             openBookingDetail={handleBookingClick}
+            upcoming={true}
           />
         ) : (
           <div>
             <WeatherCardList
               data={dummyDataCompleted}
               openBookingDetail={handleBookingClick}
+              upcoming={false}
             />
             <a href="https://ko-fi.com/" className="coffee-img-container">
               <p className="coffee-text">Support Us!</p>
