@@ -48,11 +48,11 @@ const BookingDetails: React.FC<IWeatherCardList> = (props) => {
       {/* <h1 className="booking-details-title">Booking Details</h1> */}
       <IonCard className="booking-details-card">
         <IonCardHeader>
-          <IonCardTitle>{props.data.location}</IonCardTitle>
-          <IonCardSubtitle>{props.data.date}</IonCardSubtitle>
+            <IonCardTitle>{props.data && props.data.location}</IonCardTitle>
+          <IonCardSubtitle>{props.data && props.data.date}</IonCardSubtitle>
         </IonCardHeader>
         <IonCardContent>
-          <p>{props.data.weather}</p>
+          <p>{props.data && props.data.weather}</p>
           <div className="img-container">
             <IonImg className="booking-details-img" src={sunImage} />
           </div>
