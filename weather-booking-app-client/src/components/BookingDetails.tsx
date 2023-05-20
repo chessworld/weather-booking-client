@@ -31,16 +31,14 @@ interface IWeatherCardList {
 const BookingDetails: React.FC<IWeatherCardList> = (props) => {
   return (
     <div>
-      <IonHeader>
-        <IonToolbar className="booking-details-toolbar">
-          <IonButton
-            onClick={() => props.closeBookingDetail(null)}
-            className="booking-details-back-button"
-          >
-            <IonIcon icon={chevronBackOutline} slot="icon-only"></IonIcon>
-          </IonButton>
-        </IonToolbar>
-      </IonHeader>
+      <div className="booking-details-toolbar">
+        <IonButton
+          onClick={() => props.closeBookingDetail(null)}
+          className="booking-details-back-button invisible-button"
+        >
+          <IonIcon icon={chevronBackOutline} slot="icon-only"></IonIcon>
+        </IonButton>
+      </div>
 
       <h1 className="booking-details-title">Booking Details</h1>
       <IonCard className="booking-details-card">

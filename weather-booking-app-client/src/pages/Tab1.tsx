@@ -1,179 +1,172 @@
-import React from 'react';
-import WeatherHud from '../components/BookingPage/WeatherHud';
-import { Component } from 'react';
-import { IonRange, IonPage } from '@ionic/react';
-import Background from '../components/Screen/Background';
-import './Tab1.css';
+import React from "react";
+import WeatherHud from "../components/BookingPage/WeatherHud";
+import { Component } from "react";
+import { IonRange, IonPage } from "@ionic/react";
+import Background from "../components/Screen/Background";
+import "./Tab1.css";
 
 import BookingEndpoint from "../endpoint-caller/bookingEndpoint";
 
-import Sunny from '../assets/Icons/slight_touch_happyday.png';
-import Rain from '../assets/Icons/rainy.png';
-import Cloud from '../assets/Icons/cloudy.png';
-import Windy from '../assets/Icons/sparkle_storm.png';
-import Stormy from '../assets/Icons/thnderstorm.png';
+import Sunny from "../assets/Icons/slight_touch_happyday.png";
+import Rain from "../assets/Icons/rainy.png";
+import Cloud from "../assets/Icons/cloudy.png";
+import Windy from "../assets/Icons/sparkle_storm.png";
+import Stormy from "../assets/Icons/thnderstorm.png";
 
 interface AbcState {
-    [category: string]: any;
-    date: string;
-    location: string;
-    weatherOptions: { name: string, image?: any }[];
-    selectedWeatherOption: number
+  [category: string]: any;
+  date: string;
+  location: string;
+  weatherOptions: { name: string; image?: any }[];
+  selectedWeatherOption: number;
 }
 
 interface AbcProps {
-    [category: string]: any;
+  [category: string]: any;
 }
 
 class Tab1 extends Component<AbcProps, AbcState> {
-    bookingEndpoint: BookingEndpoint;
+  bookingEndpoint: BookingEndpoint;
 
-    constructor(props: any) {
-        super(props);
+  constructor(props: any) {
+    super(props);
 
-        this.bookingEndpoint = new BookingEndpoint();
+    this.bookingEndpoint = new BookingEndpoint();
 
-        this.state = {
-            date: props.date || 'Monday 10 July',
-            location: 'Monash University, 3800',
-            weatherOptions: [
-                { name: "Cloudy", image: Cloud },
-                { name: "Sunny", image: Sunny },
-                { name: "Rainy", image: Rain },
-                { name: "Windy", image: Windy },
-                { name: "Stormy", image: Stormy }
-            ],
-            temperatureOptions: [
-                { name: "Freezing" },
-                { name: "Cool" },
-                { name: "Mild" },
-                { name: "Warm" },
-                { name: "Hot" }
-            ],
-            windOptions: [
-                { name: "No Wind" },
-                { name: "Calm" },
-                { name: "Windy" },
-                { name: "Gusty" }
-            ],
-            selectedWeatherOption: 0,
-            selectedWindOption: 0
-        };
-    }
+    this.state = {
+      date: props.date || "Monday 10 July",
+      location: "Monash University, 3800",
+      weatherOptions: [
+        { name: "Cloudy", image: Cloud },
+        { name: "Sunny", image: Sunny },
+        { name: "Rainy", image: Rain },
+        { name: "Windy", image: Windy },
+        { name: "Stormy", image: Stormy },
+      ],
+      temperatureOptions: [
+        { name: "Freezing" },
+        { name: "Cool" },
+        { name: "Mild" },
+        { name: "Warm" },
+        { name: "Hot" },
+      ],
+      windOptions: [
+        { name: "No Wind" },
+        { name: "Calm" },
+        { name: "Windy" },
+        { name: "Gusty" },
+      ],
+      selectedWeatherOption: 0,
+      selectedWindOption: 0,
+    };
+  }
 
-    componentDidMount(): void {
-    }
+  componentDidMount(): void {}
 
-    componentDidUpdate(prevProps: Readonly<{}>, prevState: Readonly<{}>, snapshot?: any): void {
-    }
+  componentDidUpdate(
+    prevProps: Readonly<{}>,
+    prevState: Readonly<{}>,
+    snapshot?: any
+  ): void {}
 
-    handleWeatherSelectionUpdate(weatherSelectionNumber: number) {
-        this.setState(prev => {
-            return {
-                ...prev,
-                selectedWeatherOption: weatherSelectionNumber
-            }
-        });
-    }
+  handleWeatherSelectionUpdate(weatherSelectionNumber: number) {
+    this.setState((prev) => {
+      return {
+        ...prev,
+        selectedWeatherOption: weatherSelectionNumber,
+      };
+    });
+  }
 
-    render(): React.ReactNode {
-        return (
-            <IonPage>
-                {/* <IonContent fullscreen className="ion-no-padding"> */}
-                <Background>
+  render(): React.ReactNode {
+    return (
+      <IonPage>
+        {/* <IonContent fullscreen className="ion-no-padding"> */}
+        <Background>
+          <div className="button-container">
+            <div className="date-location-button">{this.state.date}</div>
 
-                    <div className="button-container">
-                        <div className="button">
-                            {this.state.date}
-                        </div>
+            <div className="date-location-button">{this.state.location}</div>
+          </div>
 
-                        <div className="button">
-                            {this.state.location}
-                        </div>
-                    </div>
+          <div className="button-container">
+            {this.state.weatherOptions.map((option: any, i: number) => {
+              return (
+                <div
+                  className="weather-choose-container"
+                  key={`${i}`}
+                  onClick={() => {
+                    this.handleWeatherSelectionUpdate(i);
+                  }}
+                >
+                  <div
+                    className={`weather-choose-option ${
+                      i == this.state.selectedWeatherOption &&
+                      "weather-choose-option weather-choose-option-focus"
+                    }`}
+                  >
+                    <img src={option.image} style={{ width: "10vw" }} />
+                  </div>
+                  <span className="weather-choose-text">{option.name}</span>
+                </div>
+              );
+            })}
+          </div>
 
-                    <div className="button-container">
-                        {
-                            this.state.weatherOptions.map((option: any, i: number) => {
-                                return (
-                                    <div className="weather-choose-container" key={`${i}`}
-                                        onClick={() => {
-                                            this.handleWeatherSelectionUpdate(i);
-                                        }}
-                                    >
-                                        <div
-                                            className={`weather-choose-option ${i == this.state.selectedWeatherOption
-                                                && 'weather-choose-option weather-choose-option-focus'}`}
-                                        >
-                                            <img src={option.image} style={{ width: "10vw" }} />
-                                        </div>
-                                        <span className="weather-choose-text">
-                                            {option.name}
-                                        </span>
-                                    </div>
-                                )
-                            })
-                        }
+          <div className="slider-container">
+            <span className="weather-slider-text">Temperature</span>
+            <IonRange
+              className="weather-slider"
+              ticks={true}
+              snaps={true}
+              min={0}
+              max={this.state.temperatureOptions.length - 1}
+              onIonChange={(e: any) => {
+                this.setState((prev) => {
+                  return {
+                    ...prev,
+                    selectedTemperatureOption: e.detail.value,
+                  };
+                });
+              }}
+            ></IonRange>
 
-                    </div>
+            <span className="weather-slider-text">Wind</span>
 
-                    <div className="slider-container">
-                        <span className="weather-slider-text">
-                            Temperature
-                        </span>
-                        <IonRange
-                            className="weather-slider"
-                            ticks={true}
-                            snaps={true}
-                            min={0}
-                            max={
-                                this.state.temperatureOptions.length - 1
-                            }
-                            onIonChange={(e: any) => {
-                                this.setState(prev => {
-                                    return {
-                                        ...prev,
-                                        selectedTemperatureOption: e.detail.value
-                                    };
-                                })
-                            }}
-                        ></IonRange>
+            <IonRange
+              className="weather-slider"
+              ticks={true}
+              snaps={true}
+              min={0}
+              onIonChange={(e: any) => {
+                this.setState((prev) => {
+                  return { ...prev, selectedWindOption: e.detail.value };
+                });
+              }}
+              max={this.state.windOptions.length - 1}
+            ></IonRange>
+          </div>
 
-                        <span className="weather-slider-text">Wind</span>
+          <WeatherHud weatherData={this.state} />
 
-                        <IonRange
-                            className="weather-slider"
-                            ticks={true}
-                            snaps={true}
-                            min={0}
-                            onIonChange={(e: any) => {
-                                this.setState(prev => {
-                                    return { ...prev, selectedWindOption: e.detail.value };
-                                })
-                            }}
-                            max={
-                                this.state.windOptions.length - 1
-                            }
-                        ></IonRange>
-                    </div>
-
-                    <WeatherHud weatherData={this.state} />
-
-                    <div
-                        className="button-container"
-                        style={{
-                            marginBottom: 'vh',
-                            marginTop: '10vh'
-                        }}>
-
-                        <div onTouchEnd={this.bookingEndpoint.createBooking} className="book-button">
-                            Book
-                        </div>
-                    </div>
-                </Background>
-            </IonPage >
-        );
-    }
-};
+          <div
+            className="button-container"
+            style={{
+              marginBottom: "vh",
+              marginTop: "10vh",
+            }}
+          >
+            <div
+              onTouchEnd={this.bookingEndpoint.createBooking}
+              className="book-button"
+            >
+              Book
+            </div>
+          </div>
+        </Background>
+      </IonPage>
+    );
+  }
+}
 
 export default Tab1;

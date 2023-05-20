@@ -1,7 +1,17 @@
 .booking-details-back-button {
   display: inline-block;
   vertical-align: middle;
-  width: 50px;
+  width: 60px;
+  color: black;
+  position: relative;
+  left: 0;
+}
+
+.invisible-button {
+  --background: transparent;
+  --border-color: transparent;
+  --box-shadow: none;
+  box-shadow: none;
 }
 
 .booking-details-title {
@@ -44,7 +54,6 @@
   display: flex;
   flex-direction: row;
   justify-content: space-between;
-  padding: 0px 15px;
 }
 
 /* .booking-details-content {
@@ -81,17 +90,6 @@
   padding: 10px;
 }
 
-#feedback-card {
-  width: 90%;
-  text-align: left;
-  padding: 10px 0;
-}
-
-#feedback-content {
-  font-size: 12px;
-  width: 75%;
-  display: inline-block;
-}
 .enjoy-weather-content {
   font-size: 14px;
   font-weight: bold;
@@ -115,6 +113,7 @@
   bottom: 0px;
   left: 25%;
   text-decoration: none;
+  margin-bottom: 0.5rem;
 }
 
 .coffee-card {

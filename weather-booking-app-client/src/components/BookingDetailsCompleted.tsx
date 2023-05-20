@@ -1,5 +1,6 @@
 import { useParams } from "react-router-dom";
 import "./BookingDetails.css";
+import "./BookingDetailsCompleted.css";
 import {
   IonButton,
   IonCard,
@@ -19,6 +20,7 @@ import {
   thumbsDownSharp,
 } from "ionicons/icons";
 import sunImage from "../assets/Icons/slight_touch_happyday.png";
+import { useState } from "react";
 
 type map = {
   id: number;
@@ -33,18 +35,26 @@ interface IWeatherCardList {
 }
 
 const BookingDetailsCompleted: React.FC<IWeatherCardList> = (props) => {
+  const [thumbUp, setThumbUp] = useState<boolean | null>(null);
+
+  const handleThumbUpClick = () => {
+    setThumbUp(true);
+  };
+
+  const handleThumbDownClick = () => {
+    setThumbUp(false);
+  };
+
   return (
     <div>
-      <IonHeader>
-        <IonToolbar className="booking-details-toolbar">
-          <IonButton
-            onClick={() => props.closeBookingDetail(null)}
-            className="booking-details-back-button"
-          >
-            <IonIcon icon={chevronBackOutline} slot="icon-only"></IonIcon>
-          </IonButton>
-        </IonToolbar>
-      </IonHeader>
+      <div className="booking-details-toolbar">
+        <IonButton
+          onClick={() => props.closeBookingDetail(null)}
+          className="booking-details-back-button invisible-button"
+        >
+          <IonIcon icon={chevronBackOutline} slot="icon-only"></IonIcon>
+        </IonButton>
+      </div>
 
       <h1 className="booking-details-title"> Booking Details</h1>
       <IonCard className="booking-details-card">
@@ -92,11 +102,29 @@ const BookingDetailsCompleted: React.FC<IWeatherCardList> = (props) => {
       <IonCard className="booking-details-card">
         <IonCardContent>
           <IonCard className="enjoy-weather-card" id="feedback-card">
-            <IonTitle className="enjoy-weather-content" id="feedback-content">
+            <IonTitle id="feedback-content">
               Did you enjoy your weather?
             </IonTitle>
-            <IonIcon icon={thumbsUpSharp}></IonIcon>
-            <IonIcon icon={thumbsDownSharp}></IonIcon>
+            <div className="thumb-group">
+              <IonButton
+                className="thumb-button invisible-button"
+                onClick={() => handleThumbUpClick()}
+              >
+                <IonIcon
+                  icon={thumbsUpSharp}
+                  className={`${thumbUp ? "thumb-selected" : ""}`}
+                ></IonIcon>
+              </IonButton>
+              <IonButton
+                className="thumb-button invisible-button"
+                onClick={() => handleThumbDownClick()}
+              >
+                <IonIcon
+                  icon={thumbsDownSharp}
+                  className={`${thumbUp === false ? "thumb-selected" : ""}`}
+                ></IonIcon>
+              </IonButton>
+            </div>
           </IonCard>
 
           <IonCard className="coffee-card">
