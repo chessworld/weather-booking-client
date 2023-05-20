@@ -11,6 +11,8 @@ import Cloud from '../assets/Icons/cloudy.png';
 import Windy from '../assets/Icons/sparkle_storm.png';
 import Stormy from '../assets/Icons/thnderstorm.png';
 
+import BookingEndpoint from '../endpoint-caller/bookingEndpoint';
+
 interface AbcState {
     [category: string]: any;
     date: string;
@@ -24,8 +26,12 @@ interface AbcProps {
 }
 
 class Tab1 extends Component<AbcProps, AbcState> {
+    bookingEndpoint: BookingEndpoint;
+
     constructor(props: any) {
         super(props);
+
+        this.bookingEndpoint = new BookingEndpoint();
 
         this.state = {
             date: props.date || 'Monday 10 July',
@@ -56,7 +62,6 @@ class Tab1 extends Component<AbcProps, AbcState> {
     }
 
     componentDidMount(): void {
-        /* this.drawRhombus(); */
     }
 
     componentDidUpdate(prevProps: Readonly<{}>, prevState: Readonly<{}>, snapshot?: any): void {
@@ -147,7 +152,7 @@ class Tab1 extends Component<AbcProps, AbcState> {
 
                     <WeatherHud weatherData={this.state} />
 
-                    <div className="button-container" style={{ marginBottom: 'vh', marginTop: '10vh' }}>
+                    <div onTouchEnd={this.bookingEndpoint.createBooking} className="button-container" style={{ marginBottom: 'vh', marginTop: '10vh' }}>
                         <div className="book-button">
                             Book
                         </div>
