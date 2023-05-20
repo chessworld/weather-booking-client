@@ -1,0 +1,131 @@
+.booking-details-back-button {
+  display: inline-block;
+  vertical-align: middle;
+  width: 50px;
+}
+
+.booking-details-title {
+  font-weight: bold;
+  position: relative;
+  top: 1rem;
+}
+.booking-details-card {
+  background: transparent;
+  outline-style: solid;
+  width: 90vw;
+  color: white;
+  position: relative;
+  margin: 2rem 1rem;
+  /* padding: 5px 1px; */
+  /* margin: 1vh 0 1vh 0; */
+  /* box-shadow: 1px 2px 5px #888;
+  color: #888; */
+}
+
+.booking-details-title {
+  /* font-weight: 700; */
+  font-size: 5vw;
+  margin: 0.5vh 0 0.5vh 0;
+  padding: 0px 15px;
+}
+
+.booking-details-img {
+  width: 20vw;
+  height: auto;
+}
+
+.booking-details-img-container {
+  display: inline-block;
+  width: 30%;
+  vertical-align: middle;
+}
+
+.booking-details-toolbar {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  padding: 0px 15px;
+}
+
+/* .booking-details-content {
+} */
+
+.booking-details-details {
+  display: inline-block;
+  width: 68%;
+  position: relative;
+  bottom: 20%;
+  vertical-align: middle;
+}
+
+.booking-details-details__title {
+  font-weight: bold;
+}
+
+.booking-details-details__subtitle {
+  color: #5f5f5f;
+}
+
+.booking-details-details__weather {
+  color: #5f5f5f;
+}
+
+.enjoy-weather-card {
+  text-align: center;
+  border-radius: 20px;
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
+  margin-top: 2rem;
+  width: 65%;
+  padding: 10px;
+}
+
+#feedback-card {
+  width: 90%;
+  text-align: left;
+  padding: 10px 0;
+}
+
+#feedback-content {
+  font-size: 12px;
+  width: 75%;
+  display: inline-block;
+}
+.enjoy-weather-content {
+  font-size: 14px;
+  font-weight: bold;
+  color: black;
+}
+
+.share-card {
+  text-align: center;
+  border-radius: 10px;
+  width: 75vw;
+  color: black;
+  margin-top: 2rem;
+  background-image: url("../assets/share_now.png");
+  background-size: cover;
+  position: relative;
+  background-position: left 90% bottom 50%;
+}
+
+.share-button {
+  position: relative;
+  bottom: 0px;
+  left: 25%;
+  text-decoration: none;
+}
+
+.coffee-card {
+  text-align: center;
+  border-radius: 10px;
+  width: 75vw;
+  color: black;
+  margin-top: 2rem;
+  background-image: url("../assets/coffee_banner.png");
+  background-size: cover;
+  position: relative;
+  background-position: left 70% bottom 50%;
+  background-color: #addec9;
+}
