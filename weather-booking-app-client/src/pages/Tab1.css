@@ -5,6 +5,9 @@
     --weather-choose-option-max-height: 120px;
 }
 
+.search-bar {
+    width: 80vw;
+}
 
 .button {
     display: flex;
@@ -19,6 +22,14 @@
     box-shadow: 2px 2px 4px #888;
     font-size: 3vw;
     font-weight: 500;
+}
+
+.button-container-vertical {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    margin: 1vh 0 1vh 0;
 }
 
 .button-container {

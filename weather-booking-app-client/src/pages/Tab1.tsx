@@ -1,7 +1,7 @@
 import React from 'react';
 import WeatherHud from '../components/BookingPage/WeatherHud';
 import { Component } from 'react';
-import { IonRange, IonPage } from '@ionic/react';
+import { IonRange, IonPage, IonItem, IonLabel, IonList, IonSearchbar } from '@ionic/react';
 import Background from '../components/Screen/Background';
 import './Tab1.css';
 
@@ -18,6 +18,8 @@ interface AbcState {
     location: string;
     weatherOptions: { name: string, image?: any }[];
     selectedWeatherOption: number
+    showLocationSuggestions: boolean;
+    locationsuggestions: string[];
 }
 
 interface AbcProps {
@@ -25,16 +27,14 @@ interface AbcProps {
 }
 
 class Tab1 extends Component<AbcProps, AbcState> {
-    bookingEndpoint: BookingEndpoint;
+    bookingEndpoint: BookingEndpoint | undefined;
 
     constructor(props: any) {
         super(props);
 
-        this.bookingEndpoint = new BookingEndpoint();
-
         this.state = {
             date: props.date || 'Monday 10 July',
-            location: 'Monash University, 3800',
+            location: "",
             weatherOptions: [
                 { name: "Cloudy", image: Cloud },
                 { name: "Sunny", image: Sunny },
@@ -56,20 +56,31 @@ class Tab1 extends Component<AbcProps, AbcState> {
             ],
             selectedWeatherOption: 0,
             selectedWindOption: 0,
-            selectedTemperatureOption: 0
+            selectedTemperatureOption: 0,
+            showSuggestions: false,
+            locationSuggestions: []
         };
 
         this.getWindJson = this.getWindJson.bind(this);
     }
 
-    componentDidMount(): void {
+    async componentDidMount(): Promise<any> {
+        this.bookingEndpoint = this.bookingEndpoint ?? await BookingEndpoint.create();
+
+        setTimeout(
+            () => {
+                console.log(this.bookingEndpoint && this.bookingEndpoint.getLocationSuburbs());
+                this.setState({
+                    ...this.state,
+                    locationSuggestions: this.bookingEndpoint && this.bookingEndpoint.getLocationSuburbs()
+                });
+            }
+        )
     }
 
-    componentDidUpdate(prevProps: Readonly<{}>, prevState: Readonly<{}>, snapshot?: any): void {
-        this.getWindJson();
-        this.getTemperatureJson();
-        this.getWeatherJson();
+    async componentDidUpdate(prevProps: Readonly<{}>, prevState: Readonly<{}>, snapshot?: any): Promise<any> {
     }
+
 
     getWindJson(): {
         [category: string]: string | number
@@ -114,8 +125,6 @@ class Tab1 extends Component<AbcProps, AbcState> {
             "max_value": 40 // TODO backend
         }
 
-        console.log(temperatureJson);
-
         return temperatureJson;
     }
 
@@ -134,14 +143,48 @@ class Tab1 extends Component<AbcProps, AbcState> {
                 {/* <IonContent fullscreen className="ion-no-padding"> */}
                 <Background>
 
-                    <div className="button-container">
-                        <div className="button">
+                    <div className="button-container-vertical">
+                        {/* <div className="button">
                             {this.state.date}
-                        </div>
+                        </div> */}
 
-                        <div className="button">
-                            {this.state.location}
-                        </div>
+                        <br />
+                            <IonSearchbar
+                                className="search-bar"
+                                placeholder='Search Location'
+                                onIonChange={e => this.setState({
+                                    ...this.state,
+                                    location: e.detail.value!
+                                })}
+
+                                onFocus={() => this.setState({
+                                    ...this.state,
+                                    showSuggestions: true
+                                })}
+
+                                onBlur={() => this.setState({
+                                    ...this.state,
+                                    showSuggestions: false
+                                })}
+                            />
+
+                        {this.state.showSuggestions && (
+                            <IonList style={{ position: 'absolute', width: '90%', zIndex: 1, top: "9vh", background: "transparent" }}>
+                                {this.state.locationSuggestions
+                                    .filter((suggestion: string) => suggestion.toLowerCase().includes(this.state.location.toLowerCase()))
+                                    .map((suggestion: string, i: number) => (
+                                        <IonItem key={i} button>
+                                            <IonLabel>
+                                                {suggestion}
+                                            </IonLabel>
+                                        </IonItem>
+                                    ))}
+                            </IonList>
+                        )}
+
+                        {/* onIonChange={e => setInputValue(e.detail.value!)}
+                            onFocus={() => setShowSuggestions(true)}
+                            onBlur={() => setTimeout(() => setShowSuggestions(false), 200)} */}
                     </div>
 
                     <div className="button-container">
