@@ -2,7 +2,6 @@ import { Redirect, Route } from 'react-router-dom';
 import {
     IonApp,
     IonIcon,
-    IonLabel,
     IonRouterOutlet,
     IonTabBar,
     IonTabButton,
@@ -10,7 +9,7 @@ import {
     setupIonicReact
 } from '@ionic/react';
 import { IonReactRouter } from '@ionic/react-router';
-import { ellipse, square, triangle } from 'ionicons/icons';
+import { person, book, addCircleSharp } from 'ionicons/icons';
 import Tab1 from './pages/Tab1';
 import Tab2 from './pages/Tab2';
 import Tab3 from './pages/Tab3';
@@ -35,7 +34,7 @@ import '@ionic/react/css/display.css';
 
 /* Theme variables */
 import './theme/variables.css';
-
+import './components/Screen/NavBar.css';
 setupIonicReact();
 
 const App: React.FC = () => {
@@ -63,20 +62,18 @@ const App: React.FC = () => {
                         </Route>
                         <Route path="/booking-details" component={BookingDetails}/>
                     </IonRouterOutlet>
-
-                    <IonTabBar slot="bottom">
-                        {/* <IonTabButton tab="tab1" href="/tab1">
-                            <IonIcon aria-hidden="true" icon={triangle} />
-                            <IonLabel>Tab 1</IonLabel>
+                        <Route path="/booking-details" component={BookingDetails} />
+                    </IonRouterOutlet>
+                    <IonTabBar slot="bottom" id='navbar'>
+                        <IonTabButton tab="tab2" href="/tab2" className='nav-bar-button'>
+                            <IonIcon aria-hidden="true" icon={book} className='nav-bar-icon' />
                         </IonTabButton>
-                        <IonTabButton tab="tab2" href="/tab2">
-                            <IonIcon aria-hidden="true" icon={ellipse} />
-                            <IonLabel>Tab 2</IonLabel>
+                        <IonTabButton tab="tab1" href="/tab1" className='nav-bar-button'>
+                            <IonIcon aria-hidden="true" icon={addCircleSharp} className='nav-bar-middle-icon'/>
                         </IonTabButton>
-                        <IonTabButton tab="tab3" href="/tab3">
-                            <IonIcon aria-hidden="true" icon={square} />
-                            <IonLabel>Tab 3</IonLabel>
-                        </IonTabButton> */}
+                        <IonTabButton tab="tab3" href="/tab3" className='nav-bar-button'>
+                            <IonIcon aria-hidden="true" icon={person} className='nav-bar-icon'/>
+                        </IonTabButton>
                     </IonTabBar>
                 </IonTabs>
             </IonReactRouter>
