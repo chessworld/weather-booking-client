@@ -14,7 +14,7 @@ import {
   IonToolbar,
 } from "@ionic/react";
 import { chevronBackOutline } from "ionicons/icons";
-import sunImage from "../assets/Icons/Sun.png";
+import sunImage from "../assets/Icons/slight_touch_happyday.png";
 
 type map = {
   id: number;
