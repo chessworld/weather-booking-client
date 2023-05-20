@@ -40,7 +40,6 @@ class Tab1 extends Component<AbcProps, AbcState> {
                 { name: "Cloudy", image: Cloud },
                 { name: "Sunny", image: Sunny },
                 { name: "Rainy", image: Rain },
-                { name: "Windy", image: Windy },
                 { name: "Stormy", image: Stormy }
             ],
             temperatureOptions: [
