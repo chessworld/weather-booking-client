@@ -19,7 +19,7 @@ import {
   thumbsUpSharp,
   thumbsDownSharp,
 } from "ionicons/icons";
-import sunImage from "../assets/Icons/slight_touch_happyday.png";
+import cloudImage from "../assets/Icons/cloudy.png";
 import { useState } from "react";
 
 type map = {
@@ -72,7 +72,7 @@ const BookingDetailsCompleted: React.FC<IWeatherCardList> = (props) => {
               </p>
             </div>
             <div className="booking-details-img-container">
-              <IonImg className="booking-details-img" src={sunImage} />
+              <IonImg className="booking-details-img" src={cloudImage} />
             </div>
           </div>
           <IonCard className="enjoy-weather-card">

@@ -6,12 +6,12 @@
   color: grey;
   width: fit-content;
   display: inline-block;
-  margin: none;
+  margin: 0;
 }
 
 .thumb-group {
   display: inline-block;
-  width: 35%;
+  width: 30%;
   vertical-align: middle;
 }
 
@@ -22,11 +22,13 @@
 }
 
 #feedback-content {
-  font-size: 0.75rem;
-  width: 65%;
+  font-size: 0.8rem;
+  width: 70%;
   display: inline-block;
   position: relative;
   color: black;
   font-weight: bold;
   vertical-align: middle;
+  padding: 0;
+  padding-left: 0.7rem;
 }
