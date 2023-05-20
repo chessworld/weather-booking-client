@@ -62,8 +62,6 @@ const App: React.FC = () => {
                         </Route>
                         <Route path="/booking-details" component={BookingDetails}/>
                     </IonRouterOutlet>
-                        <Route path="/booking-details" component={BookingDetails} />
-                    </IonRouterOutlet>
                     <IonTabBar slot="bottom" id='navbar'>
                         <IonTabButton tab="tab2" href="/tab2" className='nav-bar-button'>
                             <IonIcon aria-hidden="true" icon={book} className='nav-bar-icon' />
