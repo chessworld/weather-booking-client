@@ -13,6 +13,7 @@ import { person, book, addCircleSharp } from 'ionicons/icons';
 import Tab1 from './pages/Tab1';
 import Tab2 from './pages/Tab2';
 import Tab3 from './pages/Tab3';
+import OnboardingPage from './pages/OnboardingPage';
 import BookingDetails from './components/BookingDetails';
 
 /* Core CSS required for Ionic components to work properly */
@@ -56,6 +57,11 @@ const App: React.FC = () => {
                         <Route exact path="/">
                             <Redirect to="/tab1" />
                         </Route>
+                        <Route exact path="/onboardingPage">
+                            <OnboardingPage />
+                        </Route>
+                        <Route path="/booking-details" component={BookingDetails}/>
+                    </IonRouterOutlet>
                         <Route path="/booking-details" component={BookingDetails} />
                     </IonRouterOutlet>
                     <IonTabBar slot="bottom" id='navbar'>

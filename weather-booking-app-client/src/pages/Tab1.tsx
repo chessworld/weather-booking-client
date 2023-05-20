@@ -76,7 +76,7 @@ class Tab1 extends Component<AbcProps, AbcState> {
         });
     }
 
-    render() {
+    render(): React.ReactNode {
         return (
             <IonPage>
                 {/* <IonContent fullscreen className="ion-no-padding"> */}
@@ -104,7 +104,7 @@ class Tab1 extends Component<AbcProps, AbcState> {
                                         <div
                                             className={`weather-choose-option ${i == this.state.selectedWeatherOption && 'weather-choose-option weather-choose-option-focus'}`}
                                         >
-                                        <img src={option.image} style={{ width: "10vw" }} />
+                                            <img src={option.image} style={{ width: "10vw" }} />
                                         </div>
                                         <span className="weather-choose-text">{option.name}</span>
                                     </div>
