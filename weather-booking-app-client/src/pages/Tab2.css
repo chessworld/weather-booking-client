@@ -1,20 +1,56 @@
-.coffee-img-container {
-    position: absolute;
-    width: 6rem;
-    bottom: 70px;
-    right: 1rem;
+body {
+  background: transparent !important;
+  background: linear-gradient(180deg, #a8c8ed 0%, rgba(118, 115, 220, 0.4) 100%),
+    #ffffff !important;
+}
 
+.bookings-list-title {
+  z-index: 1;
+  font-size: 5vw;
+  margin: 0.5vh 0 0.5vh 0;
+  padding: 0px 15px;
+  font-weight: bold;
+  position: relative;
+  top: 1rem;
+  margin-bottom: 1rem;
+}
+
+.bookings-tab-bar {
+  --background: #eeeeee;
+  width: 70%;
+  border-radius: 20px;
+  text-align: center;
+  position: relative;
+  margin: 20px auto;
+}
+
+.bookings-tab {
+  color: black;
+  font-size: 1rem;
+  font-weight: bold;
+  border-radius: 20px;
+}
+
+.bookings-tab-selected {
+  background: white;
+}
+
+.coffee-img-container {
+  position: absolute;
+  width: 6rem;
+  bottom: 70px;
+  right: 1rem;
 }
 
 .coffee-img {
-    width: 80%;
+  width: 80%;
 }
 
 .coffee-text {
-    width: 100%;
-    text-decoration: none;
-    color: black;
-    display: inline-block;
-    font-size: 1rem;
-    font-weight: bold;
+  width: 100%;
+  text-decoration: none;
+  color: black;
+  display: inline-block;
+  font-size: 1rem;
+  font-weight: bold;
 }

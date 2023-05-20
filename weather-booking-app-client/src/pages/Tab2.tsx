@@ -62,8 +62,14 @@ const Tab2: React.FC = () => {
   return (
     <IonPage>
       {!selectedBooking && (
-        <IonTabBar slot="top">
+        <h1 className="bookings-list-title">Your Bookings</h1>
+      )}
+      {!selectedBooking && (
+        <IonTabBar slot="top" className="bookings-tab-bar">
           <IonTabButton
+            className={`bookings-tab ${
+              selectedTab === "upcoming" ? "bookings-tab-selected" : ""
+            }`}
             tab="upcoming"
             onClick={() => handleTabChange("upcoming")}
             selected={selectedTab === "upcoming"}
@@ -72,6 +78,9 @@ const Tab2: React.FC = () => {
           </IonTabButton>
 
           <IonTabButton
+            className={`bookings-tab ${
+              selectedTab === "completed" ? "bookings-tab-selected" : ""
+            }`}
             tab="completed"
             onClick={() => handleTabChange("completed")}
             selected={selectedTab === "completed"}
