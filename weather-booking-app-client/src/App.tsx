@@ -2,7 +2,6 @@ import { Redirect, Route } from 'react-router-dom';
 import {
     IonApp,
     IonIcon,
-    IonLabel,
     IonRouterOutlet,
     IonTabBar,
     IonTabButton,
@@ -34,7 +33,7 @@ import '@ionic/react/css/display.css';
 
 /* Theme variables */
 import './theme/variables.css';
-
+import './components/Screen/NavBar.css';
 setupIonicReact();
 
 const App: React.FC = () => {
@@ -55,19 +54,19 @@ const App: React.FC = () => {
                             <Tab3 />
                         </Route>
                         <Route exact path="/">
-                            <Redirect to="/tab2" />
+                            <Redirect to="/tab1" />
                         </Route>
                         <Route path="/booking-details" component={BookingDetails}/>
                     </IonRouterOutlet>
-                    <IonTabBar slot="bottom">
-                        <IonTabButton tab="tab2" href="/tab2">
-                            <IonIcon aria-hidden="true" icon={book} />
+                    <IonTabBar slot="bottom" id='navbar'>
+                        <IonTabButton tab="tab2" href="/tab2" className='nav-bar-button'>
+                            <IonIcon aria-hidden="true" icon={book} className='nav-bar-icon' />
                         </IonTabButton>
-                        <IonTabButton tab="tab1" href="/tab1">
-                            <IonIcon aria-hidden="true" icon={addCircleSharp} size="large"/>
+                        <IonTabButton tab="tab1" href="/tab1" className='nav-bar-button'>
+                            <IonIcon aria-hidden="true" icon={addCircleSharp} className='nav-bar-middle-icon'/>
                         </IonTabButton>
-                        <IonTabButton tab="tab3" href="/tab3">
-                            <IonIcon aria-hidden="true" icon={person} />
+                        <IonTabButton tab="tab3" href="/tab3" className='nav-bar-button'>
+                            <IonIcon aria-hidden="true" icon={person} className='nav-bar-icon'/>
                         </IonTabButton>
                     </IonTabBar>
                 </IonTabs>
