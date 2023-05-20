@@ -34,12 +34,6 @@
   height: auto;
 }
 
-/* .img-container {
-  display: inline-block;
-  flex-direction: column;
-  align-items: center;
-  width: fit-content;
-} */
 .booking-details-img-container {
   display: inline-block;
   width: 30%;
@@ -86,7 +80,6 @@
   width: 65%;
   padding: 10px;
 }
-
 
 #feedback-card {
   width: 90%;

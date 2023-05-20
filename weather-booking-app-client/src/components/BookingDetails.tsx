@@ -35,29 +35,34 @@ const BookingDetails: React.FC<IWeatherCardList> = (props) => {
         <IonToolbar className="booking-details-toolbar">
           <IonButton
             onClick={() => props.closeBookingDetail(null)}
-            style={{ display: "inline-block" }}
+            className="booking-details-back-button"
           >
             <IonIcon icon={chevronBackOutline} slot="icon-only"></IonIcon>
           </IonButton>
-          <IonTitle style={{ display: "inline-block" }}>
-            Booking Details
-          </IonTitle>
         </IonToolbar>
       </IonHeader>
 
-      {/* <h1 className="booking-details-title">Booking Details</h1> */}
+      <h1 className="booking-details-title">Booking Details</h1>
       <IonCard className="booking-details-card">
-        <IonCardHeader>
-            <IonCardTitle>{props.data && props.data.location}</IonCardTitle>
-          <IonCardSubtitle>{props.data && props.data.date}</IonCardSubtitle>
-        </IonCardHeader>
         <IonCardContent>
-          <p>{props.data && props.data.weather}</p>
-          <div className="img-container">
-            <IonImg className="booking-details-img" src={sunImage} />
+          <div className="booking-details-content">
+            <div className="booking-details-details">
+              <IonCardTitle className="booking-details-details__title">
+                {props.data.location}
+              </IonCardTitle>
+              <IonCardSubtitle className="booking-details-details__subtitle">
+                {props.data.date}
+              </IonCardSubtitle>
+              <p className="booking-details-details__weather">
+                {props.data.weather}
+              </p>
+            </div>
+            <div className="booking-details-img-container">
+              <IonImg className="booking-details-img" src={sunImage} />
+            </div>
           </div>
           <IonCard className="enjoy-weather-card">
-            <IonTitle style={{ fontSize: "14px", fontWeight: "bolder" }}>
+            <IonTitle className="enjoy-weather-content">
               Enjoy your weather!
             </IonTitle>
           </IonCard>
