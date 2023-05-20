@@ -6,7 +6,7 @@
 }
 
 .search-bar {
-    width: 80vw;
+    width: 81vw;
 }
 
 .button {
@@ -78,8 +78,6 @@
 }
 
 .weather-choose-option-focus {
-    /* background: rgb(30,144,255); */
-    /* background: linear-gradient(180deg, rgba(30,144,255,1) 0%, rgba(2,0,36,1) 100%); */
     background: rgba(220, 220, 220, 0.5);
 }
 
@@ -135,6 +133,20 @@
     font-weight: 600;
 }
 
+.selector-container {
+    width: 78vw;
+}
+
+ion-select {
+    background: rgba(100, 100, 100, 0.15);
+    padding: 0px 7px;
+    height: 1.5vh;
+    border-radius: 4px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
 ion-content {
     --background: transparent;
     --background: linear-gradient(
@@ -143,8 +155,6 @@ ion-content {
         rgba(118, 115, 220, 0.4)
             100%
     ), #FFFFFF;
-    /* --padding-top: 100px; */
-    /* --offset-top: 0; */
 }
 
 ion-range {
@@ -159,6 +169,5 @@ ion-range {
 }
 
 .range-tick{
-    background: #000
+    background: #FFF
 }
-    

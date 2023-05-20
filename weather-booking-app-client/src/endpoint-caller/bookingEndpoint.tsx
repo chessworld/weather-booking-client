@@ -16,7 +16,7 @@ class BookingEndpoint {
         state: string,
         postcode: string,
         country: string
-    }[] | undefined;
+    }[];
 
     static BASE_URL: string = "http://127.0.0.1:8000/weather_api";
 
@@ -74,7 +74,11 @@ class BookingEndpoint {
     }
 
     getLocationSuburbs() : string[] {
-        return this.location?.map((location) => location.suburb);
+        return this.location.map((location) => location.suburb);
+    }
+
+    getLocation(): {suburb: string, state: string, postcode: string, country: string}[] {
+        return this.location;
     }
 
 

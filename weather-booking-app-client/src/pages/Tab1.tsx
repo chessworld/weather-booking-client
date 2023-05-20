@@ -1,7 +1,7 @@
 import React from 'react';
 import WeatherHud from '../components/BookingPage/WeatherHud';
 import { Component } from 'react';
-import { IonRange, IonPage, IonItem, IonLabel, IonList, IonSearchbar } from '@ionic/react';
+import { IonRange, IonPage, IonItem, IonLabel, IonList, IonSearchbar, IonSelect, IonSelectOption } from '@ionic/react';
 import Background from '../components/Screen/Background';
 import './Tab1.css';
 
@@ -16,10 +16,14 @@ interface AbcState {
     [category: string]: any;
     date: string;
     location: string;
+    temperatureOptions: { [catagory: string]: any };
     weatherOptions: { name: string, image?: any }[];
-    selectedWeatherOption: number
-    showLocationSuggestions: boolean;
-    locationsuggestions: string[];
+    selectedWeatherOption: number;
+    selectedWindOption: number;
+    selectedTemperatureOption: number;
+    showSuggestions?: boolean;
+    locationSuggestions: string[];
+    timePeriod: string;
 }
 
 interface AbcProps {
@@ -58,7 +62,8 @@ class Tab1 extends Component<AbcProps, AbcState> {
             selectedWindOption: 0,
             selectedTemperatureOption: 0,
             showSuggestions: false,
-            locationSuggestions: []
+            locationSuggestions: [],
+            timePeriod: ''
         };
 
         this.getWindJson = this.getWindJson.bind(this);
@@ -72,7 +77,7 @@ class Tab1 extends Component<AbcProps, AbcState> {
                 console.log(this.bookingEndpoint && this.bookingEndpoint.getLocationSuburbs());
                 this.setState({
                     ...this.state,
-                    locationSuggestions: this.bookingEndpoint && this.bookingEndpoint.getLocationSuburbs()
+                    locationSuggestions: this.bookingEndpoint?.getLocationSuburbs() ?? []
                 });
             }
         )
@@ -144,47 +149,79 @@ class Tab1 extends Component<AbcProps, AbcState> {
                 <Background>
 
                     <div className="button-container-vertical">
-                        {/* <div className="button">
-                            {this.state.date}
-                        </div> */}
-
                         <br />
-                            <IonSearchbar
-                                className="search-bar"
-                                placeholder='Search Location'
-                                onIonChange={e => this.setState({
-                                    ...this.state,
-                                    location: e.detail.value!
-                                })}
+                        <IonSearchbar
+                            className="search-bar"
+                            placeholder='Search Location'
+                            onIonChange={e => this.setState({
+                                ...this.state,
+                                location: e.detail.value!
+                            })}
 
-                                onFocus={() => this.setState({
-                                    ...this.state,
-                                    showSuggestions: true
-                                })}
+                            value={this.state.location}
 
-                                onBlur={() => this.setState({
-                                    ...this.state,
-                                    showSuggestions: false
-                                })}
-                            />
+                            onFocus={() => this.setState({
+                                ...this.state,
+                                showSuggestions: true
+                            })}
+
+                            onBlur={() => this.setState({
+                                ...this.state,
+                                showSuggestions: false
+                            })}
+                        />
+
 
                         {this.state.showSuggestions && (
-                            <IonList style={{ position: 'absolute', width: '90%', zIndex: 1, top: "9vh", background: "transparent" }}>
+                            <IonList style={{
+                                position: 'absolute',
+                                width: '90%',
+                                zIndex: 10,
+                                top: "10vh",
+                                background: "transparent"
+                            }}>
+
                                 {this.state.locationSuggestions
-                                    .filter((suggestion: string) => suggestion.toLowerCase().includes(this.state.location.toLowerCase()))
+                                    .filter((suggestion: string) => {
+                                        return suggestion.toLowerCase()
+                                            .includes(this.state.location.toLowerCase())
+                                    })
                                     .map((suggestion: string, i: number) => (
-                                        <IonItem key={i} button>
+                                        <IonItem key={i} button onTouchEnd={() => {
+                                            this.setState({
+                                                ...this.state,
+                                                location: suggestion,
+                                            });
+                                            console.log(this.state.location);
+                                        }}>
                                             <IonLabel>
                                                 {suggestion}
                                             </IonLabel>
                                         </IonItem>
                                     ))}
+
                             </IonList>
                         )}
 
-                        {/* onIonChange={e => setInputValue(e.detail.value!)}
-                            onFocus={() => setShowSuggestions(true)}
-                            onBlur={() => setTimeout(() => setShowSuggestions(false), 200)} */}
+                        {/* TODO make this use backend enum */}
+                        <div className="selector-container">
+                            <IonSelect
+                                label="Time Period"
+                                className="selector"
+                                aria-label="time-period"
+                                placeholder="Select Time Period"
+                                onIonChange={e => this.setState({
+                                    ...this.state,
+                                    timePeriod: e.detail.value
+                                })}
+                            >
+                                <IonSelectOption value="Morning">Morning</IonSelectOption>
+                                <IonSelectOption value="Afternoon">Afternoon</IonSelectOption>
+                                <IonSelectOption value="Evening">Evening</IonSelectOption>
+                                <IonSelectOption value="Night">Night</IonSelectOption>
+                            </IonSelect>
+                        </div>
+
                     </div>
 
                     <div className="button-container">
@@ -262,11 +299,13 @@ class Tab1 extends Component<AbcProps, AbcState> {
                         }}>
 
                         <div onTouchEnd={
-                            () => this.bookingEndpoint.createBooking(
-                                2,
-                                'Morning',
-                                "06:00:00",
-                                "12:00:00",
+                            () => this.bookingEndpoint?.createBooking(
+                                this.bookingEndpoint?.getLocationSuburbs().findIndex((obj: any) => {
+                                    return obj.toLowerCase() === this.state.location.toLowerCase();
+                                }) + 1,
+                                this.state.timePeriod,
+                                "06:00:00", //TODO backend
+                                "12:00:00", //TODO backend
                                 this.getWeatherJson(),
                                 this.getTemperatureJson(),
                                 this.getWindJson()
