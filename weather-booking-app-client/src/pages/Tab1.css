@@ -137,9 +137,8 @@ ion-content {
 }
 
 ion-range {
-    /* --bar-background: #E6E0F6; */
     --bar-background: rgba(230,224,246, .5);
-    --bar-background-active: #000;
+    --bar-background-active: #1e1e1e;
     --bar-height: 8px;
     --bar-border-radius: 8px;
     --knob-background: #FFF;
@@ -147,3 +146,8 @@ ion-range {
     --pin-background: #eee;
     --pin-color: #fff;
 }
+
+.range-tick{
+    background: #000
+}
+    

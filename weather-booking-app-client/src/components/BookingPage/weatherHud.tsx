@@ -1,12 +1,7 @@
 import { Component } from 'react';
 import './WeatherHud.css';
 
-import Sunny from '../../assets/Icons/Sun.png';
-import Rain from '../../assets/Icons/Rain.png';
-import Cloud from '../../assets/Icons/Cloud.png';
-
 interface AbcState {
-    weather: string,
     windCondition: string,
     temperatureRange: [number, number],
     temperatureUnit: string,
@@ -22,11 +17,9 @@ class WeatherHud extends Component<AbcProps, AbcState> {
     constructor(props: AbcProps) {
         super(props)
         this.state = {
-            weather: 'Sunny',
             windCondition: 'No Wind',
             temperatureRange: [20, 25],
             temperatureUnit: 'C',
-            /* hudContext: document.getElementById("weather-hud") && document.getElementById("weather-hud").getContext("2d"), */
         }
     }
 
@@ -111,7 +104,6 @@ class WeatherHud extends Component<AbcProps, AbcState> {
     }
 
     componentDidUpdate(prevProps: Readonly<{}>, prevState: Readonly<{}>, snapshot?: any): void {
-        /* console.log(this.props.weatherData.weatherOptions[this.props.weatherData.selectedWeatherOption].name) */
         if (prevProps !== this.props) {
             this.drawHud(this.props.weatherData.weatherOptions[this.props.weatherData.selectedWeatherOption].name);
         }
@@ -123,8 +115,6 @@ class WeatherHud extends Component<AbcProps, AbcState> {
                 <div className="hud-container">
                     <div className="hud-contents">
                         <h2 className="hud-temperature-text" >
-
-                            {/* {this.state.temperatureRange[0]}° to { this.state.temperatureRange[1] }°C */}
 
                             {
                                 this.props.weatherData.temperatureOptions[this.props.weatherData.selectedTemperatureOption]
@@ -147,9 +137,9 @@ class WeatherHud extends Component<AbcProps, AbcState> {
                         <div className="weather-hud-grid">
                             <div className="item1">
                                 {
-                                    this.state.weather == 'Rainy' ?
-                                        'Showers' :
-                                        this.state.weather
+                                    this.props.weatherData.weatherOptions[this.props.weatherData.selectedWeatherOption].name == 'Rainy'
+                                        ? 'Rain'
+                                        : this.props.weatherData.weatherOptions[this.props.weatherData.selectedWeatherOption].name
                                 }
                             </div>
 
@@ -163,7 +153,7 @@ class WeatherHud extends Component<AbcProps, AbcState> {
                                 <img src={
                                     this.props.weatherData.weatherOptions[this.props.weatherData.selectedWeatherOption].image
                                 }
-                                    style={{ width: "28vw" }}
+                                    style={{ width: "30vw" }}
                                 />
                             </div>
 

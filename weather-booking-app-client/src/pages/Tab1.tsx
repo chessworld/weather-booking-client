@@ -5,13 +5,13 @@ import { IonRange, IonPage } from '@ionic/react';
 import Background from '../components/Screen/Background';
 import './Tab1.css';
 
+import BookingEndpoint from "../endpoint-caller/bookingEndpoint";
+
 import Sunny from '../assets/Icons/slight_touch_happyday.png';
 import Rain from '../assets/Icons/rainy.png';
 import Cloud from '../assets/Icons/cloudy.png';
 import Windy from '../assets/Icons/sparkle_storm.png';
 import Stormy from '../assets/Icons/thnderstorm.png';
-
-import BookingEndpoint from '../endpoint-caller/bookingEndpoint';
 
 interface AbcState {
     [category: string]: any;
@@ -102,11 +102,14 @@ class Tab1 extends Component<AbcProps, AbcState> {
                                         }}
                                     >
                                         <div
-                                            className={`weather-choose-option ${i == this.state.selectedWeatherOption && 'weather-choose-option weather-choose-option-focus'}`}
+                                            className={`weather-choose-option ${i == this.state.selectedWeatherOption
+                                                && 'weather-choose-option weather-choose-option-focus'}`}
                                         >
                                             <img src={option.image} style={{ width: "10vw" }} />
                                         </div>
-                                        <span className="weather-choose-text">{option.name}</span>
+                                        <span className="weather-choose-text">
+                                            {option.name}
+                                        </span>
                                     </div>
                                 )
                             })
@@ -115,8 +118,9 @@ class Tab1 extends Component<AbcProps, AbcState> {
                     </div>
 
                     <div className="slider-container">
-                        <span className="weather-slider-text">Temperature</span>
-
+                        <span className="weather-slider-text">
+                            Temperature
+                        </span>
                         <IonRange
                             className="weather-slider"
                             ticks={true}
@@ -127,7 +131,10 @@ class Tab1 extends Component<AbcProps, AbcState> {
                             }
                             onIonChange={(e: any) => {
                                 this.setState(prev => {
-                                    return { ...prev, selectedTemperatureOption: e.detail.value };
+                                    return {
+                                        ...prev,
+                                        selectedTemperatureOption: e.detail.value
+                                    };
                                 })
                             }}
                         ></IonRange>
@@ -152,12 +159,17 @@ class Tab1 extends Component<AbcProps, AbcState> {
 
                     <WeatherHud weatherData={this.state} />
 
-                    <div onTouchEnd={this.bookingEndpoint.createBooking} className="button-container" style={{ marginBottom: 'vh', marginTop: '10vh' }}>
-                        <div className="book-button">
+                    <div
+                        className="button-container"
+                        style={{
+                            marginBottom: 'vh',
+                            marginTop: '10vh'
+                        }}>
+
+                        <div onTouchEnd={this.bookingEndpoint.createBooking} className="book-button">
                             Book
                         </div>
                     </div>
-
                 </Background>
             </IonPage >
         );

@@ -13,7 +13,7 @@ class Background extends React.Component<AbcProps, {}> {
 
     render() {
         return (
-            <IonContent onIonScroll={alert} className="ion-no-padding">
+            <IonContent className="ion-no-padding">
                 {
                     this.props.children
                 }

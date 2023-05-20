@@ -28,7 +28,11 @@
 
 .sunny {
     background: rgb(34,193,195);
-    background: linear-gradient(0deg, rgba(34,193,195,1) 0%, rgba(253,187,45,1) 100%);
+    background: linear-gradient(
+        0deg,
+        rgba(34,193,195,1) 0%,
+        rgba(253,187,45,1) 100%
+    );
 }
 
 .hud-contents {
@@ -104,7 +108,13 @@
 }
 
 .hud-temperature-text {
-    background: linear-gradient(250.02deg, rgba(255, 255, 255, 0.91) 8.16%, rgba(255, 255, 255, 0.54) 37.22%, #FFFFFF 51.09%, rgba(255, 255, 255, 0.46) 90.73%);
+    background: linear-gradient(
+        250.02deg,
+        rgba(255, 255, 255, 0.91) 8.16%,
+        rgba(255, 255, 255, 0.54) 37.22%,
+        #FFFFFF 51.09%,
+        rgba(255, 255, 255, 0.46) 90.73%
+    );
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
     background-clip: text;
