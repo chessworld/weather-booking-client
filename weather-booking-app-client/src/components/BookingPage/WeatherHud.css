@@ -60,7 +60,7 @@
 
 .item1 {
     text-align: center;
-    font-size: 1.7em;
+    font-size: 1.4em;
     inline-height: 1.7em;
     color: #FFF;
     grid-column-start: 4;
@@ -73,9 +73,9 @@
 .item2 {
     text-align: center;
     letter-spacing: 0.02em;
-    font-size: 1.4em;
+    font-size: 1.2em;
     inline-height: 1.4em;
-    width: 4em;
+    width: 5em;
     color: #FFF;
     grid-column-start: 4;
     grid-column-end: 6;
@@ -94,7 +94,7 @@
 }
 
 .hud-icon {
-    transform: scale(1.5);
+    transform: scale(2);
     object-fit: cover; /* optional: this prevents distortion */
 }
 

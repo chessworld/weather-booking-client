@@ -68,12 +68,7 @@
 
 .weather-choose-option {
     display: flex;
-    background: rgba(150, 150, 150, 0.75);
-    background: linear-gradient(
-        0deg,
-        rgba(136,136,136,.45) 31%,
-        rgba(219,219,219,.45) 100%
-    );
+    background: rgba(100, 100, 100, 0.50);
     backdrop-filter: blur(2px);
     justify-content: center;
     align-items: center;

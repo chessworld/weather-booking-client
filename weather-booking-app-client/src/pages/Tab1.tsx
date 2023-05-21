@@ -267,7 +267,7 @@ class Tab1 extends Component<AbcProps, AbcState> {
                                             className={`weather-choose-option ${i == this.state.selectedWeatherOption
                                                 && 'weather-choose-option weather-choose-option-focus'}`}
                                         >
-                                            <img src={option.image} style={{ width: "10vw" }} />
+                                            <img src={option.image} style={{ width: "15vw" }} />
                                         </div>
                                         <span className="weather-choose-text">
                                             {option.name}

@@ -63,6 +63,22 @@ class BookingEndpoint {
         }
     };
 
+    static async getBookingList(): Promise<any> {
+        const bookingsRoute = "/bookings"
+        const url = BookingEndpoint.BASE_URL + bookingsRoute;
+
+        const options = {
+            method: 'GET',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+        };
+
+        return fetch(url, options)
+            .then(response => response.json())
+            .catch(error => console.error('Error:', error));
+    }
+
     static getCurrentDate(): string {
         var today = new Date();
         var yyyy = today.getFullYear();
@@ -73,13 +89,14 @@ class BookingEndpoint {
         return formattedDate
     }
 
-    getLocationSuburbs() : string[] {
+    getLocationSuburbs(): string[] {
         return this.location.map((location) => location.suburb);
     }
 
-    getLocation(): {suburb: string, state: string, postcode: string, country: string}[] {
+    getLocation(): { suburb: string, state: string, postcode: string, country: string }[] {
         return this.location;
     }
+
 
 
     createBooking = (

@@ -21,6 +21,7 @@ import {
   arrowForwardOutline,
 } from "ionicons/icons";
 import cloudImage from "../assets/Icons/cloudy.png";
+import sunImage from "../assets/Icons/slight_touch_happyday.png";
 import { useState } from "react";
 
 type map = {
@@ -73,13 +74,13 @@ const BookingDetailsCompleted: React.FC<IWeatherCardList> = (props) => {
               </p>
             </div>
             <div className="booking-details-img-container">
-              <IonImg className="booking-details-img" src={cloudImage} />
+              <IonImg className="booking-details-img" src={sunImage} />
             </div>
           </div>
           <IonCard className="enjoy-weather-card">
-            <IonTitle className="enjoy-weather-content">
+            <div className="enjoy-weather-content">
               Enjoy your weather!
-            </IonTitle>
+            </div>
           </IonCard>
 
           <IonCard className="share-card">

@@ -9,62 +9,108 @@ import arrowRight from "../assets/Icons/arrow-right.png";
 import React from "react";
 import BookingDetails from "./BookingDetails";
 
+import BookingEndpoint from "../endpoint-caller/bookingEndpoint";
+
 type map = {
-  id: number;
-  location: string;
-  date: string;
-  weather: string;
+    id: number;
+    location: string;
+    date: string;
+    weather: string;
 };
 
 interface IWeatherCardList {
-  openBookingDetail: (booking: any) => void;
-  data: map[];
-  upcoming: boolean;
+    openBookingDetail: (booking: any) => void;
+    data: map[];
+    upcoming: boolean;
 }
 
 const WeatherCardList: React.FC<IWeatherCardList> = (props) => {
-  // TODO place all card list and card info in useState and update state with API calls.
-  // TODO could try https://builtin.com/software-engineering-perspectives/use-query-react useQuery to call API.
+    // TODO place all card list and card info in useState and update state with API calls.
+    // TODO could try https://builtin.com/software-engineering-perspectives/use-query-react useQuery to call API.
 
-  return (
-    <IonList className="weather-list" lines="none">
-      <div className="weather-list-container">
-        {props.data.map(({ id, location, date, weather }: map) => (
-          <IonItem
-            key={id}
-            onClick={() => props.openBookingDetail(id)}
-            className="weather-booking-item"
-          >
-            <IonCard className="weather-booking-card">
-              <div className="container-root">
-                <div className="container-group-right">
-                  <div className="imageContainer">
-                    <IonImg
-                      className="card-weather-image"
-                      src={
-                        weather.split(",")[0].toLowerCase() === "sunny"
-                          ? sunImage
-                          : weather.split(",")[0].toLowerCase() === "rainy"
-                          ? rainImage
-                          : cloudImage
-                      }
-                    />
-                  </div>
-                  <div className="container-group-text">
-                    <h1 className="card-title">{location}</h1>
-                    <p className="card-subtitle">{date}</p>
-                    <p className="card-text">{weather}</p>
-                  </div>
-                </div>
+    const [locations, setLocations] = useState<any>([]);
 
-                <IonImg className="card-arrow-image" src={arrowRight} />
-              </div>
-            </IonCard>
-          </IonItem>
-        ))}
-      </div>
-    </IonList>
-  );
+    useEffect(() => {
+        BookingEndpoint.getLocation().then(response => {
+            return response.json();
+        }).then(data => {
+            setLocations(data);
+            console.log(data);
+        })
+    }, []);
+
+
+    const timeToDisplay = (time: string) => {
+        const formattedDate = new Date('2023-05-20').toLocaleDateString('en-US', { weekday: 'long', day: '2-digit', month: 'long', year: 'numeric' });
+        return formattedDate;
+    };
+
+    return (
+        <IonList className="weather-list" lines="none">
+            <div className="weather-list-container">
+                {
+                    props.data && (props.data.map((item: any, id: number) => (
+                        <IonItem
+                            key={id}
+                            onClick={() => props.openBookingDetail(id + 1)}
+                            className="weather-booking-item"
+                        >
+                            <IonCard className="weather-booking-card">
+                                <div className="container-root">
+                                    <div className="container-group-right">
+                                        <div className="imageContainer">
+                                            <IonImg
+                                                className="card-weather-image"
+                                                src={
+                                                    (
+                                                        item.weather_option.filter((option: any) => {
+                                                            return option.option_type === "Weather"
+                                                        })[0] ? (item.weather_option.filter((option: any) => {
+                                                            return option.option_type === "Weather"
+                                                        })[0].option_name ?? "None") : "None"
+                                                    ).toLowerCase() === "sunny"
+                                                        ? sunImage
+                                                        : (
+                                                            item.weather_option.filter((option: any) => {
+                                                                return option.option_type === "Weather"
+                                                            })[0] ? (item.weather_option.filter((option: any) => {
+                                                                return option.option_type === "Weather"
+                                                            })[0].option_name ?? "None") : "None"
+                                                        ).toLowerCase() === "rainy"
+                                                            ? rainImage
+                                                            : cloudImage
+                                                }
+                                            />
+                                        </div>
+                                        <div className="container-group-text">
+                                            <h1 className="card-title">
+                                                {
+                                                    locations[item.booking[0].location - 1] && locations[item.booking[0].location - 1].suburb
+                                                }
+                                            </h1>
+                                            <p className="card-subtitle">
+                                                {
+                                                    timeToDisplay(item.booking[0].day_time.date)
+                                                }
+                                            </p>
+                                            <p className="card-text">{
+                                                item.weather_option.filter((option: any) => {
+                                                    return option.option_type === "Weather"
+                                                })[0] && (item.weather_option.filter((option: any) => {
+                                                    return option.option_type === "Weather"
+                                                })[0].option_name ?? "None")
+                                            }</p>
+                                        </div>
+                                    </div>
+
+                                    <IonImg className="card-arrow-image" src={arrowRight} />
+                                </div>
+                            </IonCard>
+                        </IonItem>
+                    )))}
+            </div>
+        </IonList>
+    );
 };
 
 export default WeatherCardList;
