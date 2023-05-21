@@ -61,12 +61,12 @@
 .item1 {
     text-align: center;
     font-size: 1.7em;
+    inline-height: 1.7em;
     color: #FFF;
     grid-column-start: 4;
     letter-spacing: 0.02em;
     grid-column-end: 6;
     text-align: center;
-    /* border: 1px solid #FFF; */
     color: #E0E0E0;
 }
 
@@ -74,23 +74,28 @@
     text-align: center;
     letter-spacing: 0.02em;
     font-size: 1.4em;
+    inline-height: 1.4em;
+    width: 4em;
     color: #FFF;
     grid-column-start: 4;
     grid-column-end: 6;
     text-align: center;
-    /* border: 1px solid #FFF; */
     color: #E0E0E0;
 }
 
 .item3 {
     /* margin-top: -7vh; */
-    font-size: 2rem;
-    grid-row-start: 2;
-    grid-row-end: 5;
+    grid-row-start: 4;
+    grid-row-end: 6;
     grid-column-start: 7;
     grid-column-end: 9;
     z-index: 3;
     /* border: 1px solid #FFF; */
+}
+
+.hud-icon {
+    transform: scale(1.5);
+    object-fit: cover; /* optional: this prevents distortion */
 }
 
 .item4 {

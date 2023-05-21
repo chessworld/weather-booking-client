@@ -153,7 +153,7 @@ class WeatherHud extends Component<AbcProps, AbcState> {
                                 <img src={
                                     this.props.weatherData.weatherOptions[this.props.weatherData.selectedWeatherOption].image
                                 }
-                                    style={{ width: "30vw" }}
+                                     className="hud-icon"
                                 />
                             </div>
 

@@ -60,17 +60,17 @@ const App: React.FC = () => {
                         <Route exact path="/onboardingPage">
                             <OnboardingPage />
                         </Route>
-                        <Route path="/booking-details" component={BookingDetails}/>
+                        <Route path="/booking-details" component={BookingDetails} />
                     </IonRouterOutlet>
                     <IonTabBar slot="bottom" id='navbar'>
                         <IonTabButton tab="tab2" href="/tab2" className='nav-bar-button'>
                             <IonIcon aria-hidden="true" icon={book} className='nav-bar-icon' />
                         </IonTabButton>
                         <IonTabButton tab="tab1" href="/tab1" className='nav-bar-button'>
-                            <IonIcon aria-hidden="true" icon={addCircleSharp} className='nav-bar-middle-icon'/>
+                            <IonIcon aria-hidden="true" icon={addCircleSharp} className='nav-bar-middle-icon' />
                         </IonTabButton>
                         <IonTabButton tab="tab3" href="/tab3" className='nav-bar-button'>
-                            <IonIcon aria-hidden="true" icon={person} className='nav-bar-icon'/>
+                            <IonIcon aria-hidden="true" icon={person} className='nav-bar-icon' />
                         </IonTabButton>
                     </IonTabBar>
                 </IonTabs>

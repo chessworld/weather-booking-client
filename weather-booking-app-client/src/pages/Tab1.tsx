@@ -1,7 +1,7 @@
 import React from 'react';
 import WeatherHud from '../components/BookingPage/WeatherHud';
 import { Component } from 'react';
-import { IonRange, IonPage, IonItem, IonLabel, IonList, IonSearchbar, IonSelect, IonSelectOption } from '@ionic/react';
+import { IonToast, IonRange, IonPage, IonItem, IonLabel, IonList, IonSearchbar, IonSelect, IonSelectOption } from '@ionic/react';
 import Background from '../components/Screen/Background';
 import './Tab1.css';
 
@@ -24,6 +24,8 @@ interface AbcState {
     showSuggestions?: boolean;
     locationSuggestions: string[];
     timePeriod: string;
+    showToast: boolean;
+    toastMessage: string;
 }
 
 interface AbcProps {
@@ -63,10 +65,14 @@ class Tab1 extends Component<AbcProps, AbcState> {
             selectedTemperatureOption: 0,
             showSuggestions: false,
             locationSuggestions: [],
-            timePeriod: ''
+            timePeriod: '',
+            showToast: false,
+            toastMessage: ''
         };
 
+        // Bindings
         this.getWindJson = this.getWindJson.bind(this);
+        this.confirmBooking = this.confirmBooking.bind(this);
     }
 
     async componentDidMount(): Promise<any> {
@@ -142,12 +148,39 @@ class Tab1 extends Component<AbcProps, AbcState> {
         });
     }
 
+    confirmBooking(): void {
+        this.bookingEndpoint?.createBooking(
+            this.bookingEndpoint?.getLocationSuburbs().findIndex((obj: any) => {
+                return obj.toLowerCase() === this.state.location.toLowerCase();
+            }) + 1,
+            this.state.timePeriod,
+            "06:00:00", //TODO backend
+            "12:00:00", //TODO backend
+            this.getWeatherJson(),
+            this.getTemperatureJson(),
+            this.getWindJson()
+        );
+
+        /* bookingFailureMessage: 'There has been a problem with your booking. Please try again' */
+
+        this.setState({
+            ...this.state,
+            showToast: true,
+            toastMessage: 'Booking has been successfully created'
+        });
+    }
+
     render(): React.ReactNode {
         return (
             <IonPage>
                 {/* <IonContent fullscreen className="ion-no-padding"> */}
+                <IonToast
+                    isOpen={this.state.showToast}
+                    onDidDismiss={() => this.setState({ showToast: false })}
+                    message={this.state.toastMessage}
+                    duration={1000}
+                />
                 <Background>
-
                     <div className="button-container-vertical">
                         <br />
                         <IonSearchbar
@@ -170,8 +203,6 @@ class Tab1 extends Component<AbcProps, AbcState> {
                                 showSuggestions: false
                             })}
                         />
-
-
                         {this.state.showSuggestions && (
                             <IonList style={{
                                 position: 'absolute',
@@ -180,7 +211,6 @@ class Tab1 extends Component<AbcProps, AbcState> {
                                 top: "10vh",
                                 background: "transparent"
                             }}>
-
                                 {this.state.locationSuggestions
                                     .filter((suggestion: string) => {
                                         return suggestion.toLowerCase()
@@ -298,19 +328,7 @@ class Tab1 extends Component<AbcProps, AbcState> {
                             marginTop: '10vh'
                         }}>
 
-                        <div onTouchEnd={
-                            () => this.bookingEndpoint?.createBooking(
-                                this.bookingEndpoint?.getLocationSuburbs().findIndex((obj: any) => {
-                                    return obj.toLowerCase() === this.state.location.toLowerCase();
-                                }) + 1,
-                                this.state.timePeriod,
-                                "06:00:00", //TODO backend
-                                "12:00:00", //TODO backend
-                                this.getWeatherJson(),
-                                this.getTemperatureJson(),
-                                this.getWindJson()
-                            )
-                        } className="book-button">
+                        <div onTouchEnd={this.confirmBooking} className="book-button">
                             Book
                         </div>
                     </div>
