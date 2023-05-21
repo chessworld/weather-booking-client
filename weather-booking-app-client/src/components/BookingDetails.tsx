@@ -13,7 +13,7 @@ import {
   IonTitle,
   IonToolbar,
 } from "@ionic/react";
-import { chevronBackOutline } from "ionicons/icons";
+import { chevronBackOutline, arrowForwardOutline } from "ionicons/icons";
 import sunImage from "../assets/Icons/slight_touch_happyday.png";
 
 type map = {
@@ -31,16 +31,14 @@ interface IWeatherCardList {
 const BookingDetails: React.FC<IWeatherCardList> = (props) => {
   return (
     <div>
-      <IonHeader>
-        <IonToolbar className="booking-details-toolbar">
-          <IonButton
-            onClick={() => props.closeBookingDetail(null)}
-            className="booking-details-back-button"
-          >
-            <IonIcon icon={chevronBackOutline} slot="icon-only"></IonIcon>
-          </IonButton>
-        </IonToolbar>
-      </IonHeader>
+      <div className="booking-details-toolbar">
+        <IonButton
+          onClick={() => props.closeBookingDetail(null)}
+          className="booking-details-back-button invisible-button"
+        >
+          <IonIcon icon={chevronBackOutline} slot="icon-only"></IonIcon>
+        </IonButton>
+      </div>
 
       <h1 className="booking-details-title">Booking Details</h1>
       <IonCard className="booking-details-card">
@@ -68,17 +66,12 @@ const BookingDetails: React.FC<IWeatherCardList> = (props) => {
           </IonCard>
 
           <IonCard className="share-card">
-            <IonTitle
-              style={{
-                display: "inline",
-                fontSize: "14px",
-                fontWeight: "bolder",
-              }}
-            >
+            <div className="share-card__title">
               Share your booking with friends
-            </IonTitle>
+            </div>
             <IonButton className="share-button" href="https://ko-fi.com/">
-              Share Now!
+              Share Now
+              <IonIcon icon={arrowForwardOutline}></IonIcon>
             </IonButton>
           </IonCard>
         </IonCardContent>

@@ -29,7 +29,7 @@ interface AbcState {
 }
 
 interface AbcProps {
-    [category: string]: any;
+  [category: string]: any;
 }
 
 class Tab1 extends Component<AbcProps, AbcState> {
