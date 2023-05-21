@@ -86,6 +86,7 @@
   margin-top: 2rem;
   width: 65%;
   padding: 10px;
+  box-shadow: none;
 }
 
 .enjoy-weather-content {
@@ -95,7 +96,7 @@
 }
 
 .share-card {
-  text-align: center;
+  text-align: left;
   border-radius: 10px;
   width: 75vw;
   color: black;
@@ -104,25 +105,27 @@
   background-size: cover;
   position: relative;
   background-position: left 90% bottom 50%;
+  overflow: visible;
+  white-space: normal;
+  padding: 0.5rem 0.8rem;
+}
+
+.share-card__title {
+  display: inline-block;
+  font-size: 1rem;
+  font-weight: bolder;
+  width: 70%;
+  padding-left: 0;
 }
 
 .share-button {
   position: relative;
-  bottom: 0px;
-  left: 25%;
+  display: inline-block;
   text-decoration: none;
   margin-bottom: 0.5rem;
-}
-
-.coffee-card {
-  text-align: center;
-  border-radius: 10px;
-  width: 75vw;
+  border-radius: 20px;
+  font-weight: bolder;
   color: black;
-  margin-top: 2rem;
-  background-image: url("../assets/coffee_banner.png");
-  background-size: cover;
-  position: relative;
-  background-position: left 70% bottom 50%;
-  background-color: #addec9;
+  --background: white;
+  --border-radius: 20px;
 }

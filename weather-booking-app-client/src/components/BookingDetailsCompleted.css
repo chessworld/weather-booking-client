@@ -19,6 +19,7 @@
   width: 90%;
   text-align: left;
   padding: 8px 0;
+  margin-top: 0;
 }
 
 #feedback-content {
@@ -31,4 +32,18 @@
   vertical-align: middle;
   padding: 0;
   padding-left: 0.7rem;
+}
+
+.coffee-card {
+  text-align: left;
+  border-radius: 10px;
+  width: 75vw;
+  color: black;
+  margin-top: 2rem;
+  background-image: url("../assets/coffee_banner.png");
+  background-size: cover;
+  position: relative;
+  background-position: left 70% bottom 50%;
+  background-color: #addec9;
+  padding: 0.5rem 0.8rem;
 }

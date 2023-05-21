@@ -27,7 +27,7 @@ const WeatherCardList: React.FC<IWeatherCardList> = (props) => {
   // TODO could try https://builtin.com/software-engineering-perspectives/use-query-react useQuery to call API.
 
   return (
-    <IonList className="weather-list">
+    <IonList className="weather-list" lines="none">
       <div className="weather-list-container">
         {props.data.map(({ id, location, date, weather }: map) => (
           <IonItem

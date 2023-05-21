@@ -82,15 +82,9 @@ const BookingDetailsCompleted: React.FC<IWeatherCardList> = (props) => {
           </IonCard>
 
           <IonCard className="share-card">
-            <IonTitle
-              style={{
-                display: "inline",
-                fontSize: "14px",
-                fontWeight: "bolder",
-              }}
-            >
+            <div className="share-card__title">
               Share your booking with friends
-            </IonTitle>
+            </div>
             <IonButton className="share-button" href="https://ko-fi.com/">
               Share Now
             </IonButton>
@@ -128,15 +122,7 @@ const BookingDetailsCompleted: React.FC<IWeatherCardList> = (props) => {
           </IonCard>
 
           <IonCard className="coffee-card">
-            <IonTitle
-              style={{
-                display: "inline",
-                fontSize: "14px",
-                fontWeight: "bolder",
-              }}
-            >
-              Buy us a coffee
-            </IonTitle>
+            <div className="share-card__title">Buy us a coffee</div>
             <IonButton className="share-button" href="https://ko-fi.com/">
               Donate
             </IonButton>
