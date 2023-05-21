@@ -18,6 +18,7 @@ import {
   chevronBackOutline,
   thumbsUpSharp,
   thumbsDownSharp,
+  arrowForwardOutline,
 } from "ionicons/icons";
 import cloudImage from "../assets/Icons/cloudy.png";
 import { useState } from "react";
@@ -87,6 +88,7 @@ const BookingDetailsCompleted: React.FC<IWeatherCardList> = (props) => {
             </div>
             <IonButton className="share-button" href="https://ko-fi.com/">
               Share Now
+              <IonIcon icon={arrowForwardOutline}></IonIcon>
             </IonButton>
           </IonCard>
         </IonCardContent>
@@ -125,6 +127,7 @@ const BookingDetailsCompleted: React.FC<IWeatherCardList> = (props) => {
             <div className="share-card__title">Buy us a coffee</div>
             <IonButton className="share-button" href="https://ko-fi.com/">
               Donate
+              <IonIcon icon={arrowForwardOutline}></IonIcon>
             </IonButton>
           </IonCard>
         </IonCardContent>

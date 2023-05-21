@@ -13,7 +13,7 @@ import {
   IonTitle,
   IonToolbar,
 } from "@ionic/react";
-import { chevronBackOutline } from "ionicons/icons";
+import { chevronBackOutline, arrowForwardOutline } from "ionicons/icons";
 import sunImage from "../assets/Icons/slight_touch_happyday.png";
 
 type map = {
@@ -71,6 +71,7 @@ const BookingDetails: React.FC<IWeatherCardList> = (props) => {
             </div>
             <IonButton className="share-button" href="https://ko-fi.com/">
               Share Now
+              <IonIcon icon={arrowForwardOutline}></IonIcon>
             </IonButton>
           </IonCard>
         </IonCardContent>
