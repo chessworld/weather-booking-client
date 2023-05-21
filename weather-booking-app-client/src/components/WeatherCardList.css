@@ -1,8 +1,13 @@
-.cardContainer {
+.weather-list-container {
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
+  background: transparent;
+}
+
+.weather-list {
+  background: transparent;
 }
 
 .imageContainer {
@@ -12,15 +17,20 @@
   width: fit-content;
 }
 
+.weather-booking-item {
+  --background: transparent;
+}
+
 .weather-booking-card {
   width: 90vw;
   padding: 10px;
   margin: 1vh 0 1vh 0;
-  /* box-shadow: 1px 2px 5px #888 !important; */
+  background: white;
+  border-radius: 20px;
+  box-shadow: 1px 2px 5px #888;
 }
 
 .container-group-right {
-  /* background: red; */
   display: flex;
   flex-direction: row;
   justify-content: flex-start;
@@ -28,7 +38,6 @@
 }
 
 .container-group-text {
-  /* background: red; */
   margin-left: 20px;
   display: flex;
   flex-direction: column;
@@ -36,7 +45,6 @@
 }
 
 .container-root {
-  /* background: red; */
   display: flex;
   flex-direction: row;
   justify-content: space-between;
@@ -44,23 +52,23 @@
 
 .card-title {
   font-weight: 700;
-  font-size: 5vw;
-  margin: 0.5vh 0 0.5vh 0;
+  font-size: 4vw;
+  margin: 0.3vh 0 0.3vh 0;
 }
 
 .card-subtitle {
-  margin: 0.5vh 0 0.5vh 0;
+  margin: 0.3vh 0 0.3vh 0;
   font-weight: 500;
   font-size: 3.5vw;
 }
 
 .card-text {
-  margin: 0.5vh 0 0.5vh 0;
+  margin: 0.3vh 0 0.3vh 0;
   font-size: 3vw;
 }
 
 .card-weather-image {
-  width: 10vw;
+  width: 15vw;
   height: auto;
 }
 
@@ -68,8 +76,4 @@
   width: 2vw;
   height: auto;
   margin-right: 4vw;
-}
-
-ionic-list {
-  --background: transparent;
 }

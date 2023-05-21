@@ -1,14 +1,19 @@
 .booking-details-back-button {
   display: inline-block;
   vertical-align: middle;
-  width: 50px;
+  width: 60px;
+  color: black;
+  position: relative;
+  left: 0;
 }
 
-.booking-details-title {
-  font-weight: bold;
-  position: relative;
-  top: 1rem;
+.invisible-button {
+  --background: transparent;
+  --border-color: transparent;
+  --box-shadow: none;
+  box-shadow: none;
 }
+
 .booking-details-card {
   background: transparent;
   outline-style: solid;
@@ -27,10 +32,13 @@
   font-size: 5vw;
   margin: 0.5vh 0 0.5vh 0;
   padding: 0px 15px;
+  font-weight: bold;
+  position: relative;
+  top: 1rem;
 }
 
 .booking-details-img {
-  width: 20vw;
+  width: 30vw;
   height: auto;
 }
 
@@ -44,7 +52,6 @@
   display: flex;
   flex-direction: row;
   justify-content: space-between;
-  padding: 0px 15px;
 }
 
 /* .booking-details-content {
@@ -79,19 +86,9 @@
   margin-top: 2rem;
   width: 65%;
   padding: 10px;
+  box-shadow: none;
 }
 
-#feedback-card {
-  width: 90%;
-  text-align: left;
-  padding: 10px 0;
-}
-
-#feedback-content {
-  font-size: 12px;
-  width: 75%;
-  display: inline-block;
-}
 .enjoy-weather-content {
   font-size: 14px;
   font-weight: bold;
@@ -99,7 +96,7 @@
 }
 
 .share-card {
-  text-align: center;
+  text-align: left;
   border-radius: 10px;
   width: 75vw;
   color: black;
@@ -108,24 +105,27 @@
   background-size: cover;
   position: relative;
   background-position: left 90% bottom 50%;
+  overflow: visible;
+  white-space: normal;
+  padding: 0.5rem 0.8rem;
+}
+
+.share-card__title {
+  display: inline-block;
+  font-size: 1rem;
+  font-weight: bolder;
+  width: 70%;
+  padding-left: 0;
 }
 
 .share-button {
   position: relative;
-  bottom: 0px;
-  left: 25%;
+  display: inline-block;
   text-decoration: none;
-}
-
-.coffee-card {
-  text-align: center;
-  border-radius: 10px;
-  width: 75vw;
+  margin-bottom: 0.5rem;
+  border-radius: 20px;
+  font-weight: bolder;
   color: black;
-  margin-top: 2rem;
-  background-image: url("../assets/coffee_banner.png");
-  background-size: cover;
-  position: relative;
-  background-position: left 70% bottom 50%;
-  background-color: #addec9;
+  --background: white;
+  --border-radius: 20px;
 }
