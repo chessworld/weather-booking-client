@@ -30,11 +30,6 @@ const BookingDetails: React.FC<IWeatherCardList> = (props) => {
         })
     }, []);
 
-    const timeToDisplay = (time: string) => {
-        const formattedDate = new Date('2023-05-20').toLocaleDateString('en-US', { weekday: 'long', day: '2-digit', month: 'long', year: 'numeric' });
-        return formattedDate;
-    };
-
     return (
         <div>
             <div className="booking-details-toolbar">
@@ -52,25 +47,10 @@ const BookingDetails: React.FC<IWeatherCardList> = (props) => {
                     <div className="booking-details-content">
                         <div className="booking-details-details">
                             <IonCardTitle className="booking-details-details__title">
-                                {
-                                    locations
-                                    && (locations[props.data.booking[0].location - 1]
-                                        && locations[props.data.booking[0].location - 1].suburb)
-                                }
                             </IonCardTitle>
                             <IonCardSubtitle className="booking-details-details__subtitle">
-                                {
-                                    timeToDisplay(props.data.booking[0].day_time.date)
-                                }
                             </IonCardSubtitle>
                             <p className="booking-details-details__weather">
-                                {
-                                    props.data.weather_option.filter((option: any) => {
-                                        return option.option_type === "Weather"
-                                    })[0] ? (props.data.weather_option.filter((option: any) => {
-                                        return option.option_type === "Weather"
-                                    })[0].option_name ?? "None") : 'Rainy'
-                                }
                             </p>
                         </div>
                         <div className="booking-details-img-container">

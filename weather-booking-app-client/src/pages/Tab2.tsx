@@ -19,7 +19,7 @@ import { useState, useEffect } from "react";
 
 const Tab2: React.FC = () => {
     const [selectedTab, setSelectedTab] = useState("upcoming");
-    const [selectedBooking, setSelectedBooking] = useState(null);
+    const [selectedBooking, setSelectedBooking] = useState<number>(0);
     const [locationMapping, setLocations] = useState<any>([]);
     const [weatherData, setWeatherData] = useState<any>([]);
 
@@ -41,23 +41,19 @@ const Tab2: React.FC = () => {
                         weather: WeatherDataExtractorFromApi
                             .getWeatherfromApiData(item),
                         datetime: WeatherDataExtractorFromApi
-                            .timeToDisplay(item.booking[0].day_time.date),
+                            .timeToTimeObject(item.booking[0].day_time.date),
                     };
                 }).filter((item: any) => item.weather !== undefined)
             )
         });
     }, [locationMapping]);
 
-    useEffect(() => {
-        console.log(weatherData);
-    }, [weatherData])
-
     const handleTabChange = (tab: string) => {
         setSelectedTab(tab);
     };
 
-    const handleBookingClick = (booking: any) => {
-        setSelectedBooking(booking);
+    const handleBookingClick = (bookingId: number) => {
+        setSelectedBooking(bookingId);
     };
 
     return (
@@ -89,22 +85,31 @@ const Tab2: React.FC = () => {
                     </IonTabButton>
                 </IonTabBar>
             )}
+
             <IonContent fullscreen>
 
                 {
                     selectedBooking && selectedTab === "upcoming" ? (
                         <BookingDetails
-                            data={weatherData && weatherData[0]}
+                            data={weatherData && weatherData[selectedBooking]}
                             closeBookingDetail={handleBookingClick}
                         />
                     ) : selectedBooking && selectedTab === "completed" ? (
                         <BookingDetailsCompleted
-                            data={weatherData && weatherData[0]}
+                            data={weatherData && weatherData[selectedBooking]}
                             closeBookingDetail={handleBookingClick}
                         />
                     ) : selectedTab === "upcoming" ? (
                         <WeatherCardList
-                            data={weatherData && weatherData}
+                            data={
+                                weatherData.filter((item: any) => {
+                                    if (item.datetime < new Date()) {
+                                        return false;
+                                    }
+
+                                    return true;
+                                })
+                            }
                             openBookingDetail={handleBookingClick}
                             upcoming={true}
                         />
@@ -112,7 +117,13 @@ const Tab2: React.FC = () => {
                         <div>
                             <WeatherCardList
                                 data={
-                                    weatherData
+                                    weatherData.filter((item: any) => {
+                                        if (item.datetime < new Date()) {
+                                            return true;
+                                        }
+
+                                        return false;
+                                    })
                                 }
                                 openBookingDetail={handleBookingClick}
                                 upcoming={false}

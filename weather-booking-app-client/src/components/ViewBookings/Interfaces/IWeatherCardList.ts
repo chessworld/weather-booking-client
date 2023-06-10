@@ -1,7 +1,7 @@
 type map = {
     id: number;
     location: string;
-    date: string;
+    datetime: Object;
     weather: string;
     map: (item: any) => any[];
 };

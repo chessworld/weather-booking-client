@@ -4,8 +4,13 @@ class WeatherDataExtractorFromApi {
     constructor() {
     }
 
-    static timeToDisplay(time: string) {
-        const formattedDate = new Date(time)
+    static timeToTimeObject(time: string) {
+        const timeObject = new Date(time)
+        return timeObject;
+    };
+
+    static timeObjectToDisplay(timeObject: Date) {
+        return timeObject
             .toLocaleDateString(
                 'en-US',
                 {
@@ -15,9 +20,7 @@ class WeatherDataExtractorFromApi {
                     year: 'numeric'
                 }
             );
-
-        return formattedDate;
-    };
+    }
 
     static getWeatherLocationFromIdUsingMapping(locationMapping: LocationMapping, item: any) {
         return locationMapping[item.booking[0].location - 1]
@@ -44,6 +47,26 @@ class WeatherDataExtractorFromApi {
         }
 
         return [];
+    }
+
+    static getInCompleteBookings(weatherData: any) {
+        weatherData.filter((item: any) => {
+            if (item.datetime < new Date()) {
+                return false;
+            }
+
+            return true;
+        })
+    }
+
+    static getCompleteBookings(weatherData: any) {
+        weatherData.filter((item: any) => {
+            if (item.datetime < new Date()) {
+                return false;
+            }
+
+            return true;
+        })
     }
 }
 

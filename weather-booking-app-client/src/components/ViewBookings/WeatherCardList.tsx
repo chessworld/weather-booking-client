@@ -27,18 +27,7 @@ const WeatherCardList: React.FC<IWeatherCardList> = (props) => {
     const [weatherData, setWeatherData] = useState<any>([]);
 
     useEffect(() => {
-        console.log(props);
         setWeatherData(props.data);
-        /* props.data && setWeatherData(
-*     props.data.map((item: any, _: number) => {
-*         return {
-*             location: WeatherDataExtractorFromApi.getWeatherLocationFromIdUsingMapping(locationMapping, item),
-*             weather: WeatherDataExtractorFromApi.getWeatherfromApiData(item),
-*             datetime: WeatherDataExtractorFromApi.
-*                 timeToDisplay(item.booking[0].day_time.date),
-*         }
-*     })
-* ) */
     }, [locationMapping])
 
     return (
@@ -68,7 +57,7 @@ const WeatherCardList: React.FC<IWeatherCardList> = (props) => {
                                             </h1>
                                             <p className="card-subtitle">
                                                 {
-                                                    item.datetime
+                                                   WeatherDataExtractorFromApi.timeObjectToDisplay(item.datetime)
                                                 }
                                             </p>
                                             <p className="card-text">{

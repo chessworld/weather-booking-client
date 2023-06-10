@@ -19,6 +19,7 @@ import {
 
 import sunImage from "../../assets/Icons/slight_touch_happyday.png";
 import { useState } from "react";
+import WeatherDataExtractorFromApi from "./Utility/WeatherDataExtractorFromApi";
 
 type map = {
   id: number;
@@ -63,7 +64,9 @@ const BookingDetailsCompleted: React.FC<IWeatherCardList> = (props) => {
                 {props.data.location}
               </IonCardTitle>
               <IonCardSubtitle className="booking-details-details__subtitle">
-                {props.data.date}
+                {
+                    WeatherDataExtractorFromApi.timeObjectToDisplay(props.data.datetime)
+                }
               </IonCardSubtitle>
               <p className="booking-details-details__weather">
                 {props.data.weather}
