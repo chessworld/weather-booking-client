@@ -5,14 +5,10 @@ import {
     IonButton,
     IonCard,
     IonCardContent,
-    IonCardHeader,
     IonCardSubtitle,
     IonCardTitle,
-    IonHeader,
     IonIcon,
     IonImg,
-    IonTitle,
-    IonToolbar,
 } from "@ionic/react";
 
 import { chevronBackOutline, arrowForwardOutline } from "ionicons/icons";
@@ -20,18 +16,8 @@ import sunImage from "../../assets/Icons/slight_touch_happyday.png";
 import rainImage from "../../assets/Icons/rainy.png";
 import BookingEndpoint from "../../endpoint-caller/bookingEndpoint";
 
-type map = {
-    id: number;
-    location: string;
-    date: string;
-    weather: string;
-};
+import IWeatherCardList from "./Interfaces/IWeatherCardList";
 
-interface IWeatherCardList {
-    [category: string]: any;
-    closeBookingDetail: (booking: any) => void;
-    data: map;
-}
 
 const BookingDetails: React.FC<IWeatherCardList> = (props) => {
     const [locations, setLocations] = useState<any>([]);

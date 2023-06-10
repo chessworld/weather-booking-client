@@ -1,75 +1,45 @@
 import { IonList, IonItem, IonCard, IonImg } from "@ionic/react";
 import { useState, useEffect } from "react";
 import "./WeatherCardList.css";
-import sunImage from "../../assets/Icons/slight_touch_happyday.png";
-import rainImage from "../../assets/Icons/rainy.png";
-import cloudImage from "../../assets/Icons/cloudy.png";
 import arrowRight from "../../assets/Icons/arrow-right.png";
-import StormyImage from '../../assets/Icons/thnderstorm.png';
-
 import React from "react";
 import BookingEndpoint from "../../endpoint-caller/bookingEndpoint";
-
-type map = {
-    id: number;
-    location: string;
-    date: string;
-    weather: string;
-};
-
-interface IWeatherCardList {
-    openBookingDetail: (booking: any) => void;
-    data: map[];
-    upcoming: boolean;
-}
+import WeatherImageMapper from "./Mappings/WeatherImageMapper";
+import IWeatherCardList from "./Interfaces/IWeatherCardList";
+import WeatherDataExtractorFromApi from "./Utility/WeatherDataExtractorFromApi";
 
 const WeatherCardList: React.FC<IWeatherCardList> = (props) => {
     // TODO place all card list and card info in useState and update state with API calls.
     // TODO could try https://builtin.com/software-engineering-perspectives/use-query-react useQuery to call API.
 
     const [locationMapping, setLocations] = useState<any>([]);
-    const [weatherData, setWeatherData] = useState<any>([]);
-
-    const weatherImageMapper: {[category: string]: string} = {
-        Rainy: rainImage,
-        cloudy: cloudImage,
-        Sunny: sunImage,
-        Stormy: StormyImage
-    }
 
     useEffect(() => {
         BookingEndpoint.getLocation().then(response => {
             return response.json();
         }).then(data => {
+            console.log(data);
             setLocations(data);
         });
     }, []);
 
+
+    const [weatherData, setWeatherData] = useState<any>([]);
+
     useEffect(() => {
-        props.data && setWeatherData(
-            props.data.map((item: any, id: number) => {
-                return {
-                    location: locationMapping[item.booking[0].location - 1] && locationMapping[item.booking[0].location - 1].suburb,
-                    weather: item.weather_option.filter((option: any) => {
-                            return option.option_type === "Weather"
-                        })[0] && (item.weather_option.filter((option: any) => {
-                            return option.option_type === "Weather"
-                        })[0].option_name ?? "None"),
-                    datetime: timeToDisplay(item.booking[0].day_time.date)
-                }
-            })
-        )
+        console.log(props);
+        setWeatherData(props.data);
+        /* props.data && setWeatherData(
+*     props.data.map((item: any, _: number) => {
+*         return {
+*             location: WeatherDataExtractorFromApi.getWeatherLocationFromIdUsingMapping(locationMapping, item),
+*             weather: WeatherDataExtractorFromApi.getWeatherfromApiData(item),
+*             datetime: WeatherDataExtractorFromApi.
+*                 timeToDisplay(item.booking[0].day_time.date),
+*         }
+*     })
+* ) */
     }, [locationMapping])
-
-    useEffect(() => {
-        console.log(weatherData);
-    }, [weatherData])
-
-
-    const timeToDisplay = (time: string) => {
-        const formattedDate = new Date('2023-05-20').toLocaleDateString('en-US', { weekday: 'long', day: '2-digit', month: 'long', year: 'numeric' });
-        return formattedDate;
-    };
 
     return (
         <IonList className="weather-list" lines="none">
@@ -87,7 +57,7 @@ const WeatherCardList: React.FC<IWeatherCardList> = (props) => {
                                         <div className="imageContainer">
                                             <IonImg
                                                 className="card-weather-image"
-                                                src={weatherImageMapper[item.weather]}
+                                                src={WeatherImageMapper[item.weather]}
                                             />
                                         </div>
                                         <div className="container-group-text">
