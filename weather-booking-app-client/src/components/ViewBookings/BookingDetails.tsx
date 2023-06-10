@@ -16,9 +16,9 @@ import {
 } from "@ionic/react";
 
 import { chevronBackOutline, arrowForwardOutline } from "ionicons/icons";
-import sunImage from "../assets/Icons/slight_touch_happyday.png";
-import rainImage from "../assets/Icons/rainy.png";
-import BookingEndpoint from "../endpoint-caller/bookingEndpoint";
+import sunImage from "../../assets/Icons/slight_touch_happyday.png";
+import rainImage from "../../assets/Icons/rainy.png";
+import BookingEndpoint from "../../endpoint-caller/bookingEndpoint";
 
 type map = {
     id: number;
@@ -41,7 +41,6 @@ const BookingDetails: React.FC<IWeatherCardList> = (props) => {
             return response.json();
         }).then(data => {
             setLocations(data);
-            console.log(data);
         })
     }, []);
 

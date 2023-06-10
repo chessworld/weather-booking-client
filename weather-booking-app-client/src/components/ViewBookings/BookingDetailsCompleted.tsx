@@ -1,18 +1,14 @@
-import { useParams } from "react-router-dom";
 import "./BookingDetails.css";
 import "./BookingDetailsCompleted.css";
 import {
   IonButton,
   IonCard,
   IonCardContent,
-  IonCardHeader,
   IonCardSubtitle,
   IonCardTitle,
-  IonHeader,
   IonIcon,
   IonImg,
   IonTitle,
-  IonToolbar,
 } from "@ionic/react";
 import {
   chevronBackOutline,
@@ -20,8 +16,8 @@ import {
   thumbsDownSharp,
   arrowForwardOutline,
 } from "ionicons/icons";
-import cloudImage from "../assets/Icons/cloudy.png";
-import sunImage from "../assets/Icons/slight_touch_happyday.png";
+
+import sunImage from "../../assets/Icons/slight_touch_happyday.png";
 import { useState } from "react";
 
 type map = {

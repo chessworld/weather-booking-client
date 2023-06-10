@@ -11,11 +11,11 @@ import {
 } from "@ionic/react";
 
 import React from "react";
-import WeatherCardList from "../components/WeatherCardList";
+import WeatherCardList from "../components/ViewBookings/WeatherCardList";
 import "./Tab2.css";
 import { useState, useEffect } from "react";
-import BookingDetails from "../components/BookingDetails";
-import BookingDetailsCompleted from "../components/BookingDetailsCompleted";
+import BookingDetails from "../components/ViewBookings/BookingDetails";
+import BookingDetailsCompleted from "../components/ViewBookings/BookingDetailsCompleted";
 import coffee from "../assets/coffee.png";
 import BookingEndpoint from "../endpoint-caller/bookingEndpoint";
 

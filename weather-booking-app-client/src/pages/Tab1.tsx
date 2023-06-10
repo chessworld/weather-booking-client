@@ -1,16 +1,15 @@
 import React from 'react';
-import WeatherHud from '../components/BookingPage/WeatherHud';
 import { Component } from 'react';
 import { IonToast, IonRange, IonPage, IonItem, IonLabel, IonList, IonSearchbar, IonSelect, IonSelectOption } from '@ionic/react';
+import WeatherHud from '../components/BookWeather/WeatherHud';
 import Background from '../components/Screen/Background';
-import './Tab1.css';
-
+import ConfirmBookingDetails from "../components/ViewBookings/ConfirmBookingDetails";
 import BookingEndpoint from "../endpoint-caller/bookingEndpoint";
-
 import Sunny from '../assets/Icons/slight_touch_happyday.png';
 import Rain from '../assets/Icons/rainy.png';
 import Cloud from '../assets/Icons/cloudy.png';
 import Stormy from '../assets/Icons/thnderstorm.png';
+import './Tab1.css';
 
 interface AbcState {
     [category: string]: any;
@@ -26,6 +25,7 @@ interface AbcState {
     timePeriod: string;
     showToast: boolean;
     toastMessage: string;
+    showConfirmation: boolean;
 }
 
 interface AbcProps {
@@ -67,12 +67,15 @@ class Tab1 extends Component<AbcProps, AbcState> {
             locationSuggestions: [],
             timePeriod: '',
             showToast: false,
-            toastMessage: ''
+            toastMessage: '',
+            showConfirmation: true,
         };
 
         // Bindings
         this.getWindJson = this.getWindJson.bind(this);
         this.confirmBooking = this.confirmBooking.bind(this);
+        this.toggleConfirmation = this.toggleConfirmation.bind(this);
+        this.Book = this.Book.bind(this);
     }
 
     async componentDidMount(): Promise<any> {
@@ -161,12 +164,42 @@ class Tab1 extends Component<AbcProps, AbcState> {
             this.getWindJson()
         );
 
+
         /* bookingFailureMessage: 'There has been a problem with your booking. Please try again' */
 
         this.setState({
             ...this.state,
+            /* showToast: true,
+* toastMessage: 'Booking has been successfully created', */
+            showConfirmation: true
+        });
+    }
+
+    Book(): void{
+        this.bookingEndpoint?.createBooking(
+            this.bookingEndpoint?.getLocationSuburbs().findIndex((obj: any) => {
+                return obj.toLowerCase() === this.state.location.toLowerCase();
+            }) + 1,
+            this.state.timePeriod,
+            "06:00:00", //TODO backend
+            "12:00:00", //TODO backend
+            this.getWeatherJson(),
+            this.getTemperatureJson(),
+            this.getWindJson()
+        );
+
+        this.setState({
+            ...this.state,
             showToast: true,
-            toastMessage: 'Booking has been successfully created'
+            toastMessage: 'Booking has been successfully created',
+            showConfirmation: true
+        });
+    }
+
+    toggleConfirmation(): void {
+        this.setState({
+            ...this.state,
+            showConfirmation: !this.state.showConfirmation
         });
     }
 
@@ -181,6 +214,29 @@ class Tab1 extends Component<AbcProps, AbcState> {
                     duration={1000}
                 />
                 <Background>
+                    {
+                        this.state.showConfirmation && (
+                            <div style={{
+                                background: "#FFF",
+                                "position": "fixed",
+                                "width": "100%",
+                                "height": "100%",
+                                "zIndex": 3
+                            }}>
+                                <ConfirmBookingDetails data={
+                                    {
+                                        id: 1,
+                                        location: "Melbourne",
+                                        date: "10-10-2023",
+                                        weather: "",
+                                    }
+                                }
+                                    closeBookingDetail={this.toggleConfirmation}
+                                    book={this.Book}
+                                />
+                                )
+                            </div>)
+                    }
                     <div className="button-container-vertical">
                         <br />
                         <IonSearchbar
