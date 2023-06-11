@@ -1,127 +1,143 @@
 import {
-  IonContent,
-  IonHeader,
-  IonPage,
-  IonTitle,
-  IonToolbar,
-  IonTabBar,
-  IonTabButton,
-  IonLabel,
-  IonImg,
+    IonContent,
+    IonPage,
+    IonTabBar,
+    IonTabButton,
+    IonLabel,
+    IonImg,
 } from "@ionic/react";
 
-import React from "react";
-import WeatherCardList from "../components/WeatherCardList";
 import "./Tab2.css";
-import { useState } from "react";
-import BookingDetails from "../components/BookingDetails";
-import BookingDetailsCompleted from "../components/BookingDetailsCompleted";
+import BookingDetails from "../components/ViewBookingsComponents/BookingDetails";
+import BookingDetailsCompleted from "../components/ViewBookingsComponents/BookingDetailsCompleted";
+import BookingEndpoint from "../endpoint-caller/bookingEndpoint";
+import React from "react";
+import WeatherCardList from "../components/ViewBookingsComponents/WeatherCardList";
+import WeatherDataExtractorFromApi from "../components/ViewBookingsComponents/Utility/WeatherDataExtractorFromApi";
 import coffee from "../assets/coffee.png";
+import { useState, useEffect } from "react";
 
 const Tab2: React.FC = () => {
-  const [selectedTab, setSelectedTab] = useState("upcoming");
-  const [selectedBooking, setSelectedBooking] = useState(null);
+    const [selectedTab, setSelectedTab] = useState("upcoming");
+    const [selectedBooking, setSelectedBooking] = useState<number>(0);
+    const [locationMapping, setLocations] = useState<any>([]);
+    const [weatherData, setWeatherData] = useState<any>([]);
 
-  const handleTabChange = (tab: string) => {
-    setSelectedTab(tab);
-  };
+    useEffect(() => {
+        BookingEndpoint.getLocation().then(response => {
+            return response.json();
+        }).then(data => {
+            setLocations(data);
+        });
+    }, []);
 
-  const handleBookingClick = (booking: any) => {
-    setSelectedBooking(booking);
-  };
+    useEffect(() => {
+        BookingEndpoint.getBookingList().then((bookings) => {
+            setWeatherData(
+                bookings.map((item: any, _: number) => {
+                    return {
+                        location: WeatherDataExtractorFromApi
+                            .getWeatherLocationFromIdUsingMapping(locationMapping, item),
+                        weather: WeatherDataExtractorFromApi
+                            .getWeatherfromApiData(item),
+                        datetime: WeatherDataExtractorFromApi
+                            .timeToTimeObject(item.booking[0].day_time.date),
+                    };
+                }).filter((item: any) => item.weather !== undefined)
+            )
+        });
+    }, [locationMapping]);
 
-  const dummyDataUpcoming = [
-    {
-      id: 1,
-      location: "Monash University",
-      date: "Monday, 10 July",
-      weather: "Sunny, Warm, No Wind",
-    },
-    {
-      id: 2,
-      location: "Clayton, VIC",
-      date: "Saturday, 1 April",
-      weather: "Sunny, Hot, No Wind",
-    },
-    {
-      id: 3,
-      location: "Glen Waverley, VIC",
-      date: "Thursday, 27 April",
-      weather: "Rainy, Cold, Wind",
-    },
-  ];
-  const dummyDataCompleted = [
-    {
-      id: 1,
-      location: "Home",
-      date: "Sunday, 13 November",
-      weather: "Cloudy, Mild, No Wind",
-    },
-  ];
+    const handleTabChange = (tab: string) => {
+        setSelectedTab(tab);
+    };
 
-  return (
-    <IonPage>
-      {!selectedBooking && (
-        <h1 className="bookings-list-title">Your Bookings</h1>
-      )}
-      {!selectedBooking && (
-        <IonTabBar slot="top" className="bookings-tab-bar">
-          <IonTabButton
-            className={`bookings-tab ${
-              selectedTab === "upcoming" ? "bookings-tab-selected" : ""
-            }`}
-            tab="upcoming"
-            onClick={() => handleTabChange("upcoming")}
-            selected={selectedTab === "upcoming"}
-          >
-            <IonLabel>Upcoming</IonLabel>
-          </IonTabButton>
+    const handleBookingClick = (bookingId: number) => {
+        setSelectedBooking(bookingId);
+    };
 
-          <IonTabButton
-            className={`bookings-tab ${
-              selectedTab === "completed" ? "bookings-tab-selected" : ""
-            }`}
-            tab="completed"
-            onClick={() => handleTabChange("completed")}
-            selected={selectedTab === "completed"}
-          >
-            <IonLabel>Completed</IonLabel>
-          </IonTabButton>
-        </IonTabBar>
-      )}
-      <IonContent fullscreen>
-        {selectedBooking && selectedTab === "upcoming" ? (
-          <BookingDetails
-            data={dummyDataUpcoming[selectedBooking - 1]}
-            closeBookingDetail={handleBookingClick}
-          />
-        ) : selectedBooking && selectedTab === "completed" ? (
-          <BookingDetailsCompleted
-            data={dummyDataCompleted[selectedBooking - 1]}
-            closeBookingDetail={handleBookingClick}
-          />
-        ) : selectedTab === "upcoming" ? (
-          <WeatherCardList
-            data={dummyDataUpcoming}
-            openBookingDetail={handleBookingClick}
-            upcoming={true}
-          />
-        ) : (
-          <div>
-            <WeatherCardList
-              data={dummyDataCompleted}
-              openBookingDetail={handleBookingClick}
-              upcoming={false}
-            />
-            <a href="https://ko-fi.com/" className="coffee-img-container">
-              <p className="coffee-text">Support Us!</p>
-              <IonImg src={coffee} className="coffee-img"></IonImg>
-            </a>
-          </div>
-        )}
-      </IonContent>
-    </IonPage>
-  );
+    return (
+        <IonPage>
+            {!selectedBooking && (
+                <h1 className="bookings-list-title">Your Bookings</h1>
+            )}
+
+            {!selectedBooking && (
+                <IonTabBar slot="top" className="bookings-tab-bar">
+                    <IonTabButton
+                        className={`bookings-tab ${selectedTab === "upcoming" ? "bookings-tab-selected" : ""
+                            }`}
+                        tab="upcoming"
+                        onClick={() => handleTabChange("upcoming")}
+                        selected={selectedTab === "upcoming"}
+                    >
+                        <IonLabel>Upcoming</IonLabel>
+                    </IonTabButton>
+
+                    <IonTabButton
+                        className={`bookings-tab ${selectedTab === "completed" ? "bookings-tab-selected" : ""
+                            }`}
+                        tab="completed"
+                        onClick={() => handleTabChange("completed")}
+                        selected={selectedTab === "completed"}
+                    >
+                        <IonLabel>Completed</IonLabel>
+                    </IonTabButton>
+                </IonTabBar>
+            )}
+
+            <IonContent fullscreen>
+
+                {
+                    selectedBooking && selectedTab === "upcoming" ? (
+                        <BookingDetails
+                            data={weatherData && weatherData[selectedBooking]}
+                            closeBookingDetail={handleBookingClick}
+                        />
+                    ) : selectedBooking && selectedTab === "completed" ? (
+                        <BookingDetailsCompleted
+                            data={weatherData && weatherData[selectedBooking]}
+                            closeBookingDetail={handleBookingClick}
+                        />
+                    ) : selectedTab === "upcoming" ? (
+                        <WeatherCardList
+                            data={
+                                weatherData.filter((item: any) => {
+                                    if (item.datetime < new Date()) {
+                                        return false;
+                                    }
+
+                                    return true;
+                                })
+                            }
+                            openBookingDetail={handleBookingClick}
+                            upcoming={true}
+                        />
+                    ) : (
+                        <div>
+                            <WeatherCardList
+                                data={
+                                    weatherData.filter((item: any) => {
+                                        if (item.datetime < new Date()) {
+                                            return true;
+                                        }
+
+                                        return false;
+                                    })
+                                }
+                                openBookingDetail={handleBookingClick}
+                                upcoming={false}
+                            />
+                            <a href="https://ko-fi.com/" className="coffee-img-container">
+                                <p className="coffee-text">Support Us!</p>
+                                <IonImg src={coffee} className="coffee-img"></IonImg>
+                            </a>
+                        </div>
+                    )
+                }
+            </IonContent>
+        </IonPage>
+    );
 };
 
 export default Tab2;

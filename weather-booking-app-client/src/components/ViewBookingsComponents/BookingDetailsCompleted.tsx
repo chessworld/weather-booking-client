@@ -1,18 +1,14 @@
-import { useParams } from "react-router-dom";
 import "./BookingDetails.css";
 import "./BookingDetailsCompleted.css";
 import {
   IonButton,
   IonCard,
   IonCardContent,
-  IonCardHeader,
   IonCardSubtitle,
   IonCardTitle,
-  IonHeader,
   IonIcon,
   IonImg,
   IonTitle,
-  IonToolbar,
 } from "@ionic/react";
 import {
   chevronBackOutline,
@@ -20,8 +16,10 @@ import {
   thumbsDownSharp,
   arrowForwardOutline,
 } from "ionicons/icons";
-import cloudImage from "../assets/Icons/cloudy.png";
+
+import sunImage from "../../assets/Icons/slight_touch_happyday.png";
 import { useState } from "react";
+import WeatherDataExtractorFromApi from "./Utility/WeatherDataExtractorFromApi";
 
 type map = {
   id: number;
@@ -66,20 +64,22 @@ const BookingDetailsCompleted: React.FC<IWeatherCardList> = (props) => {
                 {props.data.location}
               </IonCardTitle>
               <IonCardSubtitle className="booking-details-details__subtitle">
-                {props.data.date}
+                {
+                    WeatherDataExtractorFromApi.timeObjectToDisplay(props.data.datetime)
+                }
               </IonCardSubtitle>
               <p className="booking-details-details__weather">
                 {props.data.weather}
               </p>
             </div>
             <div className="booking-details-img-container">
-              <IonImg className="booking-details-img" src={cloudImage} />
+              <IonImg className="booking-details-img" src={sunImage} />
             </div>
           </div>
           <IonCard className="enjoy-weather-card">
-            <IonTitle className="enjoy-weather-content">
+            <div className="enjoy-weather-content">
               Enjoy your weather!
-            </IonTitle>
+            </div>
           </IonCard>
 
           <IonCard className="share-card">

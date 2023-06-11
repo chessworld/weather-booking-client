@@ -5,19 +5,8 @@
   --weather-choose-option-max-height: 120px;
 }
 
-.date-location-button {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  background: #004fb5;
-  border-radius: 8px;
-  color: white;
-  width: 35vw;
-  padding: 1vh 0px 1vh 0px;
-  text-align: center;
-  box-shadow: 2px 2px 4px #888;
-  font-size: 3vw;
-  font-weight: 500;
+.search-bar {
+    width: 85vw;
 }
 
 .search-bar {
@@ -47,6 +36,14 @@
   margin: 1vh 0 1vh 0;
 }
 
+.button-container-vertical {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    margin: 1vh 0 1vh 0;
+}
+
 .button-container {
   display: flex;
   flex-direction: row;
@@ -70,29 +67,25 @@
 }
 
 .weather-choose-option {
-  display: flex;
-  background: rgba(255, 253, 253, 0.15);
-  backdrop-filter: blur(2px);
-  justify-content: center;
-  align-items: center;
-  max-width: var(--weather-choose-option-max-width);
-  min-width: var(--weather-choose-option-min-width);
-  max-height: var(--weather-choose-option-max-height);
-  border-radius: 3.5em;
-  color: white;
-  width: 8vw;
-  height: 20vh;
-  padding: 0.5vh 0px 0.5vh 0px;
-  text-align: center;
-  transition: background 0.4s ease-in-out;
+    display: flex;
+    background: rgba(100, 100, 100, 0.50);
+    backdrop-filter: blur(2px);
+    justify-content: center;
+    align-items: center;
+    max-width: var(--weather-choose-option-max-width);
+    min-width: var(--weather-choose-option-min-width);
+    max-height: var(--weather-choose-option-max-height);
+    border-radius: 3.5em;
+    color: white;
+    width: 8vw;
+    height: 20vh;
+    padding: .5vh 0px .5vh 0px;
+    text-align: center;
+    transition: background .4s ease-in-out;
 }
 
 .weather-choose-option:hover {
-  background: rgba(255, 255, 255, 0.5);
-}
-
-.weather-choose-option-focus {
-  background: rgba(220, 220, 220, 0.5);
+    background: rgba(100, 100, 255, 0.5);
 }
 
 .weather-rhombus-container {
@@ -160,27 +153,41 @@ ion-select {
   align-items: center;
 }
 
+.selector-container {
+    width: 80vw;
+}
+
+ion-select {
+    background: rgba(100, 100, 100, 0.15);
+    padding: 0px 2.5vw 0px 2.5vw;
+    height: 1.5vh;
+    border-radius: 4px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
 ion-content {
-  --background: transparent;
-  --background: linear-gradient(
-      180deg,
-      #a8c8ed 0%,
-      rgba(118, 115, 220, 0.4) 100%
-    ),
-    #ffffff;
+    --background: transparent;
+    --background: linear-gradient(
+        180deg,
+        #A8C8ED 0%,
+        rgba(118, 115, 220, 0.4)
+            100%
+    ), #FFFFFF;
 }
 
 ion-range {
-  --bar-background: rgba(230, 224, 246, 0.5);
-  --bar-background-active: #1e1e1e;
-  --bar-height: 8px;
-  --bar-border-radius: 8px;
-  --knob-background: #fff;
-  --knob-size: 40px;
-  --pin-background: #eee;
-  --pin-color: #fff;
+    --bar-background: rgba(230,224,246, .5);
+    --bar-background-active: #1e1e1e;
+    --bar-height: 8px;
+    --bar-border-radius: 8px;
+    --knob-background: #FFF;
+    --knob-size: 5vw;
+    --pin-background: #eee;
+    --pin-color: #fff;
 }
 
-.range-tick {
-  background: #fff;
+.range-tick{
+    background: #FFF
 }

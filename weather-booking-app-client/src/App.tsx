@@ -10,11 +10,11 @@ import {
 } from '@ionic/react';
 import { IonReactRouter } from '@ionic/react-router';
 import { person, book, addCircleSharp } from 'ionicons/icons';
-import Tab1 from './pages/Tab1';
+import BookingPage from './pages/BookingPage/BookingPage';
 import Tab2 from './pages/Tab2';
 import Tab3 from './pages/Tab3';
 import OnboardingPage from './pages/OnboardingPage';
-import BookingDetails from './components/BookingDetails';
+import BookingDetails from './components/ViewBookingsComponents/BookingDetails';
 
 /* Core CSS required for Ionic components to work properly */
 import '@ionic/react/css/core.css';
@@ -34,7 +34,7 @@ import '@ionic/react/css/display.css';
 
 /* Theme variables */
 import './theme/variables.css';
-import './components/Screen/NavBar.css';
+import './components/ScreenComponents/NavBar.css';
 setupIonicReact();
 
 const App: React.FC = () => {
@@ -45,7 +45,7 @@ const App: React.FC = () => {
                 <IonTabs>
                     <IonRouterOutlet>
                         <Route exact path="/tab1">
-                            <Tab1 />
+                            <BookingPage />
                         </Route>
 
                         <Route exact path="/tab2">
@@ -60,17 +60,17 @@ const App: React.FC = () => {
                         <Route exact path="/onboardingPage">
                             <OnboardingPage />
                         </Route>
-                        <Route path="/booking-details" component={BookingDetails}/>
+                        <Route path="/booking-details" component={BookingDetails} />
                     </IonRouterOutlet>
                     <IonTabBar slot="bottom" id='navbar'>
                         <IonTabButton tab="tab2" href="/tab2" className='nav-bar-button'>
                             <IonIcon aria-hidden="true" icon={book} className='nav-bar-icon' />
                         </IonTabButton>
                         <IonTabButton tab="tab1" href="/tab1" className='nav-bar-button'>
-                            <IonIcon aria-hidden="true" icon={addCircleSharp} className='nav-bar-middle-icon'/>
+                            <IonIcon aria-hidden="true" icon={addCircleSharp} className='nav-bar-middle-icon' />
                         </IonTabButton>
                         <IonTabButton tab="tab3" href="/tab3" className='nav-bar-button'>
-                            <IonIcon aria-hidden="true" icon={person} className='nav-bar-icon'/>
+                            <IonIcon aria-hidden="true" icon={person} className='nav-bar-icon' />
                         </IonTabButton>
                     </IonTabBar>
                 </IonTabs>
