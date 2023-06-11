@@ -8,12 +8,12 @@ import {
 } from "@ionic/react";
 
 import "./Tab2.css";
-import BookingDetails from "../components/ViewBookings/BookingDetails";
-import BookingDetailsCompleted from "../components/ViewBookings/BookingDetailsCompleted";
+import BookingDetails from "../components/ViewBookingsComponents/BookingDetails";
+import BookingDetailsCompleted from "../components/ViewBookingsComponents/BookingDetailsCompleted";
 import BookingEndpoint from "../endpoint-caller/bookingEndpoint";
 import React from "react";
-import WeatherCardList from "../components/ViewBookings/WeatherCardList";
-import WeatherDataExtractorFromApi from "../components/ViewBookings/Utility/WeatherDataExtractorFromApi";
+import WeatherCardList from "../components/ViewBookingsComponents/WeatherCardList";
+import WeatherDataExtractorFromApi from "../components/ViewBookingsComponents/Utility/WeatherDataExtractorFromApi";
 import coffee from "../assets/coffee.png";
 import { useState, useEffect } from "react";
 

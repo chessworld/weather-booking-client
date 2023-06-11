@@ -19,7 +19,7 @@ import { chevronBackOutline, closeOutline, arrowForwardOutline } from "ionicons/
 import sunImage from "../../assets/Icons/slight_touch_happyday.png";
 import rainImage from "../../assets/Icons/rainy.png";
 import BookingEndpoint from "../../endpoint-caller/bookingEndpoint";
-import Background from '../../components/Screen/Background';
+import Background from '../../components/ScreenComponents/Background';
 
 type map = {
     id: number;
