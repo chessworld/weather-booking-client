@@ -52,7 +52,7 @@ class BookingPage extends Component<BookingPageProps, BookingPageState> {
             timePeriod: '',
             showToast: false,
             toastMessage: '',
-            showConfirmation: true,
+            showConfirmation: false, // Default of show confirmation should be set to false
         };
 
         // Bindings
@@ -127,19 +127,6 @@ class BookingPage extends Component<BookingPageProps, BookingPageState> {
     }
 
     confirmBooking(): void {
-        this.bookingEndpoint?.createBooking(
-            this.bookingEndpoint?.getLocationSuburbs().findIndex((obj: any) => {
-                return obj.toLowerCase() === this.state.location.toLowerCase();
-            }) + 1,
-            this.state.timePeriod,
-            "06:00:00", //TODO backend
-            "12:00:00", //TODO backend
-            this.getWeatherJson(),
-            this.getTemperatureJson(),
-            this.getWindJson()
-        );
-
-
         this.setState({
             ...this.state,
             showConfirmation: true
@@ -183,6 +170,7 @@ class BookingPage extends Component<BookingPageProps, BookingPageState> {
                     message={this.state.toastMessage}
                     duration={1000}
                 />
+
                 <Background>
                     {
                         this.state.showConfirmation && (
@@ -207,6 +195,7 @@ class BookingPage extends Component<BookingPageProps, BookingPageState> {
                             </div>
                         )
                     }
+
                     <div className="button-container-vertical">
                         <br />
                         <IonSearchbar
