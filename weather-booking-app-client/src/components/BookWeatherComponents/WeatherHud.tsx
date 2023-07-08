@@ -153,7 +153,7 @@ class WeatherHud extends Component<AbcProps, AbcState> {
                                 <img src={
                                     this.props.weatherData.weatherOptions[this.props.weatherData.selectedWeatherOption].image
                                 }
-                                     className="hud-icon"
+                                    className="hud-icon"
                                 />
                             </div>
 
@@ -162,11 +162,7 @@ class WeatherHud extends Component<AbcProps, AbcState> {
 
                         </div>
                     </div>
-
-                    <canvas id="weather-hud">
-                        canvas not supported
-                    </canvas>
-
+                    <canvas id="weather-hud">canvas not supported</canvas>
                 </div>
             </div>
         )

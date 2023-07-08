@@ -1,20 +1,20 @@
-import React from 'react';
-import { Component } from 'react';
-import { IonToast, IonRange, IonPage, IonItem, IonLabel, IonList, IonSearchbar, IonSelect, IonSelectOption } from '@ionic/react';
-import WeatherHud from '../../components/BookWeatherComponents/WeatherHud';
-import Background from '../../components/ScreenComponents/Background';
-import ConfirmBookingDetails from "../../components/ViewBookingsComponents/ConfirmBookingDetails";
-import BookingEndpoint from "../../endpoint-caller/bookingEndpoint";
-import Sunny from '../../assets/Icons/slight_touch_happyday.png';
-import Rain from '../../assets/Icons/rainy.png';
-import Cloud from '../../assets/Icons/cloudy.png';
-import Stormy from '../../assets/Icons/thnderstorm.png';
 import './BookingPage.css';
-import BookingPageState from "./Interface/BookingPageState";
+import Background from '../../components/ScreenComponents/Background';
+import BookingEndpoint from "../../endpoint-caller/bookingEndpoint";
 import BookingPageProps from "./Interface/BookingPageProps";
-
-import Device from "../../device/Device"
-
+import BookingPageState from "./Interface/BookingPageState";
+import Cloud from '../../assets/Icons/cloudy.png';
+import ConfirmBookingDetails from "../../components/ViewBookingsComponents/ConfirmBookingDetails";
+import Rain from '../../assets/Icons/rainy.png';
+import React from 'react';
+import Stormy from '../../assets/Icons/thnderstorm.png';
+import Sunny from '../../assets/Icons/slight_touch_happyday.png';
+import WeatherHud from '../../components/BookWeatherComponents/WeatherHud';
+import { Component } from 'react';
+import { Device } from '@capacitor/device';
+import { Preferences } from '@capacitor/preferences';
+import { IonToast, IonRange, IonPage, IonItem, IonLabel, IonList, IonSearchbar, IonSelect, IonSelectOption } from '@ionic/react';
+import { v4 as uuidv4 } from 'uuid';
 
 class BookingPage extends Component<BookingPageProps, BookingPageState> {
     bookingEndpoint: BookingEndpoint | undefined;
@@ -63,6 +63,40 @@ class BookingPage extends Component<BookingPageProps, BookingPageState> {
     }
 
     async componentDidMount(): Promise<any> {
+
+        var value = uuidv4();
+
+        const getOrCreateDeviceId = async () => {
+            // Attempt to get existing deviceId
+
+            const existingDeviceId = await Preferences.get({ key: 'deviceId' });
+
+            // If it exists, return it
+            if (existingDeviceId.value) {
+                return existingDeviceId.value;
+            }
+
+            // If it doesn't exist, generate a new UUID and store it
+            const newDeviceId = uuidv4();
+
+            await Preferences.set({
+                key: 'deviceId',
+                value: newDeviceId,
+            });
+
+            // Return the new deviceId
+            return newDeviceId;
+        };
+
+        // Usage
+        getOrCreateDeviceId().then(deviceId => {
+            this.setState({
+                ...this.state,
+                showToast: true,
+                toastMessage: `Device unique id is: ${deviceId}`,
+            });
+        });
+
         this.bookingEndpoint = this.bookingEndpoint ?? await BookingEndpoint.create();
 
         setTimeout(
@@ -332,21 +366,11 @@ class BookingPage extends Component<BookingPageProps, BookingPageState> {
                             max={
                                 this.state.windOptions.length - 1
                             }
-                        ></IonRange>
+                        />
                     </div>
-
                     <WeatherHud weatherData={this.state} />
-
-                    <div
-                        className="button-container"
-                        style={{
-                            marginBottom: 'vh',
-                            marginTop: '10vh'
-                        }}>
-
-                        <div onTouchEnd={this.confirmBooking} className="book-button">
-                            Book
-                        </div>
+                    <div style={{ display: "flex", justifyContent: "center", marginTop: "2vw" }}>
+                        <div onTouchEnd={this.confirmBooking} className="book-button">Book</div>
                     </div>
                 </Background>
             </IonPage >

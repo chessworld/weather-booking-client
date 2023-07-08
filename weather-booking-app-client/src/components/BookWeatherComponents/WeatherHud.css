@@ -11,7 +11,7 @@
     display: flex;
     flex-direction: column;
     align-items: center;
-    margin-top: 5vh;
+    margin: 2vh;
 }
 
 #weather-hud {
@@ -105,11 +105,6 @@
     grid-column-end: 40;
     z-index: 3;
     color: #E0E0E0;
-}
-
-.hud-container {
-    display: flex;
-    flex-direction: column;
 }
 
 .hud-temperature-text {
