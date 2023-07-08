@@ -18,7 +18,6 @@ const WeatherCardList: React.FC<IWeatherCardList> = (props) => {
         BookingEndpoint.getLocation().then(response => {
             return response.json();
         }).then(data => {
-            console.log(data);
             setLocations(data);
         });
     }, []);

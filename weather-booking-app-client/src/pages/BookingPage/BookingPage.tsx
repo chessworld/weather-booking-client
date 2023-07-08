@@ -13,6 +13,9 @@ import './BookingPage.css';
 import BookingPageState from "./Interface/BookingPageState";
 import BookingPageProps from "./Interface/BookingPageProps";
 
+import Device from "../../device/Device"
+
+
 class BookingPage extends Component<BookingPageProps, BookingPageState> {
     bookingEndpoint: BookingEndpoint | undefined;
 
