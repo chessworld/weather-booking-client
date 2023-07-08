@@ -15,3 +15,11 @@ Local deployment:
 ionic build
 ionic serve
 ```
+
+Build and Running the App on ios
+```sh
+npm run build
+npx cap copy
+npx cap add ios
+npx cap open ios
+```
