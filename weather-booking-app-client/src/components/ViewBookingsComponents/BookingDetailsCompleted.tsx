@@ -10,6 +10,7 @@ import {
     IonImg,
     IonTitle,
 } from "@ionic/react";
+
 import {
     chevronBackOutline,
     thumbsUpSharp,
@@ -56,7 +57,7 @@ const BookingDetailsCompleted: React.FC<IWeatherCardList> = (props) => {
                 </IonButton>
             </div>
 
-            <h1 className="booking-details-title"> Booking Details</h1>
+            <h1 className="booking-details-title">Booking Details</h1>
             <IonCard className="booking-details-card">
                 <IonCardContent>
                     <div className="booking-details-content">

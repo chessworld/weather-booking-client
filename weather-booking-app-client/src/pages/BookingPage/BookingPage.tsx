@@ -11,10 +11,8 @@ import Stormy from '../../assets/Icons/thnderstorm.png';
 import Sunny from '../../assets/Icons/slight_touch_happyday.png';
 import WeatherHud from '../../components/BookWeatherComponents/WeatherHud';
 import { Component } from 'react';
-import { Device } from '@capacitor/device';
-import { Preferences } from '@capacitor/preferences';
 import { IonToast, IonRange, IonPage, IonItem, IonLabel, IonList, IonSearchbar, IonSelect, IonSelectOption } from '@ionic/react';
-import { v4 as uuidv4 } from 'uuid';
+import DeviceManager from "../../device/DeviceManager";
 
 class BookingPage extends Component<BookingPageProps, BookingPageState> {
     bookingEndpoint: BookingEndpoint | undefined;
@@ -60,42 +58,11 @@ class BookingPage extends Component<BookingPageProps, BookingPageState> {
         this.confirmBooking = this.confirmBooking.bind(this);
         this.toggleConfirmation = this.toggleConfirmation.bind(this);
         this.book = this.book.bind(this);
+        this.verifyDeviceId = this.verifyDeviceId.bind(this);
     }
 
     async componentDidMount(): Promise<any> {
-
-        var value = uuidv4();
-
-        const getOrCreateDeviceId = async () => {
-            // Attempt to get existing deviceId
-
-            const existingDeviceId = await Preferences.get({ key: 'deviceId' });
-
-            // If it exists, return it
-            if (existingDeviceId.value) {
-                return existingDeviceId.value;
-            }
-
-            // If it doesn't exist, generate a new UUID and store it
-            const newDeviceId = uuidv4();
-
-            await Preferences.set({
-                key: 'deviceId',
-                value: newDeviceId,
-            });
-
-            // Return the new deviceId
-            return newDeviceId;
-        };
-
-        // Usage
-        getOrCreateDeviceId().then(deviceId => {
-            this.setState({
-                ...this.state,
-                showToast: true,
-                toastMessage: `Device unique id is: ${deviceId}`,
-            });
-        });
+        this.verifyDeviceId()
 
         this.bookingEndpoint = this.bookingEndpoint ?? await BookingEndpoint.create();
 
@@ -109,7 +76,19 @@ class BookingPage extends Component<BookingPageProps, BookingPageState> {
         )
     }
 
-    async componentDidUpdate(prevProps: Readonly<{}>, prevState: Readonly<{}>, snapshot?: any): Promise<any> {
+    verifyDeviceId() {
+        /**
+         * Not Sure which page this should be on. It is for verifying device id
+         */
+
+        // TODO If device id is not verified, redirect user to onboarding page as well
+        DeviceManager.getOrCreateDeviceId().then(deviceId => {
+            this.setState({
+                ...this.state,
+                showToast: true,
+                toastMessage: `Device unique id is: ${deviceId}`,
+            });
+        });
     }
 
 
@@ -215,14 +194,7 @@ class BookingPage extends Component<BookingPageProps, BookingPageState> {
                                 "height": "100%",
                                 "zIndex": 3
                             }}>
-                                <ConfirmBookingDetails data={
-                                    {
-                                        id: 1,
-                                        location: "Melbourne",
-                                        date: "10-10-2023",
-                                        weather: "",
-                                    }
-                                }
+                                <ConfirmBookingDetails data={ this.state }
                                     closeBookingDetail={this.toggleConfirmation}
                                     book={this.book}
                                 />
@@ -369,7 +341,11 @@ class BookingPage extends Component<BookingPageProps, BookingPageState> {
                         />
                     </div>
                     <WeatherHud weatherData={this.state} />
-                    <div style={{ display: "flex", justifyContent: "center", marginTop: "2vw" }}>
+                    <div style={{
+                            display: "flex",
+                            justifyContent: "center",
+                            marginTop: "2vw"
+                        }}>
                         <div onTouchEnd={this.confirmBooking} className="book-button">Book</div>
                     </div>
                 </Background>

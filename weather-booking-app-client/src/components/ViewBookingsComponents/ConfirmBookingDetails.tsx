@@ -26,6 +26,10 @@ type map = {
     location: string;
     date: string;
     weather: string;
+    weatherOptions: {
+        image: string;
+    }[];
+    selectedWeatherOption: number
 };
 
 interface IWeatherCardList {
@@ -46,7 +50,13 @@ const confirmBookingDetails: React.FC<IWeatherCardList> = (props) => {
     }, []);
 
     const timeToDisplay = (time: string) => {
-        const formattedDate = new Date('2023-05-20').toLocaleDateString('en-US', { weekday: 'long', day: '2-digit', month: 'long', year: 'numeric' });
+        const formattedDate = new Date('2023-05-20')
+            .toLocaleDateString('en-US', {
+                weekday: 'long',
+                day: '2-digit',
+                month: 'long',
+                year: 'numeric'
+            });
         return formattedDate;
     };
 
@@ -80,7 +90,9 @@ const confirmBookingDetails: React.FC<IWeatherCardList> = (props) => {
                             </p>
                         </div>
                         <div className="booking-details-img-container">
-                            <IonImg className="booking-details-img" src={rainImage} />
+                            <IonImg className="booking-details-img" src={
+                                props.data.weatherOptions[props.data.selectedWeatherOption].image
+                            } />
                         </div>
                     </div>
 
@@ -112,10 +124,10 @@ const confirmBookingDetails: React.FC<IWeatherCardList> = (props) => {
                 }}>
 
                 <div className="book-button"
-                     style={{
-                         width: "50vw"
-                     }}
-                     onTouchEnd={props.book}
+                    style={{
+                        width: "50vw"
+                    }}
+                    onTouchEnd={props.book}
                 >
                     Confirm
                 </div>
