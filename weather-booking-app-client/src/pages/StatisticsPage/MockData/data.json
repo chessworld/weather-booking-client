@@ -1,0 +1,102 @@
+{
+    "commonOptions": {
+        "responsive": true,
+        "maintainAspectRatio": false
+    },
+    "bookingAmountData": {
+        "labels": [
+            "Monday",
+            "Tuesday",
+            "Wednesday",
+            "Thursday",
+            "Friday",
+            "Saturday",
+            "Sunday"
+        ],
+        "datasets": [
+            {
+                "label": "Number of booking this week",
+                "backgroundColor": "#1e90ff",
+                "borderColor": "white",
+                "borderWidth": 1,
+                "hoverBackgroundColor": "rgba(255,99,132,0.4)",
+                "hoverBorderColor": "rgba(255,99,132,1)",
+                "data": [
+                    65,
+                    59,
+                    80,
+                    81,
+                    56,
+                    55,
+                    40
+                ]
+            }
+        ],
+        "options": {
+            "responsive": true,
+            "maintainAspectRatio": false
+        }
+    },
+    "mostGuessedWeather": {
+        "labels": [
+            "Sunny",
+            "Cloudy",
+            "Rainy",
+            "Stormy"
+        ],
+        "datasets": [
+            {
+                "label": "My First Dataset",
+                "data": [
+                    300,
+                    50,
+                    100,
+                    10
+                ],
+                "backgroundColor": [
+                    "rgb(255,99,132)",
+                    "rgb(54,162,235)",
+                    "rgb(255,205,86)"
+                ],
+                "hoverOffset": 4
+            }
+        ],
+        "options": {
+            "responsive": true,
+            "maintainAspectRatio": false,
+            "plugins": {
+                "legend": {
+                    "position": "right"
+                }
+            }
+        }
+    },
+    "bookingAcuracyData": {
+        "labels": [
+            0,
+            1,
+            2,
+            3,
+            4,
+            5,
+            6
+        ],
+        "datasets": [
+            {
+                "label": "Booking Accuracy",
+                "data": [
+                    65,
+                    59,
+                    80,
+                    81,
+                    56,
+                    55,
+                    40
+                ],
+                "fill": false,
+                "borderColor": "rgb(75,192,192)",
+                "tension": 0.1
+            }
+        ]
+    }
+}

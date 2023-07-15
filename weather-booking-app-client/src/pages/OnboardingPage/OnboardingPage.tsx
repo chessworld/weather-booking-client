@@ -1,17 +1,17 @@
 import React from 'react';
 import { Component, useRef } from 'react';
-import Background from '../components/ScreenComponents/Background';
+import Background from '../../components/ScreenComponents/Background';
 import { IonPage } from '@ionic/react';
 import './OnboardingPage.css';
 
 
-import Surfing from '../assets/Icons/surfing.png';
-import FlyingKite from '../assets/Icons/flying-kite.png';
-import EngagementRing from '../assets/Icons/engagement-rings.png';
-import Picnic from '../assets/Icons/Picnic.png';
-import BookButton from '../assets/Icons/onboarding-book-button.png';
-import Cup from '../assets/Icons/Cup.png';
-import Weather from '../assets/Icons/sun_cloud_rain.png';
+import Surfing from '../../assets/Icons/surfing.png';
+import FlyingKite from '../../assets/Icons/flying-kite.png';
+import EngagementRing from '../../assets/Icons/engagement-rings.png';
+import Picnic from '../../assets/Icons/Picnic.png';
+import BookButton from '../../assets/Icons/onboarding-book-button.png';
+import Cup from '../../assets/Icons/Cup.png';
+import Weather from '../../assets/Icons/sun_cloud_rain.png';
 
 interface EventTarget {
     style: {
@@ -130,7 +130,6 @@ class OnboardingPage extends Component<AbcProps, AbcState> {
             hasMovedPagesThisTouch: false
         });
 
-        console.log(this.state.currentPage.current);
         this.state.currentPage && this.state.currentPage.current.addEventListener('touchmove', this.handleScroll);
     }
 
