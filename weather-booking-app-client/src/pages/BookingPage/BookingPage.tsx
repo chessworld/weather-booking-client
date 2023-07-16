@@ -1,6 +1,7 @@
 import './BookingPage.css';
 import Background from '../../components/ScreenComponents/Background';
 import BookingEndpoint from "../../endpoint-caller/bookingEndpoint";
+import UserEndpoint from "../../endpoint-caller/userEndpoint";
 import BookingPageProps from "./Interface/BookingPageProps";
 import BookingPageState from "./Interface/BookingPageState";
 import Cloud from '../../assets/Icons/cloudy.png';
@@ -81,13 +82,37 @@ class BookingPage extends Component<BookingPageProps, BookingPageState> {
          * Not Sure which page this should be on. It is for verifying device id
          */
 
-        // TODO If device id is not verified, redirect user to onboarding page as well
         DeviceManager.getOrCreateDeviceId().then(deviceId => {
-            this.setState({
-                ...this.state,
-                showToast: true,
-                toastMessage: `Device unique id is: ${deviceId}`,
-            });
+            UserEndpoint.getUser(deviceId)
+                .then(user => {
+                    if (user.status === 404) {
+                        console.log("User does not exist. Creating new user.");
+                        UserEndpoint.createUser()
+                            .then(user => {
+                                user.json().then(user => {
+                                    DeviceManager.updateDeviceId(user.id)
+                                    this.showToast(`Created user ${user.id}`);
+                                });
+                            })
+                            .catch(error => {
+                                console.log(error);
+                            });
+                    } else {
+                        // User Already exists
+                        this.showToast(`Welcome back!`);
+                    }
+                });
+                })
+                .catch(error => {
+        });
+
+    }
+
+    showToast(message: string): void {
+        this.setState({
+            ...this.state,
+            showToast: true,
+            toastMessage: message,
         });
     }
 
@@ -194,7 +219,7 @@ class BookingPage extends Component<BookingPageProps, BookingPageState> {
                                 "height": "100%",
                                 "zIndex": 3
                             }}>
-                                <ConfirmBookingDetails data={ this.state }
+                                <ConfirmBookingDetails data={this.state}
                                     closeBookingDetail={this.toggleConfirmation}
                                     book={this.book}
                                 />
@@ -342,10 +367,10 @@ class BookingPage extends Component<BookingPageProps, BookingPageState> {
                     </div>
                     <WeatherHud weatherData={this.state} />
                     <div style={{
-                            display: "flex",
-                            justifyContent: "center",
-                            marginTop: "2vw"
-                        }}>
+                        display: "flex",
+                        justifyContent: "center",
+                        marginTop: "2vw"
+                    }}>
                         <div onTouchEnd={this.confirmBooking} className="book-button">Book</div>
                     </div>
                 </Background>
