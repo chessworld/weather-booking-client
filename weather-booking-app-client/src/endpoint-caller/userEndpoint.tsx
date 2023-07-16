@@ -1,43 +1,55 @@
+import { BASE_URL } from '../config.test';
+
+type UserEndpointResponse = {
+    id?: string,
+    error?: string,
+    name?: string,
+    completed_tutorial: string
+}
+
 class UserEndpoint {
-    static BASE_URL: string = "http://127.0.0.1:8000/weather_api";
+    static BASE_URL: string = BASE_URL;
 
-    constructor(locationData: any, enums: any) {
-        /* this.BASE_URL = process.env.REACT_APP_WEATHER_API_BASE_URL || "http://127.0.0.1:8000/weather_api" */
-    }
-
-    static options(method: string, body?: { [category: string]: any }): any {
+    static options(method: 'GET' | 'POST' | 'PUT', body?: { [category: string]: any }): RequestInit {
         return {
             method: method,
             headers: {
                 'Content-Type': 'application/json'
             },
-            body: JSON.stringify(body)
+            body: body ? JSON.stringify(body) : null
         }
     };
 
-    static async getUser(userId: string): Promise<{[category:string]: any}> {
-        const usersRoute = "/users/" + userId;
-        const url = UserEndpoint.BASE_URL + usersRoute;
+    static async getUser(userId: string): Promise<UserEndpointResponse> {
+        const url = `${UserEndpoint.BASE_URL}/users/${userId}`;
 
-        return fetch(url, UserEndpoint.options('GET'))
+        const response = await fetch(url, UserEndpoint.options('GET'));
+
+        return response.json();
     }
 
-    static async markUserCompletedTutorial(userId: string): Promise<any> {
-        const enumsRoute = "/user/" + userId + "/"
-        const url = UserEndpoint.BASE_URL + enumsRoute;
+    static async completeUserTutorial(userId: string): Promise<UserEndpointResponse> {
+        const url = `${UserEndpoint.BASE_URL}/users/${userId}/`;
 
-        return fetch(url, UserEndpoint.options('POST', {
+        const response = await fetch(url, UserEndpoint.options('PUT', {
             "completed_tutorial": true
         }));
+        if (!response.ok) {
+            throw new Error(`HTTP error! status: ${response.status}`);
+        }
+        return response.json();
     }
 
-    static async createUser(userName?: string): Promise<UserEndpoint> {
-        const usersRoute = "/users/"
-        const url = UserEndpoint.BASE_URL + usersRoute;
+    static async createUser(): Promise<UserEndpointResponse> {
+        const url = `${UserEndpoint.BASE_URL}/users/`;
 
-        return fetch(url, UserEndpoint.options('POST'));
+        const response = await fetch(url, UserEndpoint.options('POST'));
+        if (!response.ok) {
+            throw new Error(`HTTP error! status: ${response.status}`);
+        }
+
+        return response.json();
     }
 }
 
 export default UserEndpoint;
-

@@ -137,9 +137,7 @@ class WeatherHud extends Component<AbcProps, AbcState> {
                         <div className="weather-hud-grid">
                             <div className="item1">
                                 {
-                                    this.props.weatherData.weatherOptions[this.props.weatherData.selectedWeatherOption].name == 'Rainy'
-                                        ? 'Rain'
-                                        : this.props.weatherData.weatherOptions[this.props.weatherData.selectedWeatherOption].name
+                                    this.props.weatherData.weatherOptions[this.props.weatherData.selectedWeatherOption].name
                                 }
                             </div>
 

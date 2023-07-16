@@ -1,5 +1,6 @@
 import React from 'react';
-import { Component, useRef } from 'react';
+import { Component } from 'react';
+import { withRouter } from 'react-router-dom';
 import Background from '../components/ScreenComponents/Background';
 import { IonPage } from '@ionic/react';
 import './OnboardingPage.css';
@@ -12,6 +13,9 @@ import Picnic from '../assets/Icons/Picnic.png';
 import BookButton from '../assets/Icons/onboarding-book-button.png';
 import Cup from '../assets/Icons/Cup.png';
 import Weather from '../assets/Icons/sun_cloud_rain.png';
+
+import UserEndpoint from "../endpoint-caller/userEndpoint";
+import DeviceManager from "../device/DeviceManager";
 
 interface EventTarget {
     style: {
@@ -109,10 +113,12 @@ class OnboardingPage extends Component<AbcProps, AbcState> {
                             <img onTouchEnd={() => alert("Weather!")} src={Weather} />
                         </div>
                         <div className="onboarding-page-text">
-                            <div className="onboarding-page-button">
+                            <div className="onboarding-page-button" onTouchEnd={
+                                () => this.completeTutorial()
+                            }>
                                 Book Now
                             </div>
-                        </div>
+                        </div >
                     </>
                 )
             ]
@@ -121,6 +127,14 @@ class OnboardingPage extends Component<AbcProps, AbcState> {
         this.handleScroll = this.handleScroll.bind(this);
         this.stopHandleScroll = this.stopHandleScroll.bind(this);
         this.startHandleScroll = this.startHandleScroll.bind(this);
+    }
+
+    completeTutorial() {
+        DeviceManager.getOrCreateDeviceId().then(deviceId => {
+            UserEndpoint.completeUserTutorial(deviceId).then(() => {
+                this.props.history.push("/tab1");
+            });
+        });
     }
 
     startHandleScroll(e: any) {
@@ -177,7 +191,7 @@ class OnboardingPage extends Component<AbcProps, AbcState> {
 
     componentDidUpdate(): void {
         /* console.log(this.state.currentPage);
-* console.log(this.state.lastTouchMousePositionX); */
+        * console.log(this.state.lastTouchMousePositionX); */
     }
 
     moveToPrevPage(): void {
@@ -237,4 +251,4 @@ class OnboardingPage extends Component<AbcProps, AbcState> {
     }
 }
 
-export default OnboardingPage;
+export default withRouter(OnboardingPage);

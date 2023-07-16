@@ -27,10 +27,10 @@ class DeviceManager implements IDeviceManager {
     }
 
 
-    static async updateDeviceId(newDeviceId: string) {
+    static async updateDeviceId(newDeviceId?: string) {
         await Preferences.set({
             key: 'deviceId',
-            value: newDeviceId,
+            value: newDeviceId ?? '',
         });
     }
 
