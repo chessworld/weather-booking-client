@@ -1,4 +1,4 @@
-import React from react';
+import React from 'react';
 import { Component, useRef } from 'react';
 import { Chart, registerables } from 'chart.js';
 import { Bar, Line, Doughnut } from 'react-chartjs-2';
@@ -6,7 +6,7 @@ import { IonPage } from '@ionic/react';
 import './StatisticsPage.css';
 import mockData from "./MockData/data.json";
 
-interface AbcProps {
+interface StatisticsPageProps {
     [category: string]: any;
     bookingAmountData?: {
         labels: string[], // Labels are day of the week
@@ -32,57 +32,84 @@ interface AbcProps {
     }
 }
 
-interface AbcState {
-    bookingAmountData: any
+interface StatisticPageState {
+    chartOptions: {
+        responsive: boolean,
+        maintainAspectRatio: boolean
+    };
+    doughnutChartOptions: {
+	plugins: {
+	    legend: {
+		position: string
+	    }
+	}
+    } | StatisticPageState.chartOptions;
+    bookingAmountData: any;
     mostGuessedWeather: any;
     bookingAcuracyData: any;
 }
 
-export default class StatisticsPage extends Component<AbcProps, AbcState> {
-    constructor(props: AbcProps) {
+export default class StatisticsPage extends Component<StatisticsPageProps, StatisticPageState> {
+    constructor(props: StatisticsPageProps) {
         super(props);
 
         this.state = {
+            chartOptions: {
+                responsive: true,
+                maintainAspectRatio: false
+            },
+	    doughnutChartOptions: {
+		"responsive": true,
+		"maintainAspectRatio": false,
+		"plugins": {
+		    "legend": {
+			"position": "right"
+		    }
+		}
+	    },
             bookingAmountData: this.props.bookingAmountData ? {
                 ...this.props.bookingAmountData,
                 datasets: [
                     {
+                        ...this.props.bookingAmountData.datasets[0],
                         label: 'Number of booking this week',
                         backgroundColor: '#1e90ff',
                         borderColor: 'white',
                         borderWidth: 1,
                         hoverBackgroundColor: 'rgba(255,99,132,0.4)',
                         hoverBorderColor: 'rgba(255,99,132,1)',
-                        ...this.props.bookingAmountData
                     }
-                ],
-                options: {
-                    ...mockData.commonOptions
-                }
+                ]
             } : mockData.bookingAmountData,
             mostGuessedWeather: this.props.mostGuessedWeather ? {
+		...this.props.mostGuessedWeather,
                 labels: [
                     'Sunny',
                     'Cloudy',
                     'Rainy',
                     'Stormy'
                 ],
+                datasets: [{
+                    "label": "My First Dataset",
+                    "backgroundColor": [
+                        "rgb(255,99,132)",
+                        "rgb(54,162,235)",
+                        "rgb(255,205,86)"
+                    ],
+                    "hoverOffset": 4,
+                    ...this.props.mostGuessedWeather.datasets[0],
+                }]
             } : mockData.mostGuessedWeather,
-            bookingAcuracyData: {
-                labels: new Array(7).fill().map((_, i) => {
-                    return i;
-                }),
+            bookingAcuracyData: this.props.bookingAcuracyData ? {
+                ...this.props.bookingAcuracyData,
                 datasets: [{
                     label: 'Booking Accuracy',
-                    data: [65, 59, 80, 81, 56, 55, 40],
                     fill: false,
                     borderColor: 'rgb(75, 192, 192)',
-                    tension: 0.1
-                }],
-                options: {
-                    ...mockData.commonOptions
-                }
-            }
+                    tension: 0.1,
+                    ...this.props.bookingAcuracyData.datasets[0]
+                }]
+            } : mockData.bookingAcurracyData
         }
     }
 
@@ -119,17 +146,17 @@ export default class StatisticsPage extends Component<AbcProps, AbcState> {
             <div className="booking-amount-graph-container">
             <Bar
             data={this.state.bookingAmountData}
-                options={this.state.bookingAmountData.options}
+                options={this.state.chartOptions}
             />
                 </div>
 
                 <div className="booking-accuracy-graph-container">
-                    <Line data={this.state.bookingAcuracyData} options={this.state.bookingAcuracyData.options} />
+                    <Line data={this.state.bookingAcuracyData} options={this.state.chartOptions} />
                 </div>
 
                 <div className="most-guessed-weather-container">
                     <div className="graph-title">Most Guessed Weather</div>
-                    <Doughnut options={this.state.mostGuessedWeather.options} data={this.state.mostGuessedWeather} />
+                    <Doughnut options={this.state.doughnutChartOptions} data={this.state.mostGuessedWeather} />
                 </div>
 
             </div>
@@ -138,5 +165,3 @@ export default class StatisticsPage extends Component<AbcProps, AbcState> {
         );
     }
 }
-
-
