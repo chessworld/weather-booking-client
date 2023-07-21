@@ -16,6 +16,7 @@ import Tab2 from './pages/Tab2';
 import Tab3 from './pages/Tab3';
 import OnboardingPage from './pages/OnboardingPage/OnboardingPage';
 import StatisticsPage from './pages/StatisticsPage/StatisticsPage';
+import TestHarness from './pages/TestHarness';
 import BookingDetails from './components/ViewBookingsComponents/BookingDetails';
 
 /* Core CSS required for Ionic components to work properly */
@@ -64,6 +65,9 @@ const App: React.FC = () => {
                         </Route>
                         <Route exact path="/statisticPage">
                             <StatisticsPage />
+                        </Route>
+                        <Route exact path="/testHarness">
+                            <TestHarness />
                         </Route>
                         <Route path="/booking-details" component={BookingDetails} />
                     </IonRouterOutlet>
