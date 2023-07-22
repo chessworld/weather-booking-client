@@ -1,0 +1,12 @@
+.test-icon {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 50vw;
+    height: 50vw;
+}
+
+.test-icon svg {
+    width: 50%; /* Adjust this value according to your requirements */
+    height: auto;
+}

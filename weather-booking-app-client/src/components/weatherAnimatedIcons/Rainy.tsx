@@ -8,19 +8,23 @@ import {
 } from "@ionic/react";
 
 import React from "react";
-import "./Cloudy.css"
+import "./Cloudy.css";
+import Wind from "./weatherComponents/Wind";
 
-const Rainy: React.FC = () => {
+import WeatherIconProps from "./interface/WeatherIconProps";
+
+const Rainy: React.FC<WeatherIconProps> = (props) => {
     return (
-        <div className="element">
+        <div className={props.className}>
             <svg
                 version="1.1"
-                id="Layer_1"
+                id="Layer_"
                 xmlns="http://www.w3.org/2000/svg"
                 x="0px"
                 y="0px"
-                viewBox="0 0 55.1 60"
+                viewBox="0 0 58 58"
                 style={{
+                    ...props.style,
                     "enableBackground": "new 0 0 55.1 49.5"
                 }}
                 xmlSpace="preserve"
@@ -54,6 +58,12 @@ const Rainy: React.FC = () => {
                         <circle id="XMLID_10_" className="white" cx="34.5" cy="15.6" r="15.6" />
                     </g>
                 </g>
+
+                {
+                    props.isWindy && (
+                        <Wind />
+                    )
+                }
             </svg>
         </div>
     );

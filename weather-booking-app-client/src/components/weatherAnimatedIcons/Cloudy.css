@@ -25,6 +25,13 @@
     
 }
 
+.st1 {
+    fill: None;
+    stroke: #EEE;
+    stroke-width: 2;
+    stroke-miterlimit: 10
+}
+
 .white {fill:#FFFFFF}
 .gray {fill:#E0E0E0}
 .dark-gray {fill:#EFEFEF}

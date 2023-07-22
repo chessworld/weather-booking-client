@@ -10,17 +10,20 @@ import {
 import React from "react";
 import "./Cloudy.css"
 
-const Stormy: React.FC = () => {
+import WeatherIconProps from './interface/WeatherIconProps';
+
+const Stormy: React.FC<WeatherIconProps> = (props) => {
     return (
-        <div className="element" style={{width: "30vw", height: "30vh"}}>
+        <div className={props.className}>
             <svg
                 version="1.1"
                 id="Layer_1"
                 xmlns="http://www.w3.org/2000/svg"
                 x="0px"
                 y="0px"
-                viewBox="0 0 55.1 60"
+                viewBox="0 0 65 58"
                 style={{
+                    ...props.style,
                     "enableBackground": "new 0 0 55.1 49.5"
                 }}
                 xmlSpace="preserve"
