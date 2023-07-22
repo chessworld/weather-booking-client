@@ -1,0 +1,25 @@
+.booking-page-date-location-header {
+    margin-left: 2vw;
+    color: #1e90ff;
+    font-weight: 900
+}
+
+
+
+.booking-page-date-location-location {
+    border: none;
+    border-bottom: 1px solid #888;
+    background: transparent;
+    padding: 20px;
+    width: 70vw;
+    margin-bottom: 5vh;
+}
+
+.booking-page-date-location-container {
+    height: 90vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    /* background: white; */
+}
