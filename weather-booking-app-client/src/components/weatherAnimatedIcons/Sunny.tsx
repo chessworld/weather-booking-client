@@ -17,16 +17,19 @@ import WeatherIconProps from './interface/WeatherIconProps';
 
 const Sunny: React.FC<WeatherIconProps> = (props) => {
     return (
-        <div className={props.className}>
+        <div className={props.className}
+            style ={{
+                marginTop: "-8px"
+            }}
+        >
             <svg
                 version="1.1"
                 id="Layer_1"
                 x="0px"
                 y="0px"
-                viewBox="0 0 50 48"
+                viewBox="0 0 43 50"
                 style={{
                     ...props.style,
-                    enableBackground: "new 0 0 60.7 40"
                 }}
                 xmlSpace="preserve">
                 {

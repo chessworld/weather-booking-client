@@ -37,28 +37,30 @@
     font-size: 2.8vw;
     font-weight: bold;
     margin-top: 1vh;
+    color: white;
 }
 
 .weather-choose-option {
     max-width: var(--weather-choose-option-max-width);
     min-width: var(--weather-choose-option-min-width);
     max-height: var(--weather-choose-option-max-height);
-    display: flex;
     background: rgba(100, 100, 100, 0.50);
     backdrop-filter: blur(2px);
+    overflow: hidden;
+    display: flex;
+    flex-direction: row;
     justify-content: center;
     align-items: center;
-    border-radius: 3.5em;
+    border-radius: 3.5em !important;
     color: white;
     width: 8vw;
-    height: 14vh;
-    padding: .5vh 0px .5vh 0px;
+    height: 18vh;
+    /* padding: 4vh 0px 4vh; */
     text-align: center;
-    transition: background .4s ease-in-out;
+    box-shadow: 0 0 0 .3em rgba(255,255,255,.7) inset, 0 0 2em -.3em var(--shadow) !important;
 }
 
 .weather-choose-option:hover {
-    background: rgba(100, 100, 255, 0.5);
 }
 
 .weather-rhombus-container {
@@ -83,11 +85,20 @@
     border-radius: 25px;
 }
 
+.weather-icon {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 60%;
+    height: 100%
+}
+
 .weather-slider {
     width: var(--slider-width);
 }
 
 .weather-slider-text {
+    color: white;
     width: var(--slider-width);
     font-size: 1.2rem;
     font-weight: bold;

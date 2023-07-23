@@ -6,6 +6,7 @@ ion-content {
       rgba(118, 115, 220, 0.4) 100%
     ),
     #ffffff;
+  /* --background: #333; */
   /* --offset-top: 0; */
 }
 

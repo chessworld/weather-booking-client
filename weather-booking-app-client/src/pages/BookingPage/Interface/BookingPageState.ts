@@ -1,9 +1,17 @@
+import React from 'react';
+
 interface Tab1State {
     [category: string]: any;
     date: string;
     location: string;
     temperatureOptions: { [catagory: string]: any };
-    weatherOptions: { name: string, image?: any }[];
+    weatherOptions: {
+        name: string,
+        effectClassName: string,
+        backgroundClassName: string,
+        svg: React.FC<any>,
+        image?: any,
+    }[];
     selectedWeatherOption: number;
     selectedWindOption: number;
     selectedTemperatureOption: number;
