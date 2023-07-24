@@ -25,7 +25,6 @@ const Rainy: React.FC<WeatherIconProps> = (props) => {
                 viewBox="0 0 58 58"
                 style={{
                     ...props.style,
-                    "enableBackground": "new 0 0 55.1 49.5"
                 }}
                 xmlSpace="preserve"
             >
@@ -45,7 +44,6 @@ const Rainy: React.FC<WeatherIconProps> = (props) => {
                         </animateTransform>
                         <animate attributeType="CSS"
                             attributeName="opacity"
-                            attributeType="XML"
                             dur="1s"
                             keyTimes="0;1"
                             repeatCount="indefinite"

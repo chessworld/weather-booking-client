@@ -9,15 +9,18 @@
     width: 85vw;
 }
 
-.button-container-vertical {
+
+.page-content {
     display: flex;
     flex-direction: column;
-    justify-content: center;
+    height: 80vh;
+    justify-content: space-around;
     align-items: center;
-    margin: 2vh 0 1vh 0;
+    margin: 7vh 0 1vh 0;
 }
 
 .button-container {
+    width: 100%;
     display: flex;
     flex-direction: row;
     padding: 0px !important;
@@ -60,30 +63,27 @@
     box-shadow: 0 0 0 .3em rgba(255,255,255,.7) inset, 0 0 2em -.3em var(--shadow) !important;
 }
 
-.weather-choose-option:hover {
-}
+/* .weather-rhombus-container { */
+/*     width: 20vw; */
+/*     position: absolute; */
+/*     left: 20vw; */
+/*     height: 18vh; */
+/*     background: rgba(100, 100, 100, 1); */
+/*     z-index: 2; */
+/*     transform: rotate(90deg, 0, 90deg) scale(1, -1); */
+/*     border-radius: 25px 0px 0px 0px; */
+/* } */
 
-.weather-rhombus-container {
-    width: 20vw;
-    position: absolute;
-    left: 20vw;
-    height: 18vh;
-    background: rgba(100, 100, 100, 1);
-    z-index: 2;
-    transform: rotate(90deg, 0, 90deg) scale(1, -1);
-    border-radius: 25px 0px 0px 0px;
-}
-
-.weather-rhombus-container-bottom {
-    transform: skew(20deg);
-    position: absolute;
-    left: 4.1vw;
-    width: 20vw;
-    height: 20vh;
-    background: rgba(100, 100, 100);
-    transform: skew(-20deg);
-    border-radius: 25px;
-}
+/* .weather-rhombus-container-bottom { */
+/*     transform: skew(20deg); */
+/*     position: absolute; */
+/*     left: 4.1vw; */
+/*     width: 20vw; */
+/*     height: 20vh; */
+/*     background: rgba(100, 100, 100); */
+/*     transform: skew(-20deg); */
+/*     border-radius: 25px; */
+/* } */
 
 .weather-icon {
     display: flex;
@@ -107,17 +107,18 @@
 
 .slider-container {
     display: flex;
-    margin-top: 5vh;
+    margin-top: 2vh;
     flex-direction: column;
     align-items: center;
 }
 
 .book-button {
+    position: relative !important;
     color: white;
     background: #004fb5;
     padding: 20px;
     border-radius: 8px;
-    width: 40vw;
+    width: 50vw;
     text-align: center;
     font-size: 2.8vw;
     font-weight: 600;

@@ -20,6 +20,7 @@
     display: flex;
     flex-direction: column;
     align-items: center;
+    position: relative !important;
     margin: 2vh;
 }
 
@@ -93,7 +94,7 @@
 
 @keyframes flare {
     to {
-        transform: translate(-1em, .5em);
+        transform: translate(-5em, .5em);
         opacity: 1;
         font-size: 30%;
     }
@@ -112,7 +113,7 @@
     border-radius: 100%;
     background: rgba(255, 255, 255, .3);
     box-shadow: -1em -1em 0 2em rgba(255, 255, 255, .15);
-    animation: flare 12000ms infinite alternate linear;
+    animation: flare 7000ms infinite alternate linear;
 }
 
 .sun ul {
@@ -240,8 +241,8 @@
 }
 
 .hud-contents {
+    position: relative;
     overflow: hidden;
-    position: absolute;
     width: var(--hud-width);
     height: var(--hud-height);
     max-width: var(--hud-max-width);

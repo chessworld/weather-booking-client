@@ -31,7 +31,6 @@ const Wind: React.FC = () => {
             </animateTransform>
             <animate attributeType="CSS"
             attributeName="opacity"
-            attributeType="XML"
             dur="1.5s"
             keyTimes="0;1"
             repeatCount="indefinite"

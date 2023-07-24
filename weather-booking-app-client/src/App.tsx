@@ -16,6 +16,7 @@ import Tab2 from './pages/Tab2';
 import Tab3 from './pages/Tab3';
 import OnboardingPage from './pages/OnboardingPage/OnboardingPage';
 import StatisticsPage from './pages/StatisticsPage/StatisticsPage';
+import BookingPageDateLocation from './pages/BookingPage/BookingPageDateLocation';
 import TestHarness from './pages/TestHarness';
 import BookingDetails from './components/ViewBookingsComponents/BookingDetails';
 
@@ -47,10 +48,14 @@ const App: React.FC = () => {
             <IonReactRouter>
                 <IonTabs>
                     <IonRouterOutlet>
-                        <Route exact path="/tab1">
+                        <Route exact path="/tab">
                             <BookingPage />
+                            {/* <BookingPageDateLocation /> */}
                         </Route>
-
+                        <Route exact path="/tab1">
+                            {/* <BookingPage /> */}
+                            <BookingPageDateLocation />
+                        </Route>
                         <Route exact path="/tab2">
                             <Tab2 />
                         </Route>

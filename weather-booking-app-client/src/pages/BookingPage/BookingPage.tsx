@@ -197,6 +197,7 @@ class BookingPage extends Component<BookingPageProps, BookingPageState> {
 
     render(): React.ReactNode {
         const svgWeatherIconComponent = this.state.weatherOptions[0].svg;
+
         return (
             <IonPage>
                 <IonToast
@@ -205,7 +206,6 @@ class BookingPage extends Component<BookingPageProps, BookingPageState> {
                     message={this.state.toastMessage}
                     duration={1000}
                 />
-
                 <Background>
                     {
                         this.state.showConfirmation && (
@@ -224,162 +224,102 @@ class BookingPage extends Component<BookingPageProps, BookingPageState> {
                         )
                     }
 
-                    <div className="button-container-vertical">
-                        {/* <IonSearchbar
-                            className="search-bar"
-                            placeholder='Search Location'
-                            onIonChange={e => this.setState({
-                            ...this.state,
-                            location: e.detail.value!
-                            })}
+                    <div className="page-content">
 
-                            value={this.state.location}
-
-                            onFocus={() => this.setState({
-                            ...this.state,
-                            showSuggestions: true
-                            })}
-
-                            onBlur={() => this.setState({
-                            ...this.state,
-                            showSuggestions: false
-                            })}
-                            />
+                        {/* Vertical Buttons */}
+                        <div className="button-container">
                             {
-                            this.state.showSuggestions && (
-                            <IonList style={{
-                            position: 'absolute',
-                            width: '90%',
-                            zIndex: 10,
-                            top: "10vh",
-                            background: "transparent"
-                            }}>
-                            {this.state.locationSuggestions
-                            .filter((suggestion: string) => {
-                            return suggestion.toLowerCase()
-                            .includes(this.state.location.toLowerCase())
-                            })
-                            .map((suggestion: string, i: number) => (
-                            <IonItem key={i} button onTouchEnd={() => {
-                            this.setState({
-                            ...this.state,
-                            location: suggestion,
-                            });
-                            }}>
-                            <IonLabel>
-                            {suggestion}
-                            </IonLabel>
-                            </IonItem>
-                            ))}
-
-                            </IonList>
-                            )
-                            }
-
-                            <div className="selector-container">
-                            <IonSelect
-                            label="Time Period"
-                            className="selector"
-                            aria-label="time-period"
-                            placeholder="Select Time Period"
-                            onIonChange={e => this.setState({
-                            ...this.state,
-                            timePeriod: e.detail.value
-                            })}
-                            >
-                            <IonSelectOption value="Morning">Morning</IonSelectOption>
-                            <IonSelectOption value="Afternoon">Afternoon</IonSelectOption>
-                            <IonSelectOption value="Evening">Evening</IonSelectOption>
-                            <IonSelectOption value="Night">Night</IonSelectOption>
-                            </IonSelect>
-                            </div>
-                          */}
-                            </div>
-
-                    <div className="button-container">
-                        {
-                            this.state.weatherOptions.map((option: any, i: number) => {
-                                return (
-                                    <div className="weather-choose-container" key={`${ i }`}
-                                        onClick = { () => {
-                                            this.handleWeatherSelectionUpdate(i);
-                                        }}
-                                    >
-                                        <div
-                                            className={`hud-background ${this.state.weatherOptions[i].backgroundClassName} weather-choose-option ${i == this.state.selectedWeatherOption
-                                                && 'weather-choose-option-focus'}`}
+                                this.state.weatherOptions.map((option: any, i: number) => {
+                                    return (
+                                        <div className="weather-choose-container" key={`${ i }`}
+                                            onClick = { () => {
+                                                this.handleWeatherSelectionUpdate(i);
+                                            }}
                                         >
-                                            <div className={`${this.state.weatherOptions[i].effectClassName}`}>
-                                                <ul>
-                                                    <li></li>
-                                                    <li></li>
-                                                    <li></li>
-                                                    <li></li>
-                                                    <li></li>
-                                                </ul>
+                                            <div
+                                                className={`hud-background ${this.state.weatherOptions[i].backgroundClassName} weather-choose-option ${i == this.state.selectedWeatherOption
+                                                    && 'weather-choose-option-focus'}`}
+                                            >
+                                                <div className={`${this.state.weatherOptions[i].effectClassName}`}>
+                                                    <ul>
+                                                        <li></li>
+                                                        <li></li>
+                                                        <li></li>
+                                                        <li></li>
+                                                        <li></li>
+                                                    </ul>
+                                                </div>
+                                                    {
+                                                        React.createElement(option.svg, {
+                                                            className: 'weather-icon'
+                                                        })
+                                                    }
                                             </div>
-                                                {
-                                                    React.createElement(option.svg, {
-                                                        className: 'weather-icon'
-                                                    })
-                                                }
+                                            <span className="weather-choose-text">
+                                                {option.name}
+                                            </span>
                                         </div>
-                                        <span className="weather-choose-text">
-                                            {option.name}
-                                        </span>
-                                    </div>
-                                )
-                            })
-                        }
-
-                    </div>
-
-                    <div className="slider-container">
-                        <span className="weather-slider-text">
-                            Temperature
-                        </span>
-                        <IonRange
-                            className="weather-slider"
-                            ticks={true}
-                            snaps={true}
-                            min={0}
-                            max={
-                                this.state.temperatureOptions.length - 1
-                            }
-                            onIonChange={(e: any) => {
-                                this.setState(prev => {
-                                    return {
-                                        ...prev,
-                                        selectedTemperatureOption: e.detail.value
-                                    };
+                                    )
                                 })
-                            }}
-                        ></IonRange>
-
-                        <span className="weather-slider-text">Wind</span>
-
-                        <IonRange
-                            className="weather-slider"
-                            ticks={true}
-                            snaps={true}
-                            min={0}
-                            onIonChange={(e: any) => {
-                                this.setState(prev => {
-                                    return { ...prev, selectedWindOption: e.detail.value };
-                                })
-                            }}
-                            max={
-                                this.state.windOptions.length - 1
                             }
-                        />
-                    </div>
-                    <WeatherHud weatherData={this.state} />
-                    <div style={{
-                            display: "flex",
-                            justifyContent: "center",
-                            marginTop: "2vw"
-                        }}>
-                        <div onTouchEnd={this.confirmBooking} className="book-button">Book</div>
+
+                        </div>
+
+                        {/* Sliders */}
+                        <div className="slider-container">
+                            <span className="weather-slider-text">
+                                Temperature
+                            </span>
+                            <IonRange
+                                className="weather-slider"
+                                ticks={true}
+                                snaps={true}
+                                min={0}
+                                max={
+                                    this.state.temperatureOptions.length - 1
+                                }
+                                onIonChange={(e: any) => {
+                                    this.setState(prev => {
+                                        return {
+                                            ...prev,
+                                            selectedTemperatureOption: e.detail.value
+                                        };
+                                    })
+                                }}
+                            ></IonRange>
+
+                            <span className="weather-slider-text">Wind</span>
+
+                            <IonRange
+                                className="weather-slider"
+                                ticks={true}
+                                snaps={true}
+                                min={0}
+                                onIonChange={(e: any) => {
+                                    this.setState(prev => {
+                                        return { ...prev, selectedWindOption: e.detail.value };
+                                    })
+                                }}
+                                max={
+                                    this.state.windOptions.length - 1
+                                }
+                            />
+                        </div>
+
+                        {/* Weatherhud */}
+                        <WeatherHud weatherData={this.state} isWindy = {
+                            this.state.selectedWindOption > 1 // If wind is more than 1, it is windy
+                        } /> 
+
+                        {/* Book Button */}
+                        <div style={{
+                                display: "flex",
+                                justifyContent: "center",
+                                marginTop: "2vw"
+                            }}>
+                            <div onTouchEnd={this.confirmBooking} className="book-button">Book</div>
+                        </div>
+
                     </div>
                 </Background>
             </IonPage >

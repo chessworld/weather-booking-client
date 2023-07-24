@@ -1,25 +1,174 @@
-.booking-page-date-location-header {
-    margin-left: 2vw;
-    color: #1e90ff;
-    font-weight: 900
+:root {
+    --height: 60px;
+    --border-rad: 2vh
 }
 
+.booking-page-date-location-header {
+    color: #1e90ff;
+    width: 80vw;
+    font-size: 7vw;
+    margin-left: 4vh;
+    font-weight: 900;
+}
 
 
 .booking-page-date-location-location {
-    border: none;
-    border-bottom: 1px solid #888;
-    background: transparent;
-    padding: 20px;
+    /* border: none; */
+    /* border-bottom: 1px solid #888; */
+    /* background: transparent; */
+    border: 1px solid #888;
+    border-left: none;
+    border-radius: 0 var(--border-rad) var(--border-rad) 0;
+    height: var(--height);
+    /* padding: 20px; */
     width: 70vw;
-    margin-bottom: 5vh;
 }
 
 .booking-page-date-location-container {
-    height: 90vh;
+    height: 50vh;
+    display: flex;
+    margin: 0;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+
+/*****************************************************************************/
+/*                                  Calendar                                 */
+/*****************************************************************************/
+
+.react-calendar { 
+ width: 400px;
+ max-width: 100%;
+ background-color: #fff;
+ /* height: 30vh; */
+ color: #222;
+ border-radius: 8px;
+ box-shadow: 0 12px 24px rgba(0, 0, 0, 0.2);
+ font-family: Arial, Helvetica, sans-serif;
+ line-height: 1.125em;
+}
+
+.react-calendar__navigation button {
+ color: #6f48eb;
+ min-width: 44px;
+ background: none;
+ font-size: 16px;
+ margin-top: 8px;
+}
+.react-calendar__navigation button:enabled:hover,
+.react-calendar__navigation button:enabled:focus {
+ background-color: #f8f8fa;
+}
+.react-calendar__navigation button[disabled] {
+ background-color: #f0f0f0;
+}
+abbr[title] {
+ text-decoration: none;
+}
+/* .react-calendar__month-view__days__day--weekend {
+ color: #d10000;
+} */
+.react-calendar__tile:enabled:hover,
+.react-calendar__tile:enabled:focus {
+ background: #f8f8fa;
+ color: #6f48eb;
+ border-radius: 6px;
+}
+.react-calendar__tile--now {
+ background: #6f48eb33;
+ border-radius: 6px;
+ font-weight: bold;
+ color: #6f48eb;
+}
+.react-calendar__tile--now:enabled:hover,
+.react-calendar__tile--now:enabled:focus {
+ background: #6f48eb33;
+ border-radius: 6px;
+ font-weight: bold;
+ color: #6f48eb;
+}
+.react-calendar__tile--hasActive:enabled:hover,
+.react-calendar__tile--hasActive:enabled:focus {
+ background: #f8f8fa;
+}
+.react-calendar__tile--active {
+ background: #6f48eb;
+ border-radius: 6px;
+ font-weight: bold;
+ color: white;
+}
+.react-calendar__tile--active:enabled:hover,
+.react-calendar__tile--active:enabled:focus {
+ background: #6f48eb;
+ color: white;
+}
+.react-calendar--selectRange .react-calendar__tile--hover {
+ background-color: #f8f8fa;
+}
+.react-calendar__tile--range {
+ background: #f8f8fa;
+ color: #6f48eb;
+ border-radius: 0;
+}
+.react-calendar__tile--rangeStart {
+ border-top-right-radius: 0;
+ border-bottom-right-radius: 0;
+ border-top-left-radius: 6px;
+ border-bottom-left-radius: 6px;
+ background: #6f48eb;
+ color: white;
+}
+.react-calendar__tile--rangeEnd {
+ border-top-left-radius: 0;
+ border-bottom-left-radius: 0;
+ border-top-right-radius: 6px;
+ border-bottom-right-radius: 6px;
+ background: #6f48eb;
+ color: white;
+}
+
+.calendar-container {
     display: flex;
     flex-direction: column;
     justify-content: center;
     align-items: center;
-    /* background: white; */
+    margin-top: 5vh;
+    top: 80vh;
+}
+
+.calendar-only-container {
+    position: absolute;
+    z-Index: 2;
+    top: 40vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    width: 100vw
+}
+
+.button-icons {
+    width: 10vw;
+    height: 10vw;
+}
+
+.button-with-icon {
+    display: flex;
+    flex-direction: row;
+    width: 100vw;
+    align-items: center;
+    justify-content: center;
+}
+
+.icon-with-outline {
+    height: var(--height);
+    border-radius: 2vh 0 0 2vh;
+    background: white;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border: 1px solid #888;
+    border-right: none;
 }

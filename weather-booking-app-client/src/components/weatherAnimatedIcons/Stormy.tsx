@@ -9,6 +9,7 @@ import {
 
 import React from "react";
 import "./Cloudy.css"
+import Wind from "./weatherComponents/Wind";
 
 import WeatherIconProps from './interface/WeatherIconProps';
 
@@ -24,7 +25,6 @@ const Stormy: React.FC<WeatherIconProps> = (props) => {
                 viewBox="0 0 65 58"
                 style={{
                     ...props.style,
-                    "enableBackground": "new 0 0 55.1 49.5"
                 }}
                 xmlSpace="preserve"
             >
@@ -71,7 +71,6 @@ const Stormy: React.FC<WeatherIconProps> = (props) => {
                         </animateTransform>
                         <animate attributeType="CSS"
                             attributeName="opacity"
-                            attributeType="XML"
                             dur="1s"
                             keyTimes="0;1"
                             repeatCount="indefinite"
@@ -85,7 +84,6 @@ const Stormy: React.FC<WeatherIconProps> = (props) => {
             l-3.4-0.1l1.8-2.8c1.4-2.1,2.8-4.2,4.3-6.2c0.8-1,1.6-2,2.4-3c0.4-0.5,0.8-1,1.3-1.5C42.7,23.7,43.1,23.2,43.6,22.7z"/>
                         <animate attributeType="CSS"
                             attributeName="opacity"
-                            attributeType="XML"
                             dur="1.5s"
                             keyTimes="0;0.5;1"
                             repeatCount="indefinite"
@@ -93,6 +91,12 @@ const Stormy: React.FC<WeatherIconProps> = (props) => {
                             calcMode="linear" />
                     </g>
                 </g>
+
+                {
+                    props.isWindy && (
+                        <Wind />
+                    )
+                }
             </svg>
         </div>
     );
