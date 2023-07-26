@@ -35,7 +35,7 @@ type map = {
 interface IWeatherCardList {
     [category: string]: any;
     closeBookingDetail: (booking: any) => void;
-    data: map;
+    /* data: map; */
 }
 
 const confirmBookingDetails: React.FC<IWeatherCardList> = (props) => {

@@ -28,7 +28,6 @@ const Moon: React.FC = () => {
                 <path id="XMLID_53_" className="yellow" d="M33.2,31.9l0.2-0.3c0.2-0.2,0.6-0.3,0.8-0.1l5.3,4.5c0.2,0.2,0.3,0.6,0.1,0.8l-0.2,0.3 c-0.2,0.2-0.6,0.3-0.8,0.1l-5.3-4.5C33,32.5,33,32.1,33.2,31.9z" />
                 <animate attributeType="CSS"
                     attributeName="opacity"
-                    attributeType="XML"
                     dur="0.5s"
                     keyTimes="0;0.5;1"
                     repeatCount="indefinite"

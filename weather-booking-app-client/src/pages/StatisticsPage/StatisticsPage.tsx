@@ -1,6 +1,6 @@
 import React from 'react';
 import { Component, useRef } from 'react';
-import { Chart, registerables } from 'chart.js';
+import { Chart, registerables, ChartOptions } from 'chart.js';
 import { Bar, Line, Doughnut } from 'react-chartjs-2';
 import { IonPage } from '@ionic/react';
 import './StatisticsPage.css';
@@ -25,7 +25,7 @@ interface StatisticsPageProps {
         highestCorrectGuess: number
     },
     bookingAcuracyData?: {
-        labels:  string[],
+        labels: string[],
         datasets: {
             data: number[]
         }[]
@@ -37,13 +37,7 @@ interface StatisticPageState {
         responsive: boolean,
         maintainAspectRatio: boolean
     };
-    doughnutChartOptions: {
-	plugins: {
-	    legend: {
-		position: string
-	    }
-	}
-    } | StatisticPageState.chartOptions;
+    doughnutChartOptions: ChartOptions;
     bookingAmountData: any;
     mostGuessedWeather: any;
     bookingAcuracyData: any;
@@ -58,15 +52,10 @@ export default class StatisticsPage extends Component<StatisticsPageProps, Stati
                 responsive: true,
                 maintainAspectRatio: false
             },
-	    doughnutChartOptions: {
-		"responsive": true,
-		"maintainAspectRatio": false,
-		"plugins": {
-		    "legend": {
-			"position": "right"
-		    }
-		}
-	    },
+            doughnutChartOptions: {
+                "responsive": true,
+                "maintainAspectRatio": false
+            },
             bookingAmountData: this.props.bookingAmountData ? {
                 ...this.props.bookingAmountData,
                 datasets: [
@@ -82,7 +71,7 @@ export default class StatisticsPage extends Component<StatisticsPageProps, Stati
                 ]
             } : mockData.bookingAmountData,
             mostGuessedWeather: this.props.mostGuessedWeather ? {
-		...this.props.mostGuessedWeather,
+                ...this.props.mostGuessedWeather,
                 labels: [
                     'Sunny',
                     'Cloudy',
@@ -120,47 +109,47 @@ export default class StatisticsPage extends Component<StatisticsPageProps, Stati
     render() {
         return (
             <IonPage>
-            <div className="global-container">
-            <div className="statistics-page-header">
+                <div className="global-container">
+                    <div className="statistics-page-header">
 
-            <h1>Statistics</h1>
-            </div>
-            <div className='statistic-page-graphs'>
-            <div className='statistic-page-streaks'>
-            <div className='statistic-page-current-streak'>
-            Correct guess streak 🔥
-            <p className="statistic-page-date">02-02-2022 - 02-02-2023</p>
-            <span className="statistic-page-number" style={{background: 'rgba(118, 115, 220, .6)'}}>
-            5
-            </span>
-            </div>
-            <div className='statistic-page-highest-streak'>
-            Highest correct guess streak 🔥
-            <p className="statistic-page-date">02-02-2022 - 02-02-2023</p>
-            <span className="statistic-page-number">
-            32 
-            </span>
-            </div>
-            </div>
+                        <h1>Statistics</h1>
+                    </div>
+                    <div className='statistic-page-graphs'>
+                        <div className='statistic-page-streaks'>
+                            <div className='statistic-page-current-streak'>
+                                Correct guess streak 🔥
+                                <p className="statistic-page-date">02-02-2022 - 02-02-2023</p>
+                                <span className="statistic-page-number" style={{ background: 'rgba(118, 115, 220, .6)' }}>
+                                    5
+                                </span>
+                            </div>
+                            <div className='statistic-page-highest-streak'>
+                                Highest correct guess streak 🔥
+                                <p className="statistic-page-date">02-02-2022 - 02-02-2023</p>
+                                <span className="statistic-page-number">
+                                    32
+                                </span>
+                            </div>
+                        </div>
 
-            <div className="booking-amount-graph-container">
-            <Bar
-            data={this.state.bookingAmountData}
-                options={this.state.chartOptions}
-            />
+                        <div className="booking-amount-graph-container">
+                            <Bar
+                                data={this.state.bookingAmountData}
+                                options={this.state.chartOptions}
+                            />
+                        </div>
+
+                        <div className="booking-accuracy-graph-container">
+                            <Line data={this.state.bookingAcuracyData} options={this.state.chartOptions} />
+                        </div>
+
+                        <div className="most-guessed-weather-container">
+                            <div className="graph-title">Most Guessed Weather</div>
+                            <Doughnut options={this.state.doughnutChartOptions} data={this.state.mostGuessedWeather} />
+                        </div>
+
+                    </div>
                 </div>
-
-                <div className="booking-accuracy-graph-container">
-                    <Line data={this.state.bookingAcuracyData} options={this.state.chartOptions} />
-                </div>
-
-                <div className="most-guessed-weather-container">
-                    <div className="graph-title">Most Guessed Weather</div>
-                    <Doughnut options={this.state.doughnutChartOptions} data={this.state.mostGuessedWeather} />
-                </div>
-
-            </div>
-            </div>
             </IonPage>
         );
     }

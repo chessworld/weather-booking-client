@@ -7,13 +7,13 @@ import ConfirmBookingDetails from "../../components/ViewBookingsComponents/Confi
 import React from 'react';
 import WeatherHud from '../../components/BookWeatherComponents/WeatherHud';
 import { Component } from 'react';
-import { IonToast, IonRange, IonPage, IonItem, IonLabel, IonList, IonSearchbar, IonSelect, IonSelectOption } from '@ionic/react';
+import { IonToast, IonRange, IonPage } from '@ionic/react';
 import DeviceManager from "../../device/DeviceManager";
 
-import Cloudy from "../../components/weatherAnimatedIcons/Cloudy.tsx";
-import Sunny from "../../components/weatherAnimatedIcons/Sunny.tsx";
-import Rainy from "../../components/weatherAnimatedIcons/Rainy.tsx";
-import Stormy from "../../components/weatherAnimatedIcons/Stormy.tsx";
+import Cloudy from "../../components/weatherAnimatedIcons/Cloudy";
+import Sunny from "../../components/weatherAnimatedIcons/Sunny";
+import Rainy from "../../components/weatherAnimatedIcons/Rainy";
+import Stormy from "../../components/weatherAnimatedIcons/Stormy";
 
 class BookingPage extends Component<BookingPageProps, BookingPageState> {
     bookingEndpoint: BookingEndpoint | undefined;

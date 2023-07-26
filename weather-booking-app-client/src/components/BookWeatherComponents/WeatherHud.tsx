@@ -1,8 +1,8 @@
 import { Component } from 'react';
 import './WeatherHud.css';
 
-import WeatherHudState from './interface/WeatherHudState';
-import WeatherHudProps from './interface/WeatherHudProps';
+import WeatherHudProps from './Interface/WeatherHudProps';
+import WeatherHudState from './Interface/WeatherHudState';
 
 class WeatherHud extends Component<WeatherHudProps, WeatherHudState> {
 constructor(props: WeatherHudProps) {

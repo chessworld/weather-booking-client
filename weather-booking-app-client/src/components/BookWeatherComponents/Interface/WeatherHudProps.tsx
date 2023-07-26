@@ -1,5 +1,5 @@
-interface WeatherHudInterface {
+interface WeatherHudProps {
     [category: string]: any;
 }
 
-export default WeatherHudInterface;
+export default WeatherHudProps;
