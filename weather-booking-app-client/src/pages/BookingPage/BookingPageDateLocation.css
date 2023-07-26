@@ -4,7 +4,9 @@
 }
 
 .booking-page-date-location-header {
-    color: #1e90ff;
+    display: none;
+    color: #5f48eb;
+    opacity: 0.7;
     width: 90vw;
     font-size: 7vw;
     margin-left: 4vw;
@@ -35,22 +37,37 @@
     align-items: center;
 }
 
+.input-fields-container {
+    background: rgba(0, 0, 0, 0.4);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: flex-start;
+    padding-top: 2vh;
+    backdrop-filter: blur(2px);
+    border-radius: 4vw;
+    box-shadow: 2px 2px 8px #888;
+    width: 95vw;
+    height: 38vh
+}
 
 /*****************************************************************************/
 /*                                  Calendar                                 */
 /*****************************************************************************/
 
 .react-calendar { 
- width: 400px;
- max-width: 100%;
- background-color: #fff;
- /* height: 30vh; */
- padding: 1rem;
+ padding: 2rem;
  color: #222;
  border-radius: 8px;
  box-shadow: 0 12px 24px rgba(0, 0, 0, 0.2);
  font-family: Arial, Helvetica, sans-serif;
  line-height: 1.125em;
+ width: 400px;
+ max-width: 100%;
+ background: #FFF;
+ background: rgba(220, 220, 220, .9);
+ backdrop-filter: blur(12px);
+ -webkit-backdrop-filter: blur(12px);
 }
 
 .react-calendar__navigation button {
@@ -133,18 +150,20 @@ abbr[title] {
 }
 
 .calendar-container {
+    z-Index: 200 !important;
     display: flex;
     flex-direction: column;
     justify-content: center;
     align-items: center;
-    margin-top: 5vh;
-    top: 80vh;
+}
+
+div:has(> input[type='text']) {
+    margin-top: 2vh;
 }
 
 .calendar-only-container {
     position: absolute;
-    z-Index: 2;
-    top: 42vh;
+    top: 28vh;
     display: flex;
     flex-direction: column;
     justify-content: center;
@@ -161,7 +180,7 @@ abbr[title] {
 .button-with-icon {
     display: flex;
     flex-direction: row;
-    width: 100vw;
+    /* width: 100vw; */
     align-items: center;
     justify-content: center;
 }
@@ -175,4 +194,12 @@ abbr[title] {
     align-items: center;
     border: 1px solid #888;
     border-right: none;
+}
+
+.book-buttons-container {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-around;
+    width: 100vw;
 }

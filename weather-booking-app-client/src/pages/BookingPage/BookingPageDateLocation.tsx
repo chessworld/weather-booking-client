@@ -1,34 +1,18 @@
-import { Redirect, Route } from 'react-router-dom';
 import { Component } from 'react';
 import { Calendar } from 'react-calendar';
 import {
-    IonToast,
-    IonRange,
-    IonPage,
-    IonItem,
-    IonLabel,
-    IonList,
-    IonSearchbar,
-    IonSelect,
-    IonSelectOption,
     IonIcon,
-    IonHeader
 } from '@ionic/react';
 
 
 
-import { compassOutline, timeOutline } from "ionicons/icons";
+import { compassOutline, timeOutline, bagOutline } from "ionicons/icons";
 import type { Value } from 'react-calendar/dist/cjs/shared/types';
 
 import 'react-calendar/dist/Calendar.css';
 import "./BookingPageDateLocation.css"
 import "./BookingPage.css"
 /* import Clouds from "./Clouds" */
-
-
-type HTMLElement = {
-    [category: string]: any
-}
 
 interface AbcProps {
     [category: string]: any
@@ -78,10 +62,29 @@ class BookingPageDateLocation extends Component<AbcProps, AbcState> {
                     Book Unique Weather and Experiences
                 </div>
                 <div className="booking-page-date-location-container">
-                    <div>
+                    <div className="input-fields-container">
                         <div className="button-with-icon">
                             <div className="icon-with-outline">
-                                <IonIcon className="button-icons" icon={compassOutline} />
+                                <IonIcon
+                                    className="button-icons"
+                                    icon={bagOutline}
+                                    style={{
+                                        color: "#555"
+                                    }}
+                                />
+                            </div>
+                            <input type="text" className="booking-page-input" placeholder="Event" />
+                        </div>
+
+
+                        <div className="button-with-icon">
+                            <div className="icon-with-outline">
+                                <IonIcon className="button-icons"
+                                    icon={compassOutline}
+                                    style={{
+                                        color: "#555"
+                                    }}
+                                />
                             </div>
                             <input type="text" className="booking-page-input" placeholder="Where" />
                         </div>
@@ -90,7 +93,13 @@ class BookingPageDateLocation extends Component<AbcProps, AbcState> {
                         <div className="calendar-container">
                             <div className="button-with-icon">
                                 <div className="icon-with-outline">
-                                    <IonIcon className="button-icons" icon={timeOutline} />
+                                    <IonIcon
+                                        className="button-icons"
+                                        icon={timeOutline}
+                                        style={{
+                                            color: "#555"
+                                        }}
+                                    />
                                 </div>
                                 <input onTouchEnd={
                                     () => this.toggleShowCalendar()
@@ -98,7 +107,8 @@ class BookingPageDateLocation extends Component<AbcProps, AbcState> {
                                     id="booking-page-datetime-input"
                                     type="text"
                                     className="booking-page-input"
-                                    placeholder="Check-in" readOnly />
+                                    placeholder="Check-in"
+                                    readOnly />
 
                                 {
                                     this.state.showCalendar &&
@@ -115,7 +125,10 @@ class BookingPageDateLocation extends Component<AbcProps, AbcState> {
                             </div>
                         </div>
                     </div>
-                    <div className="book-button">Continue</div>
+                    <div className="book-buttons-container">
+                        <div className="book-button">Cancel</div>
+                        <div className="book-button">Continue</div>
+                    </div>
                 </div>
             </>
         )

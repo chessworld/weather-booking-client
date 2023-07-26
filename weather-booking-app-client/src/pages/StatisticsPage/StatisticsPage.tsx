@@ -33,10 +33,7 @@ interface StatisticsPageProps {
 }
 
 interface StatisticPageState {
-    chartOptions: {
-        responsive: boolean,
-        maintainAspectRatio: boolean
-    };
+    chartOptions: ChartOptions,
     doughnutChartOptions: ChartOptions;
     bookingAmountData: any;
     mostGuessedWeather: any;
