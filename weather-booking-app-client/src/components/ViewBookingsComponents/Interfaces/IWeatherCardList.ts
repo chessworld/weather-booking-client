@@ -8,7 +8,7 @@ type map = {
 
 interface IWeatherCardList {
     [category: string]: any;
-    closeBookingDetail: (booking: any) => void;
+    // closeBookingDetail: (booking: any) => void;
     data: map;
 }
 

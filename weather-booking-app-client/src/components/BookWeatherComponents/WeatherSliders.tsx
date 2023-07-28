@@ -8,10 +8,9 @@ class WeatherSliders extends Component<any, any> {
         }
     }
 
-    render() {
-        return (
-
-        )
-    }
+    /* render() {
+* } */
 
 }
+
+export default WeatherSliders;

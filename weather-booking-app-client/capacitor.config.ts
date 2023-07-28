@@ -1,7 +1,7 @@
 import { CapacitorConfig } from '@capacitor/cli';
 
 const config: CapacitorConfig = {
-  appId: 'io.ionic.starter',
+  appId: 'com.example.app',
   appName: 'weather-booking-app-client',
   webDir: 'dist',
   bundledWebRuntime: false

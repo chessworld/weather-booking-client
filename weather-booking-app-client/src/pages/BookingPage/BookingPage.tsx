@@ -1,17 +1,20 @@
+import './BookingPage.css';
+import { withRouter } from 'react-router-dom';
+import Background from '../../components/ScreenComponents/Background';
+import BookingEndpoint from "../../endpoint-caller/bookingEndpoint";
+import UserEndpoint from "../../endpoint-caller/userEndpoint";
+import BookingPageProps from "./Interface/BookingPageProps";
+import BookingPageState from "./Interface/BookingPageState";
+import Cloud from '../../assets/Icons/cloudy.png';
+import ConfirmBookingDetails from "../../components/ViewBookingsComponents/ConfirmBookingDetails";
+import Rain from '../../assets/Icons/rainy.png';
 import React from 'react';
+import Stormy from '../../assets/Icons/thnderstorm.png';
+import Sunny from '../../assets/Icons/slight_touch_happyday.png';
+import WeatherHud from '../../components/BookWeatherComponents/WeatherHud';
 import { Component } from 'react';
 import { IonToast, IonRange, IonPage, IonItem, IonLabel, IonList, IonSearchbar, IonSelect, IonSelectOption } from '@ionic/react';
-import WeatherHud from '../../components/BookWeatherComponents/WeatherHud';
-import Background from '../../components/ScreenComponents/Background';
-import ConfirmBookingDetails from "../../components/ViewBookingsComponents/ConfirmBookingDetails";
-import BookingEndpoint from "../../endpoint-caller/bookingEndpoint";
-import Sunny from '../../assets/Icons/slight_touch_happyday.png';
-import Rain from '../../assets/Icons/rainy.png';
-import Cloud from '../../assets/Icons/cloudy.png';
-import Stormy from '../../assets/Icons/thnderstorm.png';
-import './BookingPage.css';
-import BookingPageState from "./Interface/BookingPageState";
-import BookingPageProps from "./Interface/BookingPageProps";
+import DeviceManager from "../../device/DeviceManager";
 
 class BookingPage extends Component<BookingPageProps, BookingPageState> {
     bookingEndpoint: BookingEndpoint | undefined;
@@ -47,19 +50,24 @@ class BookingPage extends Component<BookingPageProps, BookingPageState> {
             showSuggestions: false,
             locationSuggestions: [],
             timePeriod: '',
-            showToast: false,
-            toastMessage: '',
-            showConfirmation: true,
+            toast: {
+                showToast: false,
+                toastMessage: '',
+            },
+            showConfirmation: false, // Default of show confirmation should be set to false
         };
 
         // Bindings
         this.getWindJson = this.getWindJson.bind(this);
-        this.confirmBooking = this.confirmBooking.bind(this);
+        this.clickBooking = this.clickBooking.bind(this);
         this.toggleConfirmation = this.toggleConfirmation.bind(this);
         this.book = this.book.bind(this);
+        this.verifyDeviceId = this.verifyDeviceId.bind(this);
     }
 
     async componentDidMount(): Promise<any> {
+        this.verifyDeviceId()
+
         this.bookingEndpoint = this.bookingEndpoint ?? await BookingEndpoint.create();
 
         setTimeout(
@@ -72,7 +80,50 @@ class BookingPage extends Component<BookingPageProps, BookingPageState> {
         )
     }
 
-    async componentDidUpdate(prevProps: Readonly<{}>, prevState: Readonly<{}>, snapshot?: any): Promise<any> {
+    verifyDeviceId() {
+        /**
+         * Not Sure which page this should be on. It is for verifying device id
+         */
+
+        DeviceManager.getOrCreateDeviceId().then(deviceId => {
+            UserEndpoint.getUser(deviceId)
+                .then(user => {
+                    if (user.error) {
+                        console.log("User does not exist. Creating new user.");
+                        UserEndpoint.createUser()
+                            .then(user => {
+                                // If user doesn't exist
+                                DeviceManager.updateDeviceId(user.id)
+                                this.showToast(`Created user ${user.id}`);
+                                this.props.history.push("/OnboardingPage");
+                            })
+                            .catch(error => {
+                                console.error(error);
+                            });
+                    } else {
+                        // User Already exists
+                        this.showToast(`Welcome back ${user.id}!`);
+                        if (!user.completed_tutorial) {
+                            // If user exists but hasn't completed tutorial
+                            this.props.history.push("/OnboardingPage");
+                        }
+                    };
+                })
+                .catch(error => {
+                    console.error(error);
+                });
+        });
+
+    }
+
+    showToast(message: string): void {
+        this.setState({
+            ...this.state,
+            toast: {
+                showToast: true,
+                toastMessage: message,
+            }
+        });
     }
 
 
@@ -123,24 +174,8 @@ class BookingPage extends Component<BookingPageProps, BookingPageState> {
         });
     }
 
-    confirmBooking(): void {
-        this.bookingEndpoint?.createBooking(
-            this.bookingEndpoint?.getLocationSuburbs().findIndex((obj: any) => {
-                return obj.toLowerCase() === this.state.location.toLowerCase();
-            }) + 1,
-            this.state.timePeriod,
-            "06:00:00", //TODO backend
-            "12:00:00", //TODO backend
-            this.getWeatherJson(),
-            this.getTemperatureJson(),
-            this.getWindJson()
-        );
-
-
-        this.setState({
-            ...this.state,
-            showConfirmation: true
-        });
+    clickBooking(): void {
+        this.toggleConfirmation();
     }
 
     book(): void {
@@ -156,12 +191,7 @@ class BookingPage extends Component<BookingPageProps, BookingPageState> {
             this.getWindJson()
         );
 
-        this.setState({
-            ...this.state,
-            showToast: true,
-            toastMessage: 'Booking has been successfully created',
-            showConfirmation: true
-        });
+        this.showToast("Booking has been successfully created");
     }
 
     toggleConfirmation(): void {
@@ -175,11 +205,18 @@ class BookingPage extends Component<BookingPageProps, BookingPageState> {
         return (
             <IonPage>
                 <IonToast
-                    isOpen={this.state.showToast}
-                    onDidDismiss={() => this.setState({ showToast: false })}
-                    message={this.state.toastMessage}
+                    isOpen={this.state.toast.showToast}
+                    onDidDismiss={() => this.setState({
+                        toast: {
+                            toastMessage: '',
+                            showToast: false
+                        }
+                    })
+                    }
+                    message={this.state.toast.toastMessage}
                     duration={1000}
                 />
+
                 <Background>
                     {
                         this.state.showConfirmation && (
@@ -190,20 +227,14 @@ class BookingPage extends Component<BookingPageProps, BookingPageState> {
                                 "height": "100%",
                                 "zIndex": 3
                             }}>
-                                <ConfirmBookingDetails data={
-                                    {
-                                        id: 1,
-                                        location: "Melbourne",
-                                        date: "10-10-2023",
-                                        weather: "",
-                                    }
-                                }
+                                <ConfirmBookingDetails data={this.state}
                                     closeBookingDetail={this.toggleConfirmation}
                                     book={this.book}
                                 />
                             </div>
                         )
                     }
+
                     <div className="button-container-vertical">
                         <br />
                         <IonSearchbar
@@ -340,21 +371,15 @@ class BookingPage extends Component<BookingPageProps, BookingPageState> {
                             max={
                                 this.state.windOptions.length - 1
                             }
-                        ></IonRange>
+                        />
                     </div>
-
                     <WeatherHud weatherData={this.state} />
-
-                    <div
-                        className="button-container"
-                        style={{
-                            marginBottom: 'vh',
-                            marginTop: '10vh'
-                        }}>
-
-                        <div onTouchEnd={this.confirmBooking} className="book-button">
-                            Book
-                        </div>
+                    <div style={{
+                        display: "flex",
+                        justifyContent: "center",
+                        marginTop: "2vw"
+                    }}>
+                        <div onTouchEnd={this.clickBooking} className="book-button">Book</div>
                     </div>
                 </Background>
             </IonPage >
@@ -362,4 +387,4 @@ class BookingPage extends Component<BookingPageProps, BookingPageState> {
     }
 };
 
-export default BookingPage;
+export default withRouter(BookingPage);
