@@ -48,11 +48,11 @@ const App: React.FC = () => {
             <IonReactRouter>
                 <IonTabs>
                     <IonRouterOutlet>
-                        <Route exact path="/tab">
+                        <Route exact path="/bookingPage">
                             <BookingPage />
                             {/* <BookingPageDateLocation /> */}
                         </Route>
-                        <Route exact path="/tab1">
+                        <Route exact path="/bookingPageDateLocation">
                             {/* <BookingPage /> */}
                             <BookingPageDateLocation />
                         </Route>

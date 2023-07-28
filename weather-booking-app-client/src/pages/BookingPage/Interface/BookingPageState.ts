@@ -18,8 +18,10 @@ interface Tab1State {
     showSuggestions?: boolean;
     locationSuggestions: string[];
     timePeriod: string;
-    showToast: boolean;
-    toastMessage: string;
+    toast: {
+        showToast: boolean;
+        toastMessage: string;
+    };
     showConfirmation: boolean;
 }
 

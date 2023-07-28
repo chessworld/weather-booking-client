@@ -5,10 +5,12 @@ import BookingPageProps from "./Interface/BookingPageProps";
 import BookingPageState from "./Interface/BookingPageState";
 import ConfirmBookingDetails from "../../components/ViewBookingsComponents/ConfirmBookingDetails";
 import React from 'react';
+import { withRouter } from 'react-router-dom';
 import WeatherHud from '../../components/BookWeatherComponents/WeatherHud';
 import { Component } from 'react';
 import { IonToast, IonRange, IonPage } from '@ionic/react';
 import DeviceManager from "../../device/DeviceManager";
+import UserEndpoint from "../../endpoint-caller/userEndpoint";
 
 import Cloudy from "../../components/weatherAnimatedIcons/Cloudy";
 import Sunny from "../../components/weatherAnimatedIcons/Sunny";
@@ -69,14 +71,16 @@ class BookingPage extends Component<BookingPageProps, BookingPageState> {
             showSuggestions: false,
             locationSuggestions: [],
             timePeriod: '',
-            showToast: false,
-            toastMessage: '',
+            toast: {
+                showToast: false,
+                toastMessage: '',
+            },
             showConfirmation: false, // Default of show confirmation should be set to false
         };
 
         // Bindings
         this.getWindJson = this.getWindJson.bind(this);
-        this.confirmBooking = this.confirmBooking.bind(this);
+        this.clickBooking = this.clickBooking.bind(this);
         this.toggleConfirmation = this.toggleConfirmation.bind(this);
         this.book = this.book.bind(this);
         this.verifyDeviceId = this.verifyDeviceId.bind(this);
@@ -102,13 +106,44 @@ class BookingPage extends Component<BookingPageProps, BookingPageState> {
          * Not Sure which page this should be on. It is for verifying device id
          */
 
-        // TODO If device id is not verified, redirect user to onboarding page as well
         DeviceManager.getOrCreateDeviceId().then(deviceId => {
-            this.setState({
-                ...this.state,
+            UserEndpoint.getUser(deviceId)
+                .then(user => {
+                    if (user.error) {
+                        console.log("User does not exist. Creating new user.");
+                        UserEndpoint.createUser()
+                            .then(user => {
+                                // If user doesn't exist
+                                DeviceManager.updateDeviceId(user.id)
+                                this.showToast(`Created user ${user.id}`);
+                                this.props.history.push("/OnboardingPage");
+                            })
+                            .catch(error => {
+                                console.error(error);
+                            });
+                    } else {
+                        // User Already exists
+                        this.showToast(`Welcome back ${user.id}!`);
+                        if (!user.completed_tutorial) {
+                            // If user exists but hasn't completed tutorial
+                            this.props.history.push("/OnboardingPage");
+                        }
+                    };
+                })
+                .catch(error => {
+                    console.error(error);
+                });
+        });
+
+    }
+
+    showToast(message: string): void {
+        this.setState({
+            ...this.state,
+            toast: {
                 showToast: true,
-                toastMessage: `Device unique id is: ${deviceId}`,
-            });
+                toastMessage: message,
+            }
         });
     }
 
@@ -160,11 +195,8 @@ class BookingPage extends Component<BookingPageProps, BookingPageState> {
         });
     }
 
-    confirmBooking(): void {
-        this.setState({
-            ...this.state,
-            showConfirmation: true
-        });
+    clickBooking(): void {
+        this.toggleConfirmation();
     }
 
     book(): void {
@@ -180,12 +212,7 @@ class BookingPage extends Component<BookingPageProps, BookingPageState> {
             this.getWindJson()
         );
 
-        this.setState({
-            ...this.state,
-            showToast: true,
-            toastMessage: 'Booking has been successfully created',
-            showConfirmation: true
-        });
+        this.showToast("Booking has been successfully created");
     }
 
     toggleConfirmation(): void {
@@ -201,11 +228,18 @@ class BookingPage extends Component<BookingPageProps, BookingPageState> {
         return (
             <IonPage>
                 <IonToast
-                    isOpen={this.state.showToast}
-                    onDidDismiss={() => this.setState({ showToast: false })}
-                    message={this.state.toastMessage}
+                    isOpen={this.state.toast.showToast}
+                    onDidDismiss={() => this.setState({
+                        toast: {
+                            toastMessage: '',
+                            showToast: false
+                        }
+                    })
+                    }
+                    message={this.state.toast.toastMessage}
                     duration={1000}
                 />
+
                 <Background>
                     {
                         this.state.showConfirmation && (
@@ -327,4 +361,4 @@ class BookingPage extends Component<BookingPageProps, BookingPageState> {
     }
 };
 
-export default BookingPage;
+export default withRouter(BookingPage);

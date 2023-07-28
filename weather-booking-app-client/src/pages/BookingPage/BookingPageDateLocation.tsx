@@ -174,7 +174,7 @@ class BookingPageDateLocation extends Component<AbcProps, AbcState> {
                         </div>
                         <div className="book-buttons-container">
                             <div className="book-button">Cancel</div>
-                            <div className="book-button" onTouchEnd={() => this.props.history.push('/tab')}>Next</div>
+                            <div className="book-button" onTouchEnd={() => this.props.history.push('/bookingPage')}>Next</div>
                         </div>
                     </div>
                 </div>

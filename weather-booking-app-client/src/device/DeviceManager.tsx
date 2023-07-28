@@ -27,6 +27,13 @@ class DeviceManager implements IDeviceManager {
     }
 
 
+    static async updateDeviceId(newDeviceId?: string) {
+        await Preferences.set({
+            key: 'deviceId',
+            value: newDeviceId ?? '',
+        });
+    }
+
     static async getOrCreateDeviceId() {
         // Attempt to get existing deviceId
 
@@ -37,16 +44,9 @@ class DeviceManager implements IDeviceManager {
             return existingDeviceId.value;
         }
 
-        // If it doesn't exist, generate a new UUID and store it
-        const newDeviceId = uuidv4();
+        // Throw exception if it doesn't exist
+        throw new Error('DeviceId not found');
 
-        await Preferences.set({
-            key: 'deviceId',
-            value: newDeviceId,
-        });
-
-        // Return the new deviceId
-        return newDeviceId;
     };
 }
 
