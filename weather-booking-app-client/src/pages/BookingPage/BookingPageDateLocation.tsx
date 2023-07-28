@@ -4,12 +4,9 @@ import { Calendar } from 'react-calendar';
 import {
     IonIcon,
 } from '@ionic/react';
-
-
-
+import { withRouter } from 'react-router-dom';
 import { compassOutline, timeOutline, bagOutline } from "ionicons/icons";
 import type { Value } from 'react-calendar/dist/cjs/shared/types';
-
 import 'react-calendar/dist/Calendar.css';
 import "./BookingPageDateLocation.css"
 import "./BookingPage.css"
@@ -61,6 +58,56 @@ class BookingPageDateLocation extends Component<AbcProps, AbcState> {
             <>
                 <div className="booking-page-date-location-header">
                     Book Unique Weather and Experiences
+                </div>
+                <div className="background-clouds-in-the-sky">
+                    <div className="background-cloud large background-cloud-1">
+                        <div></div><div></div><div></div><div></div>
+                    </div>
+                    <div className="background-cloud normal background-cloud-2">
+                        <div></div><div></div><div></div><div></div>
+                    </div>
+                    <div className="background-cloud small background-cloud-3">
+                        <div></div><div></div><div></div><div></div>
+                    </div>
+                    <div className="background-cloud tiny background-cloud-4">
+                        <div></div><div></div><div></div><div></div>
+                    </div>
+                    <div className="background-cloud large background-cloud-5">
+                        <div></div><div></div><div></div><div></div>
+                    </div>
+                    <div className="background-cloud normal background-cloud-6">
+                        <div></div><div></div><div></div><div></div>
+                    </div>
+                    <div className="background-cloud small background-cloud-7">
+                        <div></div><div></div><div></div><div></div>
+                    </div>
+                    <div className="background-cloud tiny background-cloud-8">
+                        <div></div><div></div><div></div><div></div>
+                    </div>
+                    <div className="background-cloud small background-cloud-9">
+                        <div></div><div></div><div></div><div></div>
+                    </div>
+                    <div className="background-cloud normal background-cloud-10">
+                        <div></div><div></div><div></div><div></div>
+                    </div>
+                    <div className="background-cloud tiny background-cloud-11">
+                        <div></div><div></div><div></div><div></div>
+                    </div>
+                    <div className="background-cloud small background-cloud-12">
+                        <div></div><div></div><div></div><div></div>
+                    </div>
+                    <div className="background-cloud normal background-cloud-13">
+                        <div></div><div></div><div></div><div></div>
+                    </div>
+                    <div className="background-cloud small background-cloud-14">
+                        <div></div><div></div><div></div><div></div>
+                    </div>
+                    <div className="background-cloud large background-cloud-15">
+                        <div></div><div></div><div></div><div></div>
+                    </div>
+                    <div className="background-cloud large background-cloud-16">
+                        <div></div><div></div><div></div><div></div>
+                    </div>
                 </div>
                 <div className="booking-page-date-location-container">
                     <div className="input-fields-container">
@@ -125,12 +172,10 @@ class BookingPageDateLocation extends Component<AbcProps, AbcState> {
                                 }
                             </div>
                         </div>
-                    </div>
-                    <div className="book-buttons-container">
-                        <div className="book-button">Cancel</div>
-                        <div className="book-button" onTouchEnd={
-                            this.props.history.push('/tab')
-                        }>Continue</div>
+                        <div className="book-buttons-container">
+                            <div className="book-button">Cancel</div>
+                            <div className="book-button" onTouchEnd={() => this.props.history.push('/tab')}>Next</div>
+                        </div>
                     </div>
                 </div>
             </>
@@ -138,4 +183,4 @@ class BookingPageDateLocation extends Component<AbcProps, AbcState> {
     }
 }
 
-export default BookingPageDateLocation;
+export default withRouter(BookingPageDateLocation);

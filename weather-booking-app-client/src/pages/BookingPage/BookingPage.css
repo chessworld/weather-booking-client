@@ -9,7 +9,6 @@
     width: 85vw;
 }
 
-
 .page-content {
     display: flex;
     flex-direction: column;
@@ -118,13 +117,17 @@
     background: #004fb5;
     background: rgba(0, 0, 0, 0.7);
     backdrop-filter: blur(2px);
-    z-index: -1;
     padding: 20px;
     border-radius: 8vw;
     width: 40vw;
     text-align: center;
     font-size: 2.8vw;
     font-weight: 600;
+    transition: background 0.5s ease;
+}
+
+.book-button:hover {
+    background: rgba(0, 0, 0, 0.8);
 }
 
 .selector-container {

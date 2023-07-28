@@ -216,7 +216,7 @@ class BookingPage extends Component<BookingPageProps, BookingPageState> {
                                 "height": "100%",
                                 "zIndex": 3
                             }}>
-                                <ConfirmBookingDetails data={ this.state }
+                                <ConfirmBookingDetails data={this.state}
                                     closeBookingDetail={this.toggleConfirmation}
                                     book={this.book}
                                 />
@@ -231,8 +231,8 @@ class BookingPage extends Component<BookingPageProps, BookingPageState> {
                             {
                                 this.state.weatherOptions.map((option: any, i: number) => {
                                     return (
-                                        <div className="weather-choose-container" key={`${ i }`}
-                                            onClick = { () => {
+                                        <div className="weather-choose-container" key={`${i}`}
+                                            onClick={() => {
                                                 this.handleWeatherSelectionUpdate(i);
                                             }}
                                         >
@@ -249,11 +249,11 @@ class BookingPage extends Component<BookingPageProps, BookingPageState> {
                                                         <li></li>
                                                     </ul>
                                                 </div>
-                                                    {
-                                                        React.createElement(option.svg, {
-                                                            className: 'weather-icon'
-                                                        })
-                                                    }
+                                                {
+                                                    React.createElement(option.svg, {
+                                                        className: 'weather-icon'
+                                                    })
+                                                }
                                             </div>
                                             <span className="weather-choose-text">
                                                 {option.name}
@@ -307,16 +307,16 @@ class BookingPage extends Component<BookingPageProps, BookingPageState> {
                         </div>
 
                         {/* Weatherhud */}
-                        <WeatherHud weatherData={this.state} isWindy = {
+                        <WeatherHud weatherData={this.state} isWindy={
                             this.state.selectedWindOption > 1 // If wind is more than 1, it is windy
-                        } /> 
+                        } />
 
                         {/* Book Button */}
                         <div style={{
-                                display: "flex",
-                                justifyContent: "center",
-                                marginTop: "2vw"
-                            }}>
+                            display: "flex",
+                            justifyContent: "center",
+                            marginTop: "2vw"
+                        }}>
                             <div onTouchEnd={this.confirmBooking} className="book-button">Book</div>
                         </div>
 
