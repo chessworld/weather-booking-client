@@ -1,3 +1,4 @@
+import { Router, Redirect } from 'react-router';
 import { Component } from 'react';
 import { Calendar } from 'react-calendar';
 import {
@@ -127,7 +128,9 @@ class BookingPageDateLocation extends Component<AbcProps, AbcState> {
                     </div>
                     <div className="book-buttons-container">
                         <div className="book-button">Cancel</div>
-                        <div className="book-button">Continue</div>
+                        <div className="book-button" onTouchEnd={
+                            this.props.history.push('/tab')
+                        }>Continue</div>
                     </div>
                 </div>
             </>
