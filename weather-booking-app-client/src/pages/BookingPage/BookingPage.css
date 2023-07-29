@@ -198,3 +198,19 @@ ion-range {
 .range-tick{
     background: #FFF
 }
+
+
+.no-scroll {
+    --overflow: hidden;
+}
+
+.no-animation,
+.no-animation *,
+.no-animation::before,
+.no-animation::after,
+.no-animation *::before,
+.no-animation *::after {
+    animation: none !important;
+    transition: none !important;
+    transform: none !important;
+}

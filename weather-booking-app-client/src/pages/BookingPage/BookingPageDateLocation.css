@@ -178,7 +178,6 @@ div:has(> input[type='text']) {
 
 .calendar-only-container {
     position: absolute;
-    top: -30vh;
     display: flex;
     flex-direction: column;
     justify-content: center;
@@ -221,4 +220,8 @@ div:has(> input[type='text']) {
     width: 100vw;
     position: absolute;
     bottom: 20px;
+}
+
+.no-scroll {
+    --overflow: hidden;
 }

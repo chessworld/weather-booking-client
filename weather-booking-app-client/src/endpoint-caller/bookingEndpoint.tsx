@@ -24,8 +24,6 @@ class BookingEndpoint {
         /* this.BASE_URL = process.env.REACT_APP_WEATHER_API_BASE_URL || "http://127.0.0.1:8000/weather_api" */
         this.location = locationData;
         this.enums = enums;
-        console.log(this.location);
-        console.log(this.enums);
     }
 
     static async getLocation(): Promise<{[category:string]: any}> {

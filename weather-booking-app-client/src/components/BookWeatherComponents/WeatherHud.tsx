@@ -33,7 +33,8 @@ constructor(props: WeatherHudProps) {
                     hud-contents
                     hud-background
                     ${this.props.weatherData.weatherOptions[this.props.weatherData.selectedWeatherOption].backgroundClassName}
-                `}>
+                `}
+                    >
                     <div className={this.props.weatherData.weatherOptions[this.props.weatherData.selectedWeatherOption].effectClassName}>
                         <ul>
                             <li></li>
@@ -78,7 +79,7 @@ constructor(props: WeatherHudProps) {
                         </div>
 
                         <div className="item3">
-                            <SvgWeatherIconComponent className="weather-icon" isWindy={ this.props.isWindy } isNight={ this.props.isNight } />
+                            <SvgWeatherIconComponent className="weather-icon" isWindy={this.props.isWindy} isNight={this.props.isNight} />
                         </div>
 
                         <div className="item4" >

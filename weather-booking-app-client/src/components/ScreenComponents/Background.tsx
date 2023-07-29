@@ -13,7 +13,7 @@ class Background extends React.Component<AbcProps, {}> {
 
     render() {
         return (
-            <IonContent className="ion-no-padding">
+            <IonContent className="ion-no-padding no-scroll">
                 {
                     this.props.showClouds && (
                         <div className="background-clouds-in-the-sky">

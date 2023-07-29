@@ -128,9 +128,7 @@ class BookingPageDateLocation extends Component<AbcProps, AbcState> {
                                             }}
                                         />
                                     </div>
-                                    <input onTouchEnd={
-                                        () => this.toggleShowCalendar()
-                                    }
+                                    <input onTouchEnd={() => this.toggleShowCalendar()}
                                         id="booking-page-datetime-input"
                                         type="text"
                                         className="booking-page-input"
@@ -140,10 +138,12 @@ class BookingPageDateLocation extends Component<AbcProps, AbcState> {
                                     {
                                         this.state.showCalendar &&
                                         <div className="calendar-only-container">
-                                            <Calendar onChange={(date: Date | Value, _: React.MouseEvent<HTMLButtonElement>) => {
-                                                if (date instanceof Date) this.updateBooking(date, 'dateTime');
-                                            }}
-                                            />
+                                            <div onBlur={() => this.toggleShowCalendar() }>
+                                                <Calendar 
+                                                        onChange={(date: Date | Value, _: React.MouseEvent<HTMLButtonElement>) => {
+                                                    if (date instanceof Date) this.updateBooking(date, 'dateTime');
+                                                }} />
+                                            </div>
                                         </div>
                                     }
                                 </div>

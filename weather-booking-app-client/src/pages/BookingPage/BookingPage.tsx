@@ -267,8 +267,7 @@ class BookingPage extends Component<BookingPageProps, BookingPageState> {
                                             >
                                                 <div
                                                     className={`hud-background ${this.state.weatherOptions[i].backgroundClassName} weather-choose-option ${i == this.state.selectedWeatherOption
-                                                        && 'weather-choose-option-focus'}`}
-                                                >
+                                                        ? 'weather-choose-option-focus' : 'no-animation'}`} >
                                                     <div className={`${this.state.weatherOptions[i].effectClassName}`}>
                                                         <ul>
                                                             <li></li>
@@ -280,6 +279,7 @@ class BookingPage extends Component<BookingPageProps, BookingPageState> {
                                                     </div>
                                                     {
                                                         React.createElement(option.svg, {
+                                                            showAnimation: this.state.selectedWeatherOption == i,
                                                             className: 'weather-icon'
                                                         })
                                                     }
