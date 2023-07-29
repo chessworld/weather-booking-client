@@ -24,8 +24,10 @@ class BookingPage extends Component<BookingPageProps, BookingPageState> {
         super(props);
 
         this.state = {
-            date: props.date || 'Monday 10 July',
-            location: "",
+            bookingDetails: {
+                ...this.props.location.state,
+                timePeriod: '',
+            },
             weatherOptions: [
                 {
                     name: "Cloudy",
@@ -70,7 +72,6 @@ class BookingPage extends Component<BookingPageProps, BookingPageState> {
             selectedTemperatureOption: 0,
             showSuggestions: false,
             locationSuggestions: [],
-            timePeriod: '',
             toast: {
                 showToast: false,
                 toastMessage: '',
@@ -87,18 +88,9 @@ class BookingPage extends Component<BookingPageProps, BookingPageState> {
     }
 
     async componentDidMount(): Promise<any> {
-        this.verifyDeviceId()
-
+        this.verifyDeviceId();
         this.bookingEndpoint = this.bookingEndpoint ?? await BookingEndpoint.create();
-
-        setTimeout(
-            () => {
-                this.setState({
-                    ...this.state,
-                    locationSuggestions: this.bookingEndpoint?.getLocationSuburbs() ?? []
-                });
-            }
-        )
+        console.log(this.state);
     }
 
     verifyDeviceId() {
@@ -203,9 +195,10 @@ class BookingPage extends Component<BookingPageProps, BookingPageState> {
     book(): void {
         this.bookingEndpoint?.createBooking(
             this.bookingEndpoint?.getLocationSuburbs().findIndex((obj: any) => {
-                return obj.toLowerCase() === this.state.location.toLowerCase();
+                return obj.toLowerCase() === this.state.bookingDetails.location.toLowerCase();
             }) + 1,
-            this.state.timePeriod,
+            this.state.bookingDetails.dateTime,
+            this.state.bookingDetails.timePeriod ?? 'Morning',
             "06:00:00", //TODO backend
             "12:00:00", //TODO backend
             this.getWeatherJson(),
@@ -227,7 +220,7 @@ class BookingPage extends Component<BookingPageProps, BookingPageState> {
         const svgWeatherIconComponent = this.state.weatherOptions[0].svg;
 
         return (
-            <IonPage keep-alive={false}>
+            <IonPage keep-alive="false">
                 <IonToast
                     isOpen={this.state.toast.showToast}
                     onDidDismiss={() => this.setState({
@@ -251,9 +244,9 @@ class BookingPage extends Component<BookingPageProps, BookingPageState> {
                                 "height": "100%",
                                 "zIndex": 3
                             }}>
-                                <ConfirmBookingDetails data={this.state}
-                                    closeBookingDetail={this.toggleConfirmation}
-                                    book={this.book}
+                                <ConfirmBookingDetails data={ this.state }
+                                    closeBookingDetail={ this.toggleConfirmation }
+                                    book={ this.book }
                                 />
                             </div>
                         )
@@ -359,8 +352,9 @@ class BookingPage extends Component<BookingPageProps, BookingPageState> {
                             <div className="book-button" onTouchEnd={() => {
                                 this.props.history.goBack();
                             }} >Back</div>
+
                             <div onTouchEnd={
-                                this.confirmBooking
+                                this.clickBooking
                             } className="book-button">Book</div>
                         </div>
 

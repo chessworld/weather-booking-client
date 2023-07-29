@@ -9,28 +9,14 @@ import {
     IonImg,
 } from "@ionic/react";
 
+import {useState, useEffect} from 'react';
 import { closeOutline, arrowForwardOutline } from "ionicons/icons";
-import sunImage from "../../assets/Icons/slight_touch_happyday.png";
-import rainImage from "../../assets/Icons/rainy.png";
 import BookingEndpoint from "../../endpoint-caller/bookingEndpoint";
 import Background from '../../components/ScreenComponents/Background';
-import BookingPageState from "../../pages/BookingPage/Interface/BookingPageState";
-
-type map = {
-    id: number;
-    location: string;
-    date: string;
-    weather: string;
-    weatherOptions: {
-        image: string;
-    }[];
-    selectedWeatherOption: number
-};
 
 interface IWeatherCardList {
     [category: string]: any;
     closeBookingDetail: (booking: any) => void;
-    /* data: map; */
 }
 
 
@@ -38,6 +24,12 @@ const confirmBookingDetails: React.FC<IWeatherCardList> = (props) => {
     const [locations, setLocations] = useState<any>([]);
 
     useEffect(() => {
+        console.log(props)
+        console.log(props)
+        console.log(props)
+        console.log(props)
+        console.log(props)
+        console.log(props)
         BookingEndpoint.getLocation().then(response => {
             return response.json();
         }).then(data => {
@@ -56,6 +48,27 @@ const confirmBookingDetails: React.FC<IWeatherCardList> = (props) => {
         return formattedDate;
     };
 
+    const monthToString = (month: number) => {
+        const monthNames = [
+            "January", "February", "March", "April", "May", "June",
+            "July", "August", "September", "October", "November", "December"
+        ];
+
+        if (month >= 1 && month <= 12) {
+            return monthNames[month - 1];
+        } else {
+            return "Invalid month";
+        }
+    }
+
+    const dateToDisplay = (dateTime: Date) => {
+        if (dateTime instanceof Date) {
+            return `${ dateTime.getDate() } ${ monthToString(dateTime.getMonth() + 1) } ${ dateTime.getFullYear() }`;
+        }
+
+        return '';
+    }
+
     return (
         <Background>
             <div className="booking-details-toolbar">
@@ -73,10 +86,10 @@ const confirmBookingDetails: React.FC<IWeatherCardList> = (props) => {
                     <div className="booking-details-content">
                         <div className="booking-details-details">
                             <IonCardTitle className="booking-details-details__title">
-                                {props.data.location}
+                                {props.data.bookingDetails.location}
                             </IonCardTitle>
                             <IonCardSubtitle className="booking-details-details__subtitle">
-                                {props.data.date}
+                                {dateToDisplay(props.data.bookingDetails.datetime)}
                             </IonCardSubtitle>
                             <p className="booking-details-details__weather">
                             </p>

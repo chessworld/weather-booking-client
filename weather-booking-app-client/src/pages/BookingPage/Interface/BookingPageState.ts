@@ -2,8 +2,12 @@ import React from 'react';
 
 interface Tab1State {
     [category: string]: any;
-    date: string;
-    location: string;
+    bookingDetails: {
+        dateTime: Date;
+        location: string;
+        timePeriod: string;
+        name: string
+    };
     temperatureOptions: { [catagory: string]: any };
     weatherOptions: {
         name: string,
@@ -17,7 +21,6 @@ interface Tab1State {
     selectedTemperatureOption: number;
     showSuggestions?: boolean;
     locationSuggestions: string[];
-    timePeriod: string;
     toast: {
         showToast: boolean;
         toastMessage: string;
