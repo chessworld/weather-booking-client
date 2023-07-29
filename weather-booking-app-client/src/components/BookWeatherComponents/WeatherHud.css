@@ -1,8 +1,9 @@
 @import url('https://fonts.googleapis.com/css?family=Work+Sans:200');
 
 :root {
-    --hud-width: 50vw;
-    --hud-height: 30vw;
+    --hud-border-radius: 1.5em;
+    --hud-width: 55vw;
+    --hud-height: 40vw;
     --hud-max-width: 600px;
     --hud-min-width: 300px;
     --hud-max-height: 320px;
@@ -54,10 +55,8 @@
 }
 
 .hud-background {
-    /* flex: none; */
-    /* display: none; */
-    /* font-size: calc(10em + 1vmin); */
-    border-radius: 3.5em;
+    border-radius: var(--hud-border-radius);
+    /* border: 1px solid #FFF; */
     box-shadow: 0 0 2em -.3em var(--shadow);
     background: linear-gradient( to var(--blend-dir), var(--blend1) var(--blend-from), var(--blend2) var(--blend-to));
     transition: all 0.5s ease-in;
@@ -146,7 +145,7 @@
   right: 0;
   bottom: 0;
   margin: .05em;
-  border-radius: 3.5em;
+  border-radius: var(--hud-border-radius);
   opacity: .125;
   will-change: background-color;
   animation: flash 2900ms infinite linear 80ms;
@@ -322,21 +321,22 @@
 
 
 .perfect {
-    --shadow: #1378bb;
-    --blend1: #1b9ce2;
-    --blend2: #1378bb;
-    --shadow: #c9e8de;
-    --blend1: #758595;
-    --blend2: #e0e2e5;
-    --blend1: #1b9ce2;
+    --shadow: rgba(19, 120, 187, 0.9);
+    --blend1: rgba(27, 156, 226, .85);
+    --blend2: rgba(19, 120, 187, .85);
+    --shadow: rgba(201, 232, 222, .85);
+    --blend1: rgba(117, 133, 149, .85);
+    --blend2: rgba(224, 226, 229, .85);
+    --blend1: rgba(27, 156, 226, .85);
     --blend-to: 65%;
     --blend-to: 90%;
+    backdrop-filter: blur(5px);
 }
 
 .stormy {
     --shadow: #c9e8de;
-    --blend1: #758595;
-    --blend2: #e0e2e5;
+    --blend1: #e0e2e5;
+    --blend2: #758595;
     --blend-to: 90%;
     --blend-dir: bottom left;
 }

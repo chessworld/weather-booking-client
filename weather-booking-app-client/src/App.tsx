@@ -48,22 +48,20 @@ const App: React.FC = () => {
             <IonReactRouter>
                 <IonTabs>
                     <IonRouterOutlet>
-                        <Route exact path="/bookingPage">
-                            <BookingPage />
-                            {/* <BookingPageDateLocation /> */}
-                        </Route>
                         <Route exact path="/bookingPageDateLocation">
-                            {/* <BookingPage /> */}
-                            <BookingPageDateLocation />
+                            <BookingPageDateLocation key={Date.now()}  />
+                        </Route>
+                        <Route exact path="/">
+                            <Redirect to="/bookingPageDateLocation" />
+                        </Route>
+                        <Route exact path="/bookingPage">
+                            <BookingPage key={Date.now()}/>
                         </Route>
                         <Route exact path="/tab2">
                             <Tab2 />
                         </Route>
                         <Route path="/tab3">
                             <Tab3 />
-                        </Route>
-                        <Route exact path="/">
-                            <Redirect to="/tab1" />
                         </Route>
                         <Route exact path="/onboardingPage">
                             <OnboardingPage />
@@ -80,7 +78,7 @@ const App: React.FC = () => {
                         <IonTabButton tab="tab2" href="/tab2" className='nav-bar-button'>
                             <IonIcon aria-hidden="true" icon={book} className='nav-bar-icon' />
                         </IonTabButton>
-                        <IonTabButton tab="tab1" href="/tab1" className='nav-bar-button'>
+                        <IonTabButton tab="tab1" href="/" className='nav-bar-button'>
                             <IonIcon aria-hidden="true" icon={addCircleSharp} className='nav-bar-middle-icon' />
                         </IonTabButton>
                         <IonTabButton tab="tab3" href="/tab3" className='nav-bar-button'>

@@ -124,6 +124,7 @@ class BookingPage extends Component<BookingPageProps, BookingPageState> {
                     } else {
                         // User Already exists
                         this.showToast(`Welcome back ${user.id}!`);
+                        console.log(`Welcome back ${user.id}!`);
                         if (!user.completed_tutorial) {
                             // If user exists but hasn't completed tutorial
                             this.props.history.push("/OnboardingPage");
@@ -226,7 +227,7 @@ class BookingPage extends Component<BookingPageProps, BookingPageState> {
         const svgWeatherIconComponent = this.state.weatherOptions[0].svg;
 
         return (
-            <IonPage>
+            <IonPage keep-alive={false}>
                 <IonToast
                     isOpen={this.state.toast.showToast}
                     onDidDismiss={() => this.setState({
@@ -240,7 +241,7 @@ class BookingPage extends Component<BookingPageProps, BookingPageState> {
                     duration={1000}
                 />
 
-                <Background>
+                <Background showClouds={false}>
                     {
                         this.state.showConfirmation && (
                             <div style={{
@@ -260,85 +261,88 @@ class BookingPage extends Component<BookingPageProps, BookingPageState> {
 
                     <div className="page-content">
 
-                        {/* Vertical Buttons */}
-                        <div className="button-container">
-                            {
-                                this.state.weatherOptions.map((option: any, i: number) => {
-                                    return (
-                                        <div className="weather-choose-container" key={`${i}`}
-                                            onClick={() => {
-                                                this.handleWeatherSelectionUpdate(i);
-                                            }}
-                                        >
-                                            <div
-                                                className={`hud-background ${this.state.weatherOptions[i].backgroundClassName} weather-choose-option ${i == this.state.selectedWeatherOption
-                                                    && 'weather-choose-option-focus'}`}
+                        <div className="input-container">
+                            {/* Vertical Buttons */}
+                            <div className="button-container">
+                                {
+                                    this.state.weatherOptions.map((option: any, i: number) => {
+                                        return (
+                                            <div className="weather-choose-container" key={`${i}`}
+                                                onClick={() => {
+                                                    this.handleWeatherSelectionUpdate(i);
+                                                }}
                                             >
-                                                <div className={`${this.state.weatherOptions[i].effectClassName}`}>
-                                                    <ul>
-                                                        <li></li>
-                                                        <li></li>
-                                                        <li></li>
-                                                        <li></li>
-                                                        <li></li>
-                                                    </ul>
+                                                <div
+                                                    className={`hud-background ${this.state.weatherOptions[i].backgroundClassName} weather-choose-option ${i == this.state.selectedWeatherOption
+                                                        && 'weather-choose-option-focus'}`}
+                                                >
+                                                    <div className={`${this.state.weatherOptions[i].effectClassName}`}>
+                                                        <ul>
+                                                            <li></li>
+                                                            <li></li>
+                                                            <li></li>
+                                                            <li></li>
+                                                            <li></li>
+                                                        </ul>
+                                                    </div>
+                                                    {
+                                                        React.createElement(option.svg, {
+                                                            className: 'weather-icon'
+                                                        })
+                                                    }
                                                 </div>
-                                                {
-                                                    React.createElement(option.svg, {
-                                                        className: 'weather-icon'
-                                                    })
-                                                }
+                                                <span className="weather-choose-text">
+                                                    {option.name}
+                                                </span>
                                             </div>
-                                            <span className="weather-choose-text">
-                                                {option.name}
-                                            </span>
-                                        </div>
-                                    )
-                                })
-                            }
+                                        )
+                                    })
+                                }
 
+                            </div>
+
+                            {/* Sliders */}
+                            <div className="slider-container">
+                                <span className="weather-slider-text">
+                                    Temperature
+                                </span>
+                                <IonRange
+                                    className="weather-slider"
+                                    ticks={true}
+                                    snaps={true}
+                                    min={0}
+                                    max={
+                                        this.state.temperatureOptions.length - 1
+                                    }
+                                    onIonChange={(e: any) => {
+                                        this.setState(prev => {
+                                            return {
+                                                ...prev,
+                                                selectedTemperatureOption: e.detail.value
+                                            };
+                                        })
+                                    }}
+                                ></IonRange>
+
+                                <span className="weather-slider-text">Wind</span>
+
+                                <IonRange
+                                    className="weather-slider"
+                                    ticks={true}
+                                    snaps={true}
+                                    min={0}
+                                    onIonChange={(e: any) => {
+                                        this.setState(prev => {
+                                            return { ...prev, selectedWindOption: e.detail.value };
+                                        })
+                                    }}
+                                    max={
+                                        this.state.windOptions.length - 1
+                                    }
+                                />
+                            </div>
                         </div>
 
-                        {/* Sliders */}
-                        <div className="slider-container">
-                            <span className="weather-slider-text">
-                                Temperature
-                            </span>
-                            <IonRange
-                                className="weather-slider"
-                                ticks={true}
-                                snaps={true}
-                                min={0}
-                                max={
-                                    this.state.temperatureOptions.length - 1
-                                }
-                                onIonChange={(e: any) => {
-                                    this.setState(prev => {
-                                        return {
-                                            ...prev,
-                                            selectedTemperatureOption: e.detail.value
-                                        };
-                                    })
-                                }}
-                            ></IonRange>
-
-                            <span className="weather-slider-text">Wind</span>
-
-                            <IonRange
-                                className="weather-slider"
-                                ticks={true}
-                                snaps={true}
-                                min={0}
-                                onIonChange={(e: any) => {
-                                    this.setState(prev => {
-                                        return { ...prev, selectedWindOption: e.detail.value };
-                                    })
-                                }}
-                                max={
-                                    this.state.windOptions.length - 1
-                                }
-                            />
-                        </div>
 
                         {/* Weatherhud */}
                         <WeatherHud weatherData={this.state} isWindy={
@@ -347,11 +351,17 @@ class BookingPage extends Component<BookingPageProps, BookingPageState> {
 
                         {/* Book Button */}
                         <div style={{
+                            width: "95vw",
                             display: "flex",
-                            justifyContent: "center",
+                            justifyContent: "space-between",
                             marginTop: "2vw"
                         }}>
-                            <div onTouchEnd={this.confirmBooking} className="book-button">Book</div>
+                            <div className="book-button" onTouchEnd={() => {
+                                this.props.history.goBack();
+                            }} >Back</div>
+                            <div onTouchEnd={
+                                this.confirmBooking
+                            } className="book-button">Book</div>
                         </div>
 
                     </div>

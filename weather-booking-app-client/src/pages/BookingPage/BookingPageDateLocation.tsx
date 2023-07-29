@@ -1,8 +1,10 @@
 import { Router, Redirect } from 'react-router';
 import { Component } from 'react';
 import { Calendar } from 'react-calendar';
+import Background from '../../components/ScreenComponents/Background';
 import {
-    IonIcon,
+    IonPage,
+    IonIcon
 } from '@ionic/react';
 import { withRouter } from 'react-router-dom';
 import { compassOutline, timeOutline, bagOutline } from "ionicons/icons";
@@ -24,7 +26,11 @@ class BookingPageDateLocation extends Component<AbcProps, AbcState> {
     constructor(props: AbcProps) {
         super(props);
         this.state = {
-            showCalendar: false
+            showCalendar: false,
+            bookingDateLocation: {
+                dateTime: new Date(),
+                location: ''
+            }
         }
     }
 
@@ -52,62 +58,12 @@ class BookingPageDateLocation extends Component<AbcProps, AbcState> {
         return el instanceof HTMLInputElement && typeof el.value === "string";
     }
 
-
     render(): React.ReactNode {
         return (
-            <>
+            <IonPage keep-alive={false}>
+            <Background showClouds={true}>
                 <div className="booking-page-date-location-header">
                     Book Unique Weather and Experiences
-                </div>
-                <div className="background-clouds-in-the-sky">
-                    <div className="background-cloud large background-cloud-1">
-                        <div></div><div></div><div></div><div></div>
-                    </div>
-                    <div className="background-cloud normal background-cloud-2">
-                        <div></div><div></div><div></div><div></div>
-                    </div>
-                    <div className="background-cloud small background-cloud-3">
-                        <div></div><div></div><div></div><div></div>
-                    </div>
-                    <div className="background-cloud tiny background-cloud-4">
-                        <div></div><div></div><div></div><div></div>
-                    </div>
-                    <div className="background-cloud large background-cloud-5">
-                        <div></div><div></div><div></div><div></div>
-                    </div>
-                    <div className="background-cloud normal background-cloud-6">
-                        <div></div><div></div><div></div><div></div>
-                    </div>
-                    <div className="background-cloud small background-cloud-7">
-                        <div></div><div></div><div></div><div></div>
-                    </div>
-                    <div className="background-cloud tiny background-cloud-8">
-                        <div></div><div></div><div></div><div></div>
-                    </div>
-                    <div className="background-cloud small background-cloud-9">
-                        <div></div><div></div><div></div><div></div>
-                    </div>
-                    <div className="background-cloud normal background-cloud-10">
-                        <div></div><div></div><div></div><div></div>
-                    </div>
-                    <div className="background-cloud tiny background-cloud-11">
-                        <div></div><div></div><div></div><div></div>
-                    </div>
-                    <div className="background-cloud small background-cloud-12">
-                        <div></div><div></div><div></div><div></div>
-                    </div>
-                    <div className="background-cloud normal background-cloud-13">
-                        <div></div><div></div><div></div><div></div>
-                    </div>
-                    <div className="background-cloud small background-cloud-14">
-                        <div></div><div></div><div></div><div></div>
-                    </div>
-                    <div className="background-cloud large background-cloud-15">
-                        <div></div><div></div><div></div><div></div>
-                    </div>
-                    <div className="background-cloud large background-cloud-16">
-                        <div></div><div></div><div></div><div></div>
-                    </div>
                 </div>
                 <div className="booking-page-date-location-container">
                     <div className="input-fields-container">
@@ -121,7 +77,9 @@ class BookingPageDateLocation extends Component<AbcProps, AbcState> {
                                     }}
                                 />
                             </div>
-                            <input type="text" className="booking-page-input" placeholder="Event" />
+                            <input type="text" onChange={(e) => {
+                                console.log(e.target.value);
+                            }} className="booking-page-input" placeholder="Event" />
                         </div>
 
 
@@ -134,7 +92,14 @@ class BookingPageDateLocation extends Component<AbcProps, AbcState> {
                                     }}
                                 />
                             </div>
-                            <input type="text" className="booking-page-input" placeholder="Where" />
+                            <input type="text" onChange={(e) => {
+                                this.setState({
+                                    ...this.state,
+                                    bookingDateLocation: {
+                                        ...this.state.bookingDateLocation,
+                                    }
+                                })
+                            }} className="booking-page-input" placeholder="Where" />
                         </div>
 
 
@@ -162,6 +127,13 @@ class BookingPageDateLocation extends Component<AbcProps, AbcState> {
                                     this.state.showCalendar &&
                                     <div className="calendar-only-container">
                                         <Calendar onChange={(date: Date | Value, _: React.MouseEvent<HTMLButtonElement>) => {
+                                            this.setState({
+                                                ...this.state,
+                                                bookingDateLocation: {
+                                                    ...this.state.bookingDateLocation,
+                                                    datetime: date
+                                                }
+                                            })
                                             var el = (document.getElementById("booking-page-datetime-input") as HTMLInputElement)
                                             if (el && (date instanceof Date)) {
                                                 el.value = `${date.getDate()} ${this.monthToString(date.getMonth() + 1)} ${date.getFullYear()}`;
@@ -174,11 +146,15 @@ class BookingPageDateLocation extends Component<AbcProps, AbcState> {
                         </div>
                         <div className="book-buttons-container">
                             <div className="book-button">Cancel</div>
-                            <div className="book-button" onTouchEnd={() => this.props.history.push('/bookingPage')}>Next</div>
+                            <div className="book-button" onTouchEnd={() => {
+                                console.log(this.props.history);
+                                this.props.history.push('/bookingPage')
+                            }}>Next</div>
                         </div>
                     </div>
                 </div>
-            </>
+            </Background >
+            </IonPage>
         )
     }
 }
