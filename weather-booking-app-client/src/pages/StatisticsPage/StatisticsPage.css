@@ -1,0 +1,104 @@
+.statistics-page-header {
+    margin-left: 3vw;
+    color: #FFF;
+}
+
+.statistic-page-graphs {
+    display: flex;
+    justify-content: space-around;
+    height: 85vh;
+    flex-direction: column
+}
+
+.statistic-page-streaks {
+    width: 85vw;
+    color: white;
+    display: grid;
+    font-size: 13px;
+    text-align: left;
+}
+
+.statistic-page-number {
+    background: #EE4040;
+    border-Radius: 7px;
+    padding: 2px 8px 2px;
+    color: white
+}
+
+.statistic-page-current-streak {
+    grid-column-start: 1;
+    grid-column-end: 3;
+    padding: 12px;
+    margin: 0px 4px 0px 4px;
+    background: rgba(10, 124, 235, .6);
+    background: rgba(10, 10, 10, .6);
+    border-radius: 12px
+}
+
+
+.statistic-page-highest-streak {
+    grid-column-start: 3;
+    grid-column-end: 6;
+    padding: 12px;
+    margin: 0px 4px 0px 4px;
+    background: rgba(118, 115, 220, .6);
+    background: rgba(10, 10, 10, .6);
+    border-radius: 12px;
+}
+
+.booking-amount-graph-container {
+    display: flex;
+    justify-content:center;
+    background: rgba(255, 255, 255, .8);
+    opacity: .8;
+    margin: 0 2vh 0 2vh;
+    padding: .5rem;
+    border-radius: 12px;
+    width: 85vw;
+    height: 20vh;
+}
+
+
+.booking-accuracy-graph-container {
+    display: flex;
+    justify-content: center;
+    background: rgba(255, 255, 255, .8);
+    opacity: .8;
+    margin: 0 2vh 0 2vh;
+    padding: .5rem;
+    border-radius: 12px;
+    width: 85vw;
+    height: 20vh;
+}
+
+
+.statistic-page-date {
+    font-size: 10px;
+    margin-top: 1px;
+    color: #2e2e2e;
+    color: #EEE;
+    text-align: left;
+}
+
+.most-guessed-weather-container{
+    background: rgba(255, 255, 255, .8);
+    opacity: .8;
+    height: 20vh;
+    width: 85vw;
+    padding: 0 0 4.5vh;
+    border-radius: 12px
+}
+
+.statistic-page-graphs {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+
+.graph-title {
+    text-align: center;
+    /* margin: 2px 0 12px 0; */
+    font-size: .8rem;
+    padding: 10px;
+}

@@ -9,18 +9,29 @@
     width: 85vw;
 }
 
-.button-container-vertical {
+.page-content {
     display: flex;
     flex-direction: column;
-    justify-content: center;
+    height: 80vh;
+    justify-content: space-around;
     align-items: center;
-    margin: 2vh 0 1vh 0;
+    margin: 7vh 0 1vh 0;
+}
+
+.input-container {
+    background: rgba(255, 255, 255, 0.4);
+    border: .5px solid #FFF;
+    backdrop-filter: blur(3px);
+    width: 95vw;
+    box-shadow: 2px 2px 8px #888;
+    border-radius: 4vw;
 }
 
 .button-container {
+    width: 95vw;
+    padding: 1vh 0 1vh 0;
     display: flex;
     flex-direction: row;
-    padding: 0px !important;
     justify-content: space-evenly;
     align-items: flex-start;
     margin: 0 0 2vh 0;
@@ -37,50 +48,57 @@
     font-size: 2.8vw;
     font-weight: bold;
     margin-top: 1vh;
+    color: white;
 }
 
 .weather-choose-option {
     max-width: var(--weather-choose-option-max-width);
     min-width: var(--weather-choose-option-min-width);
     max-height: var(--weather-choose-option-max-height);
-    display: flex;
     background: rgba(100, 100, 100, 0.50);
     backdrop-filter: blur(2px);
+    overflow: hidden;
+    display: flex;
+    flex-direction: row;
     justify-content: center;
     align-items: center;
-    border-radius: 3.5em;
+    border-radius: 3.5em !important;
     color: white;
     width: 8vw;
-    height: 14vh;
-    padding: .5vh 0px .5vh 0px;
-    text-align: center;
-    transition: background .4s ease-in-out;
-}
-
-.weather-choose-option:hover {
-    background: rgba(100, 100, 255, 0.5);
-}
-
-.weather-rhombus-container {
-    width: 20vw;
-    position: absolute;
-    left: 20vw;
     height: 18vh;
-    background: rgba(100, 100, 100, 1);
-    z-index: 2;
-    transform: rotate(90deg, 0, 90deg) scale(1, -1);
-    border-radius: 25px 0px 0px 0px;
+    /* padding: 4vh 0px 4vh; */
+    text-align: center;
+    box-shadow: 0 0 0 .1em rgba(255,255,255,.7) inset, 0 0 2em -.3em var(--shadow) !important;
 }
 
-.weather-rhombus-container-bottom {
-    transform: skew(20deg);
-    position: absolute;
-    left: 4.1vw;
-    width: 20vw;
-    height: 20vh;
-    background: rgba(100, 100, 100);
-    transform: skew(-20deg);
-    border-radius: 25px;
+/* .weather-rhombus-container { */
+/*     width: 20vw; */
+/*     position: absolute; */
+/*     left: 20vw; */
+/*     height: 18vh; */
+/*     background: rgba(100, 100, 100, 1); */
+/*     z-index: 2; */
+/*     transform: rotate(90deg, 0, 90deg) scale(1, -1); */
+/*     border-radius: 25px 0px 0px 0px; */
+/* } */
+
+/* .weather-rhombus-container-bottom { */
+/*     transform: skew(20deg); */
+/*     position: absolute; */
+/*     left: 4.1vw; */
+/*     width: 20vw; */
+/*     height: 20vh; */
+/*     background: rgba(100, 100, 100); */
+/*     transform: skew(-20deg); */
+/*     border-radius: 25px; */
+/* } */
+
+.weather-icon {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 60%;
+    height: 100%
 }
 
 .weather-slider {
@@ -88,6 +106,7 @@
 }
 
 .weather-slider-text {
+    color: white;
     width: var(--slider-width);
     font-size: 1.2rem;
     font-weight: bold;
@@ -95,21 +114,36 @@
 }
 
 .slider-container {
+    width: 95vw;
+    border-radius: 14px;
+    background: rgba(100, 100, 100, 0.4);
+    box-shadow: 2px 2px 8px #888;
+    border: .5px solid #333;
+    padding: 1vh 0 1vh 0;
+    backdrop-filter: blur(3px);
     display: flex;
-    margin-top: 5vh;
+    margin-top: 2vh;
     flex-direction: column;
     align-items: center;
 }
 
 .book-button {
+    position: relative !important;
     color: white;
     background: #004fb5;
+    background: rgba(0, 0, 0, 0.7);
+    backdrop-filter: blur(2px);
     padding: 20px;
-    border-radius: 8px;
+    border-radius: 8vw;
     width: 40vw;
     text-align: center;
     font-size: 2.8vw;
     font-weight: 600;
+    transition: background 0.5s ease;
+}
+
+.book-button:hover {
+    background: rgba(0, 0, 0, 0.8);
 }
 
 .selector-container {
@@ -163,4 +197,20 @@ ion-range {
 
 .range-tick{
     background: #FFF
+}
+
+
+.no-scroll {
+    --overflow: hidden;
+}
+
+.no-animation,
+.no-animation *,
+.no-animation::before,
+.no-animation::after,
+.no-animation *::before,
+.no-animation *::after {
+    animation: none !important;
+    transition: none !important;
+    transform: none !important;
 }

@@ -24,8 +24,6 @@ class BookingEndpoint {
         /* this.BASE_URL = process.env.REACT_APP_WEATHER_API_BASE_URL || "http://127.0.0.1:8000/weather_api" */
         this.location = locationData;
         this.enums = enums;
-        console.log(this.location);
-        console.log(this.enums);
     }
 
     static async getLocation(): Promise<{[category:string]: any}> {
@@ -98,20 +96,29 @@ class BookingEndpoint {
     }
 
 
+    formatDate(date: Date) {
+        var d = new Date(date),
+            month = '' + (d.getMonth() + 1),
+            day = '' + d.getDate(),
+            year = d.getFullYear();
+
+        if (month.length < 2)
+            month = '0' + month;
+        if (day.length < 2)
+            day = '0' + day;
+
+        return [year, month, day].join('-');
+    }
 
     createBooking = (
         location: number,
+        datetime: Date,
         time_period: string,
         start_time: string,
         end_time: string,
         windJson: { [category: string]: any },
         weatherJson: { [category: string]: any },
         temperatureJson: { [category: string]: any },
-        /* option_type: keyof typeof this.enums.weather_option_types, */
-        /* option_name: keyof typeof this.enums.weather_option_choices, */
-        /* value_type: keyof typeof this.enums.weather_value_types, */
-        /* min_value: number, */
-        /* max_value: number */
     ): void => {
         const bookingsRoute = "/bookings/"
         const url = BookingEndpoint.BASE_URL + bookingsRoute;
@@ -122,8 +129,8 @@ class BookingEndpoint {
                     "user": "fab0e9fe-7b6b-41b9-95c4-59badef18c16",
                     "location": location,
                     "day_time": {
-                        "date": BookingEndpoint.getCurrentDate(),
-                        "time_period": time_period,
+                        "date": this.formatDate( datetime ),
+                        "time_period": 'Morning',
                         "start_time": start_time,
                         "end_time": end_time
                     }

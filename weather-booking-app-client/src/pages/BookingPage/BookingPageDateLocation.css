@@ -1,0 +1,227 @@
+:root {
+    --height: 60px;
+    --border-rad: 2vh
+}
+
+.booking-page-date-location-header {
+    color: #5f48eb;
+    text-shadow: 
+        -.5px -.5px 0 #EEE,  
+        .5px -.5px 0 #EEE,
+        -.5px .5px 0 #EEE,
+        .5px .5px 0 #EEE;
+    width: 90vw;
+    font-size: 7vw;
+    margin-left: 4vw;
+    font-weight: 900;
+}
+
+
+.booking-page-input {
+    border: 1px solid #888;
+    border-left: none;
+    border-radius: 0 var(--border-rad) var(--border-rad) 0;
+    height: var(--height);
+    outline: none;
+    padding-left: 2vw;
+    width: 70vw;
+}
+
+.booking-page-input:focus {
+    outline: none;
+}
+
+.booking-page-date-location-container {
+    height: 80vh;
+    display: flex;
+    margin: 0;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.input-fields-container {
+    background: rgba(255, 230, 255, 0.4);
+    border: .5px solid #333;
+    backdrop-filter: blur(3px);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: flex-start;
+    padding-top: 2vh;
+    border-radius: 4vw;
+    box-shadow: 2px 2px 8px #888;
+    width: 95vw;
+    height: 55vh
+}
+
+/*****************************************************************************/
+/*                                  Calendar                                 */
+/*****************************************************************************/
+
+.react-calendar { 
+    padding: 2rem;
+    color: #222;
+    border-radius: 8px;
+    box-shadow: 0 12px 24px rgba(0, 0, 0, 0.2);
+    font-family: Arial, Helvetica, sans-serif;
+    line-height: 1.125em;
+    width: 400px;
+    max-width: 100%;
+    background: #FFF;
+    background: rgba(220, 220, 220, .9);
+    backdrop-filter: blur(12px);
+}
+
+.react-calendar__navigation button {
+    color: #6f48eb;
+    min-width: 44px;
+    background: none;
+    font-size: 16px;
+    margin-top: 8px;
+}
+
+.react-calendar__navigation button:enabled:hover,
+.react-calendar__navigation button:enabled:focus {
+    background-color: #f8f8fa;
+}
+
+.react-calendar__navigation button[disabled] {
+    background-color: #f0f0f0;
+}
+
+abbr[title] {
+    text-decoration: none;
+}
+
+/* .react-calendar__month-view__days__day--weekend {
+ color: #d10000;
+} */
+.react-calendar__tile:enabled:hover,
+.react-calendar__tile:enabled:focus {
+    background: #f8f8fa;
+    color: #6f48eb;
+    border-radius: 6px;
+}
+
+.react-calendar__tile--now {
+    background: #6f48eb33;
+    border-radius: 6px;
+    font-weight: bold;
+    color: #6f48eb;
+}
+
+.react-calendar__tile--now:enabled:hover,
+.react-calendar__tile--now:enabled:focus {
+    background: #6f48eb33;
+    border-radius: 6px;
+    font-weight: bold;
+    color: #6f48eb;
+}
+
+.react-calendar__tile--hasActive:enabled:hover,
+.react-calendar__tile--hasActive:enabled:focus {
+    background: #f8f8fa;
+}
+
+.react-calendar__tile--active {
+    background: #6f48eb;
+    border-radius: 6px;
+    font-weight: bold;
+    color: white;
+}
+
+.react-calendar__tile--active:enabled:hover,
+.react-calendar__tile--active:enabled:focus {
+    background: #6f48eb;
+    color: white;
+}
+
+.react-calendar--selectRange .react-calendar__tile--hover {
+    background-color: #f8f8fa;
+}
+
+.react-calendar__tile--range {
+    background: #f8f8fa;
+    color: #6f48eb;
+    border-radius: 0;
+}
+
+.react-calendar__tile--rangeStart {
+    border-top-right-radius: 0;
+    border-bottom-right-radius: 0;
+    border-top-left-radius: 6px;
+    border-bottom-left-radius: 6px;
+    background: #6f48eb;
+    color: white;
+}
+.react-calendar__tile--rangeEnd {
+    border-top-left-radius: 0;
+    border-bottom-left-radius: 0;
+    border-top-right-radius: 6px;
+    border-bottom-right-radius: 6px;
+    background: #6f48eb;
+    color: white;
+}
+
+.calendar-container {
+    z-Index: 200 !important;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+div:has(> input[type='text']) {
+    margin-top: 2vh;
+}
+
+.calendar-only-container {
+    position: absolute;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    width: 100vw
+}
+
+.button-icons {
+    width: 10vw;
+    height: 10vw;
+    max-width: 50px;
+    max-height: 50px;
+    padding: .5rem;
+}
+
+.button-with-icon {
+    display: flex;
+    flex-direction: row;
+    /* width: 100vw; */
+    align-items: center;
+    justify-content: center;
+}
+
+.icon-with-outline {
+    height: var(--height);
+    border-radius: 2vh 0 0 2vh;
+    background: white;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border: 1px solid #888;
+    border-right: none;
+}
+
+.book-buttons-container {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-around;
+    width: 100vw;
+    position: absolute;
+    bottom: 20px;
+}
+
+.no-scroll {
+    --overflow: hidden;
+}

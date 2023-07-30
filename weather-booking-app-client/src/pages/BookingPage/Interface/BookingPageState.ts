@@ -1,15 +1,26 @@
+import React from 'react';
+
 interface Tab1State {
     [category: string]: any;
-    date: string;
-    location: string;
+    bookingDetails: {
+        dateTime: Date;
+        location: string;
+        timePeriod: string;
+        name: string
+    };
     temperatureOptions: { [catagory: string]: any };
-    weatherOptions: { name: string, image?: any }[];
+    weatherOptions: {
+        name: string,
+        effectClassName: string,
+        backgroundClassName: string,
+        svg: React.FC<any>,
+        image?: any,
+    }[];
     selectedWeatherOption: number;
     selectedWindOption: number;
     selectedTemperatureOption: number;
     showSuggestions?: boolean;
     locationSuggestions: string[];
-    timePeriod: string;
     toast: {
         showToast: boolean;
         toastMessage: string;

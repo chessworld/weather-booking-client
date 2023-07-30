@@ -1,20 +1,21 @@
 import './BookingPage.css';
-import { withRouter } from 'react-router-dom';
 import Background from '../../components/ScreenComponents/Background';
 import BookingEndpoint from "../../endpoint-caller/bookingEndpoint";
-import UserEndpoint from "../../endpoint-caller/userEndpoint";
 import BookingPageProps from "./Interface/BookingPageProps";
 import BookingPageState from "./Interface/BookingPageState";
-import Cloud from '../../assets/Icons/cloudy.png';
 import ConfirmBookingDetails from "../../components/ViewBookingsComponents/ConfirmBookingDetails";
-import Rain from '../../assets/Icons/rainy.png';
 import React from 'react';
-import Stormy from '../../assets/Icons/thnderstorm.png';
-import Sunny from '../../assets/Icons/slight_touch_happyday.png';
+import { withRouter } from 'react-router-dom';
 import WeatherHud from '../../components/BookWeatherComponents/WeatherHud';
 import { Component } from 'react';
-import { IonToast, IonRange, IonPage, IonItem, IonLabel, IonList, IonSearchbar, IonSelect, IonSelectOption } from '@ionic/react';
+import { IonToast, IonRange, IonPage } from '@ionic/react';
 import DeviceManager from "../../device/DeviceManager";
+import UserEndpoint from "../../endpoint-caller/userEndpoint";
+
+import Cloudy from "../../components/weatherAnimatedIcons/Cloudy";
+import Sunny from "../../components/weatherAnimatedIcons/Sunny";
+import Rainy from "../../components/weatherAnimatedIcons/Rainy";
+import Stormy from "../../components/weatherAnimatedIcons/Stormy";
 
 class BookingPage extends Component<BookingPageProps, BookingPageState> {
     bookingEndpoint: BookingEndpoint | undefined;
@@ -23,13 +24,35 @@ class BookingPage extends Component<BookingPageProps, BookingPageState> {
         super(props);
 
         this.state = {
-            date: props.date || 'Monday 10 July',
-            location: "",
+            bookingDetails: {
+                ...this.props.location.state,
+                timePeriod: '',
+            },
             weatherOptions: [
-                { name: "Cloudy", image: Cloud },
-                { name: "Sunny", image: Sunny },
-                { name: "Rainy", image: Rain },
-                { name: "Stormy", image: Stormy }
+                {
+                    name: "Cloudy",
+                    effectClassName: "cloud",
+                    backgroundClassName: "perfect",
+                    svg: Cloudy
+                },
+                {
+                    name: "Sunny",
+                    effectClassName: "sun",
+                    backgroundClassName: "sunny",
+                    svg: Sunny
+                },
+                {
+                    name: "Rainy",
+                    effectClassName: "rain",
+                    backgroundClassName: "rainy",
+                    svg: Rainy
+                },
+                {
+                    name: "Stormy",
+                    effectClassName: "storm",
+                    backgroundClassName: "stormy",
+                    svg: Stormy
+                }
             ],
             temperatureOptions: [
                 { name: "Freezing" },
@@ -49,7 +72,6 @@ class BookingPage extends Component<BookingPageProps, BookingPageState> {
             selectedTemperatureOption: 0,
             showSuggestions: false,
             locationSuggestions: [],
-            timePeriod: '',
             toast: {
                 showToast: false,
                 toastMessage: '',
@@ -66,18 +88,9 @@ class BookingPage extends Component<BookingPageProps, BookingPageState> {
     }
 
     async componentDidMount(): Promise<any> {
-        this.verifyDeviceId()
-
+        this.verifyDeviceId();
         this.bookingEndpoint = this.bookingEndpoint ?? await BookingEndpoint.create();
-
-        setTimeout(
-            () => {
-                this.setState({
-                    ...this.state,
-                    locationSuggestions: this.bookingEndpoint?.getLocationSuburbs() ?? []
-                });
-            }
-        )
+        console.log(this.state);
     }
 
     verifyDeviceId() {
@@ -103,6 +116,7 @@ class BookingPage extends Component<BookingPageProps, BookingPageState> {
                     } else {
                         // User Already exists
                         this.showToast(`Welcome back ${user.id}!`);
+                        console.log(`Welcome back ${user.id}!`);
                         if (!user.completed_tutorial) {
                             // If user exists but hasn't completed tutorial
                             this.props.history.push("/OnboardingPage");
@@ -181,9 +195,10 @@ class BookingPage extends Component<BookingPageProps, BookingPageState> {
     book(): void {
         this.bookingEndpoint?.createBooking(
             this.bookingEndpoint?.getLocationSuburbs().findIndex((obj: any) => {
-                return obj.toLowerCase() === this.state.location.toLowerCase();
+                return obj.toLowerCase() === this.state.bookingDetails.location.toLowerCase();
             }) + 1,
-            this.state.timePeriod,
+            this.state.bookingDetails.dateTime,
+            this.state.bookingDetails.timePeriod ?? 'Morning',
             "06:00:00", //TODO backend
             "12:00:00", //TODO backend
             this.getWeatherJson(),
@@ -202,8 +217,10 @@ class BookingPage extends Component<BookingPageProps, BookingPageState> {
     }
 
     render(): React.ReactNode {
+        const svgWeatherIconComponent = this.state.weatherOptions[0].svg;
+
         return (
-            <IonPage>
+            <IonPage keep-alive="false">
                 <IonToast
                     isOpen={this.state.toast.showToast}
                     onDidDismiss={() => this.setState({
@@ -217,7 +234,7 @@ class BookingPage extends Component<BookingPageProps, BookingPageState> {
                     duration={1000}
                 />
 
-                <Background>
+                <Background showClouds={false}>
                     {
                         this.state.showConfirmation && (
                             <div style={{
@@ -227,159 +244,120 @@ class BookingPage extends Component<BookingPageProps, BookingPageState> {
                                 "height": "100%",
                                 "zIndex": 3
                             }}>
-                                <ConfirmBookingDetails data={this.state}
-                                    closeBookingDetail={this.toggleConfirmation}
-                                    book={this.book}
+                                <ConfirmBookingDetails data={ this.state }
+                                    closeBookingDetail={ this.toggleConfirmation }
+                                    book={ this.book }
                                 />
                             </div>
                         )
                     }
 
-                    <div className="button-container-vertical">
-                        <br />
-                        <IonSearchbar
-                            className="search-bar"
-                            placeholder='Search Location'
-                            onIonChange={e => this.setState({
-                                ...this.state,
-                                location: e.detail.value!
-                            })}
+                    <div className="page-content">
 
-                            value={this.state.location}
+                        <div className="input-container">
+                            {/* Vertical Buttons */}
+                            <div className="button-container">
+                                {
+                                    this.state.weatherOptions.map((option: any, i: number) => {
+                                        return (
+                                            <div className="weather-choose-container" key={`${i}`}
+                                                onClick={() => {
+                                                    this.handleWeatherSelectionUpdate(i);
+                                                }}
+                                            >
+                                                <div
+                                                    className={`hud-background ${this.state.weatherOptions[i].backgroundClassName} weather-choose-option ${i == this.state.selectedWeatherOption
+                                                        ? 'weather-choose-option-focus' : 'no-animation'}`} >
+                                                    <div className={`${this.state.weatherOptions[i].effectClassName}`}>
+                                                        <ul>
+                                                            <li></li>
+                                                            <li></li>
+                                                            <li></li>
+                                                            <li></li>
+                                                            <li></li>
+                                                        </ul>
+                                                    </div>
+                                                    {
+                                                        React.createElement(option.svg, {
+                                                            showAnimation: this.state.selectedWeatherOption == i,
+                                                            className: 'weather-icon'
+                                                        })
+                                                    }
+                                                </div>
+                                                <span className="weather-choose-text">
+                                                    {option.name}
+                                                </span>
+                                            </div>
+                                        )
+                                    })
+                                }
 
-                            onFocus={() => this.setState({
-                                ...this.state,
-                                showSuggestions: true
-                            })}
+                            </div>
 
-                            onBlur={() => this.setState({
-                                ...this.state,
-                                showSuggestions: false
-                            })}
-                        />
-                        {
-                            this.state.showSuggestions && (
-                                <IonList style={{
-                                    position: 'absolute',
-                                    width: '90%',
-                                    zIndex: 10,
-                                    top: "10vh",
-                                    background: "transparent"
-                                }}>
-                                    {this.state.locationSuggestions
-                                        .filter((suggestion: string) => {
-                                            return suggestion.toLowerCase()
-                                                .includes(this.state.location.toLowerCase())
+                            {/* Sliders */}
+                            <div className="slider-container">
+                                <span className="weather-slider-text">
+                                    Temperature
+                                </span>
+                                <IonRange
+                                    className="weather-slider"
+                                    ticks={true}
+                                    snaps={true}
+                                    min={0}
+                                    max={
+                                        this.state.temperatureOptions.length - 1
+                                    }
+                                    onIonChange={(e: any) => {
+                                        this.setState(prev => {
+                                            return {
+                                                ...prev,
+                                                selectedTemperatureOption: e.detail.value
+                                            };
                                         })
-                                        .map((suggestion: string, i: number) => (
-                                            <IonItem key={i} button onTouchEnd={() => {
-                                                this.setState({
-                                                    ...this.state,
-                                                    location: suggestion,
-                                                });
-                                            }}>
-                                                <IonLabel>
-                                                    {suggestion}
-                                                </IonLabel>
-                                            </IonItem>
-                                        ))}
+                                    }}
+                                ></IonRange>
 
-                                </IonList>
-                            )
-                        }
+                                <span className="weather-slider-text">Wind</span>
 
-                        {/* TODO make this use backend enum */}
-                        <div className="selector-container">
-                            <IonSelect
-                                label="Time Period"
-                                className="selector"
-                                aria-label="time-period"
-                                placeholder="Select Time Period"
-                                onIonChange={e => this.setState({
-                                    ...this.state,
-                                    timePeriod: e.detail.value
-                                })}
-                            >
-                                <IonSelectOption value="Morning">Morning</IonSelectOption>
-                                <IonSelectOption value="Afternoon">Afternoon</IonSelectOption>
-                                <IonSelectOption value="Evening">Evening</IonSelectOption>
-                                <IonSelectOption value="Night">Night</IonSelectOption>
-                            </IonSelect>
+                                <IonRange
+                                    className="weather-slider"
+                                    ticks={true}
+                                    snaps={true}
+                                    min={0}
+                                    onIonChange={(e: any) => {
+                                        this.setState(prev => {
+                                            return { ...prev, selectedWindOption: e.detail.value };
+                                        })
+                                    }}
+                                    max={
+                                        this.state.windOptions.length - 1
+                                    }
+                                />
+                            </div>
                         </div>
 
-                    </div>
 
-                    <div className="button-container">
-                        {
-                            this.state.weatherOptions.map((option: any, i: number) => {
-                                return (
-                                    <div className="weather-choose-container" key={`${i}`}
-                                        onClick={() => {
-                                            this.handleWeatherSelectionUpdate(i);
-                                        }}
-                                    >
-                                        <div
-                                            className={`weather-choose-option ${i == this.state.selectedWeatherOption
-                                                && 'weather-choose-option weather-choose-option-focus'}`}
-                                        >
-                                            <img src={option.image} style={{ width: "15vw" }} />
-                                        </div>
-                                        <span className="weather-choose-text">
-                                            {option.name}
-                                        </span>
-                                    </div>
-                                )
-                            })
-                        }
+                        {/* Weatherhud */}
+                        <WeatherHud weatherData={this.state} isWindy={
+                            this.state.selectedWindOption > 1 // If wind is more than 1, it is windy
+                        } />
 
-                    </div>
+                        {/* Book Button */}
+                        <div style={{
+                            width: "95vw",
+                            display: "flex",
+                            justifyContent: "space-between",
+                            marginTop: "2vw"
+                        }}>
+                            <div className="book-button" onTouchEnd={() => {
+                                this.props.history.goBack();
+                            }} >Back</div>
 
-                    <div className="slider-container">
-                        <span className="weather-slider-text">
-                            Temperature
-                        </span>
-                        <IonRange
-                            className="weather-slider"
-                            ticks={true}
-                            snaps={true}
-                            min={0}
-                            max={
-                                this.state.temperatureOptions.length - 1
-                            }
-                            onIonChange={(e: any) => {
-                                this.setState(prev => {
-                                    return {
-                                        ...prev,
-                                        selectedTemperatureOption: e.detail.value
-                                    };
-                                })
-                            }}
-                        ></IonRange>
+                            <div onTouchEnd={
+                                this.clickBooking
+                            } className="book-button">Book</div>
+                        </div>
 
-                        <span className="weather-slider-text">Wind</span>
-
-                        <IonRange
-                            className="weather-slider"
-                            ticks={true}
-                            snaps={true}
-                            min={0}
-                            onIonChange={(e: any) => {
-                                this.setState(prev => {
-                                    return { ...prev, selectedWindOption: e.detail.value };
-                                })
-                            }}
-                            max={
-                                this.state.windOptions.length - 1
-                            }
-                        />
-                    </div>
-                    <WeatherHud weatherData={this.state} />
-                    <div style={{
-                        display: "flex",
-                        justifyContent: "center",
-                        marginTop: "2vw"
-                    }}>
-                        <div onTouchEnd={this.clickBooking} className="book-button">Book</div>
                     </div>
                 </Background>
             </IonPage >
