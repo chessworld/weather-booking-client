@@ -8,12 +8,16 @@ import {
     IonTabs,
     setupIonicReact
 } from '@ionic/react';
+
 import { IonReactRouter } from '@ionic/react-router';
 import { person, book, addCircleSharp } from 'ionicons/icons';
 import BookingPage from './pages/BookingPage/BookingPage';
 import Tab2 from './pages/Tab2';
 import Tab3 from './pages/Tab3';
-import OnboardingPage from './pages/OnboardingPage';
+import OnboardingPage from './pages/OnboardingPage/OnboardingPage';
+import StatisticsPage from './pages/StatisticsPage/StatisticsPage';
+import BookingPageDateLocation from './pages/BookingPage/BookingPageDateLocation';
+import TestHarness from './pages/TestHarness';
 import BookingDetails from './components/ViewBookingsComponents/BookingDetails';
 
 /* Core CSS required for Ionic components to work properly */
@@ -44,21 +48,29 @@ const App: React.FC = () => {
             <IonReactRouter>
                 <IonTabs>
                     <IonRouterOutlet>
-                        <Route exact path="/tab1">
-                            <BookingPage />
+                        <Route exact path="/bookingPageDateLocation">
+                            <BookingPageDateLocation key={Date.now()}  />
                         </Route>
-
+                        <Route exact path="/">
+                            <Redirect to="/bookingPageDateLocation" />
+                        </Route>
+                        <Route exact path="/bookingPage">
+                            <BookingPage key={Date.now()}/>
+                        </Route>
                         <Route exact path="/tab2">
                             <Tab2 />
                         </Route>
                         <Route path="/tab3">
                             <Tab3 />
                         </Route>
-                        <Route exact path="/">
-                            <Redirect to="/tab1" />
-                        </Route>
                         <Route exact path="/onboardingPage">
                             <OnboardingPage />
+                        </Route>
+                        <Route exact path="/statisticPage">
+                            <StatisticsPage />
+                        </Route>
+                        <Route exact path="/testHarness">
+                            <TestHarness />
                         </Route>
                         <Route path="/booking-details" component={BookingDetails} />
                     </IonRouterOutlet>
@@ -66,7 +78,7 @@ const App: React.FC = () => {
                         <IonTabButton tab="tab2" href="/tab2" className='nav-bar-button'>
                             <IonIcon aria-hidden="true" icon={book} className='nav-bar-icon' />
                         </IonTabButton>
-                        <IonTabButton tab="tab1" href="/tab1" className='nav-bar-button'>
+                        <IonTabButton tab="tab1" href="/" className='nav-bar-button'>
                             <IonIcon aria-hidden="true" icon={addCircleSharp} className='nav-bar-middle-icon' />
                         </IonTabButton>
                         <IonTabButton tab="tab3" href="/tab3" className='nav-bar-button'>

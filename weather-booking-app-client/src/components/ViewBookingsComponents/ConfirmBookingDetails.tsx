@@ -1,43 +1,35 @@
-import { useParams } from "react-router-dom";
-import { useState, useEffect } from "react";
 import "./BookingDetails.css";
 import {
     IonButton,
     IonCard,
     IonCardContent,
-    IonCardHeader,
     IonCardSubtitle,
     IonCardTitle,
-    IonHeader,
     IonIcon,
     IonImg,
-    IonTitle,
-    IonToolbar,
 } from "@ionic/react";
 
-import { chevronBackOutline, closeOutline, arrowForwardOutline } from "ionicons/icons";
-import sunImage from "../../assets/Icons/slight_touch_happyday.png";
-import rainImage from "../../assets/Icons/rainy.png";
+import {useState, useEffect} from 'react';
+import { closeOutline, arrowForwardOutline } from "ionicons/icons";
 import BookingEndpoint from "../../endpoint-caller/bookingEndpoint";
 import Background from '../../components/ScreenComponents/Background';
-
-type map = {
-    id: number;
-    location: string;
-    date: string;
-    weather: string;
-};
 
 interface IWeatherCardList {
     [category: string]: any;
     closeBookingDetail: (booking: any) => void;
-    data: map;
 }
+
 
 const confirmBookingDetails: React.FC<IWeatherCardList> = (props) => {
     const [locations, setLocations] = useState<any>([]);
 
     useEffect(() => {
+        console.log(props)
+        console.log(props)
+        console.log(props)
+        console.log(props)
+        console.log(props)
+        console.log(props)
         BookingEndpoint.getLocation().then(response => {
             return response.json();
         }).then(data => {
@@ -46,9 +38,36 @@ const confirmBookingDetails: React.FC<IWeatherCardList> = (props) => {
     }, []);
 
     const timeToDisplay = (time: string) => {
-        const formattedDate = new Date('2023-05-20').toLocaleDateString('en-US', { weekday: 'long', day: '2-digit', month: 'long', year: 'numeric' });
+        const formattedDate = new Date('2023-05-20')
+            .toLocaleDateString('en-US', {
+                weekday: 'long',
+                day: '2-digit',
+                month: 'long',
+                year: 'numeric'
+            });
         return formattedDate;
     };
+
+    const monthToString = (month: number) => {
+        const monthNames = [
+            "January", "February", "March", "April", "May", "June",
+            "July", "August", "September", "October", "November", "December"
+        ];
+
+        if (month >= 1 && month <= 12) {
+            return monthNames[month - 1];
+        } else {
+            return "Invalid month";
+        }
+    }
+
+    const dateToDisplay = (dateTime: Date) => {
+        if (dateTime instanceof Date) {
+            return `${ dateTime.getDate() } ${ monthToString(dateTime.getMonth() + 1) } ${ dateTime.getFullYear() }`;
+        }
+
+        return '';
+    }
 
     return (
         <Background>
@@ -67,20 +86,18 @@ const confirmBookingDetails: React.FC<IWeatherCardList> = (props) => {
                     <div className="booking-details-content">
                         <div className="booking-details-details">
                             <IonCardTitle className="booking-details-details__title">
-                                {
-                                    props.data.location
-                                }
+                                {props.data.bookingDetails.location}
                             </IonCardTitle>
                             <IonCardSubtitle className="booking-details-details__subtitle">
-                                {
-                                    props.data.date
-                                }
+                                {dateToDisplay(props.data.bookingDetails.datetime)}
                             </IonCardSubtitle>
                             <p className="booking-details-details__weather">
                             </p>
                         </div>
                         <div className="booking-details-img-container">
-                            <IonImg className="booking-details-img" src={rainImage} />
+                            <IonImg className="booking-details-img" src={
+                                props.data.weatherOptions[props.data.selectedWeatherOption].image
+                            } />
                         </div>
                     </div>
 
@@ -112,10 +129,10 @@ const confirmBookingDetails: React.FC<IWeatherCardList> = (props) => {
                 }}>
 
                 <div className="book-button"
-                     style={{
-                         width: "50vw"
-                     }}
-                     onTouchEnd={props.book}
+                    style={{
+                        width: "50vw"
+                    }}
+                    onTouchEnd={props.book}
                 >
                     Confirm
                 </div>
