@@ -1,8 +1,7 @@
 import ApiService from "./apiService";
-ApiService.initialise();
 
-type WeatherOptionType = "Weather" | "Temperature" | "Wind";
-type WeatherOptionChoices =
+export type WeatherOptionType = "Weather" | "Temperature" | "Wind";
+export type WeatherOptionChoices =
   | "Sunny"
   | "Rainy"
   | "Cloudy"
@@ -16,16 +15,16 @@ type WeatherOptionChoices =
   | "Calm"
   | "Windy"
   | "Gusty";
-type WeatherValueType = "Km/h" | "Celsius";
+export type WeatherValueType = "Km/h" | "Celsius";
 
-interface Location {
+export interface Location {
   suburb: string;
   state: string;
   postcode: string;
   country: string;
 }
 
-interface EnumResponse {
+export interface EnumResponse {
   weather_option_types: {
     [category: string]: WeatherOptionType;
   };
@@ -37,6 +36,30 @@ interface EnumResponse {
   };
 }
 
+interface BookingResponse {
+  booking: BookingDetails[];
+  weather_option: WeatherOption[];
+}
+
+interface BookingDetails {
+  id: string;
+  user: string;
+  location: number;
+  day_time: {
+    date: string;
+    time_period: string;
+    start_time: string;
+    end_time: string;
+  };
+  status: "Upcoming" | "Completed" | "Cancelled";
+  result: "Pending" | "Success" | "Fail";
+}
+
+interface WeatherOption {
+  option_type: WeatherOptionType;
+  option_name: WeatherOptionChoices;
+  value_type: WeatherValueType;
+}
 class BookingEndpoint {
   enums: EnumResponse;
   locations: Location[];
@@ -54,7 +77,7 @@ class BookingEndpoint {
     return new BookingEndpoint(locationData, enumResponse);
   }
 
-  static async getBookingList(): Promise<any> {
+  static async getBookingList(): Promise<BookingResponse[]> {
     const bookingList = await ApiService.get("/bookings").then((response) => response.data);
     return bookingList;
   }
@@ -103,11 +126,8 @@ class BookingEndpoint {
     windJson: { [category: string]: any },
     weatherJson: { [category: string]: any },
     temperatureJson: { [category: string]: any }
-  ): void => {
-    const bookingsRoute = "/bookings/";
-    // const url = BookingEndpoint.BASE_URL + bookingsRoute;
-    const url = bookingsRoute;
-    const body = {
+  ) => {
+    ApiService.post("/bookings/", {
       booking: [
         {
           user: "fab0e9fe-7b6b-41b9-95c4-59badef18c16",
@@ -118,23 +138,12 @@ class BookingEndpoint {
             start_time: start_time,
             end_time: end_time,
           },
+          status: "Upcoming",
+          result: "Pending",
         },
       ],
       weather_option: [weatherJson, temperatureJson, windJson],
-    };
-
-    const options = {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify(body),
-    };
-
-    fetch(url, options)
-      .then((response) => response.json())
-      .then((data) => console.log(data))
-      .catch((error) => console.error("Error:", error));
+    }).then((response) => console.log(response.data));
   };
 }
 
