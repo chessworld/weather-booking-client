@@ -1,71 +1,13 @@
 import ApiService from "./apiService";
+import { BookingResponse } from "./interfaces/bookings/BookingResponse";
+import { EnumResponse } from "./interfaces/enums/EnumResponse";
+import { Location } from "./interfaces/locations/Location";
 
-export type WeatherOptionType = "Weather" | "Temperature" | "Wind";
-export type WeatherOptionChoices =
-  | "Sunny"
-  | "Rainy"
-  | "Cloudy"
-  | "Stormy"
-  | "Cool"
-  | "Mild"
-  | "Warm"
-  | "Hot"
-  | "Freezing"
-  | "No Wind"
-  | "Calm"
-  | "Windy"
-  | "Gusty";
-export type WeatherValueType = "Km/h" | "Celsius";
-
-export interface Location {
-  suburb: string;
-  state: string;
-  postcode: string;
-  country: string;
-}
-
-export interface EnumResponse {
-  weather_option_types: {
-    [category: string]: WeatherOptionType;
-  };
-  weather_option_choices: {
-    [category: string]: WeatherOptionChoices;
-  };
-  weather_value_type: {
-    [category: string]: WeatherValueType;
-  };
-}
-
-interface BookingResponse {
-  booking: BookingDetails[];
-  weather_option: WeatherOption[];
-}
-
-interface BookingDetails {
-  id: string;
-  user: string;
-  location: number;
-  day_time: {
-    date: string;
-    time_period: string;
-    start_time: string;
-    end_time: string;
-  };
-  status: "Upcoming" | "Completed" | "Cancelled";
-  result: "Pending" | "Success" | "Fail";
-}
-
-interface WeatherOption {
-  option_type: WeatherOptionType;
-  option_name: WeatherOptionChoices;
-  value_type: WeatherValueType;
-}
-class BookingEndpoint {
+export default class BookingEndpoint {
   enums: EnumResponse;
   locations: Location[];
 
   constructor(locationData: Location[], enums: EnumResponse) {
-    /* this.BASE_URL = process.env.REACT_APP_WEATHER_API_BASE_URL || "http://127.0.0.1:8000/weather_api" */
     this.locations = locationData;
     this.enums = enums;
   }
@@ -146,5 +88,3 @@ class BookingEndpoint {
     }).then((response) => console.log(response.data));
   };
 }
-
-export default BookingEndpoint;
