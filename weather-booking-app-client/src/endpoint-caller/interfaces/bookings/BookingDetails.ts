@@ -8,6 +8,6 @@ export interface BookingDetails {
     start_time: string;
     end_time: string;
   };
-  status: "Upcoming" | "Completed" | "Cancelled";
-  result: "Pending" | "Success" | "Fail";
+  status: "Upcoming" | "Completed";
+  result: "Pending" | "Successful" | "Failed";
 }

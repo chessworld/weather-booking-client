@@ -9,11 +9,12 @@ import WeatherCardList from "../components/ViewBookingsComponents/WeatherCardLis
 import WeatherDataExtractorFromApi from "../components/ViewBookingsComponents/Utility/WeatherDataExtractorFromApi";
 import coffee from "../assets/coffee.png";
 import { useState, useEffect } from "react";
+import { Location } from "../endpoint-caller/interfaces/locations/Location";
 
 const Tab2: React.FC = () => {
   const [selectedTab, setSelectedTab] = useState("upcoming");
   const [selectedBooking, setSelectedBooking] = useState<number>(0);
-  const [locationMapping, setLocations] = useState<any>([]);
+  const [locations, setLocations] = useState<Location[]>([]);
   const [weatherData, setWeatherData] = useState<any>([]);
 
   useEffect(() => {
@@ -32,7 +33,7 @@ const Tab2: React.FC = () => {
         bookings
           .map((item: any, _: number) => {
             return {
-              location: WeatherDataExtractorFromApi.getWeatherLocationFromIdUsingMapping(locationMapping, item),
+              location: WeatherDataExtractorFromApi.getWeatherLocationFromIdUsingMapping(locations, item),
               weather: WeatherDataExtractorFromApi.getWeatherfromApiData(item),
               datetime: WeatherDataExtractorFromApi.timeToTimeObject(item.booking[0].day_time.date),
             };
@@ -40,7 +41,7 @@ const Tab2: React.FC = () => {
           .filter((item: any) => item.weather !== undefined)
       );
     });
-  }, [locationMapping]);
+  }, [locations]);
 
   const handleTabChange = (tab: string) => {
     setSelectedTab(tab);
