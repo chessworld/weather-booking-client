@@ -16,6 +16,12 @@ import Cloudy from "../../components/weatherAnimatedIcons/Cloudy";
 import Sunny from "../../components/weatherAnimatedIcons/Sunny";
 import Rainy from "../../components/weatherAnimatedIcons/Rainy";
 import Stormy from "../../components/weatherAnimatedIcons/Stormy";
+import UserEndpoint from "../../endpoint-caller/userEndpoint";
+
+import Cloudy from "../../components/weatherAnimatedIcons/Cloudy";
+import Sunny from "../../components/weatherAnimatedIcons/Sunny";
+import Rainy from "../../components/weatherAnimatedIcons/Rainy";
+import Stormy from "../../components/weatherAnimatedIcons/Stormy";
 
 class BookingPage extends Component<BookingPageProps, BookingPageState> {
   bookingEndpoint: BookingEndpoint | undefined;
