@@ -1,8 +1,33 @@
+@import url('https://fonts.googleapis.com/css2?family=Roboto&display=swap');
+
+body {
+    font-family: 'Roboto', sans-serif;
+}
+
 :root {
+    --ion-color-primary: #3880ff;
     --slider-width: 70vw;
-    --weather-choose-option-max-width: 80px;
+    --weather-choose-option-max-width: 120px;
     --weather-choose-option-min-width: 60px;
-    --weather-choose-option-max-height: 120px;
+    --weather-choose-option-max-height: 130px;
+}
+
+.font {
+    color: #FFF !important;
+    text-shadow: 
+        -.8px -.8px 0 rgba(0, 0, 0, .5),  
+        .8px -.8px 0 rgba(0, 0, 0, .5),
+        -.8px .8px 0 rgba(0, 0, 0, .5),
+        .8px .8px 0 rgba(0, 0, 0, .5) !important;
+}
+
+.font-inverted {
+    color: #222 !important;
+    text-shadow: 
+        -.5px -.5px 0 rgba(255, 255, 255, .5),  
+        .5px -.5px 0 rgba(255, 255, 255, .5),
+        -.5px .5px 0 rgba(255, 255, 255, .5),
+        .5px .5px 0 rgba(255, 255, 255, .5) !important;
 }
 
 .search-bar {
@@ -19,11 +44,11 @@
 }
 
 .input-container {
-    background: rgba(255, 255, 255, 0.4);
-    border: .5px solid #FFF;
-    backdrop-filter: blur(3px);
+    /* background: rgba(255, 255, 255, 0.4); */
+    /* border: .5px solid #FFF; */
+    /* backdrop-filter: blur(3px); */
     width: 95vw;
-    box-shadow: 2px 2px 8px #888;
+    /* box-shadow: 2px 2px 8px #888; */
     border-radius: 4vw;
 }
 
@@ -48,7 +73,7 @@
     font-size: 2.8vw;
     font-weight: bold;
     margin-top: 1vh;
-    color: white;
+    color: black;
 }
 
 .weather-choose-option {
@@ -64,8 +89,8 @@
     align-items: center;
     border-radius: 3.5em !important;
     color: white;
-    width: 8vw;
-    height: 18vh;
+    width: 15vw;
+    height: 22vh;
     /* padding: 4vh 0px 4vh; */
     text-align: center;
     box-shadow: 0 0 0 .1em rgba(255,255,255,.7) inset, 0 0 2em -.3em var(--shadow) !important;
@@ -116,9 +141,9 @@
 .slider-container {
     width: 95vw;
     border-radius: 14px;
-    background: rgba(100, 100, 100, 0.4);
-    box-shadow: 2px 2px 8px #888;
-    border: .5px solid #333;
+    /* background: rgba(220, 220, 220, 0.4); */
+    /* box-shadow: 2px 2px 8px #888; */
+    /* border: .5px solid #333; */
     padding: 1vh 0 1vh 0;
     backdrop-filter: blur(3px);
     display: flex;

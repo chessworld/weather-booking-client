@@ -4,12 +4,13 @@
 }
 
 .booking-page-date-location-header {
-    color: #5f48eb;
+    color: #FFF;
     text-shadow: 
-        -.5px -.5px 0 #EEE,  
-        .5px -.5px 0 #EEE,
-        -.5px .5px 0 #EEE,
-        .5px .5px 0 #EEE;
+        -.9px -.9px 0 #000,  
+        .9px -.9px 0 #000,
+        -.9px .9px 0 #000,
+        .9px .9px 0 #000;
+
     width: 90vw;
     font-size: 7vw;
     margin-left: 4vw;
@@ -178,11 +179,9 @@ div:has(> input[type='text']) {
 }
 
 .calendar-only-container {
-    position: absolute;
     display: flex;
     flex-direction: column;
     justify-content: center;
-    top: -20vh;
     align-items: center;
     width: 100vw
 }
@@ -199,7 +198,6 @@ div:has(> input[type='text']) {
 .button-with-icon {
     display: flex;
     flex-direction: row;
-    /* width: 100vw; */
     align-items: center;
     justify-content: center;
 }

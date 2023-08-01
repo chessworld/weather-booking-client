@@ -33,6 +33,10 @@ class BookingPageDateLocation extends Component<AbcProps, AbcState> {
                 dateTime: "booking-page-date-time-input",
                 location: "booking-page-location-input"
             },
+            calendarPosition: {
+                top: 0,
+                left: 0
+            },
             showCalendar: false,
             toast: {
                 showToast: false,
@@ -158,7 +162,7 @@ ${payload.getFullYear()}`;
                     })
                     }
                     message={this.state.toast.toastMessage}
-                    duration={this.state.toast.toastDuration}
+                    duration={1000}
                 />
 
                 <Background showClouds={true}>
@@ -199,24 +203,27 @@ ${payload.getFullYear()}`;
                                     id="booking-page-location-input"
                                     placeholder="Where" />
                             </div>
-                            <div className="calendar-container">
+                            <div className="calendar-container" >
                                 <div className="button-with-icon">
                                     <div className="icon-with-outline">
                                         <IonIcon
                                             className="button-icons"
                                             icon={timeOutline} />
                                     </div>
+
                                     <input onTouchEnd={() => this.toggleShowCalendar()}
                                         id="booking-page-date-time-input"
                                         type="text"
                                         className="booking-page-input"
                                         placeholder="Check-in"
                                         readOnly />
+                                </div>
 
                                     {
                                         this.state.showCalendar &&
                                         (
-                                            <div className="calendar-only-container" >
+                                            <div className="calendar-only-container" style={{
+                                            }}>
                                                 <IonDatetime onIonChange={(e) => {
                                                     if (typeof (e.detail.value) == "string") {
                                                         var newValue = format(
@@ -231,7 +238,6 @@ ${payload.getFullYear()}`;
                                             </div>
                                         )
                                     }
-                                </div>
                             </div>
                             <div className="book-buttons-container">
                                 <div className="book-button">Cancel</div>
@@ -239,7 +245,7 @@ ${payload.getFullYear()}`;
                                     this.validateInput() &&
                                         this.props.history.push({
                                             pathname: '/bookingPage',
-                                            state: { ...this.state.bookingTimeLocation }
+                                            state: { ...this.state.bookingDetails }
                                         });
                                 }}>
                                     Next

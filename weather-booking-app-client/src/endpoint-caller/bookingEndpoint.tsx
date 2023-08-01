@@ -20,7 +20,7 @@ class BookingEndpoint {
         country: string
     }[];
 
-    device: string
+    deviceId: string
 
     static BASE_URL: string = "http://127.0.0.1:8000/weather_api";
 
@@ -28,7 +28,11 @@ class BookingEndpoint {
         /* this.BASE_URL = process.env.REACT_APP_WEATHER_API_BASE_URL || "http://127.0.0.1:8000/weather_api" */
         this.location = locationData;
         this.enums = enums;
-        this.device = DeviceManager.getInstance();
+
+
+        DeviceManager.getOrCreateDeviceId().then(deviceId => {
+            this.deviceId = deviceId;
+        });
     }
 
     static async getLocation(): Promise<{[category:string]: any}> {
@@ -119,8 +123,6 @@ class BookingEndpoint {
         location: number,
         datetime: Date,
         time_period: string,
-        start_time: string,
-        end_time: string,
         windJson: { [category: string]: any },
         weatherJson: { [category: string]: any },
         temperatureJson: { [category: string]: any },
@@ -132,13 +134,11 @@ class BookingEndpoint {
         const body = {
             "booking": [
                 {
-                    "user": this.device.getDeviceId(),
+                    "user": this.deviceId,
                     "location": location,
                     "day_time": {
                         "date": this.formatDate( datetime ),
-                        "time_period": 'Morning',
-                        "start_time": start_time,
-                        "end_time": end_time
+                        "time_period": time_period
                     }
                 }
             ],

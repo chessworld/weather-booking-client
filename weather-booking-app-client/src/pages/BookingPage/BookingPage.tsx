@@ -67,7 +67,7 @@ class BookingPage extends Component<BookingPageProps, BookingPageState> {
                 { name: "Windy" },
                 { name: "Gusty" }
             ],
-            selectedWeatherOption: 0,
+            selectedWeatherOption: 1,
             selectedWindOption: 0,
             selectedTemperatureOption: 0,
             showSuggestions: false,
@@ -148,9 +148,7 @@ class BookingPage extends Component<BookingPageProps, BookingPageState> {
             "option_type": 'Wind',
             "option_name": this.state.windOptions
                 && this.state.windOptions[this.state.selectedWindOption].name,
-            "value_type": 'Km/h',
-            "min_value": 30, //TODO backend
-            "max_value": 40 // TODO backend
+            "value_type": 'Km/h'
         }
 
         return windJson;
@@ -171,9 +169,7 @@ class BookingPage extends Component<BookingPageProps, BookingPageState> {
             "option_type": 'Temperature',
             "option_name": this.state.temperatureOptions
                 && this.state.temperatureOptions[this.state.selectedTemperatureOption].name,
-            "value_type": 'Celsius',
-            "min_value": 30, //TODO backend
-            "max_value": 40 // TODO backend
+            "value_type": 'Celsius'
         }
 
         return temperatureJson;
@@ -199,8 +195,6 @@ class BookingPage extends Component<BookingPageProps, BookingPageState> {
             }) + 1,
             this.state.bookingDetails.dateTime,
             this.state.bookingDetails.timePeriod ?? 'Morning',
-            "06:00:00", //TODO backend
-            "12:00:00", //TODO backend
             this.getWeatherJson(),
             this.getTemperatureJson(),
             this.getWindJson()
@@ -284,7 +278,7 @@ class BookingPage extends Component<BookingPageProps, BookingPageState> {
                                                         })
                                                     }
                                                 </div>
-                                                <span className="weather-choose-text">
+                                                <span className="font-inverted weather-choose-text">
                                                     {option.name}
                                                 </span>
                                             </div>
@@ -293,47 +287,49 @@ class BookingPage extends Component<BookingPageProps, BookingPageState> {
                                 }
 
                             </div>
+                        </div>
 
-                            {/* Sliders */}
-                            <div className="slider-container">
-                                <span className="weather-slider-text">
-                                    Temperature
-                                </span>
-                                <IonRange
-                                    className="weather-slider"
-                                    ticks={true}
-                                    snaps={true}
-                                    min={0}
-                                    max={
-                                        this.state.temperatureOptions.length - 1
-                                    }
-                                    onIonChange={(e: any) => {
-                                        this.setState(prev => {
-                                            return {
-                                                ...prev,
-                                                selectedTemperatureOption: e.detail.value
-                                            };
-                                        })
-                                    }}
-                                ></IonRange>
+                        {/* Sliders */}
+                        <div className="slider-container">
+                            <span className="weather-slider-text font-inverted">
+                                Temperature
+                            </span>
+                            <IonRange
+                                className="weather-slider"
+                                ticks={true}
+                                snaps={true}
+                                min={0}
+                                max={
+                                    this.state.temperatureOptions.length - 1
+                                }
+                                onIonChange={(e: any) => {
+                                    this.setState(prev => {
+                                        return {
+                                            ...prev,
+                                            selectedTemperatureOption: e.detail.value
+                                        };
+                                    })
+                                }}
+                            ></IonRange>
 
-                                <span className="weather-slider-text">Wind</span>
+                            <span className="weather-slider-text font-inverted">
+                                Wind
+                            </span>
 
-                                <IonRange
-                                    className="weather-slider"
-                                    ticks={true}
-                                    snaps={true}
-                                    min={0}
-                                    onIonChange={(e: any) => {
-                                        this.setState(prev => {
-                                            return { ...prev, selectedWindOption: e.detail.value };
-                                        })
-                                    }}
-                                    max={
-                                        this.state.windOptions.length - 1
-                                    }
-                                />
-                            </div>
+                            <IonRange
+                                className="weather-slider"
+                                ticks={true}
+                                snaps={true}
+                                min={0}
+                                onIonChange={(e: any) => {
+                                    this.setState(prev => {
+                                        return { ...prev, selectedWindOption: e.detail.value };
+                                    })
+                                }}
+                                max={
+                                    this.state.windOptions.length - 1
+                                }
+                            />
                         </div>
 
 

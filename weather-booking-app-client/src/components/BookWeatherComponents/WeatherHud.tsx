@@ -5,27 +5,17 @@ import WeatherHudProps from './Interface/WeatherHudProps';
 import WeatherHudState from './Interface/WeatherHudState';
 
 class WeatherHud extends Component<WeatherHudProps, WeatherHudState> {
-constructor(props: WeatherHudProps) {
-    super(props)
-    this.state = {
-        windCondition: 'No Wind',
-        temperatureRange: [20, 25],
-        temperatureUnit: 'C'
-    }
-}
-
-    componentDidMount(): void {
-        /* this.drawHud(); */
-    }
-
-    componentDidUpdate(prevProps: Readonly<{}>, prevState: Readonly<{}>, snapshot?: any): void {
-        if (prevProps !== this.props) {
-            /* this.drawHud(this.props.weatherData.weatherOptions[this.props.weatherData.selectedWeatherOption].name); */
+    constructor(props: WeatherHudProps) {
+        super(props)
+        this.state = {
+            windCondition: 'No Wind',
+            temperatureRange: [20, 25],
+            temperatureUnit: 'C'
         }
     }
 
     render() {
-        const SvgWeatherIconComponent = this.props.weatherData.weatherOptions[this.props.weatherData.selectedWeatherOption].svg ;
+        const SvgWeatherIconComponent = this.props.weatherData.weatherOptions[this.props.weatherData.selectedWeatherOption].svg;
 
         return (
             <div className="hud-container">
@@ -34,7 +24,7 @@ constructor(props: WeatherHudProps) {
                     hud-background
                     ${this.props.weatherData.weatherOptions[this.props.weatherData.selectedWeatherOption].backgroundClassName}
                 `}
-                    >
+                >
                     <div className={this.props.weatherData.weatherOptions[this.props.weatherData.selectedWeatherOption].effectClassName}>
                         <ul>
                             <li></li>
@@ -45,7 +35,7 @@ constructor(props: WeatherHudProps) {
                         </ul>
                     </div>
 
-                    <h2 className="hud-temperature-text" >
+                    <h2 className="hud-temperature-text">
 
                         {
                             this.props.weatherData.temperatureOptions[this.props.weatherData.selectedTemperatureOption]
@@ -66,20 +56,20 @@ constructor(props: WeatherHudProps) {
                     </h2>
 
                     <div className="weather-hud-grid">
-                        <div className="item1">
+                        <div className={`item1 ${this.props.weatherData.selectedWeatherOption != 0 ? "font" : "font-inverted"}`}>
                             {
                                 this.props.weatherData.weatherOptions[this.props.weatherData.selectedWeatherOption].name
                             }
                         </div>
 
-                        <div className="item2">
+                        <div className={`item2 ${this.props.weatherData.selectedWeatherOption != 0 ? "font" : "font-inverted"}`}>
                             {
                                 this.props.weatherData.windOptions[this.props.weatherData.selectedWindOption].name
                             }
                         </div>
 
                         <div className="item3">
-                            <SvgWeatherIconComponent className="weather-icon" isWindy={this.props.isWindy} isNight={this.props.isNight} />
+                            <SvgWeatherIconComponent showAnimation={true} className="weather-icon" isWindy={this.props.isWindy} isNight={this.props.isNight} />
                         </div>
 
                         <div className="item4" >
