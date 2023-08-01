@@ -11,13 +11,6 @@ import { Component } from "react";
 import { IonToast, IonRange, IonPage } from "@ionic/react";
 import DeviceManager from "../../device/DeviceManager";
 import UserEndpoint from "../../endpoint-caller/userEndpoint";
-
-import Cloudy from "../../components/weatherAnimatedIcons/Cloudy";
-import Sunny from "../../components/weatherAnimatedIcons/Sunny";
-import Rainy from "../../components/weatherAnimatedIcons/Rainy";
-import Stormy from "../../components/weatherAnimatedIcons/Stormy";
-import UserEndpoint from "../../endpoint-caller/userEndpoint";
-
 import Cloudy from "../../components/weatherAnimatedIcons/Cloudy";
 import Sunny from "../../components/weatherAnimatedIcons/Sunny";
 import Rainy from "../../components/weatherAnimatedIcons/Rainy";
@@ -98,7 +91,7 @@ class BookingPage extends Component<BookingPageProps, BookingPageState> {
         .then((user) => {
           if (user.error) {
             console.log("User does not exist. Creating new user.");
-            UserEndpoint.createUser()
+            UserEndpoint.createUser("New User", false) //TODO: CHANGE THIS FROM HARDCODED
               .then((user) => {
                 // If user doesn't exist
                 DeviceManager.updateDeviceId(user.id);
