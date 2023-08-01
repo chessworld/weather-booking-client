@@ -1,55 +1,28 @@
-import { BASE_URL } from '../config.test';
-
-type UserEndpointResponse = {
-    id?: string,
-    error?: string,
-    name?: string,
-    completed_tutorial: string
-}
+import ApiService from "./apiService";
+import { UserEndpointResponse } from "./interfaces/users/UserEndpointResponse";
 
 class UserEndpoint {
-    static BASE_URL: string = BASE_URL;
+  static async getUser(userId: string): Promise<UserEndpointResponse> {
+    const userData = await ApiService.get(`/users/${userId}`).then((response) => response.data);
+    return userData;
+  }
 
-    static options(method: 'GET' | 'POST' | 'PUT', body?: { [category: string]: any }): RequestInit {
-        return {
-            method: method,
-            headers: {
-                'Content-Type': 'application/json'
-            },
-            body: body ? JSON.stringify(body) : null
-        }
-    };
+  static async completeUserTutorial(userId: string): Promise<UserEndpointResponse> {
+    const response = ApiService.put(`/users/${userId}`, { completed_tutorial: true })
+      .then((response) => response.data)
+      .catch((error) => {
+        console.log(error);
+      });
+    return response;
+  }
 
-    static async getUser(userId: string): Promise<UserEndpointResponse> {
-        const url = `${UserEndpoint.BASE_URL}/users/${userId}`;
-
-        const response = await fetch(url, UserEndpoint.options('GET'));
-
-        return response.json();
-    }
-
-    static async completeUserTutorial(userId: string): Promise<UserEndpointResponse> {
-        const url = `${UserEndpoint.BASE_URL}/users/${userId}/`;
-
-        const response = await fetch(url, UserEndpoint.options('PUT', {
-            "completed_tutorial": true
-        }));
-        if (!response.ok) {
-            throw new Error(`HTTP error! status: ${response.status}`);
-        }
-        return response.json();
-    }
-
-    static async createUser(): Promise<UserEndpointResponse> {
-        const url = `${UserEndpoint.BASE_URL}/users/`;
-
-        const response = await fetch(url, UserEndpoint.options('POST'));
-        if (!response.ok) {
-            throw new Error(`HTTP error! status: ${response.status}`);
-        }
-
-        return response.json();
-    }
+  static async createUser(name: string, completedTutorial: boolean): Promise<UserEndpointResponse> {
+    const response  = ApiService.post("/users/", {
+        name: name,
+        completed_tutorial: completedTutorial,
+    }).then((response) => response.data);
+    return response;
+  }
 }
 
 export default UserEndpoint;
