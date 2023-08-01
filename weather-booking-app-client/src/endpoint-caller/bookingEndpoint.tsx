@@ -29,6 +29,37 @@ export default class BookingEndpoint {
     return locationData;
   }
 
+  createBooking = (
+    location: number,
+    datetime: Date,
+    time_period: string,
+    start_time: string,
+    end_time: string,
+    windJson: { [category: string]: any },
+    weatherJson: { [category: string]: any },
+    temperatureJson: { [category: string]: any }
+  ) => {
+    const body = {
+      booking: [
+        {
+          user: "91523207-a6d9-4b8f-b019-be5c1c2d4a28",
+          location: location,
+          day_time: {
+            date: this.formatDate(datetime),
+            time_period: "Morning",
+            start_time: start_time,
+            end_time: end_time,
+          },
+          status: "Upcoming",
+          result: "Pending",
+        },
+      ],
+      weather_option: [weatherJson, temperatureJson, windJson],
+    };
+    console.log(body);
+    ApiService.post("/bookings/", body).then((response) => console.log(response.data));
+  };
+
   static getCurrentDate(): string {
     var today = new Date();
     var yyyy = today.getFullYear();
@@ -58,33 +89,4 @@ export default class BookingEndpoint {
 
     return [year, month, day].join("-");
   }
-
-  createBooking = (
-    location: number,
-    datetime: Date,
-    time_period: string,
-    start_time: string,
-    end_time: string,
-    windJson: { [category: string]: any },
-    weatherJson: { [category: string]: any },
-    temperatureJson: { [category: string]: any }
-  ) => {
-    ApiService.post("/bookings/", {
-      booking: [
-        {
-          user: "fab0e9fe-7b6b-41b9-95c4-59badef18c16",
-          location: location,
-          day_time: {
-            date: this.formatDate(datetime),
-            time_period: "Morning",
-            start_time: start_time,
-            end_time: end_time,
-          },
-          status: "Upcoming",
-          result: "Pending",
-        },
-      ],
-      weather_option: [weatherJson, temperatureJson, windJson],
-    }).then((response) => console.log(response.data));
-  };
 }
