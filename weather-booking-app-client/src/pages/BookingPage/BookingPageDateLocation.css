@@ -25,6 +25,7 @@
     outline: none;
     padding-left: 2vw;
     width: 70vw;
+    transition: border 100ms ease-in;
 }
 
 .booking-page-input:focus {
@@ -188,6 +189,7 @@ div:has(> input[type='text']) {
 
 .button-icons {
     width: 10vw;
+    color: #555;
     height: 10vw;
     max-width: 50px;
     max-height: 50px;

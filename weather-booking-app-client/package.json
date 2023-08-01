@@ -25,6 +25,7 @@
     "@types/react-router-dom": "^5.3.3",
     "chart.js": "^4.3.0",
     "date-fns": "^2.30.0",
+    "esbuild": "^0.18.17",
     "ionicons": "^7.0.0",
     "react": "^18.2.0",
     "react-calendar": "^4.5.0",

@@ -1,3 +1,5 @@
+import DeviceManager from '../device/DeviceManager';
+
 class BookingEndpoint {
     enums: {
         "weather_option_types": {
@@ -18,12 +20,15 @@ class BookingEndpoint {
         country: string
     }[];
 
+    device: string
+
     static BASE_URL: string = "http://127.0.0.1:8000/weather_api";
 
     constructor(locationData: any, enums: any) {
         /* this.BASE_URL = process.env.REACT_APP_WEATHER_API_BASE_URL || "http://127.0.0.1:8000/weather_api" */
         this.location = locationData;
         this.enums = enums;
+        this.device = DeviceManager.getInstance();
     }
 
     static async getLocation(): Promise<{[category:string]: any}> {
@@ -123,10 +128,11 @@ class BookingEndpoint {
         const bookingsRoute = "/bookings/"
         const url = BookingEndpoint.BASE_URL + bookingsRoute;
 
+        // TODO get the user to use current device
         const body = {
             "booking": [
                 {
-                    "user": "fab0e9fe-7b6b-41b9-95c4-59badef18c16",
+                    "user": this.device.getDeviceId(),
                     "location": location,
                     "day_time": {
                         "date": this.formatDate( datetime ),

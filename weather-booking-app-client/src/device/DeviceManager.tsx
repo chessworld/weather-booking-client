@@ -1,5 +1,4 @@
 import { Preferences } from '@capacitor/preferences';
-import { v4 as uuidv4 } from 'uuid';
 
 interface IDeviceManager {
     deviceId: string | Promise<string>
