@@ -1,8 +1,10 @@
 import { Component } from 'react';
 import { Calendar } from 'react-calendar';
+import { format, parseISO } from 'date-fns';
 import Background from '../../components/ScreenComponents/Background';
 import {
     IonPage,
+    IonDatetime,
     IonIcon
 } from '@ionic/react';
 import { withRouter } from 'react-router-dom';
@@ -38,6 +40,17 @@ class BookingPageDateLocation extends Component<AbcProps, AbcState> {
         if (this.state != prevState) console.log(this.state);
     }
 
+    componentDidMount() {
+        var a = document.querySelectorAll(".calendar-only-container")[0];
+
+        window.addEventListener("click", (e) => {
+            if (a && !a.contains(e.target as Node)) {
+                console.log(e.target);
+                this.setState({ showCalendar: false })
+            }
+        });
+    }
+
     toggleShowCalendar(): void {
         this.setState({
             ...this.state,
@@ -71,11 +84,11 @@ class BookingPageDateLocation extends Component<AbcProps, AbcState> {
             }
         })
 
-        if (payload instanceof Date && action == 'dateTime') {
-            var el = (document.getElementById("booking-page-datetime-input") as HTMLInputElement)
-            if (el) {
-                el.value = `${payload.getDate()} ${this.monthToString(payload.getMonth() + 1)} ${payload.getFullYear()}`;
-            }
+        var el = (document.getElementById("booking-page-datetime-input") as HTMLInputElement)
+        if (payload instanceof Date && action == 'dateTime' && el) {
+            el.value = `${payload.getDate()} ${this.monthToString(payload.getMonth() + 1)} ${payload.getFullYear()}`;
+        } else if (action == 'dateTime' && el) {
+            el.value = payload;
         }
     }
 
@@ -137,14 +150,18 @@ class BookingPageDateLocation extends Component<AbcProps, AbcState> {
 
                                     {
                                         this.state.showCalendar &&
-                                        <div className="calendar-only-container">
-                                            <div onBlur={() => this.toggleShowCalendar() }>
-                                                <Calendar 
-                                                        onChange={(date: Date | Value, _: React.MouseEvent<HTMLButtonElement>) => {
-                                                    if (date instanceof Date) this.updateBooking(date, 'dateTime');
-                                                }} />
+                                        (
+                                            <div className="calendar-only-container" >
+                                                <IonDatetime onIonChange={(e) => {
+                                                    if (typeof( e.detail.value ) == "string" ) { 
+                                                        var newValue = format(parseISO(e.detail.value), 'MMM d, yyyy');
+                                                        console.log(newValue);
+                                                        this.updateBooking(newValue, 'dateTime');
+                                                    }
+                                                }}>
+                                                </IonDatetime>
                                             </div>
-                                        </div>
+                                        )
                                     }
                                 </div>
                             </div>

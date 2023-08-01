@@ -181,6 +181,7 @@ div:has(> input[type='text']) {
     display: flex;
     flex-direction: column;
     justify-content: center;
+    top: -20vh;
     align-items: center;
     width: 100vw
 }
