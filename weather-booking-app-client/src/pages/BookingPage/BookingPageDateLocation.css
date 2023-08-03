@@ -15,6 +15,7 @@
 
     width: 90vw;
     font-size: 7vw;
+    margin-top: 4vh;
     margin-left: 4vw;
     font-weight: 900;
 }
@@ -38,9 +39,9 @@
 .booking-page-date-location-container {
     height: 80vh;
     display: flex;
-    margin: 0;
+    margin-top: 5vh;
     flex-direction: column;
-    justify-content: center;
+    justify-content: flex-start;
     align-items: center;
 }
 
@@ -82,7 +83,6 @@
     min-width: 44px;
     background: none;
     font-size: 16px;
-    margin-top: 8px;
 }
 
 .react-calendar__navigation button:enabled:hover,
