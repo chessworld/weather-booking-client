@@ -2,6 +2,8 @@ import { Component } from 'react';
 import { format, parseISO } from 'date-fns';
 import Background from '../../components/ScreenComponents/Background';
 import BookingPageDateLocationState from "./Interface/BookingPageDateLocationState";
+import DeviceManager from "../../device/DeviceManager";
+import UserEndpoint from "../../endpoint-caller/userEndpoint";
 import {
     IonToast,
     IonPage,
@@ -48,6 +50,8 @@ class BookingPageDateLocation extends Component<RouteComponentProps, BookingPage
     }
 
     componentDidMount() {
+        this.verifyDeviceId();
+
         var a = document.querySelectorAll(".calendar-only-container")[0];
 
         window.addEventListener("click", (e) => {
@@ -103,6 +107,42 @@ class BookingPageDateLocation extends Component<RouteComponentProps, BookingPage
         return inputIsValid;
     }
 
+
+    verifyDeviceId() {
+        /**
+         * Not Sure which page this should be on. It is for verifying device id
+         */
+
+        DeviceManager.getOrCreateDeviceId().then((deviceId) => {
+            UserEndpoint.getUser(deviceId)
+                .then((user) => {
+                    // User Already exists
+                    this.showToast(`Welcome back ${user.id}!`);
+                    console.log(`Welcome back ${user.id}!`);
+                    if (!user.completed_tutorial) {
+                        // If user exists but hasn't completed tutorial
+                        this.props.history.push("/OnboardingPage");
+                    }
+                })
+                .catch((error) => {
+                    console.error(error);
+
+                });
+        }).catch((error) => {
+            console.error(error);
+            UserEndpoint.createUser("New User", false) //TODO: CHANGE THIS FROM HARDCODED
+                .then((user) => {
+                    // If user doesn't exist
+                    DeviceManager.updateDeviceId(user.id);
+                    this.showToast(`Created user ${user.id}`);
+                    this.props.history.push("/OnboardingPage");
+                })
+                .catch((error) => {
+                    console.error(error);
+                });
+        });
+    }
+
     showToast(message: string): void {
         this.setState({
             ...this.state,
@@ -114,19 +154,17 @@ class BookingPageDateLocation extends Component<RouteComponentProps, BookingPage
     }
 
     updateBooking(payload: any, action: 'name' | 'location' | 'dateTime') {
-        this.setState({
-            ...this.state,
-            bookingDetails: {
-                ...this.state.bookingDetails,
-                [action]: payload
-            }
-        })
-
-
-        var a = document.getElementById(this.state.bookingPageInputIds[action]);
-        if (a) a.style.border = "1px solid black";
 
         if (action == 'dateTime') {
+            var display = format(
+                parseISO(payload),
+                'MMM d, yyyy'
+            );
+
+            payload = format(
+                parseISO(payload),
+                'yyyy-MM-dd'
+            );
 
             var el = (document.getElementById("booking-page-date-time-input") as HTMLInputElement)
 
@@ -136,9 +174,25 @@ ${payload.getDate()} \
 ${this.monthToString(payload.getMonth() + 1)} \
 ${payload.getFullYear()}`;
             } else if (action == 'dateTime') {
-                el.value = payload;
+                el.value = display;
             }
+
         }
+
+        this.setState({
+            ...this.state,
+            bookingDetails: {
+                ...this.state.bookingDetails,
+                [action]: payload
+            }
+        })
+
+        this.resetInputBorderStyles(action);
+    }
+
+    resetInputBorderStyles(inputAction: string) {
+        var a = document.getElementById(this.state.bookingPageInputIds[inputAction]);
+        if (a) a.style.border = "1px solid black";
     }
 
     render(): React.ReactNode {
@@ -217,14 +271,8 @@ ${payload.getFullYear()}`;
                                         <div className="calendar-only-container" style={{
                                         }}>
                                             <IonDatetime onIonChange={(e) => {
-                                                if (typeof (e.detail.value) == "string") {
-                                                    var newValue = format(
-                                                        parseISO(e.detail.value),
-                                                        'MMM d, yyyy'
-                                                    );
-
-                                                    this.updateBooking(newValue, 'dateTime');
-                                                }
+                                                typeof (e.detail.value) == "string" &&
+                                                    this.updateBooking(e.detail.value, 'dateTime');
                                             }}>
                                             </IonDatetime>
                                         </div>

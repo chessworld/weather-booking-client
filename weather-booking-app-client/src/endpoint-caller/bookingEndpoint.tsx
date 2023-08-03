@@ -41,7 +41,7 @@ export default class BookingEndpoint {
 
   createBooking = (
     location: number,
-    datetime: Date,
+    datetime: string,
     timePeriod: string,
     windJson: { [category: string]: any },
     weatherJson: { [category: string]: any },
@@ -53,7 +53,7 @@ export default class BookingEndpoint {
           user: this.deviceId,
           location: location,
           day_time: {
-            date: this.formatDate(datetime),
+            date: datetime,
             time_period: timePeriod == "" ? "Morning" : timePeriod,
           },
           status: "Upcoming",
