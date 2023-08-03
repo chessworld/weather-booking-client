@@ -176,11 +176,15 @@ constructor(props: BookingPageProps) {
   }
 
   book(): void {
+    if (!this.state.bookingDetails && !isBookingDetails(this.state.bookingDetails)) {
+      throw new Error('Invalid state object');
+    }
+
     this.bookingEndpoint?.createBooking(
       this.bookingEndpoint?.getLocationSuburbs().findIndex((suburb: string) => {
-        return suburb.toLowerCase() === this.state.bookingDetails.location.toLowerCase();
+          return suburb.toLowerCase() === this.state.bookingDetails.location && this.state.bookingDetails.location.toLowerCase();
       }) + 1,
-      this.state.bookingDetails.dateTime,
+      this.state.bookingDetails.dateTime ?? '',
       this.state.bookingDetails.timePeriod ?? "Morning",
       this.getWeatherJson(),
       this.getTemperatureJson(),

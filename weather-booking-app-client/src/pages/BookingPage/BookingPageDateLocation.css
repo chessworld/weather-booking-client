@@ -1,6 +1,8 @@
 :root {
     --height: 60px;
+    --booking-page-input-transition: border 100ms ease-in;
     --border-rad: 2vh
+               
 }
 
 .booking-page-date-location-header {
@@ -26,7 +28,7 @@
     outline: none;
     padding-left: 2vw;
     width: 70vw;
-    transition: border 100ms ease-in;
+    transition: var(--booking-page-input-transition);
 }
 
 .booking-page-input:focus {
@@ -211,6 +213,7 @@ div:has(> input[type='text']) {
     align-items: center;
     border: 1px solid #888;
     border-right: none;
+    transition: var(--booking-page-input-transition);
 }
 
 .book-buttons-container {

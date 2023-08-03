@@ -1,9 +1,9 @@
 import React from 'react';
 
 type BookingDetails = {
-  dateTime: string;
-  location: string;
-  name: string;
+  dateTime: string | null;
+  location: string | null;
+  name: string | null;
   timePeriod?: string
 }
 

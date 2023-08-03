@@ -17,7 +17,6 @@ import "./BookingPageDateLocation.css"
 import "./BookingPage.css"
 
 
-
 class BookingPageDateLocation extends Component<RouteComponentProps, BookingPageDateLocationState> {
     constructor(props: RouteComponentProps) {
         super(props);
@@ -25,11 +24,12 @@ class BookingPageDateLocation extends Component<RouteComponentProps, BookingPage
             bookingPageInputIds: {
                 name: "booking-page-name-input",
                 dateTime: "booking-page-date-time-input",
-                location: "booking-page-location-input"
+                location: "booking-page-location-input",
             },
-            calendarPosition: {
-                top: 0,
-                left: 0
+            bookingPageInputIconIds: {
+                name: "booking-page-name-input-icon",
+                dateTime: "booking-page-date-time-input-icon",
+                location: "booking-page-location-input-icon"
             },
             showCalendar: false,
             toast: {
@@ -38,9 +38,9 @@ class BookingPageDateLocation extends Component<RouteComponentProps, BookingPage
                 toastMessage: ''
             },
             bookingDetails: {
-                name: '',
-                dateTime: '',
-                location: ''
+                name: null,
+                dateTime: null,
+                location: null
             }
         }
     }
@@ -89,24 +89,47 @@ class BookingPageDateLocation extends Component<RouteComponentProps, BookingPage
     validateInput(): Boolean {
         let inputIsValid = true;
 
-        Object.entries(this.state.bookingDetails).forEach((item: any) => {
+        Object.entries(this.state.bookingDetails).forEach((item: [string, string | null]) => {
             const [key, value] = item;
 
-            if (value == '') {
+            if (value === '' || value === null) {
                 inputIsValid = false;
+                this.changeInputBorderValidStyle(inputIsValid, key);
                 var error = `The ${key} field is empty.`
                 console.error(error);
                 this.showToast(error);
-
-                var a = document.getElementById(this.state.bookingPageInputIds[key]);
-                if (a) a.style.border = "2px solid #DD0000";
             }
         });
-
 
         return inputIsValid;
     }
 
+    changeInputBorderValidStyle(isInputValid: boolean, inputFieldId: string): void {
+        const inputElement = document.getElementById(this.state.bookingPageInputIds[inputFieldId as keyof typeof this.state.bookingPageInputIds]);
+        const inputIconElement = document.getElementById(this.state.bookingPageInputIconIds[inputFieldId as keyof typeof this.state.bookingPageInputIds]);
+
+        if (!isInputValid) {
+            this.applyInvalidInputStyle(inputElement);
+            this.applyInvalidInputStyle(inputIconElement, true);
+        } else {
+            this.resetInputStyle(inputElement);
+            this.resetInputStyle(inputIconElement);
+        }
+    }
+
+    applyInvalidInputStyle(element: HTMLElement | null, isIconElement?: boolean): void {
+        if (element) {
+            element.style.borderWidth = isIconElement ? "2px 0px 2px 2px" : "2px 2px 2px 0px";
+            element.style.borderStyle = "solid";
+            element.style.borderColor = "#DD0000";
+        }
+    }
+
+    resetInputStyle(element: HTMLElement | null): void {
+        if (element) {
+            element.style.border = "None";
+        }
+    }
 
     verifyDeviceId() {
         /**
@@ -147,6 +170,7 @@ class BookingPageDateLocation extends Component<RouteComponentProps, BookingPage
         this.setState({
             ...this.state,
             toast: {
+                ...this.state.toast,
                 showToast: true,
                 toastMessage: message,
             }
@@ -163,8 +187,9 @@ class BookingPageDateLocation extends Component<RouteComponentProps, BookingPage
 
             payload = format(
                 parseISO(payload),
-                'yyyy-MM-dd'
+                'dd-MM-yyyy'
             );
+
 
             var el = (document.getElementById("booking-page-date-time-input") as HTMLInputElement)
 
@@ -187,12 +212,7 @@ ${payload.getFullYear()}`;
             }
         })
 
-        this.resetInputBorderStyles(action);
-    }
-
-    resetInputBorderStyles(inputAction: string) {
-        var a = document.getElementById(this.state.bookingPageInputIds[inputAction]);
-        if (a) a.style.border = "1px solid black";
+        this.changeInputBorderValidStyle(true, action);
     }
 
     render(): React.ReactNode {
@@ -202,6 +222,7 @@ ${payload.getFullYear()}`;
                     isOpen={this.state.toast.showToast}
                     onDidDismiss={() => this.setState({
                         toast: {
+                            ...this.state.toast,
                             toastMessage: '',
                             showToast: false
                         }
@@ -218,7 +239,9 @@ ${payload.getFullYear()}`;
                     <div className="booking-page-date-location-container">
                         <div className="input-fields-container">
                             <div className="button-with-icon">
-                                <div className="icon-with-outline">
+                                <div
+                                    id="booking-page-name-input-icon"
+                                    className="icon-with-outline" >
                                     <IonIcon
                                         className="button-icons"
                                         icon={bagOutline} />
@@ -235,7 +258,9 @@ ${payload.getFullYear()}`;
 
 
                             <div className="button-with-icon">
-                                <div className="icon-with-outline">
+                                <div
+                                    id="booking-page-location-input-icon"
+                                    className="icon-with-outline">
                                     <IonIcon className="button-icons"
                                         icon={compassOutline}
                                     />
@@ -251,12 +276,14 @@ ${payload.getFullYear()}`;
                             </div>
                             <div className="calendar-container" >
                                 <div className="button-with-icon">
-                                    <div className="icon-with-outline">
+                                    <div
+                                        id="booking-page-date-time-input-icon"
+                                        className="icon-with-outline"
+                                    >
                                         <IonIcon
                                             className="button-icons"
                                             icon={timeOutline} />
                                     </div>
-
                                     <input onTouchEnd={() => this.toggleShowCalendar()}
                                         id="booking-page-date-time-input"
                                         type="text"
@@ -282,8 +309,8 @@ ${payload.getFullYear()}`;
                             <div className="book-buttons-container">
                                 <div className="book-button">Cancel</div>
                                 <div className="book-button" onTouchEnd={() => {
-                                    this.validateInput() &&
-                                        this.props.history.push({
+                                    this.validateInput()
+                                        && this.props.history.push({
                                             pathname: '/bookingPage',
                                             state: { ...this.state.bookingDetails }
                                         });
