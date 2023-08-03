@@ -10,40 +10,31 @@ import WeatherDataExtractorFromApi from "../components/ViewBookingsComponents/Ut
 import coffee from "../assets/coffee.png";
 import { useState, useEffect } from "react";
 import { Location } from "../endpoint-caller/interfaces/locations/Location";
+import { BookingResponse } from "../endpoint-caller/interfaces/bookings/BookingResponse";
+import { BookingStatus } from "../endpoint-caller/interfaces/enums/BookingStatus";
+import { key } from "ionicons/icons";
 
 const Tab2: React.FC = () => {
-  const [selectedTab, setSelectedTab] = useState("upcoming");
+  const [selectedTab, setSelectedTab] = useState<BookingStatus>("Upcoming");
   const [selectedBooking, setSelectedBooking] = useState<number>(0);
   const [locations, setLocations] = useState<Location[]>([]);
-  const [weatherData, setWeatherData] = useState<any>([]);
+  const [bookingListData, setBookingListData] = useState<BookingResponse[]>([]);
 
   useEffect(() => {
-    BookingEndpoint.getLocation()
-      .then((response) => {
-        return response;
-      })
-      .then((data) => {
-        setLocations(data);
-      });
+    BookingEndpoint.getLocation().then((response) => {
+      setLocations(response);
+    });
   }, []);
 
   useEffect(() => {
-    BookingEndpoint.getBookingList().then((bookings) => {
-      setWeatherData(
-        bookings
-          .map((item: any, _: number) => {
-            return {
-              location: WeatherDataExtractorFromApi.getWeatherLocationFromIdUsingMapping(locations, item),
-              weather: WeatherDataExtractorFromApi.getWeatherfromApiData(item),
-              datetime: WeatherDataExtractorFromApi.timeToTimeObject(item.booking[0].day_time.date),
-            };
-          })
-          .filter((item: any) => item.weather !== undefined)
-      );
+    BookingEndpoint.getBookingList("db66adee-b24d-4491-963f-bfdacdde4cfa").then((bookings) => {
+      console.log(bookings);
+      setBookingListData(bookings);
     });
   }, [locations]);
 
-  const handleTabChange = (tab: string) => {
+  const handleTabChange = (tab: BookingStatus) => {
+    console.log(bookingListData);
     setSelectedTab(tab);
   };
 
@@ -58,19 +49,19 @@ const Tab2: React.FC = () => {
       {!selectedBooking && (
         <IonTabBar slot="top" className="bookings-tab-bar">
           <IonTabButton
-            className={`bookings-tab ${selectedTab === "upcoming" ? "bookings-tab-selected" : ""}`}
-            tab="upcoming"
-            onClick={() => handleTabChange("upcoming")}
-            selected={selectedTab === "upcoming"}
+            className={`bookings-tab ${selectedTab === "Upcoming" ? "bookings-tab-selected" : ""}`}
+            tab="Upcoming"
+            onClick={() => handleTabChange("Upcoming")}
+            selected={selectedTab === "Upcoming"}
           >
             <IonLabel>Upcoming</IonLabel>
           </IonTabButton>
 
           <IonTabButton
-            className={`bookings-tab ${selectedTab === "completed" ? "bookings-tab-selected" : ""}`}
-            tab="completed"
-            onClick={() => handleTabChange("completed")}
-            selected={selectedTab === "completed"}
+            className={`bookings-tab ${selectedTab === "Completed" ? "bookings-tab-selected" : ""}`}
+            tab="Completed"
+            onClick={() => handleTabChange("Completed")}
+            selected={selectedTab === "Completed"}
           >
             <IonLabel>Completed</IonLabel>
           </IonTabButton>
@@ -78,37 +69,25 @@ const Tab2: React.FC = () => {
       )}
 
       <IonContent fullscreen>
-        {selectedBooking && selectedTab === "upcoming" ? (
-          <BookingDetails data={weatherData && weatherData[selectedBooking]} closeBookingDetail={handleBookingClick} />
-        ) : selectedBooking && selectedTab === "completed" ? (
+        {selectedBooking && selectedTab === "Upcoming" ? (
+          <BookingDetails bookingDetails={bookingListData[selectedBooking]} closeBookingDetails={handleBookingClick} />
+        ) : selectedBooking && selectedTab === "Completed" ? (
           <BookingDetailsCompleted
             data={weatherData && weatherData[selectedBooking]}
             closeBookingDetail={handleBookingClick}
           />
-        ) : selectedTab === "upcoming" ? (
+        ) : selectedTab === "Upcoming" ? (
           <WeatherCardList
-            data={weatherData.filter((item: any) => {
-              if (item.datetime < new Date()) {
-                return false;
-              }
-
-              return true;
-            })}
-            openBookingDetail={handleBookingClick}
-            upcoming={true}
+            bookingListData={bookingListData.filter((bookingDetails) => bookingDetails.status === "Upcoming")}
+            openBookingDetails={handleBookingClick}
+            key="upcoming"
           />
         ) : (
           <div>
             <WeatherCardList
-              data={weatherData.filter((item: any) => {
-                if (item.datetime < new Date()) {
-                  return true;
-                }
-
-                return false;
-              })}
-              openBookingDetail={handleBookingClick}
-              upcoming={false}
+              bookingListData={bookingListData.filter((bookingDetails) => bookingDetails.status === "Completed")}
+              openBookingDetails={handleBookingClick}
+              key="completed"
             />
             <a href="https://ko-fi.com/" className="coffee-img-container">
               <p className="coffee-text">Support Us!</p>

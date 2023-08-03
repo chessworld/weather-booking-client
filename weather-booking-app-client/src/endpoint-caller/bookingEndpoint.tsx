@@ -1,26 +1,23 @@
 import ApiService from "./apiService";
 import { BookingResponse } from "./interfaces/bookings/BookingResponse";
-import { EnumResponse } from "./interfaces/enums/EnumResponse";
+import { WeatherOption } from "./interfaces/bookings/WeatherOption";
 import { Location } from "./interfaces/locations/Location";
 
 export default class BookingEndpoint {
-  enums: EnumResponse;
   locations: Location[];
 
-  constructor(locationData: Location[], enums: EnumResponse) {
+  constructor(locationData: Location[]) {
     this.locations = locationData;
-    this.enums = enums;
   }
 
   static async create(): Promise<BookingEndpoint> {
     const locationData = await ApiService.get("/locations/").then((response) => response.data);
-    const enumResponse = await ApiService.get("/enums/").then((response) => response.data);
 
-    return new BookingEndpoint(locationData, enumResponse);
+    return new BookingEndpoint(locationData);
   }
 
-  static async getBookingList(): Promise<BookingResponse[]> {
-    const bookingList = await ApiService.get("/bookings").then((response) => response.data);
+  static async getBookingList(userId: string): Promise<BookingResponse[]> {
+    const bookingList = await ApiService.get(`/bookings/${userId}`).then((response) => response.data);
     return bookingList;
   }
 
@@ -29,32 +26,13 @@ export default class BookingEndpoint {
     return locationData;
   }
 
-  createBooking = (
-    location: number,
-    datetime: Date,
-    time_period: string,
-    start_time: string,
-    end_time: string,
-    windJson: { [category: string]: any },
-    weatherJson: { [category: string]: any },
-    temperatureJson: { [category: string]: any }
-  ) => {
+  createBooking = (location: number, date: string, timePeriod: string, weatherOption: WeatherOption) => {
     const body = {
-      booking: [
-        {
-          user: "91523207-a6d9-4b8f-b019-be5c1c2d4a28",
-          location: location,
-          day_time: {
-            date: this.formatDate(datetime),
-            time_period: "Morning",
-            start_time: start_time,
-            end_time: end_time,
-          },
-          status: "Upcoming",
-          result: "Pending",
-        },
-      ],
-      weather_option: [weatherJson, temperatureJson, windJson],
+      user: "db66adee-b24d-4491-963f-bfdacdde4cfa",
+      location: location,
+      date: date,
+      time_period: timePeriod,
+      weather_option: weatherOption,
     };
     console.log(body);
     ApiService.post("/bookings/", body).then((response) => console.log(response.data));
