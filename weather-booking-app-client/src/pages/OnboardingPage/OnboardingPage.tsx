@@ -115,8 +115,9 @@ class OnboardingPage extends Component<RouteComponentProps, OnboardingPageState>
 
     completeTutorial() {
         DeviceManager.getOrCreateDeviceId().then(deviceId => {
+            const completedTutorial = true;
             UserEndpoint.completeUserTutorial(deviceId).then(() => {
-                this.props.history.push("/tab1");
+                this.props.history.push("/bookingPageDateLocation");
             });
         });
     }
