@@ -1,9 +1,3 @@
-@import url('https://fonts.googleapis.com/css2?family=Roboto&display=swap');
-
-body {
-    font-family: 'Roboto', sans-serif;
-}
-
 :root {
     --input-container-width: 100vw;
     --ion-color-primary: #3880ff;
