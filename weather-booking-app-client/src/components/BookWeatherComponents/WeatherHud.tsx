@@ -69,7 +69,9 @@ class WeatherHud extends Component<WeatherHudProps, WeatherHudState> {
                         </div>
 
                         <div className="item3">
-                            <SvgWeatherIconComponent showAnimation={true} className="weather-icon" isWindy={this.props.isWindy} isNight={this.props.isNight} />
+                            <div className="hud-icon-container">
+                                <SvgWeatherIconComponent showAnimation={true} className="weather-icon" isWindy={this.props.isWindy} isNight={this.props.isNight} />
+                            </div>
                         </div>
 
                         <div className="item4" >

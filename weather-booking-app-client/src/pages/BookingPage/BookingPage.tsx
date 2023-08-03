@@ -89,20 +89,6 @@ class BookingPage extends Component<BookingPageProps, BookingPageState> {
     DeviceManager.getOrCreateDeviceId().then((deviceId) => {
       UserEndpoint.getUser(deviceId)
         .then((user) => {
-          if (user.error) {
-            console.warn("User does not exist. Creating new user.");
-
-            UserEndpoint.createUser("New User", false) //TODO: CHANGE THIS FROM HARDCODED
-              .then((user) => {
-                // If user doesn't exist
-                DeviceManager.updateDeviceId(user.id);
-                this.showToast(`Created user ${user.id}`);
-                this.props.history.push("/OnboardingPage");
-              })
-              .catch((error) => {
-                console.error(error);
-              });
-          } else {
             // User Already exists
             this.showToast(`Welcome back ${user.id}!`);
             console.log(`Welcome back ${user.id}!`);
@@ -110,11 +96,23 @@ class BookingPage extends Component<BookingPageProps, BookingPageState> {
               // If user exists but hasn't completed tutorial
               this.props.history.push("/OnboardingPage");
             }
-          }
         })
         .catch((error) => {
           console.error(error);
-        });
+
+    });
+  }).catch((error) => {
+      console.error(error);
+        UserEndpoint.createUser("New User", false) //TODO: CHANGE THIS FROM HARDCODED
+            .then((user) => {
+                // If user doesn't exist
+                DeviceManager.updateDeviceId(user.id);
+                this.showToast(`Created user ${user.id}`);
+                this.props.history.push("/OnboardingPage");
+            })
+            .catch((error) => {
+                console.error(error);
+            });
     });
   }
 

@@ -6,9 +6,9 @@ body {
 
 :root {
     --hud-border-radius: 1.5em;
-    --hud-width: 55vw;
+    --hud-width: 85vw;
     --hud-height: 40vw;
-    --hud-max-width: 600px;
+    --hud-max-width: 800px;
     --hud-min-width: 300px;
     --hud-max-height: 320px;
     --hud-min-height: 200px;
@@ -60,8 +60,8 @@ body {
 
 .hud-background {
     border-radius: var(--hud-border-radius);
-    /* border: 1px solid #FFF; */
-    box-shadow: 0 0 2em -.3em var(--shadow);
+    border: .1px solid rgba(50, 50, 50, .2);
+    box-shadow: 0 0 .5em -.3em var(--shadow);
     background: linear-gradient( to var(--blend-dir), var(--blend1) var(--blend-from), var(--blend2) var(--blend-to));
     transition: all 0.5s ease-in;
 }
@@ -393,8 +393,10 @@ body {
     z-index: 3;
 }
 
-.hud-icon {
-    transform: scale(2);
+.hud-icon-container {
+    display: flex;
+    justify-content: center;
+    width: 30vw;
     object-fit: cover; /* optional: this prevents distortion */
 }
 

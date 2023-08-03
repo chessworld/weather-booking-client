@@ -87,9 +87,8 @@ body {
     align-items: center;
     border-radius: 3.5em !important;
     color: white;
-    width: 17vw;
+    width: 18vw;
     height: 22vh;
-    /* padding: 4vh 0px 4vh; */
     text-align: center;
     box-shadow: 0 0 0 .1em rgba(255,255,255,.7) inset, 0 0 2em -.3em var(--shadow) !important;
 }
