@@ -1,13 +1,15 @@
 import React from 'react';
 
-interface Tab1State {
+type BookingDetails = {
+  dateTime: string;
+  location: string;
+  name: string;
+  timePeriod?: string
+}
+
+interface BookingPageState {
     [category: string]: any;
-    bookingDetails: {
-        dateTime: Date;
-        location: string;
-        timePeriod: string;
-        name: string
-    };
+    bookingDetails: BookingDetails;
     temperatureOptions: { [catagory: string]: any };
     weatherOptions: {
         name: string,
@@ -28,4 +30,22 @@ interface Tab1State {
     showConfirmation: boolean;
 }
 
-export default Tab1State;
+function isBookingDetails(obj: any): obj is BookingDetails {
+  return (
+    obj !== null &&
+    typeof obj === 'object' &&
+    'dateTime' in obj &&
+    typeof obj.dateTime === 'string' &&
+    'location' in obj &&
+    typeof obj.location === 'string' &&
+    'name' in obj &&
+    typeof obj.name === 'string'
+    //   &&
+    // 'timePeriod' in obj &&
+    // typeof obj.timePeriod === 'string'
+  );
+}
+
+export type { BookingPageState, BookingDetails };
+export { isBookingDetails};
+

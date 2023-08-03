@@ -1,31 +1,23 @@
 import { Component } from 'react';
-import { Calendar } from 'react-calendar';
 import { format, parseISO } from 'date-fns';
 import Background from '../../components/ScreenComponents/Background';
+import BookingPageDateLocationState from "./Interface/BookingPageDateLocationState";
 import {
     IonToast,
     IonPage,
     IonDatetime,
     IonIcon
 } from '@ionic/react';
-import { withRouter } from 'react-router-dom';
+import { withRouter, RouteComponentProps } from 'react-router-dom';
 import { compassOutline, timeOutline, bagOutline } from "ionicons/icons";
-import type { Value } from 'react-calendar/dist/cjs/shared/types';
 import 'react-calendar/dist/Calendar.css';
 import "./BookingPageDateLocation.css"
 import "./BookingPage.css"
-import Toast from "../../components/Toast/Toast";
 
-interface AbcProps {
-    [category: string]: any
-}
 
-interface AbcState {
-    [category: string]: any
-}
 
-class BookingPageDateLocation extends Component<AbcProps, AbcState> {
-    constructor(props: AbcProps) {
+class BookingPageDateLocation extends Component<RouteComponentProps, BookingPageDateLocationState> {
+    constructor(props: RouteComponentProps) {
         super(props);
         this.state = {
             bookingPageInputIds: {
@@ -51,7 +43,7 @@ class BookingPageDateLocation extends Component<AbcProps, AbcState> {
         }
     }
 
-    componentDidUpdate(prevProps: Readonly<AbcProps>, prevState: Readonly<AbcState>, snapshot?: any): void {
+    componentDidUpdate(prevProps: Readonly<RouteComponentProps>, prevState: Readonly<BookingPageDateLocationState>, snapshot?: any): void {
         if (this.state != prevState) console.log(this.state);
     }
 
@@ -219,25 +211,25 @@ ${payload.getFullYear()}`;
                                         readOnly />
                                 </div>
 
-                                    {
-                                        this.state.showCalendar &&
-                                        (
-                                            <div className="calendar-only-container" style={{
-                                            }}>
-                                                <IonDatetime onIonChange={(e) => {
-                                                    if (typeof (e.detail.value) == "string") {
-                                                        var newValue = format(
-                                                            parseISO(e.detail.value),
-                                                            'MMM d, yyyy'
-                                                        );
+                                {
+                                    this.state.showCalendar &&
+                                    (
+                                        <div className="calendar-only-container" style={{
+                                        }}>
+                                            <IonDatetime onIonChange={(e) => {
+                                                if (typeof (e.detail.value) == "string") {
+                                                    var newValue = format(
+                                                        parseISO(e.detail.value),
+                                                        'MMM d, yyyy'
+                                                    );
 
-                                                        this.updateBooking(newValue, 'dateTime');
-                                                    }
-                                                }}>
-                                                </IonDatetime>
-                                            </div>
-                                        )
-                                    }
+                                                    this.updateBooking(newValue, 'dateTime');
+                                                }
+                                            }}>
+                                            </IonDatetime>
+                                        </div>
+                                    )
+                                }
                             </div>
                             <div className="book-buttons-container">
                                 <div className="book-button">Cancel</div>

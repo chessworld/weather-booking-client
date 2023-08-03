@@ -2,7 +2,7 @@ import "./BookingPage.css";
 import Background from "../../components/ScreenComponents/Background";
 import BookingEndpoint from "../../endpoint-caller/bookingEndpoint";
 import BookingPageProps from "./Interface/BookingPageProps";
-import BookingPageState from "./Interface/BookingPageState";
+import { BookingDetails, BookingPageState, isBookingDetails } from "./Interface/BookingPageState";
 import ConfirmBookingDetails from "../../components/ViewBookingsComponents/ConfirmBookingDetails";
 import React from "react";
 import { withRouter } from "react-router-dom";
@@ -19,8 +19,12 @@ import Stormy from "../../components/weatherAnimatedIcons/Stormy";
 class BookingPage extends Component<BookingPageProps, BookingPageState> {
   bookingEndpoint: BookingEndpoint | undefined;
 
-  constructor(props: any) {
+constructor(props: BookingPageProps) {
     super(props);
+
+    if (!isBookingDetails(this.props.location.state)) {
+        throw new Error('Invalid state object');
+    } 
 
     this.state = {
       bookingDetails: {

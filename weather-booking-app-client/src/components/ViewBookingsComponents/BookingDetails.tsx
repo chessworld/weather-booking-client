@@ -23,9 +23,7 @@ const BookingDetails: React.FC<IWeatherCardList> = (props) => {
     const [locations, setLocations] = useState<any>([]);
 
     useEffect(() => {
-        BookingEndpoint.getLocation().then(response => {
-            return response.json();
-        }).then(data => {
+        BookingEndpoint.getLocation().then(data => {
             setLocations(data);
         })
     }, []);
