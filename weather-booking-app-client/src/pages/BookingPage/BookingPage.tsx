@@ -249,9 +249,9 @@ constructor(props: BookingPageProps) {
                       }}
                     >
                       <div
-                        className={`hud-background ${
+                    className={`hud-background weather-choose-option ${
                           this.state.weatherOptions[i].backgroundClassName
-                        } weather-choose-option ${
+                        } ${
                           i == this.state.selectedWeatherOption ? "weather-choose-option-focus" : "no-animation"
                         }`}
                       >
@@ -264,10 +264,12 @@ constructor(props: BookingPageProps) {
                             <li></li>
                           </ul>
                         </div>
-                        {React.createElement(option.svg, {
+                        {
+                          React.createElement(option.svg, {
                           showAnimation: this.state.selectedWeatherOption == i,
                           className: "weather-icon",
-                        })}
+                            })
+                        }
                       </div>
                       <span className="weather-choose-text">{option.name}</span>
                     </div>

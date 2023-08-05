@@ -1,9 +1,10 @@
-import { Component } from 'react';
+import { Component, createRef, RefObject } from 'react';
 import { format, parseISO } from 'date-fns';
 import Background from '../../components/ScreenComponents/Background';
 import BookingPageDateLocationState from "./Interface/BookingPageDateLocationState";
 import DeviceManager from "../../device/DeviceManager";
 import UserEndpoint from "../../endpoint-caller/userEndpoint";
+import Draggable, { DraggableEventHandler } from 'react-draggable';
 import {
     IonToast,
     IonPage,
@@ -12,14 +13,21 @@ import {
 } from '@ionic/react';
 import { withRouter, RouteComponentProps } from 'react-router-dom';
 import { compassOutline, timeOutline, bagOutline } from "ionicons/icons";
+
+import SlideUpPanel from '../../components/SlideUpPanel/SlideUpPanel';
+
 import 'react-calendar/dist/Calendar.css';
 import "./BookingPageDateLocation.css"
 import "./BookingPage.css"
 
 
 class BookingPageDateLocation extends Component<RouteComponentProps, BookingPageDateLocationState> {
+    panelRef: RefObject<any>;
+    calendarRef: RefObject<any>;
+
     constructor(props: RouteComponentProps) {
         super(props);
+
         this.state = {
             bookingPageInputIds: {
                 name: "booking-page-name-input",
@@ -31,7 +39,7 @@ class BookingPageDateLocation extends Component<RouteComponentProps, BookingPage
                 dateTime: "booking-page-date-time-input-icon",
                 location: "booking-page-location-input-icon"
             },
-            showCalendar: false,
+            showCalendar: true,
             toast: {
                 showToast: false,
                 toastDuration: 1000,
@@ -43,29 +51,47 @@ class BookingPageDateLocation extends Component<RouteComponentProps, BookingPage
                 location: null
             }
         }
+
+        this.panelRef = createRef();
+        this.calendarRef = createRef();
+        /* this.hideCalendar.bind(this); */
     }
 
     componentDidUpdate(prevProps: Readonly<RouteComponentProps>, prevState: Readonly<BookingPageDateLocationState>, snapshot?: any): void {
-        if (this.state != prevState) console.log(this.state);
+        /* if (process.env.REACT_APP_ENVIRONMENT  === 'development') { */
+        if (true) {
+            for (const key in prevState) {
+            if ((prevState as any)[key] !== (this.state as any)[key]) {
+                console.log('changed property:', key, 'from', (prevState as any)[key], 'to', (this.state as any)[key]);
+            }
+        }
+      }
     }
 
     componentDidMount() {
         this.verifyDeviceId();
 
-        var a = document.querySelectorAll(".calendar-only-container")[0];
+        var a = document.querySelectorAll(".slide-up-panel")[0];
 
         window.addEventListener("click", (e) => {
             if (a && !a.contains(e.target as Node)) {
-                console.log(e.target);
                 this.setState({ showCalendar: false })
             }
         });
     }
 
-    toggleShowCalendar(): void {
+    showCalendar(): void {
         this.setState({
             ...this.state,
-            showCalendar: !this.state.showCalendar,
+            showCalendar: true,
+        })
+    }
+
+
+    hideCalendar(): void {
+        this.setState({
+            ...this.state,
+            showCalendar: false,
         })
     }
 
@@ -177,6 +203,22 @@ class BookingPageDateLocation extends Component<RouteComponentProps, BookingPage
         });
     }
 
+    changeCalendarSelectedDate(type: '1day' | '2day' | '1week' | '1month' | 'today'): void {
+        var currentDate = new Date(); // convert to Date object
+
+        if (type === '1day') {
+            currentDate.setDate(currentDate.getDate() + 1); // add one day
+        } else if (type === '2day') {
+            currentDate.setDate(currentDate.getDate() + 2); // add two days
+        } else if (type === '1week') {
+            currentDate.setDate(currentDate.getDate() + 7); // add one week
+        } else if (type === '1month') {
+            currentDate.setDate(currentDate.getDate() + 30); // add one month
+        }
+
+        this.calendarRef.current.value = currentDate.toISOString(); // convert back to ISO string and set as value
+    }
+
     updateBooking(payload: any, action: 'name' | 'location' | 'dateTime') {
 
         if (action == 'dateTime') {
@@ -284,27 +326,13 @@ ${payload.getFullYear()}`;
                                             className="button-icons"
                                             icon={timeOutline} />
                                     </div>
-                                    <input onTouchEnd={() => this.toggleShowCalendar()}
+                                    <input onTouchEnd={() => this.showCalendar()}
                                         id="booking-page-date-time-input"
                                         type="text"
                                         className="booking-page-input"
                                         placeholder="Check-in"
                                         readOnly />
                                 </div>
-
-                                {
-                                    this.state.showCalendar &&
-                                    (
-                                        <div className="calendar-only-container" style={{
-                                        }}>
-                                            <IonDatetime onIonChange={(e) => {
-                                                typeof (e.detail.value) == "string" &&
-                                                    this.updateBooking(e.detail.value, 'dateTime');
-                                            }}>
-                                            </IonDatetime>
-                                        </div>
-                                    )
-                                }
                             </div>
                             <div className="book-buttons-container">
                                 <div className="book-button">Cancel</div>
@@ -319,6 +347,47 @@ ${payload.getFullYear()}`;
                                 </div>
                             </div>
                         </div>
+                        {
+                            <SlideUpPanel showPanel={this.state.showCalendar}>
+                                <div style={{
+                                  textAlign: 'left',
+                                  fontSize: '1.5rem',
+                                  marginLeft: '10vw',
+                                  width: '100vw'
+                                }}>Select Dates</div>
+                                <div className="calendar-only-container">
+                                    <IonDatetime
+                                        ref={this.calendarRef}
+                                        className="react-calendar"
+                                        onIonChange={(e) => {
+                                            typeof (e.detail.value) == "string" &&
+                                                this.updateBooking(e.detail.value, 'dateTime');
+                                        }}>
+                                    </IonDatetime>
+                                </div>
+                                <div className="small-day-button-container">
+                                    <div className="button-small" onTouchEnd={() => this.changeCalendarSelectedDate('today')}>
+                                        Today
+                                    </div>
+                                    <div className="button-small" onTouchEnd={() => this.changeCalendarSelectedDate('1day')}>
+                                        +1 day
+                                    </div>
+                                    <div className="button-small" onTouchEnd={() => this.changeCalendarSelectedDate('2day')}>
+                                        +3 day
+                                    </div>
+                                    <div className="button-small" onTouchEnd={() => this.changeCalendarSelectedDate('1week')}>
+                                        +1 week
+                                    </div>
+                                    <div className="button-small" onTouchEnd={() => this.changeCalendarSelectedDate('1month')}>
+                                        +1 month
+                                    </div>
+                                </div>
+
+                                <div className="book-button" onTouchEnd={() => this.hideCalendar()}>
+                                    Select Dates
+                                </div>
+                            </SlideUpPanel>
+                        }
                     </div>
                 </Background >
             </IonPage>
