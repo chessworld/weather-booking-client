@@ -2,7 +2,8 @@ import ApiService from "./apiService";
 import { BookingResponse } from "./interfaces/bookings/BookingResponse";
 import { WeatherOption } from "./interfaces/bookings/WeatherOption";
 import { Location } from "./interfaces/locations/Location";
-
+import { AppContext } from "../stores/app-context";
+import { useContext } from "react";
 export default class BookingEndpoint {
   locations: Location[];
 
@@ -27,8 +28,9 @@ export default class BookingEndpoint {
   }
 
   createBooking = (location: number, date: string, timePeriod: string, weatherOption: WeatherOption) => {
+    const appCtx = useContext(AppContext);
     const body = {
-      user: "db66adee-b24d-4491-963f-bfdacdde4cfa",
+      user: appCtx.deviceId,
       location: location,
       date: date,
       time_period: timePeriod,

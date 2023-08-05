@@ -1,23 +1,15 @@
 import { IonList, IonItem, IonCard, IonImg } from "@ionic/react";
-import { useState, useEffect } from "react";
 import "./WeatherCardList.css";
 import arrowRight from "../../assets/Icons/arrow-right.png";
-import React from "react";
-import BookingEndpoint from "../../endpoint-caller/bookingEndpoint";
+import React, { useContext } from "react";
 import WeatherImageMapper from "./Mappings/WeatherImageMapper";
 import { BookingResponse } from "../../endpoint-caller/interfaces/bookings/BookingResponse";
-import { Location } from "../../endpoint-caller/interfaces/locations/Location";
-import { book } from "ionicons/icons";
-
+import { AppContext } from "../../stores/app-context";
+import formatDate from "./Utility/formatDate";
 const WeatherCardList: React.FC<{ bookingListData: BookingResponse[]; openBookingDetails: (id: number) => void }> = (
   props
 ) => {
-  const [locations, setLocations] = useState<Location[]>([]);
-  useEffect(() => {
-    BookingEndpoint.getLocation().then((response) => {
-      setLocations(response);
-    });
-  }, []);
+  const appCtx = useContext(AppContext);
 
   return (
     <IonList className="weather-list" lines="none">
@@ -35,9 +27,9 @@ const WeatherCardList: React.FC<{ bookingListData: BookingResponse[]; openBookin
                   </div>
                   <div className="container-group-text">
                     <h1 className="card-title">
-                      {locations.length !== 0 && locations[bookingDetails.location].suburb}
+                      {appCtx.locations.length !== 0 && appCtx.locations[bookingDetails.location].suburb}
                     </h1>
-                    <p className="card-subtitle">{bookingDetails.date}</p>
+                    <p className="card-subtitle">{formatDate(bookingDetails.date)}</p>
                     <p className="card-text">
                       {bookingDetails.weather_option.weather}, {bookingDetails.weather_option.wind},
                       {bookingDetails.weather_option.temperature}

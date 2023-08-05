@@ -1,24 +1,36 @@
-import { useParams } from "react-router-dom";
-import { useState, useEffect } from "react";
+import { useContext, useState } from "react";
 import "./BookingDetails.css";
-import { IonButton, IonCard, IonCardContent, IonCardSubtitle, IonCardTitle, IonIcon, IonImg } from "@ionic/react";
-
-import { chevronBackOutline, arrowForwardOutline } from "ionicons/icons";
-import sunImage from "../../assets/Icons/slight_touch_happyday.png";
-import rainImage from "../../assets/Icons/rainy.png";
-import BookingEndpoint from "../../endpoint-caller/bookingEndpoint";
+import {
+  IonButton,
+  IonCard,
+  IonCardContent,
+  IonCardSubtitle,
+  IonCardTitle,
+  IonIcon,
+  IonImg,
+  IonTitle,
+} from "@ionic/react";
+import { chevronBackOutline, arrowForwardOutline, thumbsDownSharp, thumbsUpSharp } from "ionicons/icons";
+import WeatherImageMapper from "./Mappings/WeatherImageMapper";
 import { BookingResponse } from "../../endpoint-caller/interfaces/bookings/BookingResponse";
+import { AppContext } from "../../stores/app-context";
+import formatDate from "./Utility/formatDate";
 
 const BookingDetails: React.FC<{ bookingDetails: BookingResponse; closeBookingDetails: (id: number) => void }> = (
   props
 ) => {
-  const [locations, setLocations] = useState<any>([]);
+  const appCtx = useContext(AppContext);
 
-  useEffect(() => {
-    BookingEndpoint.getLocation().then((locations) => {
-      setLocations(locations);
-    });
-  }, []);
+  // Completed Booking Details Logic
+  const [thumbUp, setThumbUp] = useState<boolean | null>(null);
+
+  const handleThumbUpClick = () => {
+    setThumbUp(true);
+  };
+
+  const handleThumbDownClick = () => {
+    setThumbUp(false);
+  };
 
   return (
     <div>
@@ -36,16 +48,25 @@ const BookingDetails: React.FC<{ bookingDetails: BookingResponse; closeBookingDe
         <IonCardContent>
           <div className="booking-details-content">
             <div className="booking-details-details">
-              <IonCardTitle className="booking-details-details__title"></IonCardTitle>
-              <IonCardSubtitle className="booking-details-details__subtitle"></IonCardSubtitle>
-              <p className="booking-details-details__weather"></p>
+              <IonCardTitle className="booking-details-details__title">
+                {appCtx.locations.length !== 0 && appCtx.locations[props.bookingDetails.location].suburb}
+              </IonCardTitle>
+              <IonCardSubtitle className="booking-details-details__subtitle">
+                {formatDate(props.bookingDetails.date)}
+              </IonCardSubtitle>
+              <p className="booking-details-details__weather">
+                {props.bookingDetails.weather_option.weather}, {props.bookingDetails.weather_option.temperature},{" "}
+                {props.bookingDetails.weather_option.wind}
+              </p>
             </div>
             <div className="booking-details-img-container">
-              <IonImg className="booking-details-img" src={rainImage} />
+              <IonImg
+                className="booking-details-img"
+                src={WeatherImageMapper[props.bookingDetails.weather_option.weather]}
+              />
             </div>
           </div>
 
-          {/* Cards */}
           <IonCard className="enjoy-weather-card">
             <div className="enjoy-weather-content">Enjoy your weather!</div>
           </IonCard>
@@ -59,6 +80,40 @@ const BookingDetails: React.FC<{ bookingDetails: BookingResponse; closeBookingDe
           </IonCard>
         </IonCardContent>
       </IonCard>
+
+      {props.bookingDetails.status === "Completed" ? (
+        <div>
+          <h1 className="booking-details-title"> Feedback</h1>
+          <IonCard className="booking-details-card">
+            <IonCardContent>
+              <IonCard className="enjoy-weather-card" id="feedback-card">
+                <IonTitle id="feedback-content">Did you enjoy your weather?</IonTitle>
+                <div className="thumb-group">
+                  <IonButton className="thumb-button invisible-button" onClick={() => handleThumbUpClick()}>
+                    <IonIcon icon={thumbsUpSharp} className={`${thumbUp ? "thumb-selected" : ""}`}></IonIcon>
+                  </IonButton>
+                  <IonButton className="thumb-button invisible-button" onClick={() => handleThumbDownClick()}>
+                    <IonIcon
+                      icon={thumbsDownSharp}
+                      className={`${thumbUp === false ? "thumb-selected" : ""}`}
+                    ></IonIcon>
+                  </IonButton>
+                </div>
+              </IonCard>
+
+              <IonCard className="coffee-card">
+                <div className="share-card__title">Buy us a coffee</div>
+                <IonButton className="share-button" href="https://ko-fi.com/">
+                  Donate
+                  <IonIcon icon={arrowForwardOutline}></IonIcon>
+                </IonButton>
+              </IonCard>
+            </IonCardContent>
+          </IonCard>
+        </div>
+      ) : (
+        <div></div>
+      )}
     </div>
   );
 };

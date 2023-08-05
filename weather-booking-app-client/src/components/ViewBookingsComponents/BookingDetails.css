@@ -21,10 +21,8 @@
   color: white;
   position: relative;
   margin: 2rem 1rem;
-  /* padding: 5px 1px; */
-  /* margin: 1vh 0 1vh 0; */
-  /* box-shadow: 1px 2px 5px #888;
-  color: #888; */
+  display: flex;
+  justify-content: center;
 }
 
 .booking-details-title {
@@ -101,7 +99,7 @@
   width: 75vw;
   color: black;
   margin-top: 2rem;
-  background-image: url("../assets/share_now.png");
+  background-image: url("../../assets/share_now.png");
   background-size: cover;
   position: relative;
   background-position: left 90% bottom 50%;
@@ -128,4 +126,55 @@
   color: black;
   --background: white;
   --border-radius: 20px;
+}
+
+.thumb-selected {
+  color: #3880ff;
+}
+
+.thumb-button {
+  color: grey;
+  width: fit-content;
+  display: inline-block;
+  margin: 0;
+}
+
+.thumb-button button.button-native {
+  padding: 0 !important;
+}
+
+.thumb-group {
+  display: flex;
+  justify-content: center;
+  padding-right: 0.5rem;
+}
+
+#feedback-card {
+  width: 100%;
+  text-align: left;
+  padding: 8px 0;
+  margin-top: 0;
+  display: flex;
+  align-items: center;
+}
+
+#feedback-content {
+  font-size: 0.8rem;
+  color: black;
+  font-weight: bold;
+  padding: 0 0 0 0.7rem;
+}
+
+.coffee-card {
+  text-align: left;
+  border-radius: 10px;
+  width: 75vw;
+  color: black;
+  margin-top: 2rem;
+  background-image: url("../../assets/coffee_banner.png");
+  background-size: cover;
+  position: relative;
+  background-position: left 70% bottom 50%;
+  background-color: #addec9;
+  padding: 0.5rem 0.8rem;
 }
