@@ -1,10 +1,7 @@
 .booking-details-back-button {
-  display: inline-block;
-  vertical-align: middle;
   width: 60px;
   color: black;
-  position: relative;
-  left: 0;
+  padding-top: 1rem;
 }
 
 .invisible-button {

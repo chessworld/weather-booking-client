@@ -6,6 +6,7 @@ import WeatherImageMapper from "./Mappings/WeatherImageMapper";
 import { BookingResponse } from "../../endpoint-caller/interfaces/bookings/BookingResponse";
 import { AppContext } from "../../stores/app-context";
 import formatDate from "./Utility/formatDate";
+
 const WeatherCardList: React.FC<{ bookingListData: BookingResponse[]; openBookingDetails: (id: number) => void }> = (
   props
 ) => {
