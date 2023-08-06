@@ -17,7 +17,7 @@ export default class BookingEndpoint {
   }
 
   static async getBookingList(userId: string): Promise<BookingResponse[]> {
-    const bookingList = await ApiService.get(`/bookings/${userId}`).then((response) => response.data);
+    const bookingList = await ApiService.get(`/bookings/user/${userId}`).then((response) => response.data);
     return bookingList;
   }
 
@@ -27,15 +27,15 @@ export default class BookingEndpoint {
   }
 
   createBooking = (location: number, date: string, timePeriod: string, weatherOption: WeatherOption) => {
+    const userId = "7b9d4e65-d545-46f2-9572-19dad9206422";
     const body = {
-      user: "7b9d4e65-d545-46f2-9572-19dad9206422",
       location: location,
       date: date,
       time_period: timePeriod,
       weather_option: weatherOption,
     };
     console.log(body);
-    ApiService.post("/bookings/", body).then((response) => console.log(response.data));
+    ApiService.post(`/bookings/user/${userId}`, body).then((response) => console.log(response.data));
   };
 
   static getCurrentDate(): string {
