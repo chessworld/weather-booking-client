@@ -1,76 +1,27 @@
 import "./BookingDetails.css";
 import { IonButton, IonCard, IonCardContent, IonCardSubtitle, IonCardTitle, IonIcon, IonImg } from "@ionic/react";
-
-import { useState, useEffect } from "react";
+import { useContext, useState } from "react";
 import { closeOutline, arrowForwardOutline } from "ionicons/icons";
-import BookingEndpoint from "../../endpoint-caller/bookingEndpoint";
 import Background from "../../components/ScreenComponents/Background";
+import { BookingResponse } from "../../endpoint-caller/interfaces/bookings/BookingResponse";
+import { AppContext } from "../../stores/app-context";
+import formatDate from "../../utility/formatDate";
+import WeatherImageMapper from "../../utility/WeatherImageMapper";
 
-interface IWeatherCardList {
-  [category: string]: any;
-  closeBookingDetail: (booking: any) => void;
+interface confirmBookingDetailsProps {
+  bookingDetails: BookingResponse;
+  closeBookingDetails: (id: number) => void;
+  book: () => void;
 }
 
-const confirmBookingDetails: React.FC<IWeatherCardList> = (props) => {
-  const [locations, setLocations] = useState<any>([]);
-
-  useEffect(() => {
-    console.log(props);
-    BookingEndpoint.getLocation()
-      .then((response) => {
-        return response;
-      })
-      .then((data) => {
-        setLocations(data);
-      });
-  }, []);
-
-  const timeToDisplay = (time: string) => {
-    const formattedDate = new Date("2023-05-20").toLocaleDateString("en-US", {
-      weekday: "long",
-      day: "2-digit",
-      month: "long",
-      year: "numeric",
-    });
-    return formattedDate;
-  };
-
-  const monthToString = (month: number) => {
-    const monthNames = [
-      "January",
-      "February",
-      "March",
-      "April",
-      "May",
-      "June",
-      "July",
-      "August",
-      "September",
-      "October",
-      "November",
-      "December",
-    ];
-
-    if (month >= 1 && month <= 12) {
-      return monthNames[month - 1];
-    } else {
-      return "Invalid month";
-    }
-  };
-
-  const dateToDisplay = (dateTime: Date) => {
-    if (dateTime instanceof Date) {
-      return `${dateTime.getDate()} ${monthToString(dateTime.getMonth() + 1)} ${dateTime.getFullYear()}`;
-    }
-
-    return "";
-  };
+const confirmBookingDetails: React.FC<confirmBookingDetailsProps> = (props) => {
+  const appCtx = useContext(AppContext);
 
   return (
     <Background>
       <div className="booking-details-toolbar">
         <IonButton
-          onClick={() => props.closeBookingDetail(null)}
+          onClick={() => props.closeBookingDetails(0)}
           className="booking-details-back-button invisible-button"
         >
           <IonIcon icon={closeOutline} slot="icon-only"></IonIcon>
@@ -83,17 +34,20 @@ const confirmBookingDetails: React.FC<IWeatherCardList> = (props) => {
           <div className="booking-details-content">
             <div className="booking-details-details">
               <IonCardTitle className="booking-details-details__title">
-                {props.data.bookingDetails.location}
+                {appCtx.locations.length !== 0 && appCtx.locations[props.bookingDetails.location].suburb}
               </IonCardTitle>
               <IonCardSubtitle className="booking-details-details__subtitle">
-                {dateToDisplay(props.data.bookingDetails.datetime)}
+                {formatDate(props.bookingDetails.date)}
               </IonCardSubtitle>
-              <p className="booking-details-details__weather"></p>
+              <p className="booking-details-details__weather">
+                {props.bookingDetails.weather_option.weather}, {props.bookingDetails.weather_option.temperature},{" "}
+                {props.bookingDetails.weather_option.wind}
+              </p>
             </div>
             <div className="booking-details-img-container">
               <IonImg
                 className="booking-details-img"
-                src={props.data.weatherOptions[props.data.selectedWeatherOption].image}
+                src={WeatherImageMapper[props.bookingDetails.weather_option.weather]}
               />
             </div>
           </div>

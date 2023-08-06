@@ -4,7 +4,7 @@ import { IonApp, IonIcon, IonRouterOutlet, IonTabBar, IonTabButton, IonTabs, set
 import { IonReactRouter } from "@ionic/react-router";
 import { person, book, addCircleSharp } from "ionicons/icons";
 import BookingPage from "./pages/BookingPage/BookingPage";
-import BookingsList from "./pages/BookingsList";
+import ViewBookingsPage from "./pages/ViewBookingsPage";
 import Tab3 from "./pages/Tab3";
 import OnboardingPage from "./pages/OnboardingPage/OnboardingPage";
 import StatisticsPage from "./pages/StatisticsPage/StatisticsPage";
@@ -49,8 +49,8 @@ const App: React.FC = () => {
               <Route exact path="/bookingPage">
                 <BookingPage key={Date.now()} />
               </Route>
-              <Route exact path="/bookingslist">
-                <BookingsList />
+              <Route exact path="/viewBookingsPage">
+                <ViewBookingsPage />
               </Route>
               <Route path="/tab3">
                 <Tab3 />
@@ -68,7 +68,7 @@ const App: React.FC = () => {
             </AppContextProvider>
           </IonRouterOutlet>
           <IonTabBar slot="bottom" id="navbar">
-            <IonTabButton tab="tab2" href="/bookingslist" className="nav-bar-button">
+            <IonTabButton tab="tab2" href="/viewBookingsPage" className="nav-bar-button">
               <IonIcon aria-hidden="true" icon={book} className="nav-bar-icon" />
             </IonTabButton>
             <IonTabButton tab="tab1" href="/" className="nav-bar-button">

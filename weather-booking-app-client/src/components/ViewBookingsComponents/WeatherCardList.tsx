@@ -2,10 +2,10 @@ import { IonList, IonItem, IonCard, IonImg } from "@ionic/react";
 import "./WeatherCardList.css";
 import arrowRight from "../../assets/Icons/arrow-right.png";
 import React, { useContext } from "react";
-import WeatherImageMapper from "./Mappings/WeatherImageMapper";
+import WeatherImageMapper from "../../utility/WeatherImageMapper";
 import { BookingResponse } from "../../endpoint-caller/interfaces/bookings/BookingResponse";
 import { AppContext } from "../../stores/app-context";
-import formatDate from "./Utility/formatDate";
+import formatDate from "../../utility/formatDate";
 
 const WeatherCardList: React.FC<{ bookingListData: BookingResponse[]; openBookingDetails: (id: number) => void }> = (
   props

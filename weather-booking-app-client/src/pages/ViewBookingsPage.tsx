@@ -1,5 +1,5 @@
 import { IonContent, IonPage, IonTabBar, IonTabButton, IonLabel, IonImg } from "@ionic/react";
-import "./BookingsList.css";
+import "./ViewBookingsPage.css";
 import BookingDetails from "../components/ViewBookingsComponents/BookingDetails";
 import BookingEndpoint from "../endpoint-caller/bookingEndpoint";
 import React from "react";
@@ -10,15 +10,15 @@ import { BookingResponse } from "../endpoint-caller/interfaces/bookings/BookingR
 import { BookingStatus } from "../endpoint-caller/interfaces/enums/BookingStatus";
 import { AppContext } from "../stores/app-context";
 
-const ViewBookings: React.FC = () => {
+const ViewBookingsPage: React.FC = () => {
   const [selectedTab, setSelectedTab] = useState<BookingStatus>("Upcoming");
   const [selectedBooking, setSelectedBooking] = useState<number>(0);
   const [bookingListData, setBookingListData] = useState<BookingResponse[]>([]);
   const appCtx = useContext(AppContext);
 
   useEffect(() => {
-    if (appCtx.deviceId !== "") {
-      BookingEndpoint.getBookingList(appCtx.deviceId).then((bookings) => {
+    if (appCtx.userId !== "") {
+      BookingEndpoint.getBookingList(appCtx.userId).then((bookings) => {
         setBookingListData(bookings);
       });
     }
@@ -96,4 +96,4 @@ const ViewBookings: React.FC = () => {
   );
 };
 
-export default ViewBookings;
+export default ViewBookingsPage;

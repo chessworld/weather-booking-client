@@ -11,14 +11,17 @@ import {
   IonTitle,
 } from "@ionic/react";
 import { chevronBackOutline, arrowForwardOutline, thumbsDownSharp, thumbsUpSharp } from "ionicons/icons";
-import WeatherImageMapper from "./Mappings/WeatherImageMapper";
+import WeatherImageMapper from "../../utility/WeatherImageMapper";
 import { BookingResponse } from "../../endpoint-caller/interfaces/bookings/BookingResponse";
 import { AppContext } from "../../stores/app-context";
-import formatDate from "./Utility/formatDate";
+import formatDate from "../../utility/formatDate";
 
-const BookingDetails: React.FC<{ bookingDetails: BookingResponse; closeBookingDetails: (id: number) => void }> = (
-  props
-) => {
+interface BookingDetailsProps {
+  bookingDetails: BookingResponse;
+  closeBookingDetails: (id: number) => void;
+}
+
+const BookingDetails: React.FC<BookingDetailsProps> = (props) => {
   const appCtx = useContext(AppContext);
 
   // Completed Booking Details Logic
@@ -81,7 +84,7 @@ const BookingDetails: React.FC<{ bookingDetails: BookingResponse; closeBookingDe
         </IonCardContent>
       </IonCard>
 
-      {props.bookingDetails.status === "Completed" ? (
+      {props.bookingDetails.status === "Completed" && (
         <div>
           <h1 className="booking-details-title"> Feedback</h1>
           <IonCard className="booking-details-card">
@@ -111,8 +114,6 @@ const BookingDetails: React.FC<{ bookingDetails: BookingResponse; closeBookingDe
             </IonCardContent>
           </IonCard>
         </div>
-      ) : (
-        <div></div>
       )}
     </div>
   );
