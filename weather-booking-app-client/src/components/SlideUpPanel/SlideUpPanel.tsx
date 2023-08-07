@@ -26,11 +26,19 @@ class SlideUpPanel extends Component<SlideUpPanelProps, SlideUpPanelState> {
         this.panelRef = createRef();
     }
 
+    componentDidMount(): void {
+        window.addEventListener("click", (e) => {
+            if (this.panelRef.current && !this.panelRef.current.contains(e.target as Node)) {
+                this.setState({ showSlideUpPanel: false })
+            }
+        });
+    }
+
     componentDidUpdate(prevProps: Readonly<SlideUpPanelProps>, prevState: Readonly<SlideUpPanelState>, snapshot?: any): void {
-        if (this.props !== prevProps) {
+        if (this.props.showPanel !== prevProps.showPanel) {
             this.setState({
-                showSlideUpPanel: this.props.showPanel
-            })
+                showSlideUpPanel: !this.state.showSlideUpPanel
+            });
         }
     }
 

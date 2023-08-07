@@ -3,11 +3,11 @@
 /*****************************************************************************/
 
 .slide-up-panel {
-    background: rgba(255, 255, 255, 0.9);
+    background: rgba(255, 255, 255, 0.9) !important;
     backdrop-filter: blur(10px);
     -webkit-backdrop-filter: blur(10px);
     position: absolute;
-    z-index: 2;
+    z-index: 3 !important;
     bottom: 0;
     height: 70vh;
     display: flex;

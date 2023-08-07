@@ -30,19 +30,8 @@
   padding: 0px 15px;
   font-weight: bold;
   position: relative;
-  top: 1rem;
-}
-
-.booking-details-img {
   width: 100vw;
-  height: 100vh;
-  height: auto;
-}
-
-.booking-details-img-container {
-  display: inline-block;
-  width: 30%;
-  vertical-align: middle;
+  top: 1rem;
 }
 
 .booking-details-toolbar {

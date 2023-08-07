@@ -1,18 +1,17 @@
 :root {
     --height: 60px;
     --booking-page-input-transition: border 100ms ease-in;
-    --border-rad: 2vh
+    --border-rad: 10px
                
 }
 
 .booking-page-date-location-header {
     color: #FFF;
     text-shadow: 
-        -.9px -.9px 0 #000,  
-        .9px -.9px 0 #000,
-        -.9px .9px 0 #000,
-        .9px .9px 0 #000;
-
+        -1.9px -1.9px 0 #000,  
+        1.9px -1.9px 0 #000,
+        -1.9px 1.9px 0 #000,
+        1.9px 1.9px 0 #000;
     width: 90vw;
     font-size: 7vw;
     margin-top: 7vh;
@@ -51,6 +50,8 @@
     backdrop-filter: blur(10px);
     -webkit-backdrop-filter: blur(10px);
     display: flex;
+    position: absolute;
+    bottom: 4vh;
     flex-direction: column;
     align-items: center;
     justify-content: flex-start;
@@ -58,7 +59,7 @@
     border-radius: 4vw;
     box-shadow: 2px 2px 8px #888;
     width: 95vw;
-    height: 55vh
+    height: 65vh
 }
 
 
@@ -105,7 +106,7 @@ div:has(> input[type='text']) {
 
 .icon-with-outline {
     height: var(--height);
-    border-radius: 2vh 0 0 2vh;
+    border-radius: var(--border-rad) 0 0 var(--border-rad);
     background: white;
     display: flex;
     justify-content: center;

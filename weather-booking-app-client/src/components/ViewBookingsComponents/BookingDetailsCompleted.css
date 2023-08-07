@@ -47,3 +47,28 @@
   background-color: #addec9;
   padding: 0.5rem 0.8rem;
 }
+
+.confirm-booking-weather-icon-container {
+    background: rgba(0, 0, 0, 0.7);
+    display: flex;
+    border-radius: 25%;
+    justify-content: center;
+    align-items: center;
+    width: 25vw;
+    height: 25vw;
+}
+
+.share-button {
+    position: relative !important;
+    color: white !important;
+    background: #004fb5;
+    background: rgba(0, 0, 0, 0.7);
+    padding: 5px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    border-radius: 2vw;
+    width: 40vw;
+    border: 2px solid black;
+}

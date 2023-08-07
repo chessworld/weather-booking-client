@@ -10,10 +10,10 @@
 .font {
     color: #FFF !important;
     text-shadow: 
-        -.8px -.8px 0 rgba(0, 0, 0, .5),  
-        .8px -.8px 0 rgba(0, 0, 0, .5),
-        -.8px .8px 0 rgba(0, 0, 0, .5),
-        .8px .8px 0 rgba(0, 0, 0, .5) !important;
+        -1.5px -1.5px 0 rgba(0, 0, 0, .5),  
+        1.5px -1.5px 0 rgba(0, 0, 0, .5),
+        -1.5px 1.5px 0 rgba(0, 0, 0, .5),
+        1.5px 1.5px 0 rgba(0, 0, 0, .5) !important;
 }
 
 .font-inverted {
@@ -145,10 +145,10 @@
     background: rgba(0, 0, 0, 0.7);
     backdrop-filter: blur(2px);
     padding: 20px;
-    border-radius: 8vw;
+    border-radius: 2vw;
     width: 40vw;
     text-align: center;
-    font-size: 2.8vw;
+    font-size: .8rem;
     font-weight: 600;
     transition: background 0.5s ease;
 }
@@ -198,12 +198,24 @@ ion-content {
 ion-range {
     --bar-background: rgba(230,224,246, .5);
     --bar-background-active: #1e1e1e;
-    --bar-height: 8px;
-    --bar-border-radius: 8px;
+    --bar-height: 20px !important;
+    --bar-background-active: rgba(110,104,126, .5);
+    --bar-border-radius: 40px;
     --knob-background: #FFF;
     --knob-size: 5vw;
     --pin-background: #eee;
     --pin-color: #fff;
+}
+
+.range-bar-active {
+    transition: width 2s ease-in-out !important;
+}
+
+.range-bar-active {
+    bottom: 0px;
+    width: auto;
+    background: var(--bar-background-active);
+    transition: width 0.1s ease-in-out;
 }
 
 .range-tick{
@@ -224,4 +236,8 @@ ion-range {
     animation: none !important;
     transition: none !important;
     transform: none !important;
+}
+
+.booking-detail-container {
+    background: rgba(255, 255, 255, .5);
 }

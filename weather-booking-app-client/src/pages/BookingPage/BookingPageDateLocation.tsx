@@ -1,19 +1,20 @@
 import { Component, createRef, RefObject } from 'react';
 import { format, parseISO } from 'date-fns';
-import Background from '../../components/ScreenComponents/Background';
-import BookingPageDateLocationState from "./Interface/BookingPageDateLocationState";
-import DeviceManager from "../../device/DeviceManager";
-import UserEndpoint from "../../endpoint-caller/userEndpoint";
-import Draggable, { DraggableEventHandler } from 'react-draggable';
 import {
     IonToast,
     IonPage,
     IonDatetime,
     IonIcon
 } from '@ionic/react';
+import { isBookingDetails } from "./Interface/BookingPageState";
 import { withRouter, RouteComponentProps } from 'react-router-dom';
 import { compassOutline, timeOutline, bagOutline } from "ionicons/icons";
-
+import { BookingDetails } from './Interface/BookingPageState';
+import Background from '../../components/ScreenComponents/Background';
+import BookingPageDateLocationProps from "./Interface/BookingPageDateLocationProps";
+import BookingPageDateLocationState from "./Interface/BookingPageDateLocationState";
+import DeviceManager from "../../device/DeviceManager";
+import UserEndpoint from "../../endpoint-caller/userEndpoint";
 import SlideUpPanel from '../../components/SlideUpPanel/SlideUpPanel';
 
 import 'react-calendar/dist/Calendar.css';
@@ -21,12 +22,15 @@ import "./BookingPageDateLocation.css"
 import "./BookingPage.css"
 
 
-class BookingPageDateLocation extends Component<RouteComponentProps, BookingPageDateLocationState> {
+class BookingPageDateLocation extends Component<BookingPageDateLocationProps, BookingPageDateLocationState> {
     panelRef: RefObject<any>;
     calendarRef: RefObject<any>;
 
-    constructor(props: RouteComponentProps) {
+
+    constructor(props: BookingPageDateLocationProps) {
         super(props);
+
+        let redirectPassInBookingDetails = false;
 
         this.state = {
             bookingPageInputIds: {
@@ -39,61 +43,49 @@ class BookingPageDateLocation extends Component<RouteComponentProps, BookingPage
                 dateTime: "booking-page-date-time-input-icon",
                 location: "booking-page-location-input-icon"
             },
-            showCalendar: true,
+            showCalendar: false,
             toast: {
                 showToast: false,
                 toastDuration: 1000,
                 toastMessage: ''
             },
-            bookingDetails: {
-                name: null,
-                dateTime: null,
-                location: null
+            bookingDetails:  {
+              location: 'Melbourne',
+              dateTime: '12-12-2024',
+              name: 'Graduation',
+              timePeriod: 'Morning' //TODO make frontend have this input
             }
         }
+      
 
         this.panelRef = createRef();
         this.calendarRef = createRef();
-        /* this.hideCalendar.bind(this); */
     }
 
-    componentDidUpdate(prevProps: Readonly<RouteComponentProps>, prevState: Readonly<BookingPageDateLocationState>, snapshot?: any): void {
+    componentDidUpdate(prevProps: Readonly<BookingPageDateLocationProps>, prevState: Readonly<BookingPageDateLocationState>, snapshot?: any): void {
         /* if (process.env.REACT_APP_ENVIRONMENT  === 'development') { */
+
+        console.table(this.props.location.state);
         if (true) {
             for (const key in prevState) {
-            if ((prevState as any)[key] !== (this.state as any)[key]) {
-                console.log('changed property:', key, 'from', (prevState as any)[key], 'to', (this.state as any)[key]);
+                if ((prevState as any)[key] !== (this.state as any)[key]) {
+                    console.log('changed property:', key, 'from', (prevState as any)[key], 'to', (this.state as any)[key]);
+                }
             }
         }
-      }
     }
 
     componentDidMount() {
         this.verifyDeviceId();
-
-        var a = document.querySelectorAll(".slide-up-panel")[0];
-
-        window.addEventListener("click", (e) => {
-            if (a && !a.contains(e.target as Node)) {
-                this.setState({ showCalendar: false })
-            }
-        });
     }
 
-    showCalendar(): void {
+    toggleShowCalendar(): void {
         this.setState({
             ...this.state,
-            showCalendar: true,
+            showCalendar: !this.state.showCalendar,
         })
     }
 
-
-    hideCalendar(): void {
-        this.setState({
-            ...this.state,
-            showCalendar: false,
-        })
-    }
 
     monthToString(month: Number | any) {
         const monthNames = [
@@ -122,7 +114,6 @@ class BookingPageDateLocation extends Component<RouteComponentProps, BookingPage
                 inputIsValid = false;
                 this.changeInputBorderValidStyle(inputIsValid, key);
                 var error = `The ${key} field is empty.`
-                console.error(error);
                 this.showToast(error);
             }
         });
@@ -231,19 +222,6 @@ class BookingPageDateLocation extends Component<RouteComponentProps, BookingPage
                 parseISO(payload),
                 'dd-MM-yyyy'
             );
-
-
-            var el = (document.getElementById("booking-page-date-time-input") as HTMLInputElement)
-
-            if (payload instanceof Date) {
-                el.value = `
-${payload.getDate()} \
-${this.monthToString(payload.getMonth() + 1)} \
-${payload.getFullYear()}`;
-            } else if (action == 'dateTime') {
-                el.value = display;
-            }
-
         }
 
         this.setState({
@@ -255,6 +233,33 @@ ${payload.getFullYear()}`;
         })
 
         this.changeInputBorderValidStyle(true, action);
+    }
+
+    resetInputFields(): BookingDetails {
+        const bookingDetails = this.state.bookingDetails;
+
+        Object.entries(this.state.bookingPageInputIds).forEach((item: [string, string | null]) => {
+            const [key, value] = item;
+
+
+            if (value) {
+                const inputElement = document.getElementById(value);
+
+                if (inputElement && this.hasValue(inputElement)) {
+                    this.setState({
+                        ...this.state,
+                        bookingDetails: {
+                            ...this.state.bookingDetails,
+                            dateTime: '',
+                            location: '',
+                            name: ''
+                        }
+                    })
+                }
+            }
+        });
+
+        return bookingDetails;
     }
 
     render(): React.ReactNode {
@@ -291,8 +296,9 @@ ${payload.getFullYear()}`;
                                 <input
                                     type="text"
                                     onChange={(e) => {
-                                        this.updateBooking(JSON.stringify(e.target.value), 'name');
+                                        this.updateBooking(e.target.value, 'name');
                                     }}
+                                    value={this.state.bookingDetails.name ?? ''}
                                     id={this.state.bookingPageInputIds.name}
                                     className="booking-page-input"
                                     placeholder="Event" />
@@ -312,6 +318,7 @@ ${payload.getFullYear()}`;
                                     onChange={(e) => {
                                         this.updateBooking(e.target.value, 'location');
                                     }}
+                                    value={this.state.bookingDetails.location ?? ''}
                                     className="booking-page-input"
                                     id="booking-page-location-input"
                                     placeholder="Where" />
@@ -325,74 +332,79 @@ ${payload.getFullYear()}`;
                                         <IonIcon
                                             className="button-icons"
                                             icon={timeOutline} />
-                                    </div>
-                                    <input onTouchEnd={() => this.showCalendar()}
-                                        id="booking-page-date-time-input"
-                                        type="text"
-                                        className="booking-page-input"
-                                        placeholder="Check-in"
-                                        readOnly />
                                 </div>
-                            </div>
-                            <div className="book-buttons-container">
-                                <div className="book-button">Cancel</div>
-                                <div className="book-button" onTouchEnd={() => {
-                                    this.validateInput()
-                                        && this.props.history.push({
-                                            pathname: '/bookingPage',
-                                            state: { ...this.state.bookingDetails }
-                                        });
-                                }}>
-                                    Next
-                                </div>
+                                <input onTouchEnd={() => this.toggleShowCalendar()}
+                                    id="booking-page-date-time-input"
+                                    value={this.state.bookingDetails.dateTime ?? ''}
+                                    type="text"
+                                    className="booking-page-input"
+                                    placeholder="Check-in"
+                                    readOnly />
                             </div>
                         </div>
-                        {
-                            <SlideUpPanel showPanel={this.state.showCalendar}>
-                                <div style={{
-                                  textAlign: 'left',
-                                  fontSize: '1.5rem',
-                                  marginLeft: '10vw',
-                                  width: '100vw'
-                                }}>Select Dates</div>
-                                <div className="calendar-only-container">
-                                    <IonDatetime
-                                        ref={this.calendarRef}
-                                        className="react-calendar"
-                                        onIonChange={(e) => {
-                                            typeof (e.detail.value) == "string" &&
-                                                this.updateBooking(e.detail.value, 'dateTime');
-                                        }}>
-                                    </IonDatetime>
-                                </div>
-                                <div className="small-day-button-container">
-                                    <div className="button-small" onTouchEnd={() => this.changeCalendarSelectedDate('today')}>
-                                        Today
-                                    </div>
-                                    <div className="button-small" onTouchEnd={() => this.changeCalendarSelectedDate('1day')}>
-                                        +1 day
-                                    </div>
-                                    <div className="button-small" onTouchEnd={() => this.changeCalendarSelectedDate('2day')}>
-                                        +3 day
-                                    </div>
-                                    <div className="button-small" onTouchEnd={() => this.changeCalendarSelectedDate('1week')}>
-                                        +1 week
-                                    </div>
-                                    <div className="button-small" onTouchEnd={() => this.changeCalendarSelectedDate('1month')}>
-                                        +1 month
-                                    </div>
-                                </div>
-
-                                <div className="book-button" onTouchEnd={() => this.hideCalendar()}>
-                                    Select Dates
-                                </div>
-                            </SlideUpPanel>
-                        }
+                        <div className="book-buttons-container">
+                            <div className="book-button">Cancel</div>
+                            <div className="book-button" onTouchEnd={() => {
+                                if (this.validateInput()) {
+                                    this.props.history.push({
+                                        pathname: '/bookingPage',
+                                        state: this.resetInputFields()
+                                    });
+                                }
+                            }}>
+                                Next
+                            </div>
+                        </div>
                     </div>
-                </Background >
-            </IonPage>
-        )
-    }
+                    {
+                        <SlideUpPanel showPanel={this.state.showCalendar}>
+                            <div style={{
+                                textAlign: 'left',
+                                fontSize: '1.5rem',
+                                marginLeft: '10vw',
+                                width: '100vw'
+                            }}>
+                                Select Dates
+                            </div>
+
+                            <div className="calendar-only-container">
+                                <IonDatetime
+                                    ref={this.calendarRef}
+                                    className="react-calendar"
+                                    onIonChange={(e) => {
+                                        typeof (e.detail.value) == "string" &&
+                                            this.updateBooking(e.detail.value, 'dateTime');
+                                    }}>
+                                </IonDatetime>
+                            </div>
+                            <div className="small-day-button-container">
+                                <div className="button-small" onTouchEnd={() => this.changeCalendarSelectedDate('today')}>
+                                    Today
+                                </div>
+                                <div className="button-small" onTouchEnd={() => this.changeCalendarSelectedDate('1day')}>
+                                    +1 day
+                                </div>
+                                <div className="button-small" onTouchEnd={() => this.changeCalendarSelectedDate('2day')}>
+                                    +3 day
+                                </div>
+                                <div className="button-small" onTouchEnd={() => this.changeCalendarSelectedDate('1week')}>
+                                    +1 week
+                                </div>
+                                <div className="button-small" onTouchEnd={() => this.changeCalendarSelectedDate('1month')}>
+                                    +1 month
+                                </div>
+                            </div>
+
+                            <div className="book-button" onTouchEnd={() => this.toggleShowCalendar()}>
+                                Select Dates
+                            </div>
+                        </SlideUpPanel>
+                    }
+                </div>
+            </Background >
+        </IonPage >
+    )
+}
 }
 
 export default withRouter(BookingPageDateLocation);
