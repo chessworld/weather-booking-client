@@ -26,11 +26,9 @@ const BookingDetails: React.FC<BookingDetailsProps> = (props) => {
 
   // Completed Booking Details Logic
   const [thumbUp, setThumbUp] = useState<boolean | null>(null);
-
   const handleThumbUpClick = () => {
     setThumbUp(true);
   };
-
   const handleThumbDownClick = () => {
     setThumbUp(false);
   };

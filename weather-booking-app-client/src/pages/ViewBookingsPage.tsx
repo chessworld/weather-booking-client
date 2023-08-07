@@ -11,33 +11,32 @@ import { BookingStatus } from "../endpoint-caller/interfaces/enums/BookingStatus
 import { AppContext } from "../stores/app-context";
 
 const ViewBookingsPage: React.FC = () => {
-  const [selectedTab, setSelectedTab] = useState<BookingStatus>("Upcoming");
-  const [selectedBooking, setSelectedBooking] = useState<number>(0);
+  // API Logic: Getting Booking List Data
   const [bookingListData, setBookingListData] = useState<BookingResponse[]>([]);
   const appCtx = useContext(AppContext);
-
   useEffect(() => {
     if (appCtx.userId !== "") {
       BookingEndpoint.getBookingList(appCtx.userId).then((bookings) => {
         setBookingListData(bookings);
       });
     }
-  }, [appCtx.locations]);
+  }, [appCtx.userId]);
 
+  // Selected Tab Logic
+  const [selectedTab, setSelectedTab] = useState<BookingStatus>("Upcoming");
   const handleTabChange = (tab: BookingStatus) => {
     setSelectedTab(tab);
   };
 
+  // Show Booking Details Logic
+  const [selectedBooking, setSelectedBooking] = useState<number>(0);
   const handleBookingClick = (bookingId: number) => {
     setSelectedBooking(bookingId);
   };
 
   // JSX Logic
-  let yourBookingsHeading;
-  yourBookingsHeading = <h1 className="bookings-list-title">Your Bookings</h1>;
-
-  let selectedTabHeader;
-  selectedTabHeader = (
+  const yourBookingsHeading = <h1 className="bookings-list-title">Your Bookings</h1>;
+  const selectedTabHeader = (
     <IonTabBar slot="top" className="bookings-tab-bar">
       <IonTabButton
         className={`bookings-tab ${selectedTab === "Upcoming" ? "bookings-tab-selected" : ""}`}
@@ -59,20 +58,30 @@ const ViewBookingsPage: React.FC = () => {
     </IonTabBar>
   );
 
-  return (
-    <IonPage>
-      {!selectedBooking && yourBookingsHeading}
-      {!selectedBooking && selectedTabHeader}
-
-      <IonContent fullscreen>
-        {selectedBooking ? (
+  // Show Booking Details if booking is selected
+  if (selectedBooking) {
+    return (
+      <IonPage>
+        <IonContent fullscreen>
           <BookingDetails
             bookingDetails={
               bookingListData.filter((bookingDetails) => bookingDetails.status === selectedTab)[selectedBooking - 1]
             }
             closeBookingDetails={handleBookingClick}
           />
-        ) : selectedTab === "Upcoming" ? (
+        </IonContent>
+      </IonPage>
+    );
+  }
+
+  // Show weather card list if no booking is selected
+  return (
+    <IonPage>
+      {yourBookingsHeading}
+      {selectedTabHeader}
+
+      <IonContent fullscreen>
+        {selectedTab === "Upcoming" ? (
           <WeatherCardList
             bookingListData={bookingListData.filter((bookingDetails) => bookingDetails.status === "Upcoming")}
             openBookingDetails={handleBookingClick}

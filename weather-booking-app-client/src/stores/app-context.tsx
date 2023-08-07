@@ -24,7 +24,7 @@ export const AppContextProvider: React.FC<{ children: React.ReactNode }> = (prop
   useEffect(() => {
     setUserId("7b9d4e65-d545-46f2-9572-19dad9206422");
 
-    BookingEndpoint.getLocation().then((response) => {
+    BookingEndpoint.getLocations().then((response) => {
       setLocations(response);
     });
   }, []);
