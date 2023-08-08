@@ -34,7 +34,7 @@ const BookingDetails: React.FC<BookingDetailsProps> = (props) => {
   };
 
   return (
-    <div>
+    <div className="booking-details-container">
       <div className="booking-details-toolbar">
         <IonButton
           onClick={() => props.closeBookingDetails(0)}
@@ -50,15 +50,15 @@ const BookingDetails: React.FC<BookingDetailsProps> = (props) => {
           <div className="booking-details-content">
             <div className="booking-details-details">
               <IonCardTitle className="booking-details-details__title">
-                {appCtx.locations.length !== 0 && appCtx.locations[props.bookingDetails.location].suburb}
+                {appCtx.locations.length !== 0 && appCtx.locations[props.bookingDetails.location - 1].suburb}
               </IonCardTitle>
               <IonCardSubtitle className="booking-details-details__subtitle">
                 {formatDate(props.bookingDetails.date)}
               </IonCardSubtitle>
-              <p className="booking-details-details__weather">
+              <IonCardSubtitle className="booking-details-details__subtitle">
                 {props.bookingDetails.weather_option.weather}, {props.bookingDetails.weather_option.temperature},{" "}
                 {props.bookingDetails.weather_option.wind}
-              </p>
+              </IonCardSubtitle>
             </div>
             <div className="booking-details-img-container">
               <IonImg
@@ -68,9 +68,7 @@ const BookingDetails: React.FC<BookingDetailsProps> = (props) => {
             </div>
           </div>
 
-          <IonCard className="enjoy-weather-card">
-            <div className="enjoy-weather-content">Enjoy your weather!</div>
-          </IonCard>
+          <IonCard className="enjoy-weather-card">Enjoy your weather!</IonCard>
 
           <IonCard className="share-card">
             <div className="share-card__title">Share your booking with friends</div>
@@ -87,8 +85,8 @@ const BookingDetails: React.FC<BookingDetailsProps> = (props) => {
           <h1 className="booking-details-title"> Feedback</h1>
           <IonCard className="booking-details-card">
             <IonCardContent>
-              <IonCard className="enjoy-weather-card" id="feedback-card">
-                <IonTitle id="feedback-content">Did you enjoy your weather?</IonTitle>
+              <IonCard className="enjoy-weather-card feedback-card" id="feedback-card">
+                <IonCardTitle className="feedback-title">Did you enjoy your weather?</IonCardTitle>
                 <div className="thumb-group">
                   <IonButton className="thumb-button invisible-button" onClick={() => handleThumbUpClick()}>
                     <IonIcon icon={thumbsUpSharp} className={`${thumbUp ? "thumb-selected" : ""}`}></IonIcon>

@@ -28,7 +28,7 @@ const WeatherCardList: React.FC<{ bookingListData: BookingResponse[]; openBookin
                   </div>
                   <div className="container-group-text">
                     <h1 className="card-title">
-                      {appCtx.locations.length !== 0 && appCtx.locations[bookingDetails.location].suburb}
+                      {appCtx.locations.length !== 0 && appCtx.locations[bookingDetails.location-1].suburb}
                     </h1>
                     <p className="card-subtitle">{formatDate(bookingDetails.date)}</p>
                     <p className="card-text">

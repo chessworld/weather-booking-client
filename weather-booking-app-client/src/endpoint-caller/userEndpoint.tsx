@@ -17,9 +17,9 @@ class UserEndpoint {
   }
 
   static async createUser(name: string, completedTutorial: boolean): Promise<UserEndpointResponse> {
-    const response  = ApiService.post("/users/", {
-        name: name,
-        completed_tutorial: completedTutorial,
+    const response = ApiService.post("/users/", {
+      name: name,
+      completed_tutorial: completedTutorial,
     }).then((response) => response.data);
     return response;
   }

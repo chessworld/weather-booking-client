@@ -9,6 +9,7 @@ interface AppContextInterface {
 }
 
 export const AppContext = React.createContext<AppContextInterface>({
+
   userId: "",
   locations: [],
 });
@@ -16,13 +17,11 @@ export const AppContext = React.createContext<AppContextInterface>({
 export const AppContextProvider: React.FC<{ children: React.ReactNode }> = (props) => {
   const [userId, setUserId] = useState<string>("");
   const [locations, setLocations] = useState<Location[]>([]);
-
-  //   DeviceManager.getOrCreateDeviceId().then((deviceId) => {
-  //     setUserId(deviceId);
-  //   });
-
   useEffect(() => {
-    setUserId("7b9d4e65-d545-46f2-9572-19dad9206422");
+    setUserId("54533f44-680f-4187-87cd-84350f31d383");
+    // DeviceManager.getOrCreateDeviceId().then((deviceId) => {
+    //   setUserId(deviceId);
+    // });
 
     BookingEndpoint.getLocations().then((response) => {
       setLocations(response);

@@ -34,7 +34,7 @@ class DeviceManager implements IDeviceManager {
         });
     }
 
-    static async getOrCreateDeviceId() {
+    static async getOrCreateDeviceId(): Promise<string> {
         // Attempt to get existing deviceId
         const existingDeviceId = await Preferences.get({ key: 'deviceId' });
 
