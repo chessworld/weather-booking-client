@@ -13,6 +13,8 @@ import "./BookingPageDateLocation.css"
 import "./BookingPage.css"
 /* import Clouds from "./Clouds" */
 
+import { AddressAutofill } from '@mapbox/search-js-react';
+
 interface AbcProps {
     [category: string]: any
 }
@@ -30,6 +32,9 @@ class BookingPageDateLocation extends Component<AbcProps, AbcState> {
                 name: '',
                 dateTime: new Date(),
                 location: ''
+            },
+            bookingTimeLocation: {
+                location: {}
             }
         }
     }
@@ -79,6 +84,20 @@ class BookingPageDateLocation extends Component<AbcProps, AbcState> {
         }
     }
 
+    updateBookingLocation(payload: any, action: 'address' | 'postCode' | 'suburb') {
+
+        this.setState({
+            ...this.state,
+            bookingTimeLocation: {
+                ...this.state.bookingTimeLocation,
+                ['location']:{
+                    ...this.state.bookingTimeLocation['location'],
+                    [action]: payload
+                }
+            }
+        })
+    }
+
     render(): React.ReactNode {
         return (
             <IonPage keep-alive="false">
@@ -113,9 +132,21 @@ class BookingPageDateLocation extends Component<AbcProps, AbcState> {
                                         }}
                                     />
                                 </div>
+                                <form>
+                                <AddressAutofill accessToken='pk.eyJ1IjoibGVvbmFyZG9wcmFzZXR5bzUiLCJhIjoiY2xrczZkaGxwMDA4azNmcDl0OWp1NGFnbiJ9.xCeKjotNA7WSnztHD_bn2A'>
                                 <input type="text" onChange={(e) => {
-                                    this.updateBooking(e.target.value, 'location');
-                                }} className="booking-page-input" placeholder="Where" />
+                                    this.updateBookingLocation(e.target.value, 'address');
+                                }} className="booking-page-input" placeholder="Where" autoComplete="address-line1"/>
+                                </AddressAutofill>
+                                <div className='hidden'>
+                                    <input type="text" autoComplete='address-level2' id="suburb-input" onChange={(e) => {
+                                        this.updateBookingLocation(e.target.value, 'suburb');
+                                    }} disabled className='disabled-location-input' placeholder='Suburb'/>
+                                    <input type="text" autoComplete="postal-code" id="postal-code-input" onChange={(e) => {
+                                        this.updateBookingLocation(e.target.value, 'postCode');
+                                    }} disabled className='disabled-location-input' placeholder='Postal Code'/>
+                                </div>
+                                </form>
                             </div>
                             <div className="calendar-container">
                                 <div className="button-with-icon">

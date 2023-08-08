@@ -225,3 +225,7 @@ div:has(> input[type='text']) {
 .no-scroll {
     --overflow: hidden;
 }
+
+.hidden {
+    display: none;
+}
