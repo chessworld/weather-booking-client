@@ -9,7 +9,6 @@ export interface AppContextInterface {
 }
 
 export const AppContext = React.createContext<AppContextInterface>({
-
   userId: "",
   locations: [],
 });
@@ -18,7 +17,6 @@ export const AppContextProvider: React.FC<{ children: React.ReactNode }> = (prop
   const [userId, setUserId] = useState<string>("");
   const [locations, setLocations] = useState<Location[]>([]);
   useEffect(() => {
-    // setUserId("54533f44-680f-4187-87cd-84350f31d383");
     DeviceManager.getOrCreateDeviceId().then((deviceId) => {
       setUserId(deviceId);
     });
