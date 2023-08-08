@@ -32,7 +32,7 @@ const WeatherCardList: React.FC<{ bookingListData: BookingResponse[]; openBookin
                     </h1>
                     <p className="card-subtitle">{formatDate(bookingDetails.date)}</p>
                     <p className="card-text">
-                      {bookingDetails.weather_option.weather}, {bookingDetails.weather_option.wind},
+                      {bookingDetails.weather_option.weather}, {bookingDetails.weather_option.wind}, {" "}
                       {bookingDetails.weather_option.temperature}
                     </p>
                   </div>

@@ -16,14 +16,28 @@ export default class BookingEndpoint {
     return locationData;
   }
 
-  static createBooking = (location: number, date: string, timePeriod: string, weatherOption: WeatherOption) => {
-    const userId = "7b9d4e65-d545-46f2-9572-19dad9206422";
+  static createBooking = (
+    userId: string,
+    location: number,
+    date: string,
+    timePeriod: string,
+    weatherOption: WeatherOption
+  ) => {
     const body = {
       location: location,
       date: date,
       time_period: timePeriod,
       weather_option: weatherOption,
     };
-    ApiService.post(`/bookings/user/${userId}`, body).then((response) => console.log(response.data));
+    console.log(JSON.stringify(body));
+    ApiService.post(`/bookings/user/${userId}/`, { ...body });
   };
 }
+
+// BookingEndpoint.getBookingList("dc1e8b64-8ea9-4e60-871d-2b35c518313a");
+
+// BookingEndpoint.createBooking("dc1e8b64-8ea9-4e60-871d-2b35c518313a", 2, "2023-08-08", "Morning", {
+//   weather: "Sunny",
+//   wind: "Calm",
+//   temperature: "Warm",
+// });

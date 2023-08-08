@@ -3,7 +3,7 @@ import React, { useEffect, useState } from "react";
 import DeviceManager from "../device/DeviceManager";
 import BookingEndpoint from "../endpoint-caller/bookingEndpoint";
 
-interface AppContextInterface {
+export interface AppContextInterface {
   userId: string;
   locations: Location[];
 }
@@ -18,10 +18,10 @@ export const AppContextProvider: React.FC<{ children: React.ReactNode }> = (prop
   const [userId, setUserId] = useState<string>("");
   const [locations, setLocations] = useState<Location[]>([]);
   useEffect(() => {
-    setUserId("54533f44-680f-4187-87cd-84350f31d383");
-    // DeviceManager.getOrCreateDeviceId().then((deviceId) => {
-    //   setUserId(deviceId);
-    // });
+    // setUserId("54533f44-680f-4187-87cd-84350f31d383");
+    DeviceManager.getOrCreateDeviceId().then((deviceId) => {
+      setUserId(deviceId);
+    });
 
     BookingEndpoint.getLocations().then((response) => {
       setLocations(response);

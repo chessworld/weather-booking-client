@@ -205,7 +205,7 @@ class BookingPageDateLocation extends Component<BookingPageDateLocationProps, Bo
 
             payload = format(
                 parseISO(payload),
-                'dd-MM-yyyy'
+                'yyyy-MM-dd'
             );
         }
 
