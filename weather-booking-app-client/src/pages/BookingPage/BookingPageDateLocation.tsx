@@ -154,32 +154,17 @@ class BookingPageDateLocation extends Component<BookingPageDateLocationProps, Bo
          */
 
         DeviceManager.getOrCreateDeviceId().then((deviceId) => {
-            UserEndpoint.getUser(deviceId)
-                .then((user) => {
-                    // User Already exists
-                    this.showToast(`Welcome back ${user.id}!`);
-                    console.log(`Welcome back ${user.id}!`);
-                    if (!user.completed_tutorial) {
-                        // If user exists but hasn't completed tutorial
-                        this.props.history.push("/OnboardingPage");
-                    }
-                })
-                .catch((error) => {
-                    console.error(error);
-
-                });
+            this.showToast(`Welcome back ${deviceId}!`);
+            console.log(`Welcome back ${deviceId}!`);
         }).catch((error) => {
             console.error(error);
-            UserEndpoint.createUser("New User", false) //TODO: CHANGE THIS FROM HARDCODED
-                .then((user) => {
-                    // If user doesn't exist
-                    DeviceManager.updateDeviceId(user.id);
-                    this.showToast(`Created user ${user.id}`);
-                    this.props.history.push("/OnboardingPage");
-                })
-                .catch((error) => {
-                    console.error(error);
-                });
+        });
+
+        DeviceManager.checkUserCompletedTutorial().then(res => {
+            if (!res) {
+                // If user exists but hasn't completed tutorial
+                this.props.history.push("/OnboardingPage");
+            }
         });
     }
 
