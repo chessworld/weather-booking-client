@@ -1,14 +1,15 @@
-import "./BookingPage.css";
+import React from "react";
+import { withRouter } from "react-router-dom";
+import { Component } from "react";
+import { IonIcon, IonToast, IonRange, IonPage } from "@ionic/react";
+import { chevronBackOutline } from "ionicons/icons";
+
 import Background from "../../components/ScreenComponents/Background";
+import ConfirmBookingDetails from "../../components/ConfirmBookingDetails/ConfirmBookingDetails";
 import BookingEndpoint from "../../endpoint-caller/bookingEndpoint";
 import BookingPageProps from "./Interface/BookingPageProps";
 import { BookingPageState, isBookingDetails } from "./Interface/BookingPageState";
-import ConfirmBookingDetails from "../../components/ConfirmBookingDetails/ConfirmBookingDetails";
-import React from "react";
-import { withRouter } from "react-router-dom";
 import WeatherHud from "../../components/BookWeatherComponents/WeatherHud";
-import { Component } from "react";
-import { IonToast, IonRange, IonPage } from "@ionic/react";
 import DeviceManager from "../../device/DeviceManager";
 import UserEndpoint from "../../endpoint-caller/userEndpoint";
 import Cloudy from "../../components/weatherAnimatedIcons/Cloudy";
@@ -16,6 +17,8 @@ import Sunny from "../../components/weatherAnimatedIcons/Sunny";
 import Rainy from "../../components/weatherAnimatedIcons/Rainy";
 import Stormy from "../../components/weatherAnimatedIcons/Stormy";
 import SlideUpPanel from "../../components/SlideUpPanel/SlideUpPanel";
+
+import "./BookingPage.css";
 
 class BookingPage extends Component<BookingPageProps, BookingPageState> {
     bookingEndpoint: BookingEndpoint | undefined;
@@ -236,6 +239,16 @@ class BookingPage extends Component<BookingPageProps, BookingPageState> {
                     }
 
                     <div className="page-content">
+                            <div
+                                className="back-button"
+                                onTouchEnd={() => {
+                                    this.props.history.goBack();
+                                }}
+                            >
+                                    <IonIcon className="button-icons"
+                                    icon={chevronBackOutline}
+                                    />
+                            </div>
                         <div className="input-container">
                             {/* Vertical Buttons */}
                             <div className="button-container">
@@ -249,6 +262,9 @@ class BookingPage extends Component<BookingPageProps, BookingPageState> {
                                             }}
                                         >
                                             <div
+                                                style={{
+                                                    borderRadius: "3.5em"
+                                                }}
                                                 className={`hud-background weather-choose-option ${this.state.weatherOptions[i].backgroundClassName
                                                     } ${i == this.state.selectedWeatherOption ? "weather-choose-option-focus" : "no-animation"
                                                     }`}
@@ -317,29 +333,15 @@ class BookingPage extends Component<BookingPageProps, BookingPageState> {
                             isWindy={
                                 this.state.selectedWindOption > 1 // If wind is more than 1, it is windy
                             }
-                        />
+                        > <div
+                                className="book-buttons-container">
+                                <div onTouchEnd={this.clickBooking} className="book-button">
+                                    Book
+                                </div>
+                            </div>
+                        </WeatherHud>
 
                         {/* Book Button */}
-                        <div
-                            className="book-buttons-container"
-                        >
-                            <div
-                                className="book-button"
-                                onTouchEnd={() => {
-                                    this.props.history.goBack();
-
-                                    {/* this.props.history.push({
-                                        pathname: '/bookingPageDateLocation',
-                                        state: this.state.bookingDetails
-                                    }); */}
-                                }}
-                            >
-                                Back
-                            </div>
-                            <div onTouchEnd={this.clickBooking} className="book-button">
-                                Book
-                            </div>
-                        </div>
                     </div>
                 </Background>
             </IonPage>

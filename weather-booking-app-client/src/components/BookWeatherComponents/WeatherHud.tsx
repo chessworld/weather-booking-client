@@ -75,10 +75,12 @@ class WeatherHud extends Component<WeatherHudProps, WeatherHudState> {
                         </div>
 
                         <div className="item4" >
+                            {this.props.children}
                         </div>
                     </div>
                 </div>
             </div>
+
         )
     }
 }

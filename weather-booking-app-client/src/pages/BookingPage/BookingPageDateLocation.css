@@ -1,8 +1,9 @@
 :root {
-    --height: 60px;
+    --booking-page-input-height: 65px;
     --booking-page-input-transition: border 100ms ease-in;
-    --border-rad: 10px
-               
+    --border-rad: 10px;
+    --booking-page-input-width: 70vw;
+    --booking-page-input-border: 1px solid #888
 }
 
 .booking-page-date-location-header {
@@ -24,10 +25,10 @@
     border: 1px solid #888;
     border-left: none;
     border-radius: 0 var(--border-rad) var(--border-rad) 0;
-    height: var(--height);
+    height: var(--booking-page-input-height);
     outline: none;
+    width: var(--booking-page-input-width);
     padding-left: 2vw;
-    width: 70vw;
     transition: var(--booking-page-input-transition);
 }
 
@@ -45,7 +46,7 @@
 }
 
 .input-fields-container {
-    background: rgba(255, 230, 255, 0.4);
+    background: rgba(255, 255, 255, 0.4);
     border: .5px solid #333;
     backdrop-filter: blur(10px);
     -webkit-backdrop-filter: blur(10px);
@@ -63,8 +64,13 @@
 }
 
 
-div:has(> input[type='text']) {
-    margin-top: 2vh;
+div:has(> input[type='text']), div:has(> select) {
+    margin-top: 1vh;
+}
+
+
+div:has(> ion-select) {
+    margin-top: 1vh;
 }
 
 /*****************************************************************************/
@@ -105,13 +111,13 @@ div:has(> input[type='text']) {
 }
 
 .icon-with-outline {
-    height: var(--height);
+    height: var(--booking-page-input-height);
     border-radius: var(--border-rad) 0 0 var(--border-rad);
     background: white;
     display: flex;
     justify-content: center;
     align-items: center;
-    border: 1px solid #888;
+    border: var(--booking-page-input-border);
     border-right: none;
     transition: var(--booking-page-input-transition);
 }
@@ -146,4 +152,40 @@ div:has(> input[type='text']) {
     flex-flow: row;
     width: 100vw;
     justify-content: space-evenly;
+}
+
+ion-select {
+    /* --placeholder-color: #971e49; */
+    /* --placeholder-opacity: 1; */
+    width: var(--booking-page-input-width);
+    height: var(--booking-page-input-height);
+    border: var(--booking-page-input-border);
+    border-left: none;
+    flex-direction: row;
+    align-items: flex-end;
+    justify-content: flex-end;
+    background: #FFF;
+    border-radius: 0 var(--border-rad) var(--border-rad) 0 !important;
+    transition: var(--booking-page-input-transition);
+}
+
+
+/* ion-select::part(placeholder), */
+/* ion-select::part(text) { */
+/*     flex: 0 0 auto; */
+/* } */
+
+ion-select::part(placeholder) {
+    /* font-size: 24px; */
+    /* font-weight: 500; */
+    font-color: black;
+}
+
+ion-select::part(text) {
+    /* color: #545ca7; */
+    float: left;
+}
+
+ion-select::part(icon) {
+    opacity: 1;
 }

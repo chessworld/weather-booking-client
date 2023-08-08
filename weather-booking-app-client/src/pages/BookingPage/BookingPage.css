@@ -41,6 +41,7 @@
 .input-container {
     width: var(--input-container-width);
     border-radius: 4vw;
+    -webkit-border-radius: 4vw;
 }
 
 .button-container {
@@ -74,17 +75,20 @@
     max-height: var(--weather-choose-option-max-height);
     background: rgba(100, 100, 100, 0.50);
     backdrop-filter: blur(2px);
+    -webkit-backdrop-filter: blur(2px);
     overflow: hidden;
     display: flex;
     flex-direction: row;
     justify-content: center;
     align-items: center;
     border-radius: 3.5em !important;
+    -webkit-border-radius: 3.5em !important;
     color: white;
     width: 18vw;
     height: 22vh;
     text-align: center;
     box-shadow: 0 0 0 .1em rgba(255,255,255,.7) inset, 0 0 2em -.3em var(--shadow) !important;
+    -webkit-box-shadow: 0 0 0 .1em rgba(255,255,255,.7) inset, 0 0 2em -.3em var(--shadow) !important;
 }
 
 /* .weather-rhombus-container { */
@@ -112,6 +116,8 @@
 .weather-icon {
     display: flex;
     justify-content: center;
+    transition: transform .1s ease-in;
+    transform: scale(1.2) !important;
     align-items: center;
     width: 60%;
     height: 100%
@@ -131,6 +137,7 @@
 
 .slider-container {
     border-radius: 14px;
+    -webkit-border-radius: 14px;
     width: var(--input-container-width);
     display: flex;
     margin-top: 2vh;
@@ -144,9 +151,10 @@
     background: #004fb5;
     background: rgba(0, 0, 0, 0.7);
     backdrop-filter: blur(2px);
-    padding: 20px;
+    -webkit-backdrop-filter: blur(2px);
+    padding: 10px;
     border-radius: 2vw;
-    width: 40vw;
+    width: 30vw;
     text-align: center;
     font-size: .8rem;
     font-weight: 600;
@@ -166,6 +174,7 @@ ion-select {
     padding: 0px 7px;
     height: 1.5vh;
     border-radius: 4px;
+    -webkit-border-radius: 4px;
     display: flex;
     justify-content: center;
     align-items: center;
@@ -180,6 +189,7 @@ ion-select {
     padding: 0px 2.5vw 0px 2.5vw;
     height: 1.5vh;
     border-radius: 4px;
+    -webkit-border-radius: 4px;
     display: flex;
     justify-content: center;
     align-items: center;
@@ -240,4 +250,8 @@ ion-range {
 
 .booking-detail-container {
     background: rgba(255, 255, 255, .5);
+}
+
+.back-button {
+    align-self: flex-start;
 }

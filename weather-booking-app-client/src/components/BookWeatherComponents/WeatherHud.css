@@ -6,8 +6,8 @@ body {
 
 :root {
     --hud-border-radius: 1.5em;
-    --hud-width: 85vw;
-    --hud-height: 40vw;
+    --hud-width: 90vw;
+    --hud-height: 28vh;
     --hud-max-width: 800px;
     --hud-min-width: 300px;
     --hud-max-height: 320px;
@@ -162,47 +162,47 @@ body {
 /* Lightning */
 
 @keyframes flash {
-	  49% {background-color: var(--shadow);}
-	  51% {background-color: var(--ring);}
-	  53% {background-color: var(--shadow);}
-	  57% {background-color: var(--ring);}
-	  85% {background-color: var(--shadow);}
+    49% {background-color: var(--shadow);}
+    51% {background-color: var(--ring);}
+    53% {background-color: var(--shadow);}
+    57% {background-color: var(--ring);}
+    85% {background-color: var(--shadow);}
 }
 
 .storm::before {
-  --shadow: rgba(255, 255, 255, 0);
-  content: '';
-  position: absolute;
-  top: 0;
-  left: 0;
-  right: 0;
-  bottom: 0;
-  margin: .05em;
-  border-radius: var(--hud-border-radius);
-  opacity: .125;
-  will-change: background-color;
-  animation: flash 2900ms infinite linear 80ms;
+    --shadow: rgba(255, 255, 255, 0);
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    margin: .05em;
+    border-radius: var(--hud-border-radius);
+    opacity: .125;
+    will-change: background-color;
+    animation: flash 2900ms infinite linear 80ms;
 }
 
 .storm .cloud {
-  --shadow: #c9e8de;
-  --ring: #f0f2f0;
-  background-color: var(--shadow);
-  font-size: 1.3em;
-  left: 50%;
-  will-change: background-color, transform, opacity;
-  animation: flash 2300ms infinite linear, move 3700ms infinite linear;
+    --shadow: #c9e8de;
+    --ring: #f0f2f0;
+    background-color: var(--shadow);
+    font-size: 1.3em;
+    left: 50%;
+    will-change: background-color, transform, opacity;
+    animation: flash 2300ms infinite linear, move 3700ms infinite linear;
 }
 
 .storm ul {
-  position: absolute;
-  list-style: none;
-  top: 10%;
-  left: 10%;
-  right: 0%;
-  height: 100%;
-  margin: 0;
-  padding: 0;  
+    position: absolute;
+    list-style: none;
+    top: 10%;
+    left: 10%;
+    right: 0%;
+    height: 100%;
+    margin: 0;
+    padding: 0;  
 }
 
 @keyframes rain {
@@ -214,28 +214,28 @@ body {
 .storm li,
 .storm li::before,
 .storm li::after {
-  position: absolute;
-  width: .05em;
-  height: .2em;
-  border-radius: 10%;
-  background-color: #eee;
-  opacity: 0;
-  will-change: transform, opacity;
-  animation: rain 2000ms infinite linear;
-  transform: rotate(25deg);
+    position: absolute;
+    width: .05em;
+    height: .2em;
+    border-radius: 10%;
+    background-color: #eee;
+    opacity: 0;
+    will-change: transform, opacity;
+    animation: rain 2000ms infinite linear;
+    transform: rotate(25deg);
 }
 
 .storm li::before,
 .storm li::after {
-  content: '';
+    content: '';
 }
 
 .storm li:nth-child(5n+3)::before,
 .storm li:nth-child(11n+7)::after,
 .storm li:nth-child(2n+1) {
-  top: 10%;
-  left: 68%;
-  animation-delay: 500ms;
+    top: 10%;
+    left: 68%;
+    animation-delay: 500ms;
 }
 
 .storm li:nth-child(3n+2)::after,
@@ -243,33 +243,33 @@ body {
 .storm li:nth-child(7n+5)::after,
 
 .storm li:nth-child(3n+2) {
-  top: 5%;
-  left: 45%;
-  animation-delay: 1250ms;
+    top: 5%;
+    left: 45%;
+    animation-delay: 1250ms;
 }
 
 .storm li:nth-child(2n+1)::before,
 .storm li:nth-child(5n+3)::after,
 .storm li:nth-child(7n+5) {
-  top: 4%;
-  left: 82%;
-  animation-delay: 750ms;
+    top: 4%;
+    left: 82%;
+    animation-delay: 750ms;
 }
 
 .storm li:nth-child(11n+7)::before,
 .storm li:nth-child(3n+2)::after,
 .storm li:nth-child(7n+5) {
-  top: 15%;
-  left: 15%;
-  animation-delay: 2000ms;
+    top: 15%;
+    left: 15%;
+    animation-delay: 2000ms;
 }
 
 .storm li:nth-child(7n+5)::before,
 .storm li:nth-child(2n+1)::after,
 .storm li:nth-child(11n+7) {
-  top: 10%;
-  left: 33%;
-  animation-delay: 2500ms;
+    top: 10%;
+    left: 33%;
+    animation-delay: 2500ms;
 }
 
 .hud-contents {
@@ -292,56 +292,56 @@ body {
 }
 
 .rainy::before {
-  content: '';
-  position: absolute;
-  top: 0;
-  left: -50%;
-  right: 0;
-  bottom: 0;
-  width: 200%;
-  height: 100%;
-  background-image: 
-    radial-gradient(1px 1px at 50% 20%, #fff, rgba(0,0,0,0)),
-    radial-gradient(1px 1px at 60% 40%, #fff, rgba(0,0,0,0)),
-    radial-gradient(1px 1px at 56% 35%, #fff, rgba(0,0,0,0)),
-    radial-gradient(1px 1px at 90% 80%, #fff, rgba(0,0,0,0)),
-    radial-gradient(3px 3px at 99% 99%, #fff, rgba(0,0,0,0)),
-    radial-gradient(2px 2px at 80% 87%, #fff, rgba(0,0,0,0)),
-    radial-gradient(2px 2px at 12% 5%, #fff, rgba(0,0,0,0)),
-    radial-gradient(2px 2px at 37% 35%, #fff, rgba(0,0,0,0)),
-    radial-gradient(1px 1px at 30% 65%, #fff, rgba(0,0,0,0)),
-    radial-gradient(2px 2px at 15% 05%, #fff, rgba(0,0,0,0)),
-    radial-gradient(2px 2px at 37% 35%, #fff, rgba(0,0,0,0)),
-    radial-gradient(2px 2px at 65% 47%, #fff, rgba(0,0,0,0)),
-    radial-gradient(1px 1px at 42% 29%, #fff, rgba(0,0,0,0)),
-    radial-gradient(1px 1px at 73% 56%, #fff, rgba(0,0,0,0)),
-    radial-gradient(1px 1px at 24% 19%, #fff, rgba(0,0,0,0)),
-    radial-gradient(2px 2px at 31% 47%, #fff, rgba(0,0,0,0)),
-    radial-gradient(1px 1px at 18% 39%, #fff, rgba(0,0,0,0)),
-    radial-gradient(1px 1px at 50% 20%, #fff, rgba(0,0,0,0)),
-    radial-gradient(1px 1px at 30% 65%, #fff, rgba(0,0,0,0)),
-    radial-gradient(2px 2px at 15% 05%, #fff, rgba(0,0,0,0)),
-    radial-gradient(2px 2px at 37% 35%, #fff, rgba(0,0,0,0)),
-    radial-gradient(2px 2px at 65% 47%, #fff, rgba(0,0,0,0)),
-    radial-gradient(1px 1px at 42% 29%, #fff, rgba(0,0,0,0)),
-    radial-gradient(1px 1px at 73% 56%, #fff, rgba(0,0,0,0)),
-    radial-gradient(1px 1px at 24% 19%, #fff, rgba(0,0,0,0)),
-    radial-gradient(2px 2px at 31% 47%, #fff, rgba(0,0,0,0)),
-    radial-gradient(1px 1px at 18% 39%, #fff, rgba(0,0,0,0)),
-    radial-gradient(1px 1px at 60% 80%, #fff, rgba(0,0,0,0)),
-    radial-gradient(1px 1px at 10% 90%, #fff, rgba(0,0,0,0)),
-    radial-gradient(2px 2px at 85% 10%, #fff, rgba(0,0,0,0)),
-    radial-gradient(2px 2px at 45% 75%, #fff, rgba(0,0,0,0)),
-    radial-gradient(2px 2px at 25% 60%, #fff, rgba(0,0,0,0)),
-    radial-gradient(1px 1px at 55% 30%, #fff, rgba(0,0,0,0)),
-    radial-gradient(1px 1px at 90% 70%, #fff, rgba(0,0,0,0)),
-    radial-gradient(1px 1px at 10% 50%, #fff, rgba(0,0,0,0)),
-    radial-gradient(2px 2px at 30% 20%, #fff, rgba(0,0,0,0)),
-    radial-gradient(1px 1px at 70% 40%, #fff, rgba(0,0,0,0));
-  background-repeat: repeat;
-  will-change: transform;
-  transform-origin: center center;
-  animation: revolve 80000ms linear infinite;
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -50%;
+    right: 0;
+    bottom: 0;
+    width: 200%;
+    height: 100%;
+    background-image: 
+        radial-gradient(1px 1px at 50% 20%, #fff, rgba(0,0,0,0)),
+        radial-gradient(1px 1px at 60% 40%, #fff, rgba(0,0,0,0)),
+        radial-gradient(1px 1px at 56% 35%, #fff, rgba(0,0,0,0)),
+        radial-gradient(1px 1px at 90% 80%, #fff, rgba(0,0,0,0)),
+        radial-gradient(3px 3px at 99% 99%, #fff, rgba(0,0,0,0)),
+        radial-gradient(2px 2px at 80% 87%, #fff, rgba(0,0,0,0)),
+        radial-gradient(2px 2px at 12% 5%, #fff, rgba(0,0,0,0)),
+        radial-gradient(2px 2px at 37% 35%, #fff, rgba(0,0,0,0)),
+        radial-gradient(1px 1px at 30% 65%, #fff, rgba(0,0,0,0)),
+        radial-gradient(2px 2px at 15% 05%, #fff, rgba(0,0,0,0)),
+        radial-gradient(2px 2px at 37% 35%, #fff, rgba(0,0,0,0)),
+        radial-gradient(2px 2px at 65% 47%, #fff, rgba(0,0,0,0)),
+        radial-gradient(1px 1px at 42% 29%, #fff, rgba(0,0,0,0)),
+        radial-gradient(1px 1px at 73% 56%, #fff, rgba(0,0,0,0)),
+        radial-gradient(1px 1px at 24% 19%, #fff, rgba(0,0,0,0)),
+        radial-gradient(2px 2px at 31% 47%, #fff, rgba(0,0,0,0)),
+        radial-gradient(1px 1px at 18% 39%, #fff, rgba(0,0,0,0)),
+        radial-gradient(1px 1px at 50% 20%, #fff, rgba(0,0,0,0)),
+        radial-gradient(1px 1px at 30% 65%, #fff, rgba(0,0,0,0)),
+        radial-gradient(2px 2px at 15% 05%, #fff, rgba(0,0,0,0)),
+        radial-gradient(2px 2px at 37% 35%, #fff, rgba(0,0,0,0)),
+        radial-gradient(2px 2px at 65% 47%, #fff, rgba(0,0,0,0)),
+        radial-gradient(1px 1px at 42% 29%, #fff, rgba(0,0,0,0)),
+        radial-gradient(1px 1px at 73% 56%, #fff, rgba(0,0,0,0)),
+        radial-gradient(1px 1px at 24% 19%, #fff, rgba(0,0,0,0)),
+        radial-gradient(2px 2px at 31% 47%, #fff, rgba(0,0,0,0)),
+        radial-gradient(1px 1px at 18% 39%, #fff, rgba(0,0,0,0)),
+        radial-gradient(1px 1px at 60% 80%, #fff, rgba(0,0,0,0)),
+        radial-gradient(1px 1px at 10% 90%, #fff, rgba(0,0,0,0)),
+        radial-gradient(2px 2px at 85% 10%, #fff, rgba(0,0,0,0)),
+        radial-gradient(2px 2px at 45% 75%, #fff, rgba(0,0,0,0)),
+        radial-gradient(2px 2px at 25% 60%, #fff, rgba(0,0,0,0)),
+        radial-gradient(1px 1px at 55% 30%, #fff, rgba(0,0,0,0)),
+        radial-gradient(1px 1px at 90% 70%, #fff, rgba(0,0,0,0)),
+        radial-gradient(1px 1px at 10% 50%, #fff, rgba(0,0,0,0)),
+        radial-gradient(2px 2px at 30% 20%, #fff, rgba(0,0,0,0)),
+        radial-gradient(1px 1px at 70% 40%, #fff, rgba(0,0,0,0));
+    background-repeat: repeat;
+    will-change: transform;
+    transform-origin: center center;
+    animation: revolve 80000ms linear infinite;
 }
 
 
@@ -352,45 +352,64 @@ body {
     display: grid;
     grid-template-columns: auto auto auto;
     gap: .2em;
-    /* background-color: #2196F3; */
-    padding: 10px;
+    display: grid;
+    gap: 1px; /* adjust this for your gap */
+    grid-template-columns: repeat(30, 1fr);
+    grid-template-rows: repeat(30, 1fr);
     /* border: 1px solid black; */
 }
 
 .item1 {
-    text-align: center;
-    font-size: 1.4em;
-    inline-height: 1.7em;
-    color: #FFF;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    grid-row-start: 1;
+    grid-row-end: 2;
     grid-column-start: 4;
-    letter-spacing: 0.02em;
-    grid-column-end: 6;
+    grid-column-end: 10;
     text-align: center;
-    color: #E0E0E0;
+    letter-spacing: 0.02em;
+    font-size: 1.4rem;
 }
 
 .item2 {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 5em;
     text-align: center;
     letter-spacing: 0.02em;
     font-size: 1.2em;
-    inline-height: 1.4em;
-    width: 5em;
-    color: #FFF;
+    color: #fff;
+    grid-row-start: 2;
+    grid-row-end: 3;
     grid-column-start: 4;
-    grid-column-end: 6;
+    grid-column-end: 10;
     text-align: center;
-    color: #E0E0E0;
+    color: #e0e0e0;
+    font-size: 1.2rem;
 }
+
 
 .item3 {
     display: flex;
     justify-content: center;
     align-items: center;
     grid-row-start: 1;
-    grid-row-end: 10;
-    grid-column-start: 7;
-    grid-column-end: 40;
-    z-index: 3;
+    grid-row-end: 4;
+    grid-column-start: 15;
+    grid-column-end: 30;
+}
+
+
+.item4 {
+    display: flex;
+    grid-column-start: 1;
+    grid-column-end: 31;
+    grid-row-start: 4;
+    grid-row-end: 5;
+    justify-content: center;
+    align-items: center
 }
 
 .hud-icon-container {
@@ -398,15 +417,6 @@ body {
     justify-content: center;
     width: 30vw;
     object-fit: cover; /* optional: this prevents distortion */
-}
-
-.item4 {
-    grid-row-start: 0;
-    grid-row-end: 5;
-    grid-column-start: 6;
-    grid-column-end: 40;
-    z-index: 3;
-    color: #E0E0E0;
 }
 
 .hud-temperature-text {

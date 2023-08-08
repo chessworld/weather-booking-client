@@ -4,12 +4,14 @@ interface BookingPageDateLocationState {
     bookingPageInputIds: {
         name: string,
         dateTime: string,
-        location: string
+        location: string,
+        timePeriod: string
     },
     bookingPageInputIconIds: {
         name: string,
         dateTime: string,
-        location: string
+        location: string,
+        timePeriod: string
     },
     showCalendar: boolean,
     toast: {
