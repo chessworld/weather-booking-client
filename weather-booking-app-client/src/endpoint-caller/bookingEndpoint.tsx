@@ -3,6 +3,8 @@ import { BookingResponse } from "./interfaces/bookings/BookingResponse";
 import { WeatherOption } from "./interfaces/bookings/WeatherOption";
 import { Location } from "./interfaces/locations/Location";
 
+import DeviceManager from "../device/DeviceManager";
+
 export default class BookingEndpoint {
   static async getBookingList(userId: string): Promise<BookingResponse[]> {
     const bookingList = await ApiService.get(`/bookings/user/${userId}`).then((response) => response.data);

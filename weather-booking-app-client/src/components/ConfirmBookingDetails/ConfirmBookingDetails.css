@@ -1,0 +1,105 @@
+.booking-details-back-button {
+  display: inline-block;
+  vertical-align: middle;
+  width: 60px;
+  color: black;
+  position: relative;
+  left: 0;
+}
+
+.invisible-button {
+  --background: transparent;
+  --border-color: transparent;
+  --box-shadow: none;
+  box-shadow: none;
+}
+
+.booking-details-card {
+  background: transparent;
+  outline-style: solid;
+  width: 90vw;
+  color: white;
+  position: relative;
+  margin: 2rem 1rem;
+}
+
+.booking-details-title {
+  /* font-weight: 700; */
+  font-size: 5vw;
+  margin: 0.5vh 0 0.5vh 0;
+  padding: 0px 15px;
+  font-weight: bold;
+  position: relative;
+  width: 100vw;
+  top: 1rem;
+}
+
+.booking-details-toolbar {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+}
+
+/* .booking-details-content {
+} */
+
+.booking-details-details {
+  display: inline-block;
+  width: 68%;
+  position: relative;
+  bottom: 20%;
+  vertical-align: middle;
+}
+
+.booking-details-details__title {
+  font-weight: bold;
+}
+
+.booking-details-details__subtitle {
+  color: #5f5f5f;
+}
+
+.booking-details-details__weather {
+  color: #5f5f5f;
+}
+
+.enjoy-weather-card {
+  text-align: center;
+  border-radius: 20px;
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
+  margin-top: 2rem;
+  width: 80%;
+  padding: 12px;
+  box-shadow: none;
+}
+
+.enjoy-weather-content {
+  font-weight: bold;
+  color: black;
+  font-size: 3vw;
+}
+
+.share-card {
+  text-align: left;
+  border-radius: 10px;
+  width: 75vw;
+  color: black;
+  margin-top: 2rem;
+  background-image: url("../assets/share_now.png");
+  background-size: cover;
+  position: relative;
+  background-position: left 90% bottom 50%;
+  overflow: visible;
+  white-space: normal;
+  padding: 0.5rem 0.8rem;
+}
+
+.share-card__title {
+  display: inline-block;
+  font-size: 1rem;
+  font-weight: bolder;
+  width: 70%;
+  padding-left: 0;
+}

@@ -102,3 +102,17 @@
     font-size: .8rem;
     padding: 10px;
 }
+
+/*****************************************************************************/
+/*                               slide up panel                              */
+/*****************************************************************************/
+
+.slide-up-panel {
+    background: #1e90ff;
+    position: absolute;
+    z-index: 2;
+    bottom: 0;
+    height: 70vh;
+    display: flex;
+    flex-direction: space-evenly;
+}

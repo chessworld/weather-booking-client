@@ -1,10 +1,10 @@
 import React from 'react';
 import { Component } from 'react';
-import { withRouter } from 'react-router-dom';
+import { withRouter, RouteComponentProps } from 'react-router-dom';
+import OnboardingPageState from "./Interface/OnboardingPageState";
 import Background from '../../components/ScreenComponents/Background';
 import { IonPage } from '@ionic/react';
 import './OnboardingPage.css';
-
 
 import Surfing from '../../assets/Icons/surfing.png';
 import FlyingKite from '../../assets/Icons/flying-kite.png';
@@ -39,25 +39,9 @@ interface SyntheticEvent {
     type: string;
 }
 
-interface AbcState {
-    currentPageNumber: number,
-    currentPage?: any,
-    pages: React.ReactElement[],
-    lastTouchMousePositionX?: number,
-    hasMovedPagesThisTouch: boolean
-}
 
-interface AbcProps {
-    [category: string]: any;
-}
-
-/* const springs: any = useSpring({
-*     from: { opacity: 0, transform: 'translate3d(100%,0,0)' },
-*     to: { opacity: 1, transform: 'translate3d(0%,0,0)' },
-* }) */
-
-class OnboardingPage extends Component<AbcProps, AbcState> {
-    constructor(props: AbcProps) {
+class OnboardingPage extends Component<RouteComponentProps, OnboardingPageState> {
+    constructor(props: RouteComponentProps) {
         super(props);
 
         //use usestring from react spring to animate the pages
@@ -131,8 +115,9 @@ class OnboardingPage extends Component<AbcProps, AbcState> {
 
     completeTutorial() {
         DeviceManager.getOrCreateDeviceId().then(deviceId => {
+            const completedTutorial = true;
             UserEndpoint.completeUserTutorial(deviceId).then(() => {
-                this.props.history.push("/tab1");
+                this.props.history.push("/bookingPageDateLocation");
             });
         });
     }
