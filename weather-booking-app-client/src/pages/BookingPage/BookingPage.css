@@ -1,8 +1,28 @@
 :root {
-    --slider-width: 70vw;
-    --weather-choose-option-max-width: 80px;
+    --input-container-width: 100vw;
+    --ion-color-primary: #3880ff;
+    --slider-width: 80vw;
+    --weather-choose-option-max-width: 200px;
     --weather-choose-option-min-width: 60px;
-    --weather-choose-option-max-height: 120px;
+    --weather-choose-option-max-height: 130px;
+}
+
+.font {
+    color: #FFF !important;
+    text-shadow: 
+        -1.5px -1.5px 0 rgba(0, 0, 0, .5),  
+        1.5px -1.5px 0 rgba(0, 0, 0, .5),
+        -1.5px 1.5px 0 rgba(0, 0, 0, .5),
+        1.5px 1.5px 0 rgba(0, 0, 0, .5) !important;
+}
+
+.font-inverted {
+    color: #222 !important;
+    text-shadow: 
+        -.5px -.5px 0 rgba(255, 255, 255, .5),  
+        .5px -.5px 0 rgba(255, 255, 255, .5),
+        -.5px .5px 0 rgba(255, 255, 255, .5),
+        .5px .5px 0 rgba(255, 255, 255, .5) !important;
 }
 
 .search-bar {
@@ -19,20 +39,17 @@
 }
 
 .input-container {
-    background: rgba(255, 255, 255, 0.4);
-    border: .5px solid #FFF;
-    backdrop-filter: blur(3px);
-    width: 95vw;
-    box-shadow: 2px 2px 8px #888;
+    width: var(--input-container-width);
     border-radius: 4vw;
 }
 
 .button-container {
-    width: 95vw;
+    width: var(--input-container-width);
+    width: 100vw;
     padding: 1vh 0 1vh 0;
     display: flex;
     flex-direction: row;
-    justify-content: space-evenly;
+    justify-content: space-around;
     align-items: flex-start;
     margin: 0 0 2vh 0;
 }
@@ -48,7 +65,7 @@
     font-size: 2.8vw;
     font-weight: bold;
     margin-top: 1vh;
-    color: white;
+    color: black;
 }
 
 .weather-choose-option {
@@ -64,9 +81,8 @@
     align-items: center;
     border-radius: 3.5em !important;
     color: white;
-    width: 8vw;
-    height: 18vh;
-    /* padding: 4vh 0px 4vh; */
+    width: 18vw;
+    height: 22vh;
     text-align: center;
     box-shadow: 0 0 0 .1em rgba(255,255,255,.7) inset, 0 0 2em -.3em var(--shadow) !important;
 }
@@ -114,13 +130,8 @@
 }
 
 .slider-container {
-    width: 95vw;
     border-radius: 14px;
-    background: rgba(100, 100, 100, 0.4);
-    box-shadow: 2px 2px 8px #888;
-    border: .5px solid #333;
-    padding: 1vh 0 1vh 0;
-    backdrop-filter: blur(3px);
+    width: var(--input-container-width);
     display: flex;
     margin-top: 2vh;
     flex-direction: column;
@@ -134,10 +145,10 @@
     background: rgba(0, 0, 0, 0.7);
     backdrop-filter: blur(2px);
     padding: 20px;
-    border-radius: 8vw;
+    border-radius: 2vw;
     width: 40vw;
     text-align: center;
-    font-size: 2.8vw;
+    font-size: .8rem;
     font-weight: 600;
     transition: background 0.5s ease;
 }
@@ -187,12 +198,24 @@ ion-content {
 ion-range {
     --bar-background: rgba(230,224,246, .5);
     --bar-background-active: #1e1e1e;
-    --bar-height: 8px;
-    --bar-border-radius: 8px;
+    --bar-height: 20px !important;
+    --bar-background-active: rgba(110,104,126, .5);
+    --bar-border-radius: 40px;
     --knob-background: #FFF;
     --knob-size: 5vw;
     --pin-background: #eee;
     --pin-color: #fff;
+}
+
+.range-bar-active {
+    transition: width 2s ease-in-out !important;
+}
+
+.range-bar-active {
+    bottom: 0px;
+    width: auto;
+    background: var(--bar-background-active);
+    transition: width 0.1s ease-in-out;
 }
 
 .range-tick{
@@ -213,4 +236,8 @@ ion-range {
     animation: none !important;
     transition: none !important;
     transform: none !important;
+}
+
+.booking-detail-container {
+    background: rgba(255, 255, 255, .5);
 }

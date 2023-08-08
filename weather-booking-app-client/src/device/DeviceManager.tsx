@@ -1,5 +1,4 @@
 import { Preferences } from '@capacitor/preferences';
-import { v4 as uuidv4 } from 'uuid';
 
 interface IDeviceManager {
     deviceId: string | Promise<string>
@@ -34,15 +33,15 @@ class DeviceManager implements IDeviceManager {
         });
     }
 
-    static async getOrCreateDeviceId() {
+    static async getOrCreateDeviceId(): Promise<string> {
         // Attempt to get existing deviceId
         const existingDeviceId = await Preferences.get({ key: 'deviceId' });
 
         if (existingDeviceId.value) {
             return existingDeviceId.value;
         }
-        throw new Error('DeviceId not found');
 
+        throw new Error('DeviceId not found');
     };
 }
 

@@ -1,4 +1,3 @@
-import { useParams } from "react-router-dom";
 import { useState, useEffect } from "react";
 import "./BookingDetails.css";
 import {
@@ -12,10 +11,8 @@ import {
 } from "@ionic/react";
 
 import { chevronBackOutline, arrowForwardOutline } from "ionicons/icons";
-import sunImage from "../../assets/Icons/slight_touch_happyday.png";
 import rainImage from "../../assets/Icons/rainy.png";
 import BookingEndpoint from "../../endpoint-caller/bookingEndpoint";
-
 import IWeatherCardList from "./Interfaces/IWeatherCardList";
 
 
@@ -23,9 +20,7 @@ const BookingDetails: React.FC<IWeatherCardList> = (props) => {
     const [locations, setLocations] = useState<any>([]);
 
     useEffect(() => {
-        BookingEndpoint.getLocation().then(response => {
-            return response.json();
-        }).then(data => {
+        BookingEndpoint.getLocation().then(data => {
             setLocations(data);
         })
     }, []);

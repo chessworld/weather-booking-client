@@ -8,7 +8,7 @@ class UserEndpoint {
   }
 
   static async completeUserTutorial(userId: string): Promise<UserEndpointResponse> {
-    const response = ApiService.put(`/users/${userId}`, { completed_tutorial: true })
+    const response = ApiService.put(`/users/${userId}/`, { completed_tutorial: true })
       .then((response) => response.data)
       .catch((error) => {
         console.log(error);
@@ -16,7 +16,7 @@ class UserEndpoint {
     return response;
   }
 
-  static async createUser(name: string, completedTutorial: boolean): Promise<UserEndpointResponse> {
+  static async createUser(name: string, completedTutorial: boolean=false): Promise<UserEndpointResponse> {
     const response  = ApiService.post("/users/", {
         name: name,
         completed_tutorial: completedTutorial,

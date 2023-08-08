@@ -3,13 +3,23 @@ import { BookingResponse } from "./interfaces/bookings/BookingResponse";
 import { EnumResponse } from "./interfaces/enums/EnumResponse";
 import { Location } from "./interfaces/locations/Location";
 
+import DeviceManager from "../device/DeviceManager";
+
 export default class BookingEndpoint {
   enums: EnumResponse;
   locations: Location[];
+  device: DeviceManager;
+  deviceId: string;
 
   constructor(locationData: Location[], enums: EnumResponse) {
     this.locations = locationData;
     this.enums = enums;
+    this.device = DeviceManager.getInstance();
+    this.deviceId = "";
+
+    DeviceManager.getOrCreateDeviceId().then((deviceId: string) => {
+        this.deviceId = deviceId;
+    });
   }
 
   static async create(): Promise<BookingEndpoint> {
@@ -31,10 +41,8 @@ export default class BookingEndpoint {
 
   createBooking = (
     location: number,
-    datetime: Date,
-    time_period: string,
-    start_time: string,
-    end_time: string,
+    datetime: string,
+    timePeriod: string,
     windJson: { [category: string]: any },
     weatherJson: { [category: string]: any },
     temperatureJson: { [category: string]: any }
@@ -42,13 +50,11 @@ export default class BookingEndpoint {
     const body = {
       booking: [
         {
-          user: "91523207-a6d9-4b8f-b019-be5c1c2d4a28",
+          user: this.deviceId,
           location: location,
           day_time: {
-            date: this.formatDate(datetime),
-            time_period: "Morning",
-            start_time: start_time,
-            end_time: end_time,
+            date: datetime,
+            time_period: timePeriod == "" ? "Morning" : timePeriod,
           },
           status: "Upcoming",
           result: "Pending",
@@ -56,7 +62,9 @@ export default class BookingEndpoint {
       ],
       weather_option: [weatherJson, temperatureJson, windJson],
     };
-    console.log(body);
+
+    console.log(JSON.stringify( body ));
+
     ApiService.post("/bookings/", body).then((response) => console.log(response.data));
   };
 

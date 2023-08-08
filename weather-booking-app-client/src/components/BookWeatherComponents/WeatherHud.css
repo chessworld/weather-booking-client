@@ -1,10 +1,14 @@
-@import url('https://fonts.googleapis.com/css?family=Work+Sans:200');
+@import url('https://fonts.googleapis.com/css2?family=Roboto&display=swap');
+
+body {
+    font-family: 'Roboto', sans-serif;
+}
 
 :root {
     --hud-border-radius: 1.5em;
-    --hud-width: 55vw;
+    --hud-width: 85vw;
     --hud-height: 40vw;
-    --hud-max-width: 600px;
+    --hud-max-width: 800px;
     --hud-min-width: 300px;
     --hud-max-height: 320px;
     --hud-min-height: 200px;
@@ -37,27 +41,56 @@
     transition: background 1s ease-in-out;
 }
 
+/* .rainy { */
+/*     --shadow: #5133a5; */
+/*     --blend1: #4054b2; */
+/*     --blend2: #aa4cba; */
+/*     --blend-to: 65%; */
+/*     --blend-dir: bottom right; */
+/* } */
+
+
 .sunny {
-    background: rgb(34,193,195);
-    background: linear-gradient(
-        0deg,
-        rgba(34,193,195,1) 0%,
-        rgba(253,187,45,1) 100%
-    );
+    --shadow: #fd6f21;
+    --blend1: #fc5830;
+    --blend2: #f98c24;
+    --blend-to: 65%;
+}
+
+
+.perfect {
+    --shadow: rgba(19, 120, 187, 0.9);
+    --blend1: rgba(27, 156, 226, .85);
+    --blend2: rgba(19, 120, 187, .85);
+    --shadow: rgba(201, 232, 222, .85);
+    --blend1: rgba(117, 133, 149, .85);
+    --blend2: rgba(224, 226, 229, .85);
+    --blend1: rgba(27, 156, 226, .85);
+    --blend-to: 65%;
+    --blend-to: 90%;
+    backdrop-filter: blur(5px);
+}
+
+.stormy {
+    --shadow: #c9e8de;
+    --blend1: #e0e2e5;
+    --blend2: #758595;
+    --blend-to: 90%;
+    --blend-dir: bottom left;
 }
 
 .rainy {
-    --shadow: #5133a5;
-    --blend1: #4054b2;
-    --blend2: #aa4cba;
-    --blend-to: 65%;
-    --blend-dir: bottom right;
+    --shadow: #c9e8de;
+    --blend1: #e0e2e5;
+    --blend2: rgba(117, 133, 149, .85);
+    --blend-to: 90%;
+    --blend-dir: bottom left;
 }
 
 .hud-background {
     border-radius: var(--hud-border-radius);
-    /* border: 1px solid #FFF; */
-    box-shadow: 0 0 2em -.3em var(--shadow);
+    border: .1px solid rgba(50, 50, 50, .2);
+    box-shadow: 0 0 .5em -.3em var(--shadow);
     background: linear-gradient( to var(--blend-dir), var(--blend1) var(--blend-from), var(--blend2) var(--blend-to));
     transition: all 0.5s ease-in;
 }
@@ -312,35 +345,6 @@
 }
 
 
-.sunny {
-    --shadow: #fd6f21;
-    --blend1: #fc5830;
-    --blend2: #f98c24;
-    --blend-to: 65%;
-}
-
-
-.perfect {
-    --shadow: rgba(19, 120, 187, 0.9);
-    --blend1: rgba(27, 156, 226, .85);
-    --blend2: rgba(19, 120, 187, .85);
-    --shadow: rgba(201, 232, 222, .85);
-    --blend1: rgba(117, 133, 149, .85);
-    --blend2: rgba(224, 226, 229, .85);
-    --blend1: rgba(27, 156, 226, .85);
-    --blend-to: 65%;
-    --blend-to: 90%;
-    backdrop-filter: blur(5px);
-}
-
-.stormy {
-    --shadow: #c9e8de;
-    --blend1: #e0e2e5;
-    --blend2: #758595;
-    --blend-to: 90%;
-    --blend-dir: bottom left;
-}
-
 .weather-hud-grid {
     width: var(--hud-width);
     max-width: var(--hud-max-width);
@@ -389,8 +393,10 @@
     z-index: 3;
 }
 
-.hud-icon {
-    transform: scale(2);
+.hud-icon-container {
+    display: flex;
+    justify-content: center;
+    width: 30vw;
     object-fit: cover; /* optional: this prevents distortion */
 }
 
