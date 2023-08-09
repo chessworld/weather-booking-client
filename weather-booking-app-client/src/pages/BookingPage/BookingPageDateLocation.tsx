@@ -94,7 +94,6 @@ class BookingPageDateLocation extends Component<AbcProps, AbcState> {
 
     updateBookingLocation(payload: any, action: 'address') {
 
-
         this.setState({
             ...this.state,
             bookingTimeLocation: {
@@ -111,12 +110,6 @@ class BookingPageDateLocation extends Component<AbcProps, AbcState> {
 
     updateAutoComplete(payload: any, action: 'postCode' | 'suburb') {
         //Only change when autocomplete is triggered
-
-        //var prevValue = this.state[action];
-
-        //Check if value changed
-        
-            //update prev values in state and update locationInputValue
         this.setState({
             ...this.state,
             bookingTimeLocation: {
@@ -127,33 +120,17 @@ class BookingPageDateLocation extends Component<AbcProps, AbcState> {
                 }
             }
         })
+
+        //Updates adderess input element
         var postCodeEl = document.getElementById("postal-code-input") as HTMLInputElement
         var suburbEl = document.getElementById("suburb-input") as HTMLInputElement
         this.setState({
             ...this.state,
-            locationInputValue: `${suburbEl.value}, ${postCodeEl.value}`
+            locationInputValue: `${suburbEl.value} ${postCodeEl.value}`
         })
 
-        
-    
-    
-        // var suburb = this.suburb
-        // var postCode = this.postCode
-
-        // this.setState({
-        //     ...this.state,
-        //     locationInputValue: `${suburb}, ${postCode}`
-        // })
-
     }
 
-    updateAddressInput(){
-        // var suburb = this.state.bookingTimeLocation.location['suburb']
-        // var postCode = this.state.bookingTimeLocation.location['postCode']
-        
-
-        
-    }
 
 
     render(): React.ReactNode {
@@ -203,7 +180,6 @@ class BookingPageDateLocation extends Component<AbcProps, AbcState> {
                                     <input type="text" autoComplete='address-level2' id="suburb-input" onChange={(e) => {
                                         this.updateAutoComplete(e.target.value, 'suburb');
                                     }} disabled placeholder='Suburb'/>
-                                    <input type="text" autoComplete='country' onChange={(e) => {this.updateAddressInput()}} disabled />
                                     
                                 </div>
                                 </form>
