@@ -1,4 +1,4 @@
-import { Component } from 'react';
+import { Component, useState } from 'react';
 import { Calendar } from 'react-calendar';
 import Background from '../../components/ScreenComponents/Background';
 import {
@@ -14,6 +14,7 @@ import "./BookingPage.css"
 /* import Clouds from "./Clouds" */
 
 import { AddressAutofill } from '@mapbox/search-js-react';
+import path from 'path';
 
 interface AbcProps {
     [category: string]: any
@@ -22,6 +23,7 @@ interface AbcProps {
 interface AbcState {
     [category: string]: any
 }
+
 
 class BookingPageDateLocation extends Component<AbcProps, AbcState> {
     constructor(props: AbcProps) {
@@ -34,9 +36,15 @@ class BookingPageDateLocation extends Component<AbcProps, AbcState> {
                 location: ''
             },
             bookingTimeLocation: {
-                location: {}
-            }
+                location: {
+                    address: '',
+                    postCode: '',
+                    suburb: ''
+                }
+            },
+            locationInputValue: ''
         }
+
     }
 
     componentDidUpdate(prevProps: Readonly<AbcProps>, prevState: Readonly<AbcState>, snapshot?: any): void {
@@ -84,8 +92,31 @@ class BookingPageDateLocation extends Component<AbcProps, AbcState> {
         }
     }
 
-    updateBookingLocation(payload: any, action: 'address' | 'postCode' | 'suburb') {
+    updateBookingLocation(payload: any, action: 'address') {
 
+
+        this.setState({
+            ...this.state,
+            bookingTimeLocation: {
+                ...this.state.bookingTimeLocation,
+                ['location']:{
+                    ...this.state.bookingTimeLocation['location'],
+                    [action]: payload
+                }
+            },
+            locationInputValue: payload
+        })
+    
+    }
+
+    updateAutoComplete(payload: any, action: 'postCode' | 'suburb') {
+        //Only change when autocomplete is triggered
+
+        //var prevValue = this.state[action];
+
+        //Check if value changed
+        
+            //update prev values in state and update locationInputValue
         this.setState({
             ...this.state,
             bookingTimeLocation: {
@@ -96,7 +127,34 @@ class BookingPageDateLocation extends Component<AbcProps, AbcState> {
                 }
             }
         })
+        var postCodeEl = document.getElementById("postal-code-input") as HTMLInputElement
+        var suburbEl = document.getElementById("suburb-input") as HTMLInputElement
+        this.setState({
+            ...this.state,
+            locationInputValue: `${suburbEl.value}, ${postCodeEl.value}`
+        })
+
+        
+    
+    
+        // var suburb = this.suburb
+        // var postCode = this.postCode
+
+        // this.setState({
+        //     ...this.state,
+        //     locationInputValue: `${suburb}, ${postCode}`
+        // })
+
     }
+
+    updateAddressInput(){
+        // var suburb = this.state.bookingTimeLocation.location['suburb']
+        // var postCode = this.state.bookingTimeLocation.location['postCode']
+        
+
+        
+    }
+
 
     render(): React.ReactNode {
         return (
@@ -136,15 +194,17 @@ class BookingPageDateLocation extends Component<AbcProps, AbcState> {
                                 <AddressAutofill accessToken='pk.eyJ1IjoibGVvbmFyZG9wcmFzZXR5bzUiLCJhIjoiY2xrczZkaGxwMDA4azNmcDl0OWp1NGFnbiJ9.xCeKjotNA7WSnztHD_bn2A'>
                                 <input type="text" onChange={(e) => {
                                     this.updateBookingLocation(e.target.value, 'address');
-                                }} className="booking-page-input" placeholder="Where" autoComplete="address-line1"/>
+                                }} className="booking-page-input" placeholder="Where" autoComplete="address-line1" value={this.state.locationInputValue}/>
                                 </AddressAutofill>
                                 <div className='hidden'>
-                                    <input type="text" autoComplete='address-level2' id="suburb-input" onChange={(e) => {
-                                        this.updateBookingLocation(e.target.value, 'suburb');
-                                    }} disabled className='disabled-location-input' placeholder='Suburb'/>
                                     <input type="text" autoComplete="postal-code" id="postal-code-input" onChange={(e) => {
-                                        this.updateBookingLocation(e.target.value, 'postCode');
-                                    }} disabled className='disabled-location-input' placeholder='Postal Code'/>
+                                        this.updateAutoComplete(e.target.value, 'postCode');
+                                    }} disabled placeholder='Postal Code'/>
+                                    <input type="text" autoComplete='address-level2' id="suburb-input" onChange={(e) => {
+                                        this.updateAutoComplete(e.target.value, 'suburb');
+                                    }} disabled placeholder='Suburb'/>
+                                    <input type="text" autoComplete='country' onChange={(e) => {this.updateAddressInput()}} disabled />
+                                    
                                 </div>
                                 </form>
                             </div>
