@@ -11,7 +11,7 @@ import type { Value } from 'react-calendar/dist/cjs/shared/types';
 import 'react-calendar/dist/Calendar.css';
 import "./BookingPageDateLocation.css";
 import "./BookingPage.css";
-import {api_key} from "./config";
+import {api_key} from "./config/config";
 /* import Clouds from "./Clouds" */
 
 import { AddressAutofill } from '@mapbox/search-js-react';
