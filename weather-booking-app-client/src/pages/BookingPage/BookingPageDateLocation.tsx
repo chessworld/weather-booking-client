@@ -9,8 +9,9 @@ import { withRouter } from 'react-router-dom';
 import { compassOutline, timeOutline, bagOutline } from "ionicons/icons";
 import type { Value } from 'react-calendar/dist/cjs/shared/types';
 import 'react-calendar/dist/Calendar.css';
-import "./BookingPageDateLocation.css"
-import "./BookingPage.css"
+import "./BookingPageDateLocation.css";
+import "./BookingPage.css";
+import {api_key} from "./config";
 /* import Clouds from "./Clouds" */
 
 import { AddressAutofill } from '@mapbox/search-js-react';
@@ -168,7 +169,7 @@ class BookingPageDateLocation extends Component<AbcProps, AbcState> {
                                     />
                                 </div>
                                 <form>
-                                <AddressAutofill accessToken='pk.eyJ1IjoibGVvbmFyZG9wcmFzZXR5bzUiLCJhIjoiY2xrczZkaGxwMDA4azNmcDl0OWp1NGFnbiJ9.xCeKjotNA7WSnztHD_bn2A'>
+                                <AddressAutofill accessToken={api_key}>
                                 <input type="text" onChange={(e) => {
                                     this.updateBookingLocation(e.target.value, 'address');
                                 }} className="booking-page-input" placeholder="Where" autoComplete="address-line1" value={this.state.locationInputValue}/>
