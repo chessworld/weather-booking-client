@@ -1,9 +1,9 @@
-import { WeatherOptionChoice } from "../enums/WeatherOptionChoice";
-import { WeatherOptionType } from "../enums/WeatherOptionType";
-import { WeatherValueType } from "../enums/WeatherValueType";
+import { TemperatureLevel } from "../enums/TemperatureLevel";
+import { WeatherType } from "../enums/WeatherType";
+import { WindLevel } from "../enums/WindLevel";
 
 export interface WeatherOption {
-  option_type: WeatherOptionType;
-  option_name: WeatherOptionChoice;
-  value_type: WeatherValueType;
+  weather: WeatherType;
+  wind: WindLevel;
+  temperature: TemperatureLevel;
 }
