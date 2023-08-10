@@ -37,4 +37,4 @@ yarn-error.log*
 *.org
 
 #Key for mapbox
-.pages/BookingPage/config.ts
+pages/BookingPage/config.ts
