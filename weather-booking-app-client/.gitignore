@@ -37,4 +37,4 @@ yarn-error.log*
 *.org
 
 #Key for mapbox
-pages/BookingPage/config.ts
+weather-booking-app-client/src/pages/BookingPage/config.ts
