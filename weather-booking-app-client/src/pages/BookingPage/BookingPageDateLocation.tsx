@@ -38,9 +38,7 @@ class BookingPageDateLocation extends Component<AbcProps, AbcState> {
             },
             bookingTimeLocation: {
                 location: {
-                    address: '',
-                    postCode: '',
-                    suburb: ''
+                    address: ''
                 }
             },
             locationInputValue: ''
@@ -109,26 +107,25 @@ class BookingPageDateLocation extends Component<AbcProps, AbcState> {
     
     }
 
-    updateAutoComplete(payload: any, action: 'postCode' | 'suburb') {
+    updateAutoComplete(payload: any) {
         //Only change when autocomplete is triggered
+        var postCodeEl = document.getElementById("postal-code-input") as HTMLInputElement
+        var suburbEl = document.getElementById("suburb-input") as HTMLInputElement
+        var countryEl = document.getElementById("country-input") as HTMLInputElement
         this.setState({
             ...this.state,
             bookingTimeLocation: {
                 ...this.state.bookingTimeLocation,
                 ['location']:{
                     ...this.state.bookingTimeLocation['location'],
-                    [action]: payload
+                    ['postCode']: postCodeEl.value,
+                    ['suburb']: suburbEl.value,
+                    ['country']: countryEl.value
                 }
-            }
-        })
-
-        //Updates adderess input element
-        var postCodeEl = document.getElementById("postal-code-input") as HTMLInputElement
-        var suburbEl = document.getElementById("suburb-input") as HTMLInputElement
-        this.setState({
-            ...this.state,
+            },
             locationInputValue: `${suburbEl.value} ${postCodeEl.value}`
         })
+
 
     }
 
@@ -176,10 +173,13 @@ class BookingPageDateLocation extends Component<AbcProps, AbcState> {
                                 </AddressAutofill>
                                 <div className='hidden'>
                                     <input type="text" autoComplete="postal-code" id="postal-code-input" onChange={(e) => {
-                                        this.updateAutoComplete(e.target.value, 'postCode');
+                                        this.updateAutoComplete(e.target.value);
                                     }} disabled placeholder='Postal Code'/>
                                     <input type="text" autoComplete='address-level2' id="suburb-input" onChange={(e) => {
-                                        this.updateAutoComplete(e.target.value, 'suburb');
+                                        this.updateAutoComplete(e.target.value);
+                                    }} disabled placeholder='Suburb'/>
+                                    <input type="text" autoComplete='country' id="country-input" onChange={(e) => {
+                                        this.updateAutoComplete(e.target.value);
                                     }} disabled placeholder='Suburb'/>
                                     
                                 </div>
