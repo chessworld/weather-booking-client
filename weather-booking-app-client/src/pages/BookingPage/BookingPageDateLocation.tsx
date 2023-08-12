@@ -118,7 +118,7 @@ class BookingPageDateLocation extends Component<AbcProps, AbcState> {
                 ...this.state.bookingTimeLocation,
                 ['location']:{
                     ...this.state.bookingTimeLocation['location'],
-                    ['postCode']: postCodeEl.value,
+                    ['postcode']: postCodeEl.value,
                     ['suburb']: suburbEl.value,
                     ['country']: countryEl.value
                 }
@@ -174,13 +174,13 @@ class BookingPageDateLocation extends Component<AbcProps, AbcState> {
                                 <div className='hidden'>
                                     <input type="text" autoComplete="postal-code" id="postal-code-input" onChange={(e) => {
                                         this.updateAutoComplete(e.target.value);
-                                    }} disabled placeholder='Postal Code'/>
+                                    }} disabled/>
                                     <input type="text" autoComplete='address-level2' id="suburb-input" onChange={(e) => {
                                         this.updateAutoComplete(e.target.value);
-                                    }} disabled placeholder='Suburb'/>
+                                    }} disabled/>
                                     <input type="text" autoComplete='country' id="country-input" onChange={(e) => {
                                         this.updateAutoComplete(e.target.value);
-                                    }} disabled placeholder='Suburb'/>
+                                    }} disabled/>
                                     
                                 </div>
                                 </form>
