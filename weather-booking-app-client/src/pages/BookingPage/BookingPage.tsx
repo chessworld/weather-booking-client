@@ -9,14 +9,23 @@ import { withRouter } from "react-router-dom";
 import WeatherHud from "../../components/BookWeatherComponents/WeatherHud";
 import { Component } from "react";
 import { IonToast, IonRange, IonPage } from "@ionic/react";
-import DeviceManager from "../../device/DeviceManager";
-import UserEndpoint from "../../endpoint-caller/userEndpoint";
 import Cloudy from "../../components/weatherAnimatedIcons/Cloudy";
 import Sunny from "../../components/weatherAnimatedIcons/Sunny";
 import Rainy from "../../components/weatherAnimatedIcons/Rainy";
 import Stormy from "../../components/weatherAnimatedIcons/Stormy";
 import SlideUpPanel from "../../components/SlideUpPanel/SlideUpPanel";
-import {AppContext, AppContextInterface } from "../../stores/app-context";
+import { AppContext, AppContextInterface } from "../../stores/app-context";
+import { WeatherType } from "../../endpoint-caller/interfaces/enums/WeatherType";
+import WeatherIconProps from "../../components/weatherAnimatedIcons/interface/WeatherIconProps";
+import { WindLevel } from "../../endpoint-caller/interfaces/enums/WindLevel";
+import { TemperatureLevel } from "../../endpoint-caller/interfaces/enums/TemperatureLevel";
+
+export interface BookingWeatherOption {
+  name: WeatherType;
+  effectClassName: string;
+  backgroundClassName: string;
+  svg: React.FC<WeatherIconProps>;
+}
 class BookingPage extends Component<BookingPageProps, BookingPageState> {
   static contextType = AppContext;
 
@@ -33,37 +42,9 @@ class BookingPage extends Component<BookingPageProps, BookingPageState> {
         ...this.props.location.state,
         timePeriod: "",
       },
-      weatherOptions: [
-        {
-          name: "Cloudy",
-          effectClassName: "cloud",
-          backgroundClassName: "perfect",
-          svg: Cloudy,
-        },
-        {
-          name: "Sunny",
-          effectClassName: "sun",
-          backgroundClassName: "sunny",
-          svg: Sunny,
-        },
-        {
-          name: "Rainy",
-          effectClassName: "rain",
-          backgroundClassName: "rainy",
-          svg: Rainy,
-        },
-        {
-          name: "Stormy",
-          effectClassName: "storm",
-          backgroundClassName: "stormy",
-          svg: Stormy,
-        },
-      ],
-      temperatureOptions: [{ name: "Freezing" }, { name: "Cool" }, { name: "Mild" }, { name: "Warm" }, { name: "Hot" }],
-      windOptions: [{ name: "No Wind" }, { name: "Calm" }, { name: "Windy" }, { name: "Gusty" }],
-      selectedWeatherOption: 0,
-      selectedWindOption: 0,
-      selectedTemperatureOption: 0,
+      selectedWeatherOption: undefined,
+      selectedWindOption: undefined,
+      selectedTemperatureOption: undefined,
       showSuggestions: false,
       locationSuggestions: [],
       toast: {
@@ -74,51 +55,39 @@ class BookingPage extends Component<BookingPageProps, BookingPageState> {
     };
 
     // Bindings
-    this.getWindJson = this.getWindJson.bind(this);
     this.clickBooking = this.clickBooking.bind(this);
     this.toggleConfirmation = this.toggleConfirmation.bind(this);
     this.book = this.book.bind(this);
-    this.verifyDeviceId = this.verifyDeviceId.bind(this);
   }
 
-  async componentDidMount(): Promise<any> {
-    this.verifyDeviceId();
-  }
-
-  verifyDeviceId() {
-    /**
-     * Not Sure which page this should be on. It is for verifying device id
-     */
-
-    DeviceManager.getOrCreateDeviceId()
-      .then((deviceId) => {
-        UserEndpoint.getUser(deviceId)
-          .then((user) => {
-            // User Already exists
-            this.showToast(`Welcome back ${user.id}!`);
-            if (!user.completed_tutorial) {
-              // If user exists but hasn't completed tutorial
-              this.props.history.push("/OnboardingPage");
-            }
-          })
-          .catch((error) => {
-            console.error(error);
-          });
-      })
-      .catch((error) => {
-        console.error(error);
-        UserEndpoint.createUser("New User", false) //TODO: CHANGE THIS FROM HARDCODED
-          .then((user) => {
-            // If user doesn't exist
-            DeviceManager.updateDeviceId(user.id);
-            this.showToast(`Created user ${user.id}`);
-            this.props.history.push("/OnboardingPage");
-          })
-          .catch((error) => {
-            console.error(error);
-          });
-      });
-  }
+  weatherOptions: BookingWeatherOption[] = [
+    {
+      name: "Cloudy",
+      effectClassName: "cloud",
+      backgroundClassName: "perfect",
+      svg: Cloudy,
+    },
+    {
+      name: "Sunny",
+      effectClassName: "sun",
+      backgroundClassName: "sunny",
+      svg: Sunny,
+    },
+    {
+      name: "Rainy",
+      effectClassName: "rain",
+      backgroundClassName: "rainy",
+      svg: Rainy,
+    },
+    {
+      name: "Stormy",
+      effectClassName: "storm",
+      backgroundClassName: "stormy",
+      svg: Stormy,
+    },
+  ];
+  temperatureOptions: TemperatureLevel[] = ["Cool", "Warm", "Hot"];
+  windOptions: WindLevel[] = ["Calm", "Windy", "Windy"];
 
   showToast(message: string): void {
     this.setState({
@@ -130,43 +99,11 @@ class BookingPage extends Component<BookingPageProps, BookingPageState> {
     });
   }
 
-  getWindJson(): {
-    [category: string]: string | number;
-  } {
-    const windJson = {
-      option_type: "Wind",
-      option_name: this.state.windOptions && this.state.windOptions[this.state.selectedWindOption].name,
-      value_type: "Km/h",
-    };
-
-    return windJson;
-  }
-
-  getWeatherJson(): { [category: string]: string | number } {
-    const weatherJson = {
-      option_type: "Weather",
-      option_name: this.state.weatherOptions && this.state.weatherOptions[this.state.selectedWeatherOption].name,
-    };
-
-    return weatherJson;
-  }
-
-  getTemperatureJson(): { [category: string]: string | number } {
-    const temperatureJson = {
-      option_type: "Temperature",
-      option_name:
-        this.state.temperatureOptions && this.state.temperatureOptions[this.state.selectedTemperatureOption].name,
-      value_type: "Celsius",
-    };
-
-    return temperatureJson;
-  }
-
-  handleWeatherSelectionUpdate(weatherSelectionNumber: number) {
+  handleWeatherSelectionUpdate(weatherTypeSelected: WeatherType) {
     this.setState((prev) => {
       return {
         ...prev,
-        selectedWeatherOption: weatherSelectionNumber,
+        selectedWeatherOption: weatherTypeSelected,
       };
     });
   }
@@ -191,7 +128,7 @@ class BookingPage extends Component<BookingPageProps, BookingPageState> {
       }) + 1,
       this.state.bookingDetails.dateTime ?? "",
       "Morning",
-    //   this.state.bookingDetails.timePeriod ?? "Morning",
+      //   this.state.bookingDetails.timePeriod ?? "Morning",
       {
         weather: "Sunny",
         wind: "Calm",
@@ -216,8 +153,7 @@ class BookingPage extends Component<BookingPageProps, BookingPageState> {
   }
 
   render(): React.ReactNode {
-    const appCtx = this.context as AppContextInterface;
-    const svgWeatherIconComponent = this.state.weatherOptions[0].svg;
+    // const svgWeatherIconComponent = this.state.weatherOptions[0].svg;
     return (
       <IonPage keep-alive="false">
         <IonToast
@@ -237,7 +173,12 @@ class BookingPage extends Component<BookingPageProps, BookingPageState> {
         <Background showClouds={false}>
           {
             <SlideUpPanel showPanel={this.state.showConfirmation}>
-              <ConfirmBookingDetails data={this.state} closeBookingDetail={this.toggleConfirmation} book={this.book} />
+              <ConfirmBookingDetails
+                weatherBookingDetails={this.state}
+                weatherOptions={this.weatherOptions}
+                closeBookingDetail={this.toggleConfirmation}
+                book={this.book}
+              />
             </SlideUpPanel>
           }
 
@@ -245,21 +186,25 @@ class BookingPage extends Component<BookingPageProps, BookingPageState> {
             <div className="input-container">
               {/* Vertical Buttons */}
               <div className="button-container">
-                {this.state.weatherOptions.map((option: any, i: number) => {
+                {this.weatherOptions.map((weatherOption: BookingWeatherOption, i: number) => {
                   return (
                     <div
                       className="weather-choose-container"
                       key={`${i}`}
                       onClick={() => {
-                        this.handleWeatherSelectionUpdate(i);
+                        this.handleWeatherSelectionUpdate(weatherOption.name);
                       }}
                     >
                       <div
                         className={`hud-background weather-choose-option ${
-                          this.state.weatherOptions[i].backgroundClassName
-                        } ${i == this.state.selectedWeatherOption ? "weather-choose-option-focus" : "no-animation"}`}
+                          this.weatherOptions[i].backgroundClassName
+                        } ${
+                          this.weatherOptions[i].name == this.state.selectedWeatherOption
+                            ? "weather-choose-option-focus"
+                            : "no-animation"
+                        }`}
                       >
-                        <div className={`${this.state.weatherOptions[i].effectClassName}`}>
+                        <div className={`${this.weatherOptions[i].effectClassName}`}>
                           <ul>
                             <li></li>
                             <li></li>
@@ -268,12 +213,12 @@ class BookingPage extends Component<BookingPageProps, BookingPageState> {
                             <li></li>
                           </ul>
                         </div>
-                        {React.createElement(option.svg, {
-                          showAnimation: this.state.selectedWeatherOption == i,
+                        {React.createElement(weatherOption.svg, {
+                          showAnimation: this.weatherOptions[i].name === this.state.selectedWeatherOption,
                           className: "weather-icon",
                         })}
                       </div>
-                      <span className="weather-choose-text">{option.name}</span>
+                      <span className="weather-choose-text">{weatherOption.name}</span>
                     </div>
                   );
                 })}
@@ -287,7 +232,7 @@ class BookingPage extends Component<BookingPageProps, BookingPageState> {
                   ticks={true}
                   snaps={true}
                   min={0}
-                  max={this.state.temperatureOptions.length - 1}
+                  max={this.temperatureOptions.length - 1}
                   onIonChange={(e: any) => {
                     this.setState((prev) => {
                       return {
@@ -310,7 +255,7 @@ class BookingPage extends Component<BookingPageProps, BookingPageState> {
                       return { ...prev, selectedWindOption: e.detail.value };
                     });
                   }}
-                  max={this.state.windOptions.length - 1}
+                  max={this.windOptions.length - 1}
                 />
               </div>
             </div>
@@ -318,8 +263,11 @@ class BookingPage extends Component<BookingPageProps, BookingPageState> {
             {/* Weatherhud */}
             <WeatherHud
               weatherData={this.state}
+              weatherOptions={this.weatherOptions}
+              windOptions={this.windOptions}
+              temperatureOptions={this.temperatureOptions}
               isWindy={
-                this.state.selectedWindOption > 1 // If wind is more than 1, it is windy
+                this.state.selectedWindOption !== "No Wind" // If wind is more than 1, it is windy
               }
             />
 
