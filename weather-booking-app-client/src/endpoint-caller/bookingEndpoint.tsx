@@ -27,7 +27,6 @@ export default class BookingEndpoint {
       time_period: timePeriod,
       weather_option: weatherOption,
     };
-    console.log(JSON.stringify(body));
     ApiService.post(`/bookings/user/${userId}/`, { ...body });
   };
 }

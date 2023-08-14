@@ -1,149 +1,140 @@
 :root {
-    --height: 60px;
-    --booking-page-input-transition: border 100ms ease-in;
-    --border-rad: 10px
-               
+  --height: 60px;
+  --booking-page-input-transition: border 100ms ease-in;
+  --border-rad: 10px;
 }
 
 .booking-page-date-location-header {
-    color: #FFF;
-    text-shadow: 
-        -1.9px -1.9px 0 #000,  
-        1.9px -1.9px 0 #000,
-        -1.9px 1.9px 0 #000,
-        1.9px 1.9px 0 #000;
-    width: 90vw;
-    font-size: 7vw;
-    margin-top: 7vh;
-    margin-left: 4vw;
-    font-weight: 900;
+  color: #000000;
+  width: 90vw;
+  font-size: 8vw;
+  margin-top: 7vh;
+  margin-left: 4vw;
+  font-weight: 900;
 }
 
-
 .booking-page-input {
-    border: 1px solid #888;
-    border-left: none;
-    border-radius: 0 var(--border-rad) var(--border-rad) 0;
-    height: var(--height);
-    outline: none;
-    padding-left: 2vw;
-    width: 70vw;
-    transition: var(--booking-page-input-transition);
+  border: 1px solid #888;
+  border-left: none;
+  border-radius: 0 var(--border-rad) var(--border-rad) 0;
+  height: var(--height);
+  outline: none;
+  padding-left: 2vw;
+  width: 70vw;
+  transition: var(--booking-page-input-transition);
 }
 
 .booking-page-input:focus {
-    outline: none;
+  outline: none;
 }
 
 .booking-page-date-location-container {
-    height: 80vh;
-    display: flex;
-    margin-top: 5vh;
-    flex-direction: column;
-    justify-content: flex-start;
-    align-items: center;
+  height: 80vh;
+  display: flex;
+  margin-top: 5vh;
+  flex-direction: column;
+  justify-content: flex-start;
+  align-items: center;
 }
 
 .input-fields-container {
-    background: rgba(255, 230, 255, 0.4);
-    border: .5px solid #333;
-    backdrop-filter: blur(10px);
-    -webkit-backdrop-filter: blur(10px);
-    display: flex;
-    position: absolute;
-    bottom: 4vh;
-    flex-direction: column;
-    align-items: center;
-    justify-content: flex-start;
-    padding-top: 2vh;
-    border-radius: 4vw;
-    box-shadow: 2px 2px 8px #888;
-    width: 95vw;
-    height: 65vh
+  background: rgba(255, 230, 255, 0.4);
+  border: 0.5px solid #333;
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  display: flex;
+  position: absolute;
+  bottom: 4vh;
+  flex-direction: column;
+  align-items: center;
+  justify-content: flex-start;
+  padding-top: 2vh;
+  border-radius: 4vw;
+  box-shadow: 2px 2px 8px #888;
+  width: 95vw;
+  height: 65vh;
 }
 
-
-div:has(> input[type='text']) {
-    margin-top: 2vh;
+div:has(> input[type="text"]) {
+  margin-top: 2vh;
 }
 
 /*****************************************************************************/
 /*                                  Calendar                                 */
 /*****************************************************************************/
 
-.react-calendar { 
-    width: 100vw !important;
-    padding: 1rem;
-    border-radius: 5px;
-    color: #222;
-    background: transparent;
-    border: none;
+.react-calendar {
+  width: 100vw !important;
+  padding: 1rem;
+  border-radius: 5px;
+  color: #222;
+  background: transparent;
+  border: none;
 }
 
 .calendar-only-container {
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    width: 100vw
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  width: 100vw;
 }
 
 .button-icons {
-    width: 10vw;
-    color: #555;
-    height: 10vw;
-    max-width: 50px;
-    max-height: 50px;
-    padding: .5rem;
+  width: 10vw;
+  color: #555;
+  height: 10vw;
+  max-width: 50px;
+  max-height: 50px;
+  padding: 0.5rem;
 }
 
 .button-with-icon {
-    display: flex;
-    flex-direction: row;
-    align-items: center;
-    justify-content: center;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
 }
 
 .icon-with-outline {
-    height: var(--height);
-    border-radius: var(--border-rad) 0 0 var(--border-rad);
-    background: white;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    border: 1px solid #888;
-    border-right: none;
-    transition: var(--booking-page-input-transition);
+  height: var(--height);
+  border-radius: var(--border-rad) 0 0 var(--border-rad);
+  background: white;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border: 1px solid #888;
+  border-right: none;
+  transition: var(--booking-page-input-transition);
 }
 
 .book-buttons-container {
-    display: flex;
-    flex-direction: row;
-    align-items: center;
-    justify-content: space-around;
-    width: 100vw;
-    position: absolute;
-    bottom: 20px;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-around;
+  width: 100vw;
+  position: absolute;
+  bottom: 20px;
 }
 
-
 .button-small {
-    position: relative !important;
-    color: white;
-    background: rgba(0, 0, 0, 0.7);
-    backdrop-filter: blur(10px);
-    -webkit-backdrop-filter: blur(10px);
-    padding: 10px 15px 10px;
-    border-radius: 1vw;
-    text-align: center;
-    font-size: 2.8vw;
-    font-weight: 600;
-    transition: background 0.5s ease;
+  position: relative !important;
+  color: white;
+  background: rgba(0, 0, 0, 0.7);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  padding: 10px 15px 10px;
+  border-radius: 1vw;
+  text-align: center;
+  font-size: 2.8vw;
+  font-weight: 600;
+  transition: background 0.5s ease;
 }
 
 .small-day-button-container {
-    display: flex;
-    flex-flow: row;
-    width: 100vw;
-    justify-content: space-evenly;
+  display: flex;
+  flex-flow: row;
+  width: 100vw;
+  justify-content: space-evenly;
 }

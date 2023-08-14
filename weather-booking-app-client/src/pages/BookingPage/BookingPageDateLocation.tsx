@@ -8,8 +8,6 @@ import { BookingDetails } from "./Interface/BookingPageState";
 import Background from "../../components/ScreenComponents/Background";
 import BookingPageDateLocationProps from "./Interface/BookingPageDateLocationProps";
 import BookingPageDateLocationState from "./Interface/BookingPageDateLocationState";
-import DeviceManager from "../../device/DeviceManager";
-import UserEndpoint from "../../endpoint-caller/userEndpoint";
 import SlideUpPanel from "../../components/SlideUpPanel/SlideUpPanel";
 
 import "react-calendar/dist/Calendar.css";
@@ -44,7 +42,7 @@ class BookingPageDateLocation extends Component<BookingPageDateLocationProps, Bo
       },
       bookingDetails: {
         location: "Melbourne",
-        dateTime: "12-12-2024",
+        dateTime: "2023-12-12",
         name: "Graduation",
         timePeriod: "Morning", //TODO make frontend have this input
       },

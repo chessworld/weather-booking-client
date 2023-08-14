@@ -42,9 +42,9 @@ class BookingPage extends Component<BookingPageProps, BookingPageState> {
         ...this.props.location.state,
         timePeriod: "",
       },
-      selectedWeatherOption: undefined,
-      selectedWindOption: undefined,
-      selectedTemperatureOption: undefined,
+      selectedWeatherOption: "Cloudy",
+      selectedWindOption: "No Wind",
+      selectedTemperatureOption: "Cool",
       showSuggestions: false,
       locationSuggestions: [],
       toast: {
@@ -87,7 +87,7 @@ class BookingPage extends Component<BookingPageProps, BookingPageState> {
     },
   ];
   temperatureOptions: TemperatureLevel[] = ["Cool", "Warm", "Hot"];
-  windOptions: WindLevel[] = ["Calm", "Windy", "Windy"];
+  windOptions: WindLevel[] = ["No Wind", "Calm", "Windy"];
 
   showToast(message: string): void {
     this.setState({
@@ -119,6 +119,12 @@ class BookingPage extends Component<BookingPageProps, BookingPageState> {
     }
     const appCtx = this.context as AppContextInterface;
 
+    //Form Validation
+    if (!this.state.selectedWeatherOption || !this.state.selectedWindOption || !this.state.selectedTemperatureOption) {
+      this.showToast("Please select all options");
+      return;
+    }
+
     BookingEndpoint.createBooking(
       appCtx.userId,
       appCtx.locations.findIndex((location) => {
@@ -130,9 +136,9 @@ class BookingPage extends Component<BookingPageProps, BookingPageState> {
       "Morning",
       //   this.state.bookingDetails.timePeriod ?? "Morning",
       {
-        weather: "Sunny",
-        wind: "Calm",
-        temperature: "Hot",
+        weather: this.state.selectedWeatherOption,
+        wind: this.state.selectedWindOption,
+        temperature: this.state.selectedTemperatureOption,
       }
     );
 
@@ -142,7 +148,7 @@ class BookingPage extends Component<BookingPageProps, BookingPageState> {
   }
 
   redirectToBookListPage(): void {
-    this.props.history.push("/tab2");
+    this.props.history.push("/viewBookingsPage");
   }
 
   toggleConfirmation(): void {
@@ -153,7 +159,6 @@ class BookingPage extends Component<BookingPageProps, BookingPageState> {
   }
 
   render(): React.ReactNode {
-    // const svgWeatherIconComponent = this.state.weatherOptions[0].svg;
     return (
       <IonPage keep-alive="false">
         <IonToast
@@ -189,7 +194,7 @@ class BookingPage extends Component<BookingPageProps, BookingPageState> {
                 {this.weatherOptions.map((weatherOption: BookingWeatherOption, i: number) => {
                   return (
                     <div
-                      className="weather-choose-container"
+                      className={`weather-choose-container`}
                       key={`${i}`}
                       onClick={() => {
                         this.handleWeatherSelectionUpdate(weatherOption.name);
@@ -200,25 +205,24 @@ class BookingPage extends Component<BookingPageProps, BookingPageState> {
                           this.weatherOptions[i].backgroundClassName
                         } ${
                           this.weatherOptions[i].name == this.state.selectedWeatherOption
-                            ? "weather-choose-option-focus"
+                            ? "weather-choose-option-selected"
                             : "no-animation"
                         }`}
                       >
-                        <div className={`${this.weatherOptions[i].effectClassName}`}>
-                          <ul>
-                            <li></li>
-                            <li></li>
-                            <li></li>
-                            <li></li>
-                            <li></li>
-                          </ul>
-                        </div>
                         {React.createElement(weatherOption.svg, {
                           showAnimation: this.weatherOptions[i].name === this.state.selectedWeatherOption,
                           className: "weather-icon",
                         })}
                       </div>
-                      <span className="weather-choose-text">{weatherOption.name}</span>
+                      <span
+                        className={`${
+                          this.weatherOptions[i].name == this.state.selectedWeatherOption
+                            ? "weather-choose-text-selected"
+                            : "weather-choose-text"
+                        }`}
+                      >
+                        {weatherOption.name}
+                      </span>
                     </div>
                   );
                 })}
@@ -237,7 +241,7 @@ class BookingPage extends Component<BookingPageProps, BookingPageState> {
                     this.setState((prev) => {
                       return {
                         ...prev,
-                        selectedTemperatureOption: e.detail.value,
+                        selectedTemperatureOption: this.temperatureOptions[e.detail.value],
                       };
                     });
                   }}
@@ -252,7 +256,7 @@ class BookingPage extends Component<BookingPageProps, BookingPageState> {
                   min={0}
                   onIonChange={(e: any) => {
                     this.setState((prev) => {
-                      return { ...prev, selectedWindOption: e.detail.value };
+                      return { ...prev, selectedWindOption: this.windOptions[e.detail.value] };
                     });
                   }}
                   max={this.windOptions.length - 1}
@@ -277,13 +281,6 @@ class BookingPage extends Component<BookingPageProps, BookingPageState> {
                 className="book-button"
                 onTouchEnd={() => {
                   this.props.history.goBack();
-
-                  {
-                    /* this.props.history.push({
-                                        pathname: '/bookingPageDateLocation',
-                                        state: this.state.bookingDetails
-                                    }); */
-                  }
                 }}
               >
                 Back
