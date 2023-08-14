@@ -1,7 +1,6 @@
 body {
   background: transparent !important;
-  background: linear-gradient(180deg, #a8c8ed 0%, rgba(118, 115, 220, 0.4) 100%),
-    #ffffff !important;
+  background: linear-gradient(180deg, #a8c8ed 0%, rgba(118, 115, 220, 0.4) 100%), #ffffff !important;
 }
 
 .bookings-list-title {
@@ -26,9 +25,12 @@ body {
 
 .bookings-tab {
   color: black;
+  border-radius: 20px;
+}
+
+.bookings-tab__text {
   font-size: 1rem;
   font-weight: bold;
-  border-radius: 20px;
 }
 
 .bookings-tab-selected {

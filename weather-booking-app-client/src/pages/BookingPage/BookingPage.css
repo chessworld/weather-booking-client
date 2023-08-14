@@ -29,7 +29,15 @@
   height: 80vh;
   gap: 2rem;
   align-items: center;
-  margin: 7vh 0 1vh 0;
+  margin: 4vh 0 1vh 0;
+}
+
+.booking-page-back-button {
+  width: fit-content !important;
+  color: black !important;
+  padding-top: 1rem;
+  position: relative;
+  font-size: 1rem !important;
 }
 
 .input-container {
@@ -57,7 +65,6 @@
 
 .weather-choose-text {
   font-size: 3.5vw;
-  font-weight: bold;
   margin-top: 1vh;
   color: white;
 }
@@ -179,7 +186,6 @@ ion-range {
   --bar-background-active: #1e1e1e;
   --bar-height: 15px !important;
   --bar-background-active: rgba(110, 104, 126, 0.5);
-  --bar-border-radius: 40px;
   --knob-background: #fff;
   --knob-size: 5vw;
   --pin-background: #eee;

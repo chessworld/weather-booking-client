@@ -8,7 +8,7 @@ import React from "react";
 import { withRouter } from "react-router-dom";
 import WeatherHud from "../../components/BookWeatherComponents/WeatherHud";
 import { Component } from "react";
-import { IonToast, IonRange, IonPage } from "@ionic/react";
+import { IonToast, IonRange, IonPage, IonButton, IonIcon } from "@ionic/react";
 import Cloudy from "../../components/weatherAnimatedIcons/Cloudy";
 import Sunny from "../../components/weatherAnimatedIcons/Sunny";
 import Rainy from "../../components/weatherAnimatedIcons/Rainy";
@@ -19,6 +19,7 @@ import { WeatherType } from "../../endpoint-caller/interfaces/enums/WeatherType"
 import { WindLevel } from "../../endpoint-caller/interfaces/enums/WindLevel";
 import { TemperatureLevel } from "../../endpoint-caller/interfaces/enums/TemperatureLevel";
 import { BookingWeatherOption } from "./Interface/BookingWeatherOptions";
+import { chevronBackOutline } from "ionicons/icons";
 
 class BookingPage extends Component<BookingPageProps, BookingPageState> {
   static contextType = AppContext;
@@ -153,6 +154,9 @@ class BookingPage extends Component<BookingPageProps, BookingPageState> {
   render(): React.ReactNode {
     return (
       <IonPage keep-alive="false">
+        <IonButton onClick={() => this.props.history.goBack()} className="booking-page-back-button invisible-button">
+          <IonIcon icon={chevronBackOutline} slot="icon-only"></IonIcon>
+        </IonButton>
         <IonToast
           isOpen={this.state.toast.showToast}
           onDidDismiss={() =>
@@ -269,14 +273,6 @@ class BookingPage extends Component<BookingPageProps, BookingPageState> {
 
             {/* Book Button */}
             <div className="book-buttons-container">
-              <div
-                className="book-button"
-                onTouchEnd={() => {
-                  this.props.history.goBack();
-                }}
-              >
-                Back
-              </div>
               <div onTouchEnd={this.clickBooking} className="book-button">
                 Book
               </div>

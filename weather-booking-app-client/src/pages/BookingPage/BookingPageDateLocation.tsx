@@ -336,7 +336,6 @@ class BookingPageDateLocation extends Component<BookingPageDateLocationProps, Bo
             }
           </div>
           <div className="book-buttons-container">
-            <div className="book-button">Cancel</div>
             <div
               className="book-button"
               onTouchEnd={() => {
