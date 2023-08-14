@@ -287,23 +287,8 @@ class BookingPageDateLocation extends Component<BookingPageDateLocationProps, Bo
                   />
                 </div>
               </div>
-              <div className="book-buttons-container">
-                <div className="book-button">Cancel</div>
-                <div
-                  className="book-button"
-                  onTouchEnd={() => {
-                    if (this.validateInput()) {
-                      this.props.history.push({
-                        pathname: "/bookingPage",
-                        state: this.resetInputFields(),
-                      });
-                    }
-                  }}
-                >
-                  Next
-                </div>
-              </div>
             </div>
+
             {
               <SlideUpPanel showPanel={this.state.showCalendar}>
                 <div
@@ -349,6 +334,22 @@ class BookingPageDateLocation extends Component<BookingPageDateLocationProps, Bo
                 </div>
               </SlideUpPanel>
             }
+          </div>
+          <div className="book-buttons-container">
+            <div className="book-button">Cancel</div>
+            <div
+              className="book-button"
+              onTouchEnd={() => {
+                if (this.validateInput()) {
+                  this.props.history.push({
+                    pathname: "/bookingPage",
+                    state: this.resetInputFields(),
+                  });
+                }
+              }}
+            >
+              Next
+            </div>
           </div>
         </Background>
       </IonPage>

@@ -2,8 +2,6 @@ import { Component } from "react";
 import "./WeatherHud.css";
 import WeatherHudProps from "./Interface/WeatherHudProps";
 import WeatherHudState from "./Interface/WeatherHudState";
-import WeatherIconProps from "../weatherAnimatedIcons/interface/WeatherIconProps";
-import { he } from "date-fns/locale";
 
 class WeatherHud extends Component<WeatherHudProps, WeatherHudState> {
   constructor(props: WeatherHudProps) {

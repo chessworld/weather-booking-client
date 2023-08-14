@@ -2,20 +2,20 @@ import React from "react";
 import { WeatherType } from "../../../endpoint-caller/interfaces/enums/WeatherType";
 import { WindLevel } from "../../../endpoint-caller/interfaces/enums/WindLevel";
 import { TemperatureLevel } from "../../../endpoint-caller/interfaces/enums/TemperatureLevel";
-
+import { TimePeriod } from "../../../endpoint-caller/interfaces/enums/TimePeriod";
 type BookingDetails = {
   dateTime: string | null;
   location: string | null;
   name: string | null;
-  timePeriod?: string | null;
+  timePeriod: TimePeriod;
 };
 
 interface BookingPageState {
   [category: string]: any;
   bookingDetails: BookingDetails;
-  selectedWeatherOption?: WeatherType;
-  selectedWindOption?: WindLevel;
-  selectedTemperatureOption?: TemperatureLevel;
+  selectedWeatherOption: WeatherType;
+  selectedWindOption: WindLevel;
+  selectedTemperatureOption: TemperatureLevel;
   showSuggestions?: boolean;
   locationSuggestions: string[];
   toast: {

@@ -16,16 +16,10 @@ import Stormy from "../../components/weatherAnimatedIcons/Stormy";
 import SlideUpPanel from "../../components/SlideUpPanel/SlideUpPanel";
 import { AppContext, AppContextInterface } from "../../stores/app-context";
 import { WeatherType } from "../../endpoint-caller/interfaces/enums/WeatherType";
-import WeatherIconProps from "../../components/weatherAnimatedIcons/interface/WeatherIconProps";
 import { WindLevel } from "../../endpoint-caller/interfaces/enums/WindLevel";
 import { TemperatureLevel } from "../../endpoint-caller/interfaces/enums/TemperatureLevel";
+import { BookingWeatherOption } from "./Interface/BookingWeatherOptions";
 
-export interface BookingWeatherOption {
-  name: WeatherType;
-  effectClassName: string;
-  backgroundClassName: string;
-  svg: React.FC<WeatherIconProps>;
-}
 class BookingPage extends Component<BookingPageProps, BookingPageState> {
   static contextType = AppContext;
 
@@ -40,7 +34,6 @@ class BookingPage extends Component<BookingPageProps, BookingPageState> {
     this.state = {
       bookingDetails: {
         ...this.props.location.state,
-        timePeriod: "",
       },
       selectedWeatherOption: "Cloudy",
       selectedWindOption: "No Wind",
@@ -133,8 +126,7 @@ class BookingPage extends Component<BookingPageProps, BookingPageState> {
         );
       }) + 1,
       this.state.bookingDetails.dateTime ?? "",
-      "Morning",
-      //   this.state.bookingDetails.timePeriod ?? "Morning",
+      this.state.bookingDetails.timePeriod,
       {
         weather: this.state.selectedWeatherOption,
         wind: this.state.selectedWindOption,

@@ -43,8 +43,7 @@
   backdrop-filter: blur(10px);
   -webkit-backdrop-filter: blur(10px);
   display: flex;
-  position: absolute;
-  bottom: 4vh;
+  padding-bottom: 4vh;
   flex-direction: column;
   align-items: center;
   justify-content: flex-start;
@@ -52,7 +51,6 @@
   border-radius: 4vw;
   box-shadow: 2px 2px 8px #888;
   width: 95vw;
-  height: 65vh;
 }
 
 div:has(> input[type="text"]) {
