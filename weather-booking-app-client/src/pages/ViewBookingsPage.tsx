@@ -44,7 +44,7 @@ const ViewBookingsPage: React.FC = () => {
         onClick={() => handleTabChange("Upcoming")}
         selected={selectedTab === "Upcoming"}
       >
-        <IonLabel>Upcoming</IonLabel>
+        <IonLabel className="bookings-tab__text">Upcoming</IonLabel>
       </IonTabButton>
 
       <IonTabButton
@@ -53,7 +53,7 @@ const ViewBookingsPage: React.FC = () => {
         onClick={() => handleTabChange("Completed")}
         selected={selectedTab === "Completed"}
       >
-        <IonLabel>Completed</IonLabel>
+        <IonLabel className="bookings-tab__text">Completed</IonLabel>
       </IonTabButton>
     </IonTabBar>
   );

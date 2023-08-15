@@ -1,13 +1,12 @@
-import { IonButton, IonCard, IonCardContent, IonCardSubtitle, IonCardTitle, IonIcon, IonImg } from "@ionic/react";
+import { IonCard, IonCardContent, IonCardSubtitle, IonCardTitle, IonIcon, IonImg } from "@ionic/react";
 import { withRouter } from "react-router-dom";
-import { createElement, useState, useEffect } from "react";
-import { closeOutline, arrowForwardOutline } from "ionicons/icons";
-import BookingEndpoint from "../../endpoint-caller/bookingEndpoint";
+import { createElement } from "react";
+import { arrowForwardOutline } from "ionicons/icons";
 import "./ConfirmBookingDetails.css";
-
+import formatDate from "../../utility/formatDate";
 import ConfirmBookingDetailsProps from "./Interface/ConfirmBookingDetailsProps";
 
-const ConfirmBookingDetails: React.FC<ConfirmBookingDetailsProps> = (props: ConfirmBookingDetailsProps) => {
+const ConfirmBookingDetails: React.FC<ConfirmBookingDetailsProps> = (props) => {
   const timeToDisplay = (time: string) => {
     const formattedDate = new Date("2023-05-20").toLocaleDateString("en-US", {
       weekday: "long",
@@ -49,6 +48,10 @@ const ConfirmBookingDetails: React.FC<ConfirmBookingDetailsProps> = (props: Conf
     return "";
   };
 
+  const selectedBookingWeatherOption = props.weatherOptions.find((weatherOption) => {
+    return weatherOption.name == props.weatherBookingDetails.selectedWeatherOption;
+  });
+
   return (
     <>
       <h1 className="booking-details-title">Booking Details</h1>
@@ -57,23 +60,24 @@ const ConfirmBookingDetails: React.FC<ConfirmBookingDetailsProps> = (props: Conf
           <div className="booking-details-content">
             <div className="booking-details-details">
               <IonCardTitle className="booking-details-details__title">
-                {props.data.bookingDetails.location}
+                {props.weatherBookingDetails.bookingDetails.location}
               </IonCardTitle>
               <IonCardSubtitle className="booking-details-details__subtitle">
-                {dateToDisplay(props.data.bookingDetails.datetime)}
+                {formatDate(props.weatherBookingDetails.bookingDetails.dateTime as string)}
               </IonCardSubtitle>
               <p className="booking-details-details__weather"></p>
             </div>
             <div className="booking-details-img-container">
-              <IonImg
+              {/* <IonImg
                 className="booking-details-img"
-                src={props.data.weatherOptions[props.data.selectedWeatherOption].image}
-              />
+                src={props.weatherBookingDetails.weatherOptions[props.data.selectedWeatherOption].image}
+              /> */}
               <div className="confirm-booking-weather-icon-container">
-                {createElement(props.data.weatherOptions[props.data.selectedWeatherOption].svg, {
-                  showAnimation: true,
-                  className: "weather-icon",
-                })}
+                {selectedBookingWeatherOption &&
+                  createElement(selectedBookingWeatherOption?.svg, {
+                    showAnimation: true,
+                    className: "weather-icon",
+                  })}
               </div>
             </div>
           </div>
