@@ -1,7 +1,7 @@
 :root {
   --input-container-width: 100vw;
   --ion-color-primary: #3880ff;
-  --slider-width: 90vw;
+  --slider-width: 85vw;
   --weather-choose-option-max-width: 200px;
   --weather-choose-option-min-width: 60px;
   --weather-choose-option-max-height: 130px;
@@ -96,7 +96,7 @@
 }
 
 .weather-choose-option-selected {
-  box-shadow: 0 0 0 0.1em rgba(255, 255, 255, 0.7) inset, 0 0 2em -0.3em var(--shadow) !important;
+  box-shadow: 0 0 0 0.2em rgba(255, 255, 255, 0.7) inset, 0 0 2em -0.3em var(--shadow) !important;
   width: 25vw;
 }
 

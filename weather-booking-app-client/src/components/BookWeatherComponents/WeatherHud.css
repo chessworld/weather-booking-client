@@ -89,7 +89,7 @@ body {
   border-radius: var(--hud-border-radius);
   box-shadow: 0 0 0.5em -0.3em var(--shadow);
   background: linear-gradient(to var(--blend-dir), var(--blend1) var(--blend-from), var(--blend2) var(--blend-to));
-  transition: all 0.5s ease-in;
+  transition: all 0.2s ease-in;
 }
 
 .hud-background::after {
