@@ -3,4 +3,4 @@ export interface UserEndpointResponse {
   name?: string;
   error?: string;
   completed_tutorial: string;
-};
+}

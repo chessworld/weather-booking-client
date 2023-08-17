@@ -65,12 +65,12 @@
 
 
 div:has(> input[type='text']), div:has(> select) {
-    margin-top: 1vh;
+    margin-top: 2vh;
 }
 
 
 div:has(> ion-select) {
-    margin-top: 1vh;
+    margin-top: 2vh;
 }
 
 /*****************************************************************************/
@@ -168,12 +168,6 @@ ion-select {
     border-radius: 0 var(--border-rad) var(--border-rad) 0 !important;
     transition: var(--booking-page-input-transition);
 }
-
-
-/* ion-select::part(placeholder), */
-/* ion-select::part(text) { */
-/*     flex: 0 0 auto; */
-/* } */
 
 ion-select::part(placeholder) {
     /* font-size: 24px; */

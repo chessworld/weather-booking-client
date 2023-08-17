@@ -8,7 +8,7 @@ class UserEndpoint {
   }
 
   static async completeUserTutorial(userId: string): Promise<UserEndpointResponse> {
-    const response = ApiService.put(`/users/${userId}/`, { completed_tutorial: true })
+    const response = ApiService.patch(`/users/${userId}/`, { completed_tutorial: true })
       .then((response) => response.data)
       .catch((error) => {
         console.log(error);

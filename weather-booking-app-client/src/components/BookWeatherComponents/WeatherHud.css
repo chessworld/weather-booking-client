@@ -1,44 +1,44 @@
-@import url('https://fonts.googleapis.com/css2?family=Roboto&display=swap');
+@import url("https://fonts.googleapis.com/css2?family=Roboto&display=swap");
 
 body {
-    font-family: 'Roboto', sans-serif;
+  font-family: "Roboto", sans-serif;
 }
 
 :root {
-    --hud-border-radius: 1.5em;
-    --hud-width: 90vw;
-    --hud-height: 28vh;
-    --hud-max-width: 800px;
-    --hud-min-width: 300px;
-    --hud-max-height: 320px;
-    --hud-min-height: 200px;
-    --shadow: #fd6f21;
-    --ring: currentColor;
-    --blend1: #fc5830;
-    --blend2: #f98c24;
-    --blend-from: 0%;
-    --blend-to: 100%;
-    --blend-dir: top right;
+  --hud-border-radius: 1.5em;
+  --hud-width: 85vw;
+  --hud-height: 40vw;
+  --hud-max-width: 800px;
+  --hud-min-width: 300px;
+  --hud-max-height: 320px;
+  --hud-min-height: 200px;
+  --shadow: #fd6f21;
+  --ring: currentColor;
+  --blend1: #fc5830;
+  --blend2: #f98c24;
+  --blend-from: 0%;
+  --blend-to: 100%;
+  --blend-dir: top right;
 }
 
 .hud-container {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    position: relative !important;
-    margin: 2vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  position: relative !important;
+  margin: 2vh;
 }
 
 #weather-hud {
-    width: var(--hud-width);
-    height: var(--hud-height);
-    max-width: var(--hud-max-width);
-    max-height: var(--hud-max-height);
-    min-width: var(--hud-min-width);
-    min-height: var(--hud-min-height);
-    opacity: .9;
-    z-index: 0;
-    transition: background 1s ease-in-out;
+  width: var(--hud-width);
+  height: var(--hud-height);
+  max-width: var(--hud-max-width);
+  max-height: var(--hud-max-height);
+  min-width: var(--hud-min-width);
+  min-height: var(--hud-min-height);
+  opacity: 0.9;
+  z-index: 0;
+  transition: background 1s ease-in-out;
 }
 
 /* .rainy { */
@@ -49,139 +49,143 @@ body {
 /*     --blend-dir: bottom right; */
 /* } */
 
-
 .sunny {
-    --shadow: #fd6f21;
-    --blend1: #fc5830;
-    --blend2: #f98c24;
-    --blend-to: 65%;
+  --shadow: #fd6f21;
+  --blend1: #fc5830;
+  --blend2: #f98c24;
+  --blend-to: 65%;
 }
 
-
 .perfect {
-    --shadow: rgba(19, 120, 187, 0.9);
-    --blend1: rgba(27, 156, 226, .85);
-    --blend2: rgba(19, 120, 187, .85);
-    --shadow: rgba(201, 232, 222, .85);
-    --blend1: rgba(117, 133, 149, .85);
-    --blend2: rgba(224, 226, 229, .85);
-    --blend1: rgba(27, 156, 226, .85);
-    --blend-to: 65%;
-    --blend-to: 90%;
-    backdrop-filter: blur(5px);
+  --shadow: rgba(19, 120, 187, 0.9);
+  --blend1: rgba(27, 156, 226, 0.85);
+  --blend2: rgba(19, 120, 187, 0.85);
+  --shadow: rgba(201, 232, 222, 0.85);
+  --blend1: rgba(117, 133, 149, 0.85);
+  --blend2: rgba(224, 226, 229, 0.85);
+  --blend1: rgba(27, 156, 226, 0.85);
+  --blend-to: 65%;
+  --blend-to: 90%;
+  backdrop-filter: blur(5px);
 }
 
 .stormy {
-    --shadow: #c9e8de;
-    --blend1: #e0e2e5;
-    --blend2: #758595;
-    --blend-to: 90%;
-    --blend-dir: bottom left;
+  --shadow: #c9e8de;
+  --blend1: #9b2ddf;
+  --blend2: #2e023d;
+  --blend-to: 90%;
+  --blend-dir: bottom left;
 }
 
 .rainy {
-    --shadow: #c9e8de;
-    --blend1: #e0e2e5;
-    --blend2: rgba(117, 133, 149, .85);
-    --blend-to: 90%;
-    --blend-dir: bottom left;
+  --shadow: #c9e8de;
+  --blend1: #699deb;
+  --blend2: rgba(1, 66, 130, 0.85);
+  --blend-to: 90%;
+  --blend-dir: bottom left;
 }
 
 .hud-background {
-    border-radius: var(--hud-border-radius);
-    border: .1px solid rgba(50, 50, 50, .2);
-    box-shadow: 0 0 .5em -.3em var(--shadow);
-    background: linear-gradient( to var(--blend-dir), var(--blend1) var(--blend-from), var(--blend2) var(--blend-to));
-    transition: all 0.5s ease-in;
+  border-radius: var(--hud-border-radius);
+  box-shadow: 0 0 0.5em -0.3em var(--shadow);
+  background: linear-gradient(to var(--blend-dir), var(--blend1) var(--blend-from), var(--blend2) var(--blend-to));
+  transition: all 0.2s ease-in;
 }
 
 .hud-background::after {
-    content: attr(data-label);
-    top: calc(100% + 1vmin);
-    left: 50%;
-    transform: translateX(-50%);
-    font: inherit;
-    font-size: .15em;
+  content: attr(data-label);
+  top: calc(100% + 1vmin);
+  left: 50%;
+  transform: translateX(-50%);
+  font: inherit;
+  font-size: 0.15em;
 }
-
 
 /* Cloudy effects */
 /* --------------------- */
 /* No cloudy effects */
 
 .cloud ul {
-    display: none
+  display: none;
 }
-
 
 /* Sunny effects */
 /* --------------------- */
 /* Sunny rays */
 .sun {
-    z-index: 2;
-    border-radius: 100%;
-    transform-origin: .1em .1em;
-    background: red;
+  z-index: 2;
+  border-radius: 100%;
+  transform-origin: 0.1em 0.1em;
+  background: red;
 }
 
 @keyframes flare {
-    to {
-        transform: translate(-5em, .5em);
-        opacity: 1;
-        font-size: 30%;
-    }
+  to {
+    transform: translate(-5em, 0.5em);
+    opacity: 1;
+    font-size: 30%;
+  }
 }
 
 .sun::after {
-    content: '';
-    position: absolute;
-    font-size: 60%;
-    top: 45%;  /* Reset the top position */
-    left: 80%;  /* Make the pseudo-element start from the right edge of the original element */
-    will-change: transform;
-    transform: translate(0, -20%);  /* Adjust the vertical position */
-    width: 2em;
-    height: 2em;
-    border-radius: 100%;
-    background: rgba(255, 255, 255, .3);
-    box-shadow: -1em -1em 0 2em rgba(255, 255, 255, .15);
-    animation: flare 7000ms infinite alternate linear;
+  content: "";
+  position: absolute;
+  font-size: 60%;
+  top: 45%; /* Reset the top position */
+  left: 80%; /* Make the pseudo-element start from the right edge of the original element */
+  will-change: transform;
+  transform: translate(0, -20%); /* Adjust the vertical position */
+  width: 2em;
+  height: 2em;
+  border-radius: 100%;
+  background: rgba(255, 255, 255, 0.3);
+  box-shadow: -1em -1em 0 2em rgba(255, 255, 255, 0.15);
+  animation: flare 7000ms infinite alternate linear;
 }
 
 .sun ul {
-    display: none
+  display: none;
 }
 
 .rain ul {
-    display: none
+  display: none;
 }
-
 
 /* STORMY */
 /* --------------------- */
 /* Lightning */
 
 @keyframes flash {
-    49% {background-color: var(--shadow);}
-    51% {background-color: var(--ring);}
-    53% {background-color: var(--shadow);}
-    57% {background-color: var(--ring);}
-    85% {background-color: var(--shadow);}
+  49% {
+    background-color: var(--shadow);
+  }
+  51% {
+    background-color: var(--ring);
+  }
+  53% {
+    background-color: var(--shadow);
+  }
+  57% {
+    background-color: var(--ring);
+  }
+  85% {
+    background-color: var(--shadow);
+  }
 }
 
 .storm::before {
-    --shadow: rgba(255, 255, 255, 0);
-    content: '';
-    position: absolute;
-    top: 0;
-    left: 0;
-    right: 0;
-    bottom: 0;
-    margin: .05em;
-    border-radius: var(--hud-border-radius);
-    opacity: .125;
-    will-change: background-color;
-    animation: flash 2900ms infinite linear 80ms;
+  --shadow: rgba(255, 255, 255, 0);
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  margin: 0.05em;
+  border-radius: var(--hud-border-radius);
+  opacity: 0.125;
+  will-change: background-color;
+  animation: flash 2900ms infinite linear 80ms;
 }
 
 .storm .cloud {
@@ -195,244 +199,233 @@ body {
 }
 
 .storm ul {
-    position: absolute;
-    list-style: none;
-    top: 10%;
-    left: 10%;
-    right: 0%;
-    height: 100%;
-    margin: 0;
-    padding: 0;  
+  position: absolute;
+  list-style: none;
+  top: 10%;
+  left: 10%;
+  right: 0%;
+  height: 100%;
+  margin: 0;
+  padding: 0;
 }
 
 @keyframes rain {
-    10% {opacity: .4;}
-    50% {opacity: 1;}
-    100% {transform: translate(.02em, 3em);}
+  10% {
+    opacity: 0.4;
+  }
+  50% {
+    opacity: 1;
+  }
+  100% {
+    transform: translate(0.02em, 3em);
+  }
 }
 
 .storm li,
 .storm li::before,
 .storm li::after {
-    position: absolute;
-    width: .05em;
-    height: .2em;
-    border-radius: 10%;
-    background-color: #eee;
-    opacity: 0;
-    will-change: transform, opacity;
-    animation: rain 2000ms infinite linear;
-    transform: rotate(25deg);
+  position: absolute;
+  width: 0.05em;
+  height: 0.2em;
+  border-radius: 10%;
+  background-color: #eee;
+  opacity: 0;
+  will-change: transform, opacity;
+  animation: rain 2000ms infinite linear;
+  transform: rotate(25deg);
 }
 
 .storm li::before,
 .storm li::after {
-    content: '';
+  content: "";
 }
 
-.storm li:nth-child(5n+3)::before,
-.storm li:nth-child(11n+7)::after,
-.storm li:nth-child(2n+1) {
-    top: 10%;
-    left: 68%;
-    animation-delay: 500ms;
+.storm li:nth-child(5n + 3)::before,
+.storm li:nth-child(11n + 7)::after,
+.storm li:nth-child(2n + 1) {
+  top: 10%;
+  left: 68%;
+  animation-delay: 500ms;
 }
 
-.storm li:nth-child(3n+2)::after,
-
-.storm li:nth-child(7n+5)::after,
-
-.storm li:nth-child(3n+2) {
-    top: 5%;
-    left: 45%;
-    animation-delay: 1250ms;
+.storm li:nth-child(3n + 2)::after,
+.storm li:nth-child(7n + 5)::after,
+.storm li:nth-child(3n + 2) {
+  top: 5%;
+  left: 45%;
+  animation-delay: 1250ms;
 }
 
-.storm li:nth-child(2n+1)::before,
-.storm li:nth-child(5n+3)::after,
-.storm li:nth-child(7n+5) {
-    top: 4%;
-    left: 82%;
-    animation-delay: 750ms;
+.storm li:nth-child(2n + 1)::before,
+.storm li:nth-child(5n + 3)::after,
+.storm li:nth-child(7n + 5) {
+  top: 4%;
+  left: 82%;
+  animation-delay: 750ms;
 }
 
-.storm li:nth-child(11n+7)::before,
-.storm li:nth-child(3n+2)::after,
-.storm li:nth-child(7n+5) {
-    top: 15%;
-    left: 15%;
-    animation-delay: 2000ms;
+.storm li:nth-child(11n + 7)::before,
+.storm li:nth-child(3n + 2)::after,
+.storm li:nth-child(7n + 5) {
+  top: 15%;
+  left: 15%;
+  animation-delay: 2000ms;
 }
 
-.storm li:nth-child(7n+5)::before,
-.storm li:nth-child(2n+1)::after,
-.storm li:nth-child(11n+7) {
-    top: 10%;
-    left: 33%;
-    animation-delay: 2500ms;
+.storm li:nth-child(7n + 5)::before,
+.storm li:nth-child(2n + 1)::after,
+.storm li:nth-child(11n + 7) {
+  top: 10%;
+  left: 33%;
+  animation-delay: 2500ms;
 }
 
 .hud-contents {
-    position: relative;
-    overflow: hidden;
-    width: var(--hud-width);
-    height: var(--hud-height);
-    max-width: var(--hud-max-width);
-    max-height: var(--hud-max-height);
-    min-width: var(--hud-min-width);
-    min-height: var(--hud-min-height);
-    z-index: 2;
+  position: relative;
+  overflow: hidden;
+  width: var(--hud-width);
+  height: var(--hud-height);
+  max-width: var(--hud-max-width);
+  max-height: var(--hud-max-height);
+  min-width: var(--hud-min-width);
+  min-height: var(--hud-min-height);
+  z-index: 2;
 }
 
 /* Cool and rainy */
 /* -------------------- */
 
 @keyframes revolve {
-    to {transform: rotate(360deg);}
+  to {
+    transform: rotate(360deg);
+  }
 }
 
 .rainy::before {
-    content: '';
-    position: absolute;
-    top: 0;
-    left: -50%;
-    right: 0;
-    bottom: 0;
-    width: 200%;
-    height: 100%;
-    background-image: 
-        radial-gradient(1px 1px at 50% 20%, #fff, rgba(0,0,0,0)),
-        radial-gradient(1px 1px at 60% 40%, #fff, rgba(0,0,0,0)),
-        radial-gradient(1px 1px at 56% 35%, #fff, rgba(0,0,0,0)),
-        radial-gradient(1px 1px at 90% 80%, #fff, rgba(0,0,0,0)),
-        radial-gradient(3px 3px at 99% 99%, #fff, rgba(0,0,0,0)),
-        radial-gradient(2px 2px at 80% 87%, #fff, rgba(0,0,0,0)),
-        radial-gradient(2px 2px at 12% 5%, #fff, rgba(0,0,0,0)),
-        radial-gradient(2px 2px at 37% 35%, #fff, rgba(0,0,0,0)),
-        radial-gradient(1px 1px at 30% 65%, #fff, rgba(0,0,0,0)),
-        radial-gradient(2px 2px at 15% 05%, #fff, rgba(0,0,0,0)),
-        radial-gradient(2px 2px at 37% 35%, #fff, rgba(0,0,0,0)),
-        radial-gradient(2px 2px at 65% 47%, #fff, rgba(0,0,0,0)),
-        radial-gradient(1px 1px at 42% 29%, #fff, rgba(0,0,0,0)),
-        radial-gradient(1px 1px at 73% 56%, #fff, rgba(0,0,0,0)),
-        radial-gradient(1px 1px at 24% 19%, #fff, rgba(0,0,0,0)),
-        radial-gradient(2px 2px at 31% 47%, #fff, rgba(0,0,0,0)),
-        radial-gradient(1px 1px at 18% 39%, #fff, rgba(0,0,0,0)),
-        radial-gradient(1px 1px at 50% 20%, #fff, rgba(0,0,0,0)),
-        radial-gradient(1px 1px at 30% 65%, #fff, rgba(0,0,0,0)),
-        radial-gradient(2px 2px at 15% 05%, #fff, rgba(0,0,0,0)),
-        radial-gradient(2px 2px at 37% 35%, #fff, rgba(0,0,0,0)),
-        radial-gradient(2px 2px at 65% 47%, #fff, rgba(0,0,0,0)),
-        radial-gradient(1px 1px at 42% 29%, #fff, rgba(0,0,0,0)),
-        radial-gradient(1px 1px at 73% 56%, #fff, rgba(0,0,0,0)),
-        radial-gradient(1px 1px at 24% 19%, #fff, rgba(0,0,0,0)),
-        radial-gradient(2px 2px at 31% 47%, #fff, rgba(0,0,0,0)),
-        radial-gradient(1px 1px at 18% 39%, #fff, rgba(0,0,0,0)),
-        radial-gradient(1px 1px at 60% 80%, #fff, rgba(0,0,0,0)),
-        radial-gradient(1px 1px at 10% 90%, #fff, rgba(0,0,0,0)),
-        radial-gradient(2px 2px at 85% 10%, #fff, rgba(0,0,0,0)),
-        radial-gradient(2px 2px at 45% 75%, #fff, rgba(0,0,0,0)),
-        radial-gradient(2px 2px at 25% 60%, #fff, rgba(0,0,0,0)),
-        radial-gradient(1px 1px at 55% 30%, #fff, rgba(0,0,0,0)),
-        radial-gradient(1px 1px at 90% 70%, #fff, rgba(0,0,0,0)),
-        radial-gradient(1px 1px at 10% 50%, #fff, rgba(0,0,0,0)),
-        radial-gradient(2px 2px at 30% 20%, #fff, rgba(0,0,0,0)),
-        radial-gradient(1px 1px at 70% 40%, #fff, rgba(0,0,0,0));
-    background-repeat: repeat;
-    will-change: transform;
-    transform-origin: center center;
-    animation: revolve 80000ms linear infinite;
+  content: "";
+  position: absolute;
+  top: 0;
+  left: -50%;
+  right: 0;
+  bottom: 0;
+  width: 200%;
+  height: 100%;
+  background-image: radial-gradient(1px 1px at 50% 20%, #fff, rgba(0, 0, 0, 0)),
+    radial-gradient(1px 1px at 60% 40%, #fff, rgba(0, 0, 0, 0)),
+    radial-gradient(1px 1px at 56% 35%, #fff, rgba(0, 0, 0, 0)),
+    radial-gradient(1px 1px at 90% 80%, #fff, rgba(0, 0, 0, 0)),
+    radial-gradient(3px 3px at 99% 99%, #fff, rgba(0, 0, 0, 0)),
+    radial-gradient(2px 2px at 80% 87%, #fff, rgba(0, 0, 0, 0)),
+    radial-gradient(2px 2px at 12% 5%, #fff, rgba(0, 0, 0, 0)),
+    radial-gradient(2px 2px at 37% 35%, #fff, rgba(0, 0, 0, 0)),
+    radial-gradient(1px 1px at 30% 65%, #fff, rgba(0, 0, 0, 0)),
+    radial-gradient(2px 2px at 15% 05%, #fff, rgba(0, 0, 0, 0)),
+    radial-gradient(2px 2px at 37% 35%, #fff, rgba(0, 0, 0, 0)),
+    radial-gradient(2px 2px at 65% 47%, #fff, rgba(0, 0, 0, 0)),
+    radial-gradient(1px 1px at 42% 29%, #fff, rgba(0, 0, 0, 0)),
+    radial-gradient(1px 1px at 73% 56%, #fff, rgba(0, 0, 0, 0)),
+    radial-gradient(1px 1px at 24% 19%, #fff, rgba(0, 0, 0, 0)),
+    radial-gradient(2px 2px at 31% 47%, #fff, rgba(0, 0, 0, 0)),
+    radial-gradient(1px 1px at 18% 39%, #fff, rgba(0, 0, 0, 0)),
+    radial-gradient(1px 1px at 50% 20%, #fff, rgba(0, 0, 0, 0)),
+    radial-gradient(1px 1px at 30% 65%, #fff, rgba(0, 0, 0, 0)),
+    radial-gradient(2px 2px at 15% 05%, #fff, rgba(0, 0, 0, 0)),
+    radial-gradient(2px 2px at 37% 35%, #fff, rgba(0, 0, 0, 0)),
+    radial-gradient(2px 2px at 65% 47%, #fff, rgba(0, 0, 0, 0)),
+    radial-gradient(1px 1px at 42% 29%, #fff, rgba(0, 0, 0, 0)),
+    radial-gradient(1px 1px at 73% 56%, #fff, rgba(0, 0, 0, 0)),
+    radial-gradient(1px 1px at 24% 19%, #fff, rgba(0, 0, 0, 0)),
+    radial-gradient(2px 2px at 31% 47%, #fff, rgba(0, 0, 0, 0)),
+    radial-gradient(1px 1px at 18% 39%, #fff, rgba(0, 0, 0, 0)),
+    radial-gradient(1px 1px at 60% 80%, #fff, rgba(0, 0, 0, 0)),
+    radial-gradient(1px 1px at 10% 90%, #fff, rgba(0, 0, 0, 0)),
+    radial-gradient(2px 2px at 85% 10%, #fff, rgba(0, 0, 0, 0)),
+    radial-gradient(2px 2px at 45% 75%, #fff, rgba(0, 0, 0, 0)),
+    radial-gradient(2px 2px at 25% 60%, #fff, rgba(0, 0, 0, 0)),
+    radial-gradient(1px 1px at 55% 30%, #fff, rgba(0, 0, 0, 0)),
+    radial-gradient(1px 1px at 90% 70%, #fff, rgba(0, 0, 0, 0)),
+    radial-gradient(1px 1px at 10% 50%, #fff, rgba(0, 0, 0, 0)),
+    radial-gradient(2px 2px at 30% 20%, #fff, rgba(0, 0, 0, 0)),
+    radial-gradient(1px 1px at 70% 40%, #fff, rgba(0, 0, 0, 0));
+  background-repeat: repeat;
+  will-change: transform;
+  transform-origin: center center;
+  animation: revolve 80000ms linear infinite;
 }
 
-
 .weather-hud-grid {
-    width: var(--hud-width);
-    max-width: var(--hud-max-width);
-    min-width: var(--hud-min-width);
-    display: grid;
-    grid-template-columns: auto auto auto;
-    gap: .2em;
-    display: grid;
-    gap: 1px; /* adjust this for your gap */
-    grid-template-columns: repeat(30, 1fr);
-    grid-template-rows: repeat(30, 1fr);
-    /* border: 1px solid black; */
+  width: var(--hud-width);
+  max-width: var(--hud-max-width);
+  min-width: var(--hud-min-width);
+  display: grid;
+  grid-template-columns: auto auto auto;
+  gap: 0.2em;
+  /* background-color: #2196F3; */
+  padding: 10px;
+  /* border: 1px solid black; */
 }
 
 .item1 {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    grid-row-start: 1;
-    grid-row-end: 2;
-    grid-column-start: 4;
-    grid-column-end: 10;
-    text-align: center;
-    letter-spacing: 0.02em;
-    font-size: 1.4rem;
+  text-align: center;
+  font-size: 1.4em;
+  grid-column-start: 4;
+  letter-spacing: 0.02em;
+  grid-column-end: 6;
+  text-align: center;
+  color: #e0e0e0;
 }
 
 .item2 {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    width: 5em;
-    text-align: center;
-    letter-spacing: 0.02em;
-    font-size: 1.2em;
-    color: #fff;
-    grid-row-start: 2;
-    grid-row-end: 3;
-    grid-column-start: 4;
-    grid-column-end: 10;
-    text-align: center;
-    color: #e0e0e0;
-    font-size: 1.2rem;
+  text-align: center;
+  letter-spacing: 0.02em;
+  font-size: 1.2em;
+  width: 5em;
+  grid-column-start: 4;
+  grid-column-end: 6;
+  text-align: center;
+  color: #e0e0e0;
 }
 
 
 .item3 {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    grid-row-start: 1;
-    grid-row-end: 4;
-    grid-column-start: 15;
-    grid-column-end: 30;
-}
-
-
-.item4 {
-    display: flex;
-    grid-column-start: 1;
-    grid-column-end: 31;
-    grid-row-start: 4;
-    grid-row-end: 5;
-    justify-content: center;
-    align-items: center
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  grid-row-start: 1;
+  grid-row-end: 10;
+  grid-column-start: 7;
+  grid-column-end: 40;
+  z-index: 3;
 }
 
 .hud-icon-container {
-    display: flex;
-    justify-content: center;
-    width: 30vw;
-    object-fit: cover; /* optional: this prevents distortion */
+  display: flex;
+  justify-content: center;
+  width: 30vw;
+  object-fit: cover; /* optional: this prevents distortion */
+}
+
+.item4 {
+  grid-row-start: 0;
+  grid-row-end: 5;
+  grid-column-start: 6;
+  grid-column-end: 40;
+  z-index: 3;
+  color: #e0e0e0;
 }
 
 .hud-temperature-text {
-    background: linear-gradient(
-        250.02deg,
-        rgba(255, 255, 255, 0.91) 8.16%,
-        rgba(255, 255, 255, 0.54) 37.22%,
-        #FFFFFF 51.09%,
-        rgba(255, 255, 255, 0.46) 90.73%
-    );
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
-    background-clip: text;
-    text-fill-color: transparent;
-    font-size: 2.5em;
-    text-align: center;
-    letter-spacing: 0.03em;
+  background: linear-gradient(
+    250.02deg,
+    rgba(255, 255, 255, 0.91) 8.16%,
+    rgba(255, 255, 255, 0.54) 37.22%,
+    #ffffff 51.09%,
+    rgba(255, 255, 255, 0.46) 90.73%
+  );
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  font-size: 2.5em;
+  text-align: center;
+  letter-spacing: 0.03em;
 }
-

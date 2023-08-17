@@ -55,9 +55,9 @@ class BookingPageDateLocation extends Component<BookingPageDateLocationProps, Bo
                 toastMessage: ''
             },
             bookingDetails: {
-                location: 'Melbourne',
-                dateTime: '12-12-2024',
-                name: 'Graduation',
+                location: null,
+                dateTime: null,
+                name: null,
                 timePeriod: null
             }
         }
@@ -215,16 +215,10 @@ class BookingPageDateLocation extends Component<BookingPageDateLocationProps, Bo
     }
 
     updateBooking(payload: any, action: 'name' | 'location' | 'dateTime' | 'timePeriod') {
-
         if (action == 'dateTime') {
-            var display = format(
-                parseISO(payload),
-                'MMM d, yyyy'
-            );
-
             payload = format(
                 parseISO(payload),
-                'dd-MM-yyyy'
+                'yyyy-MM-dd'
             );
         }
 
@@ -394,6 +388,7 @@ class BookingPageDateLocation extends Component<BookingPageDateLocationProps, Bo
 
                                 <div className="calendar-only-container">
                                     <IonDatetime
+                                        presentation="date"
                                         ref={this.calendarRef}
                                         className="react-calendar"
                                         onIonChange={(e) => {

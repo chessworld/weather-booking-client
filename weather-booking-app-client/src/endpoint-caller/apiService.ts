@@ -19,8 +19,12 @@ export default class ApiService {
     return this.api.put(resource, data, config);
   }
 
+  public static patch(resource: string, data?: any, config?: AxiosRequestConfig): Promise<AxiosResponse> {
+    return this.api.patch(resource, data, config);
+  }
+
   public static post(resource: string, data?: any, config?: AxiosRequestConfig): Promise<AxiosResponse> {
-    return this.api.post(resource, data, config);
+      return this.api.post(resource, data, config);
   }
 
   public static delete(resource: string): Promise<AxiosResponse> {
