@@ -1,13 +1,15 @@
 import { Component, createRef, RefObject } from "react";
 import { format, parseISO } from "date-fns";
-import { IonToast, IonPage, IonDatetime, IonIcon } from "@ionic/react";
+import { IonSelectOption, IonText, IonToast, IonSelect, IonPage, IonDatetime, IonIcon } from "@ionic/react";
 import { isBookingDetails } from "./Interface/BookingPageState";
 import { withRouter, RouteComponentProps } from "react-router-dom";
-import { compassOutline, timeOutline, bagOutline } from "ionicons/icons";
+import { calendarOutline, compassOutline, timeOutline, bagOutline } from "ionicons/icons";
 import { BookingDetails } from "./Interface/BookingPageState";
 import Background from "../../components/ScreenComponents/Background";
 import BookingPageDateLocationProps from "./Interface/BookingPageDateLocationProps";
 import BookingPageDateLocationState from "./Interface/BookingPageDateLocationState";
+import DeviceManager from "../../device/DeviceManager";
+import UserEndpoint from "../../endpoint-caller/userEndpoint";
 import SlideUpPanel from "../../components/SlideUpPanel/SlideUpPanel";
 
 import "react-calendar/dist/Calendar.css";
@@ -28,11 +30,13 @@ class BookingPageDateLocation extends Component<BookingPageDateLocationProps, Bo
         name: "booking-page-name-input",
         dateTime: "booking-page-date-time-input",
         location: "booking-page-location-input",
+        timePeriod: "booking-page-time-period-input",
       },
       bookingPageInputIconIds: {
         name: "booking-page-name-input-icon",
         dateTime: "booking-page-date-time-input-icon",
         location: "booking-page-location-input-icon",
+        timePeriod: "booking-page-time-period-input-icon",
       },
       showCalendar: false,
       toast: {
@@ -41,10 +45,10 @@ class BookingPageDateLocation extends Component<BookingPageDateLocationProps, Bo
         toastMessage: "",
       },
       bookingDetails: {
-        location: "Melbourne",
-        dateTime: "2023-12-12",
-        name: "Graduation",
-        timePeriod: "Morning", //TODO make frontend have this input
+        location: null,
+        dateTime: null,
+        name: null,
+        timePeriod: null,
       },
     };
 
@@ -57,12 +61,20 @@ class BookingPageDateLocation extends Component<BookingPageDateLocationProps, Bo
     prevState: Readonly<BookingPageDateLocationState>,
     snapshot?: any
   ): void {
+    /* if (process.env.REACT_APP_ENVIRONMENT  === 'development') { */
+
     console.table(this.props.location.state);
-    for (const key in prevState) {
-      if ((prevState as any)[key] !== (this.state as any)[key]) {
-        console.log("changed property:", key, "from", (prevState as any)[key], "to", (this.state as any)[key]);
+    if (true) {
+      for (const key in prevState) {
+        if ((prevState as any)[key] !== (this.state as any)[key]) {
+          console.log("changed property:", key, "from", (prevState as any)[key], "to", (this.state as any)[key]);
+        }
       }
     }
+  }
+
+  componentDidMount() {
+    this.verifyDeviceId();
   }
 
   toggleShowCalendar(): void {
@@ -147,6 +159,42 @@ class BookingPageDateLocation extends Component<BookingPageDateLocationProps, Bo
     }
   }
 
+  verifyDeviceId() {
+    /**
+     * Not Sure which page this should be on. It is for verifying device id
+     */
+
+    DeviceManager.getOrCreateDeviceId()
+      .then((deviceId) => {
+        UserEndpoint.getUser(deviceId)
+          .then((user) => {
+            // User Already exists
+            this.showToast(`Welcome back ${user.id}!`);
+            console.log(`Welcome back ${user.id}!`);
+            if (!user.completed_tutorial) {
+              // If user exists but hasn't completed tutorial
+              this.props.history.push("/OnboardingPage");
+            }
+          })
+          .catch((error) => {
+            console.error(error);
+          });
+      })
+      .catch((error) => {
+        console.error(error);
+        UserEndpoint.createUser("New User", false) //TODO: CHANGE THIS FROM HARDCODED
+          .then((user) => {
+            // If user doesn't exist
+            DeviceManager.updateDeviceId(user.id);
+            this.showToast(`Created user ${user.id}`);
+            this.props.history.push("/OnboardingPage");
+          })
+          .catch((error) => {
+            console.error(error);
+          });
+      });
+  }
+
   showToast(message: string): void {
     this.setState({
       ...this.state,
@@ -174,10 +222,8 @@ class BookingPageDateLocation extends Component<BookingPageDateLocationProps, Bo
     this.calendarRef.current.value = currentDate.toISOString(); // convert back to ISO string and set as value
   }
 
-  updateBooking(payload: any, action: "name" | "location" | "dateTime") {
+  updateBooking(payload: any, action: "name" | "location" | "dateTime" | "timePeriod") {
     if (action == "dateTime") {
-      var display = format(parseISO(payload), "MMM d, yyyy");
-
       payload = format(parseISO(payload), "yyyy-MM-dd");
     }
 
@@ -206,9 +252,9 @@ class BookingPageDateLocation extends Component<BookingPageDateLocationProps, Bo
             ...this.state,
             bookingDetails: {
               ...this.state.bookingDetails,
-              dateTime: "",
-              location: "",
-              name: "",
+              dateTime: null,
+              location: null,
+              name: null,
             },
           });
         }
@@ -271,10 +317,29 @@ class BookingPageDateLocation extends Component<BookingPageDateLocationProps, Bo
                   placeholder="Where"
                 />
               </div>
+              <div className="button-with-icon">
+                <div id="booking-page-time-period-input-icon" className="icon-with-outline">
+                  <IonIcon className="button-icons" icon={timeOutline} />
+                </div>
+                <IonSelect
+                  id="booking-page-time-period-input"
+                  placeholder="Time Period"
+                  onIonChange={(e) => this.updateBooking(e.target.value, "timePeriod")}
+                  interfaceOptions={{ csdsad: "time-period-select" }}
+                >
+                  <div slot="label">
+                    Favorite Fruit <IonText color="danger">(Required)</IonText>
+                  </div>
+                  <IonSelectOption value="Morning">Morning</IonSelectOption>
+                  <IonSelectOption value="Afternoon">Afternoon</IonSelectOption>
+                  <IonSelectOption value="Evening">Evening</IonSelectOption>
+                  <IonSelectOption value="Night">Night</IonSelectOption>
+                </IonSelect>
+              </div>
               <div className="calendar-container">
                 <div className="button-with-icon">
                   <div id="booking-page-date-time-input-icon" className="icon-with-outline">
-                    <IonIcon className="button-icons" icon={timeOutline} />
+                    <IonIcon className="button-icons" icon={calendarOutline} />
                   </div>
                   <input
                     onTouchEnd={() => this.toggleShowCalendar()}
@@ -287,8 +352,23 @@ class BookingPageDateLocation extends Component<BookingPageDateLocationProps, Bo
                   />
                 </div>
               </div>
+              <div className="book-buttons-container">
+                <div className="book-button">Cancel</div>
+                <div
+                  className="book-button"
+                  onTouchEnd={() => {
+                    if (this.validateInput()) {
+                      this.props.history.push({
+                        pathname: "/bookingPage",
+                        state: this.resetInputFields(),
+                      });
+                    }
+                  }}
+                >
+                  Next
+                </div>
+              </div>
             </div>
-
             {
               <SlideUpPanel showPanel={this.state.showCalendar}>
                 <div
@@ -304,12 +384,15 @@ class BookingPageDateLocation extends Component<BookingPageDateLocationProps, Bo
 
                 <div className="calendar-only-container">
                   <IonDatetime
+                    presentation="date"
                     ref={this.calendarRef}
                     className="react-calendar"
                     onIonChange={(e) => {
                       typeof e.detail.value == "string" && this.updateBooking(e.detail.value, "dateTime");
                     }}
-                  ></IonDatetime>
+                  >
+                    Night
+                  </IonDatetime>
                 </div>
                 <div className="small-day-button-container">
                   <div className="button-small" onTouchEnd={() => this.changeCalendarSelectedDate("today")}>
@@ -329,26 +412,11 @@ class BookingPageDateLocation extends Component<BookingPageDateLocationProps, Bo
                   </div>
                 </div>
 
-                <div className="book-button" onTouchEnd={() => this.toggleShowCalendar()}>
+                <div className="book-button" style={{ marginTop: "10px" }} onTouchEnd={() => this.toggleShowCalendar()}>
                   Select Dates
                 </div>
               </SlideUpPanel>
             }
-          </div>
-          <div className="book-buttons-container">
-            <div
-              className="book-button"
-              onTouchEnd={() => {
-                if (this.validateInput()) {
-                  this.props.history.push({
-                    pathname: "/bookingPage",
-                    state: this.resetInputFields(),
-                  });
-                }
-              }}
-            >
-              Next
-            </div>
           </div>
         </Background>
       </IonPage>

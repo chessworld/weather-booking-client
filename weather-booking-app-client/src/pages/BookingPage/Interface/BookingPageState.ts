@@ -7,7 +7,7 @@ type BookingDetails = {
   dateTime: string | null;
   location: string | null;
   name: string | null;
-  timePeriod: TimePeriod;
+  timePeriod: TimePeriod | null;
 };
 
 interface BookingPageState {

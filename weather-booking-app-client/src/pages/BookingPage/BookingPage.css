@@ -152,16 +152,6 @@
   width: 78vw;
 }
 
-ion-select {
-  background: rgba(100, 100, 100, 0.15);
-  padding: 0px 7px;
-  height: 1.5vh;
-  border-radius: 4px;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-}
-
 .selector-container {
   width: 80vw;
 }
@@ -224,4 +214,8 @@ ion-range {
 
 .booking-detail-container {
   background: rgba(255, 255, 255, 0.5);
+}
+
+.back-button {
+    align-self: flex-start;
 }

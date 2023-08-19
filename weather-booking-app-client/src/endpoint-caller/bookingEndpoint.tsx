@@ -2,6 +2,7 @@ import ApiService from "./apiService";
 import { BookingResponse } from "./interfaces/bookings/BookingResponse";
 import { WeatherOption } from "./interfaces/bookings/WeatherOption";
 import { Location } from "./interfaces/locations/Location";
+import { TimePeriod } from "./interfaces/enums/TimePeriod";
 
 export default class BookingEndpoint {
   static async getBookingList(userId: string): Promise<BookingResponse[]> {
@@ -18,7 +19,7 @@ export default class BookingEndpoint {
     userId: string,
     location: number,
     date: string,
-    timePeriod: string,
+    timePeriod: TimePeriod,
     weatherOption: WeatherOption
   ) => {
     const body = {
@@ -27,6 +28,8 @@ export default class BookingEndpoint {
       time_period: timePeriod,
       weather_option: weatherOption,
     };
+
+    console.log(JSON.stringify(body));
     ApiService.post(`/bookings/user/${userId}/`, { ...body });
   };
 }
