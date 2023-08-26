@@ -2,79 +2,158 @@ import { Preferences } from "@capacitor/preferences";
 import UserEndpoint from "../endpoint-caller/userEndpoint";
 
 interface IDeviceManager {
-  deviceId: string | Promise<string>;
+    deviceUserId: string;
 }
 
+/**
+ * Singleton class responsible for device management tasks such as 
+ * retrieving and updating the device's user ID, checking if the user has completed a tutorial, and more.
+ */
 class DeviceManager implements IDeviceManager {
-  private static instance: DeviceManager;
-  deviceId: string | Promise<string>;
+    private static instance: DeviceManager;
+    deviceUserId: string;
+    userCompletedTutorial: boolean | undefined;
 
-  private constructor() {
-    // Prevent direct object creation
-    this.deviceId = DeviceManager.getOrCreateDeviceId();
-  }
-
-  static getInstance(): DeviceManager {
-    if (!DeviceManager.instance) {
-      DeviceManager.instance = new DeviceManager();
-      DeviceManager.instance.deviceId = DeviceManager.getOrCreateDeviceId();
-    }
-    return DeviceManager.instance;
-  }
-
-  getDeviceId() {
-    return this.deviceId;
-  }
-
-  static async updateDeviceId(newDeviceId?: string) {
-    await Preferences.set({
-      key: "deviceId",
-      value: newDeviceId ?? "",
-    });
-  }
-
-  static async getOrCreateDeviceId(): Promise<string> {
-    // Attempt to get existing deviceId
-    const existingDeviceId = await Preferences.get({ key: "deviceId" });
-
-    if (existingDeviceId.value) {
-      // User Already exists
-      return existingDeviceId.value;
+    /**
+      * Private constructor ensures the singleton nature of the class.
+      */
+    private constructor() {
+        this.deviceUserId = '';
     }
 
-    // If no device id create a new user
-    UserEndpoint.createUser("New User", false) //TODO: CHANGE THIS FROM HARDCODED
-      .then((user) => {
-        // If user doesn't exist
-        this.updateDeviceId(user.id);
-        return user.id;
-      })
-      .catch((error) => {
-        console.error(error);
-      });
+    /**
+     * Initializes the DeviceManager by setting the device user ID.
+     * Throws an error if unable to initialize the user ID.
+     */
+    private async initialize(): Promise<void> {
+        this.deviceUserId = await this.getDeviceId() ?? await this.createDeviceId();
 
-    throw new Error("DeviceId not found");
-  }
+        if (!this.deviceUserId) {
+            throw new Error('Unable to initialize deviceUserId');
+        }
+        console.log('Device ID: ', this.deviceUserId);
+    }
 
-  static async checkUserCompletedTutorial(): Promise<boolean> {
-    this.getOrCreateDeviceId().then((deviceId: string) => {
-      UserEndpoint.getUser(deviceId)
-        .then((user) => {
-          // User Already exists
-          if (!user.completed_tutorial) {
-            // If user exists but hasn't completed tutorial
-            return false;
-          }
+    /**
+     * Returns an instance of DeviceManager. If it doesn't exist, it creates one.
+     * 
+     * @returns {Promise<DeviceManager>} The instance of the DeviceManager.
+     */
+    static async getInstance(): Promise<DeviceManager> {
+        if (!DeviceManager.instance) {
+            DeviceManager.instance = new DeviceManager();
+            await DeviceManager.instance.initialize();
+        }
 
-          return true;
-        })
-        .catch((error) => {
-          console.error(error);
+        return DeviceManager.instance;
+    }
+
+    /**
+     * Updates the device's user ID in the preferences.
+     * 
+     * @param {string} userId - The user ID to be set.
+     * @throws {Error} If the provided userId is invalid.
+     */
+    async updateDeviceId(userId: string): Promise<void> {
+        if (!userId) {
+            throw new Error('Invalid userId provided to updateDeviceId');
+        }
+        await Preferences.set({
+            key: "deviceId",
+            value: userId,
         });
-    });
+    }
 
-    return true;
-  }
+    /**
+     * Retrieves the device's user ID.
+     * 
+     * @returns {Promise<string | void>} The device's user ID or void if it doesn't exist.
+     */
+    async getDeviceId(): Promise<string | void> {
+
+        if (this.deviceUserId) {
+            return this.deviceUserId;
+        }
+
+        const deviceId = await Preferences.get({ key: "deviceId" });
+
+        if (deviceId.value && await this.checkDeviceUserIdExistOnServerAsUserId(deviceId.value)) {
+            return deviceId.value;
+        }
+    }
+
+    /**
+      * Creates a new device user ID by calling the UserEndpoint.
+      * 
+      * @returns {Promise<string>} The newly created device's user ID.
+      * @throws {Error} If unable to create a new device ID.
+      */
+    async createDeviceId(): Promise<string> {
+        const username = "New User";
+        const user = await UserEndpoint.createUser(username, false);
+
+        if (user.id) {
+            await this.updateDeviceId(user.id);
+            return user.id;
+        }
+
+        throw new Error('Failed to create a new device ID');
+    }
+
+    /**
+     * Checks if the given device ID exists on the server.
+     * Note: Currently always returns true (based on provided code).
+     * 
+     * @param {string} deviceId - The device ID to check.
+     * @returns {Promise<boolean>} True if the device ID exists, false otherwise.
+     */
+    private async checkDeviceUserIdExistOnServerAsUserId(deviceId: string): Promise<boolean> {
+        if (!deviceId) {
+            return false;
+        }
+
+        return true;
+
+        /* try {
+*     await UserEndpoint.getUser(deviceId);
+*     return true;
+* } catch (userError) {
+*     return false;
+* } */
+    }
+
+
+    /**
+     * Attempts to mark the user as having completed the tutorial.
+     * 
+     * @returns {Promise<boolean>} True if the tutorial completion was recorded successfully, false otherwise.
+     */
+    async setUserCompletedTutorial(): Promise<boolean> {
+        try {
+            const response = await UserEndpoint.completeUserTutorial(this.deviceUserId);
+            this.userCompletedTutorial = response.completed_tutorial;
+            return true;
+        } catch (error) {
+            console.error(error);
+            return false;
+        }
+    }
+
+    /**
+     * Checks if the user has completed the tutorial.
+     * 
+     * @returns {Promise<boolean>} True if the user has completed the tutorial, false otherwise.
+     * @throws {Error} If there's a failure in checking the tutorial status.
+     */
+    async checkUserCompletedTutorial(): Promise<boolean> {
+        try {
+            const user = await UserEndpoint.getUser(this.deviceUserId);
+            return user.completed_tutorial;
+        } catch (error) {
+            console.error(error);
+            throw new Error('Failed to check if user completed tutorial');
+        }
+    }
 }
 
 export default DeviceManager;

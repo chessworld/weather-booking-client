@@ -1,12 +1,12 @@
-interface OnboardingPageState {
+interface IOnboardingPageState {
     currentPageNumber: number,
     currentPage?: any,
-    pages: React.ReactElement[],
+    slides: React.ReactElement[],
     lastTouchMousePositionX?: number,
     hasMovedPagesThisTouch: boolean
 };
 
 
-export default OnboardingPageState;
+export default IOnboardingPageState;
 
 

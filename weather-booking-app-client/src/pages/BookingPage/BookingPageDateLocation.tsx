@@ -9,7 +9,6 @@ import {
     IonDatetime,
     IonIcon
 } from '@ionic/react';
-import { isBookingDetails } from "./Interface/BookingPageState";
 import { withRouter, RouteComponentProps } from 'react-router-dom';
 import { calendarOutline, compassOutline, timeOutline, bagOutline } from "ionicons/icons";
 import { BookingDetails } from './Interface/BookingPageState';
@@ -17,7 +16,6 @@ import Background from '../../components/ScreenComponents/Background';
 import BookingPageDateLocationProps from "./Interface/BookingPageDateLocationProps";
 import BookingPageDateLocationState from "./Interface/BookingPageDateLocationState";
 import DeviceManager from "../../device/DeviceManager";
-import UserEndpoint from "../../endpoint-caller/userEndpoint";
 import SlideUpPanel from '../../components/SlideUpPanel/SlideUpPanel';
 
 import 'react-calendar/dist/Calendar.css';
@@ -28,12 +26,11 @@ import "./BookingPage.css"
 class BookingPageDateLocation extends Component<BookingPageDateLocationProps, BookingPageDateLocationState> {
     panelRef: RefObject<any>;
     calendarRef: RefObject<any>;
+    deviceManager: DeviceManager | undefined;
 
 
     constructor(props: BookingPageDateLocationProps) {
         super(props);
-
-        let redirectPassInBookingDetails = false;
 
         this.state = {
             bookingPageInputIds: {
@@ -68,20 +65,21 @@ class BookingPageDateLocation extends Component<BookingPageDateLocationProps, Bo
     }
 
     componentDidUpdate(prevProps: Readonly<BookingPageDateLocationProps>, prevState: Readonly<BookingPageDateLocationState>, snapshot?: any): void {
-        /* if (process.env.REACT_APP_ENVIRONMENT  === 'development') { */
-
-        console.table(this.props.location.state);
-        if (true) {
-            for (const key in prevState) {
-                if ((prevState as any)[key] !== (this.state as any)[key]) {
-                    console.log('changed property:', key, 'from', (prevState as any)[key], 'to', (this.state as any)[key]);
-                }
+        for (const key in prevState) {
+            if ((prevState as any)[key] !== (this.state as any)[key]) {
+                console.log('changed property:', key, 'from', (prevState as any)[key], 'to', (this.state as any)[key]);
             }
         }
     }
 
-    componentDidMount() {
-        this.verifyDeviceId();
+    async componentDidMount() {
+        /* this.deviceManager = await DeviceManager.getInstance(); */
+
+        /* this.deviceManager.checkUserCompletedTutorial().then((completed) => {
+*     if (!completed) {
+*         this.props.history.push('/onBoardingPage');
+*     }
+* }); */
     }
 
     toggleShowCalendar(): void {
@@ -116,7 +114,7 @@ class BookingPageDateLocation extends Component<BookingPageDateLocationProps, Bo
             const [key, value] = item;
 
             if (value === '' || value === null) {
-                inputIsValid = false;
+              inputIsValid = false;
                 this.changeInputBorderValidStyle(inputIsValid, key);
                 var error = `The ${key} field is empty.`
                 this.showToast(error);
@@ -153,39 +151,6 @@ class BookingPageDateLocation extends Component<BookingPageDateLocationProps, Bo
         }
     }
 
-    verifyDeviceId() {
-        /**
-         * Not Sure which page this should be on. It is for verifying device id
-         */
-
-        DeviceManager.getOrCreateDeviceId().then((deviceId) => {
-            UserEndpoint.getUser(deviceId)
-                .then((user) => {
-                    // User Already exists
-                    this.showToast(`Welcome back ${user.id}!`);
-                    console.log(`Welcome back ${user.id}!`);
-                    if (!user.completed_tutorial) {
-                        // If user exists but hasn't completed tutorial
-                        this.props.history.push("/OnboardingPage");
-                    }
-                })
-                .catch((error) => {
-                    console.error(error);
-                });
-        }).catch((error) => {
-            console.error(error);
-            UserEndpoint.createUser("New User", false) //TODO: CHANGE THIS FROM HARDCODED
-                .then((user) => {
-                    // If user doesn't exist
-                    DeviceManager.updateDeviceId(user.id);
-                    this.showToast(`Created user ${user.id}`);
-                    this.props.history.push("/OnboardingPage");
-                })
-                .catch((error) => {
-                    console.error(error);
-                });
-        });
-    }
 
     showToast(message: string): void {
         this.setState({
