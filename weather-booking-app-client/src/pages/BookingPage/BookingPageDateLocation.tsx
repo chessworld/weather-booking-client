@@ -11,6 +11,7 @@ import BookingPageDateLocationState from "./Interface/BookingPageDateLocationSta
 import DeviceManager from "../../device/DeviceManager";
 import UserEndpoint from "../../endpoint-caller/userEndpoint";
 import SlideUpPanel from "../../components/SlideUpPanel/SlideUpPanel";
+import { AppContext, AppContextInterface } from "../../stores/app-context";
 
 import "react-calendar/dist/Calendar.css";
 import "./BookingPageDateLocation.css";
@@ -19,6 +20,7 @@ import "./BookingPage.css";
 class BookingPageDateLocation extends Component<BookingPageDateLocationProps, BookingPageDateLocationState> {
   panelRef: RefObject<any>;
   calendarRef: RefObject<any>;
+  static contextType = AppContext;
 
   constructor(props: BookingPageDateLocationProps) {
     super(props);
@@ -74,7 +76,12 @@ class BookingPageDateLocation extends Component<BookingPageDateLocationProps, Bo
   }
 
   componentDidMount() {
-    this.verifyDeviceId();
+    const appCtx = this.context as AppContextInterface;
+    console.log(appCtx.userId);
+
+    if (!appCtx.completedTutorial) {
+      this.props.history.push("/OnboardingPage");
+    }
   }
 
   toggleShowCalendar(): void {
@@ -157,42 +164,6 @@ class BookingPageDateLocation extends Component<BookingPageDateLocationProps, Bo
     if (element) {
       element.style.border = "None";
     }
-  }
-
-  verifyDeviceId() {
-    /**
-     * Not Sure which page this should be on. It is for verifying device id
-     */
-
-    DeviceManager.getOrCreateDeviceId()
-      .then((deviceId) => {
-        UserEndpoint.getUser(deviceId)
-          .then((user) => {
-            // User Already exists
-            this.showToast(`Welcome back ${user.id}!`);
-            console.log(`Welcome back ${user.id}!`);
-            if (!user.completed_tutorial) {
-              // If user exists but hasn't completed tutorial
-              this.props.history.push("/OnboardingPage");
-            }
-          })
-          .catch((error) => {
-            console.error(error);
-          });
-      })
-      .catch((error) => {
-        console.error(error);
-        UserEndpoint.createUser("New User", false) //TODO: CHANGE THIS FROM HARDCODED
-          .then((user) => {
-            // If user doesn't exist
-            DeviceManager.updateDeviceId(user.id);
-            this.showToast(`Created user ${user.id}`);
-            this.props.history.push("/OnboardingPage");
-          })
-          .catch((error) => {
-            console.error(error);
-          });
-      });
   }
 
   showToast(message: string): void {

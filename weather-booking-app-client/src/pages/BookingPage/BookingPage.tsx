@@ -118,6 +118,7 @@ class BookingPage extends Component<BookingPageProps, BookingPageState> {
       this.showToast("Please select all options");
       return;
     }
+    console.log(appCtx.userId);
 
     BookingEndpoint.createBooking(
       appCtx.userId,

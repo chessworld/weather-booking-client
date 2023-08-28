@@ -7,7 +7,7 @@ export default class ApiService {
 
   public static initialise() {
     this.api = axios.create({
-      baseURL: "http://127.0.0.1:8000/weather_api",
+      baseURL: "http://170.64.139.37/weather_api/",
     });
   }
 
@@ -24,7 +24,7 @@ export default class ApiService {
   }
 
   public static post(resource: string, data?: any, config?: AxiosRequestConfig): Promise<AxiosResponse> {
-      return this.api.post(resource, data, config);
+    return this.api.post(resource, data, config);
   }
 
   public static delete(resource: string): Promise<AxiosResponse> {
