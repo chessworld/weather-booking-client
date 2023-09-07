@@ -25,8 +25,6 @@ export const AppContextProvider: React.FC<IAppContextProvider> = (props) => {
   const history = useHistory(); // Use the useHistory hook to get the history object
 
   const checkCompletedTutorial = async (): Promise<void> => {
-    let completed;
-
     if (deviceManager) {
       const completed = await deviceManager!.checkUserCompletedTutorial();
 
