@@ -3,8 +3,12 @@ import { UserEndpointResponse } from "./interfaces/users/UserEndpointResponse";
 
 class UserEndpoint {
   static async getUser(userId: string): Promise<UserEndpointResponse> {
-    const userData = await ApiService.get(`/users/${userId}`).then((response) => response.data);
-    return userData;
+    if (userId) {
+      const userData = await ApiService.get(`/users/${userId}`).then((response) => response.data);
+      return userData;
+    }
+
+    throw Error(`Invalid userId of type ${typeof userId}`);
   }
 
   static async completeUserTutorial(userId: string): Promise<UserEndpointResponse> {

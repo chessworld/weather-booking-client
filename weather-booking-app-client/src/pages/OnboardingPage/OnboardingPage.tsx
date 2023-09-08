@@ -1,7 +1,8 @@
 import React from 'react';
 import { Component } from 'react';
 import { withRouter, RouteComponentProps } from 'react-router-dom';
-import OnboardingPageState from "./Interface/OnboardingPageState";
+import IOnboardPageState from "./Interface/IOnboardingPageState";
+import SyntheticEvent from "./Interface/SyntheticEvent";
 import Background from '../../components/ScreenComponents/Background';
 import { IonPage } from '@ionic/react';
 import './OnboardingPage.css';
@@ -14,43 +15,19 @@ import BookButton from '../../assets/Icons/onboarding-book-button.png';
 import Cup from '../../assets/Icons/Cup.png';
 import Weather from '../../assets/Icons/sun_cloud_rain.png';
 
-import UserEndpoint from "../../endpoint-caller/userEndpoint";
-import DeviceManager from "../../device/DeviceManager";
+import { AppContext, AppContextInterface } from "../../stores/app-context";
 
-interface EventTarget {
-    style: {
-        [category: string]: string;
-    };
-}
+class OnboardingPage extends Component<RouteComponentProps, IOnboardPageState> {
+    static contextType = AppContext;
 
-interface SyntheticEvent {
-    bubbles: boolean;
-    cancelable: boolean;
-    currentTarget: EventTarget;
-    defaultPrevented: boolean;
-    eventPhase: number;
-    isTrusted: boolean;
-    nativeEvent: Event;
-    preventDefault(): void;
-    stopPropagation(): void;
-    target: EventTarget;
-    timeStamp: Date;
-    touches: any[];
-    type: string;
-}
-
-
-class OnboardingPage extends Component<RouteComponentProps, OnboardingPageState> {
     constructor(props: RouteComponentProps) {
         super(props);
-
-        //use usestring from react spring to animate the pages
 
         this.state = {
             currentPageNumber: 0,
             currentPage: React.createRef(),
             hasMovedPagesThisTouch: false,
-            pages: [
+            slides: [
                 (
                     <>
                         <div className="onboarding-page-image-container">
@@ -98,7 +75,7 @@ class OnboardingPage extends Component<RouteComponentProps, OnboardingPageState>
                         </div>
                         <div className="onboarding-page-text">
                             <div className="onboarding-page-button" onTouchEnd={
-                                () => this.completeTutorial()
+                                () => this.setUserCompletedTutorial()
                             }>
                                 Book Now
                             </div>
@@ -113,13 +90,13 @@ class OnboardingPage extends Component<RouteComponentProps, OnboardingPageState>
         this.startHandleScroll = this.startHandleScroll.bind(this);
     }
 
-    completeTutorial() {
-        DeviceManager.getOrCreateDeviceId().then(deviceId => {
-            const completedTutorial = true;
-            UserEndpoint.completeUserTutorial(deviceId).then(() => {
-                this.props.history.push("/bookingPageDateLocation");
-            });
-        });
+    setUserCompletedTutorial() {
+        const { deviceManager } = this.context as AppContextInterface;
+        if (deviceManager) {
+          deviceManager.setUserCompletedTutorial();
+        }
+
+        this.props.history.push("/");
     }
 
     startHandleScroll(e: any) {
@@ -147,12 +124,10 @@ class OnboardingPage extends Component<RouteComponentProps, OnboardingPageState>
         }
     };
 
-    setCurrentSlidePosition(): void {
-    }
-
     stopHandleScroll(): void {
         // @ts-ignore
         window.removeEventListener('touchmove', this.handleScroll);
+
         this.setState({
             ...this.state,
             lastTouchMousePositionX: undefined,
@@ -166,25 +141,20 @@ class OnboardingPage extends Component<RouteComponentProps, OnboardingPageState>
         this.setState(prev => {
             return {
                 ...prev,
-                currentPageNumber: (prev.currentPageNumber + 1) % this.state.pages.length,
+                currentPageNumber: (prev.currentPageNumber + 1) % this.state.slides.length,
                 hasMovedPagesThisTouch: true,
                 lastTouchMousePositionX: undefined
             }
         });
     }
 
-    componentDidUpdate(): void {
-        /* console.log(this.state.currentPage);
-        * console.log(this.state.lastTouchMousePositionX); */
-    }
-
     moveToPrevPage(): void {
         this.setState(prev => {
             return {
                 ...prev,
-                currentPageNumber: (prev.currentPageNumber - 1) % this.state.pages.length < 0
-                    ? this.state.pages.length - 1
-                    : (prev.currentPageNumber - 1) % this.state.pages.length,
+                currentPageNumber: (prev.currentPageNumber - 1) % this.state.slides.length < 0
+                    ? this.state.slides.length - 1
+                    : (prev.currentPageNumber - 1) % this.state.slides.length,
                 hasMovedPagesThisTouch: true,
                 lastTouchMousePositionX: undefined
             }
@@ -197,7 +167,7 @@ class OnboardingPage extends Component<RouteComponentProps, OnboardingPageState>
                 <Background>
                     <div className="carousel"> <div className="onboarding-page-container">
                         {
-                            this.state.pages.map((page, index) => {
+                            this.state.slides.map((page, index) => {
                                 if (this.state.currentPageNumber === index) {
                                     return (
                                         <div
@@ -219,7 +189,7 @@ class OnboardingPage extends Component<RouteComponentProps, OnboardingPageState>
                         {/* Page indicators */}
                         <div className="page-indicator-container">
                             {
-                                this.state.pages.map((page, i) => {
+                                this.state.slides.map((page, i) => {
                                     i == this.state.currentPageNumber ?
                                         page = (<div key={i} className="page-indiator page-indicator-active"></div>)
                                         :

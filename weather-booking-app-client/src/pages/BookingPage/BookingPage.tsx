@@ -127,7 +127,7 @@ class BookingPage extends Component<BookingPageProps, BookingPageState> {
         );
       }) + 1,
       this.state.bookingDetails.dateTime ?? "",
-      this.state.bookingDetails.timePeriod!,
+      this.state.bookingDetails.timePeriod ?? "",
       {
         weather: this.state.selectedWeatherOption,
         wind: this.state.selectedWindOption,
