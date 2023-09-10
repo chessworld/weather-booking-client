@@ -85,6 +85,12 @@ const BookingDetails: React.FC<BookingDetailsProps> = (props) => {
           <h1 className="booking-details-title"> Feedback</h1>
           <IonCard className="booking-details-card">
             <IonCardContent>
+              {props.bookingDetails.result === "Failed" && (
+                <p className="apology-text">
+                  Sorry we couldn't fulfill your request!
+                  <br /> We will try to do better next time. Please give us your feedback.
+                </p>
+              )}
               <IonCard className="enjoy-weather-card feedback-card" id="feedback-card">
                 <IonCardTitle className="feedback-title">Did you enjoy your weather?</IonCardTitle>
                 <div className="thumb-group">
