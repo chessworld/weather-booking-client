@@ -1,4 +1,4 @@
-import { useContext, useState } from "react";
+import { useContext, useEffect, useRef, useState } from "react";
 import "./BookingDetails.css";
 import {
   IonButton,
@@ -9,13 +9,30 @@ import {
   IonIcon,
   IonImg,
   IonTitle,
+  IonModal,
+  IonHeader,
+  IonToolbar,
+  IonButtons,
 } from "@ionic/react";
 import { chevronBackOutline, arrowForwardOutline, thumbsDownSharp, thumbsUpSharp } from "ionicons/icons";
 import WeatherImageMapper from "../../utility/WeatherImageMapper";
 import { BookingResponse } from "../../endpoint-caller/interfaces/bookings/BookingResponse";
 import { AppContext } from "../../stores/app-context";
 import formatDate from "../../utility/formatDate";
-
+import BookingDetailsImage from "../ShareComponents/BookingDetailsImage";
+import {
+  FacebookShareButton,
+  WhatsappShareButton,
+  WhatsappIcon,
+  FacebookIcon,
+  TwitterShareButton,
+  TwitterIcon,
+  RedditShareButton,
+  RedditIcon,
+  EmailShareButton,
+  EmailIcon,
+} from "react-share";
+import { toBlob } from "html-to-image";
 interface BookingDetailsProps {
   bookingDetails: BookingResponse;
   closeBookingDetails: (id: number) => void;
@@ -32,6 +49,34 @@ const BookingDetails: React.FC<BookingDetailsProps> = (props) => {
   const handleThumbDownClick = () => {
     setThumbUp(false);
   };
+
+  //Share Modal Logic
+  const shareModal = useRef<HTMLIonModalElement>(null);
+  const shareMessage = "Check out my weather booking!";
+  const shareImageRef = useRef<any>(null);
+
+  let newFile: Blob | null = null;
+  let shareUrl: string = "";
+  useEffect(() => {
+    console.log(shareImageRef);
+    console.log(shareImageRef.current);
+    if (shareImageRef.current) {
+      toBlob(shareImageRef.current).then((blob) => {
+        newFile = blob;
+        shareUrl = URL.createObjectURL(newFile as Blob);
+        console.log(shareUrl);
+      });
+    }
+  }, [shareImageRef.current]);
+  // const data = {
+  //   files: [
+  //     new File([newFile as any], "image.png", {
+  //       type: newFile.type,
+  //     }),
+  //   ],
+  //   title: "Image",
+  //   text: "image",
+  // };
 
   return (
     <div className="booking-details-container">
@@ -72,7 +117,7 @@ const BookingDetails: React.FC<BookingDetailsProps> = (props) => {
 
           <IonCard className="share-card">
             <div className="share-card__title">Share your booking with friends</div>
-            <IonButton className="share-button" href="https://ko-fi.com/">
+            <IonButton className="share-button" id="open-share-modal">
               Share Now
               <IonIcon icon={arrowForwardOutline}></IonIcon>
             </IonButton>
@@ -117,6 +162,34 @@ const BookingDetails: React.FC<BookingDetailsProps> = (props) => {
           </IonCard>
         </div>
       )}
+      <IonModal ref={shareModal} trigger="open-share-modal" initialBreakpoint={0.5} breakpoints={[0, 0.25, 0.5, 0.75]}>
+        <IonCardContent className="share-modal-content">
+          <div ref={shareImageRef}>
+            <BookingDetailsImage {...props.bookingDetails} />
+          </div>
+          <IonButton onClick={() => shareModal.current?.dismiss()} className="download-button">
+            Download as PNG
+          </IonButton>
+          <h2 style={{ fontWeight: "bold" }}>Share</h2>
+          <div>
+            <WhatsappShareButton url={shareUrl} title={shareMessage}>
+              <WhatsappIcon size={40} round={true} />
+            </WhatsappShareButton>
+            <FacebookShareButton url={shareUrl} title={shareMessage}>
+              <FacebookIcon size={40} round={true} />
+            </FacebookShareButton>
+            <TwitterShareButton url={shareUrl} title={shareMessage}>
+              <TwitterIcon size={40} round={true} />
+            </TwitterShareButton>
+            <RedditShareButton url={shareUrl} title={shareMessage}>
+              <RedditIcon size={40} round={true} />
+            </RedditShareButton>
+            <EmailShareButton url={shareUrl} title={shareMessage}>
+              <EmailIcon size={40} round={true} />
+            </EmailShareButton>
+          </div>
+        </IonCardContent>
+      </IonModal>
     </div>
   );
 };
