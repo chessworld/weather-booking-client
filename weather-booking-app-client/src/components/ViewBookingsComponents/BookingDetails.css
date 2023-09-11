@@ -89,33 +89,6 @@
   color: black;
 }
 
-.share-card {
-  text-align: left;
-  border-radius: 10px;
-  color: black;
-  margin-top: 2rem;
-  background-image: url("../../assets/share_now.png");
-  background-size: cover;
-  position: relative;
-  background-position: left 90% bottom 50%;
-  white-space: normal;
-  padding: 1rem 0.8rem;
-}
-
-.share-card__title {
-  font-size: 1rem;
-  font-weight: bolder;
-  width: 70%;
-}
-
-.share-button {
-  border-radius: 20px;
-  font-weight: bolder;
-  color: black;
-  --background: white;
-  --border-radius: 20px;
-}
-
 .thumb-selected {
   color: #3880ff;
 }

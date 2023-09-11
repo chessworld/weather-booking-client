@@ -212,10 +212,6 @@ ion-range {
   transform: none !important;
 }
 
-.booking-detail-container {
-  background: rgba(255, 255, 255, 0.5);
-}
-
 .back-button {
-    align-self: flex-start;
+  align-self: flex-start;
 }

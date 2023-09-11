@@ -5,8 +5,15 @@ import { AppContext } from "../../stores/app-context";
 import { useContext } from "react";
 import { BookingResponse } from "../../endpoint-caller/interfaces/bookings/BookingResponse";
 import "./BookingDetailsImage.css";
+import { WeatherOption } from "../../endpoint-caller/interfaces/bookings/WeatherOption";
 
-const BookingDetailsImage: React.FC<BookingResponse> = (props) => {
+interface BookingDetailsImageProps {
+  location: number;
+  date: string;
+  weather_option: WeatherOption;
+}
+
+const BookingDetailsImage: React.FC<BookingDetailsImageProps> = (props) => {
   const appCtx = useContext(AppContext);
 
   return (
@@ -28,6 +35,7 @@ const BookingDetailsImage: React.FC<BookingResponse> = (props) => {
             <IonImg className="booking-details-image-img" src={WeatherImageMapper[props.weather_option.weather]} />
           </div>
         </div>
+        <IonCard className="enjoy-weather-card">Enjoy your weather!</IonCard>
       </IonCardContent>
     </IonCard>
   );

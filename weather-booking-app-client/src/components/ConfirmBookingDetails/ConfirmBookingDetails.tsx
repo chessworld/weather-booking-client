@@ -5,6 +5,7 @@ import { arrowForwardOutline } from "ionicons/icons";
 import "./ConfirmBookingDetails.css";
 import formatDate from "../../utility/formatDate";
 import ConfirmBookingDetailsProps from "./Interface/ConfirmBookingDetailsProps";
+import ShareCard from "../ShareComponents/ShareCard";
 
 const ConfirmBookingDetails: React.FC<ConfirmBookingDetailsProps> = (props) => {
   const timeToDisplay = (time: string) => {
@@ -81,14 +82,15 @@ const ConfirmBookingDetails: React.FC<ConfirmBookingDetailsProps> = (props) => {
               </div>
             </div>
           </div>
-
-          <IonCard className="share-card">
-            <div className="share-card__title">Share your booking with friends</div>
-            <a className="share-button" href="https://ko-fi.com/">
-              Share Now
-              <IonIcon icon={arrowForwardOutline}></IonIcon>
-            </a>
-          </IonCard>
+          <ShareCard
+            location={1}
+            date={props.weatherBookingDetails.bookingDetails.dateTime!}
+            weather_option={{
+              weather: props.weatherBookingDetails.selectedWeatherOption,
+              temperature: props.weatherBookingDetails.selectedTemperatureOption,
+              wind: props.weatherBookingDetails.selectedWindOption,
+            }}
+          />
         </IonCardContent>
       </IonCard>
       <div
