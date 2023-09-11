@@ -56,18 +56,18 @@ const BookingDetails: React.FC<BookingDetailsProps> = (props) => {
   const shareImageRef = useRef<any>(null);
 
   let newFile: Blob | null = null;
-  let shareUrl: string = "";
-  useEffect(() => {
-    console.log(shareImageRef);
-    console.log(shareImageRef.current);
-    if (shareImageRef.current) {
-      toBlob(shareImageRef.current).then((blob) => {
-        newFile = blob;
-        shareUrl = URL.createObjectURL(newFile as Blob);
-        console.log(shareUrl);
-      });
-    }
-  }, [shareImageRef.current]);
+  let shareUrl: string = "google.com";
+  // useEffect(() => {
+  //   console.log(shareImageRef);
+  //   console.log(shareImageRef.current);
+  //   if (shareImageRef.current) {
+  //     toBlob(shareImageRef.current).then((blob) => {
+  //       newFile = blob;
+  //       shareUrl = URL.createObjectURL(newFile as Blob);
+  //       console.log(shareUrl);
+  //     });
+  //   }
+  // }, [shareImageRef.current]);
   // const data = {
   //   files: [
   //     new File([newFile as any], "image.png", {
@@ -175,7 +175,7 @@ const BookingDetails: React.FC<BookingDetailsProps> = (props) => {
             <WhatsappShareButton url={shareUrl} title={shareMessage}>
               <WhatsappIcon size={40} round={true} />
             </WhatsappShareButton>
-            <FacebookShareButton url={shareUrl} title={shareMessage}>
+            <FacebookShareButton url={shareUrl} quote={shareMessage}>
               <FacebookIcon size={40} round={true} />
             </FacebookShareButton>
             <TwitterShareButton url={shareUrl} title={shareMessage}>
