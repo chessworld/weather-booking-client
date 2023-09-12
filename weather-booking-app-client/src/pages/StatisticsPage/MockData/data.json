@@ -5,30 +5,28 @@
     },
     "bookingAmountData": {
         "labels": [
-            "Monday",
-            "Tuesday",
-            "Wednesday",
-            "Thursday",
-            "Friday",
-            "Saturday",
-            "Sunday"
+            "Sun",
+            "Mon",
+            "Tue",
+            "Wed",
+            "Thu",
+            "Fri",
+            "Sat"
+            
         ],
         "datasets": [
             {
-                "label": "Number of booking this week",
-                "backgroundColor": "#1e90ff",
-                "borderColor": "white",
-                "borderWidth": 1,
-                "hoverBackgroundColor": "rgba(255,99,132,0.4)",
-                "hoverBorderColor": "rgba(255,99,132,1)",
+                "label": "Number of booking",
+                "backgroundColor": "#CF3333",
+                "borderColor": "rgb(255, 99, 132)",
                 "data": [
-                    65,
-                    59,
-                    80,
-                    81,
-                    56,
-                    55,
-                    40
+                    0,
+                    0,
+                    0,
+                    0,
+                    0,
+                    0,
+                    0
                 ]
             }
         ],
@@ -39,24 +37,22 @@
     },
     "mostGuessedWeather": {
         "labels": [
-            "Sunny",
-            "Cloudy",
-            "Rainy",
-            "Stormy"
+            "Successfull",
+            "Failed",
+            "Pending"
         ],
         "datasets": [
             {
-                "label": "My First Dataset",
+                "label": "Result",
                 "data": [
-                    300,
-                    50,
-                    100,
+                    80,
+                    10,
                     10
                 ],
                 "backgroundColor": [
-                    "rgb(255,99,132)",
-                    "rgb(54,162,235)",
-                    "rgb(255,205,86)"
+                    "#9BCB3C",
+                    "#CF3333",
+                    "#FFB03B"
                 ],
                 "hoverOffset": 4
             }
@@ -73,13 +69,13 @@
     },
     "bookingAcurracyData": {
         "labels": [
-            0,
-            1,
-            2,
-            3,
-            4,
-            5,
-            6
+            "Sun",
+            "Mon",
+            "Tue",
+            "Wed",
+            "Thu",
+            "Fri",
+            "Sat"
         ],
         "datasets": [
             {
