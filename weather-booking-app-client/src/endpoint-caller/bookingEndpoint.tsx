@@ -16,7 +16,8 @@ export default class BookingEndpoint {
 
   static createBooking = (
     userId: string,
-    location: number, date: string,
+    location: Location, 
+    date: string,
     timePeriod: string,
     weatherOption: WeatherOption
   ) => {

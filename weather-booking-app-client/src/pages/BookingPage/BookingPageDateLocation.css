@@ -183,3 +183,7 @@ ion-select::part(text) {
 ion-select::part(icon) {
     opacity: 1;
 }
+
+.hidden {
+    display: none;
+}
