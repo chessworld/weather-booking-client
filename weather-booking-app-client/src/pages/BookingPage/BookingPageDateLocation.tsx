@@ -18,9 +18,14 @@ import BookingPageDateLocationState from "./Interface/BookingPageDateLocationSta
 import DeviceManager from "../../device/DeviceManager";
 import SlideUpPanel from '../../components/SlideUpPanel/SlideUpPanel';
 
+//Autocomplete functionality
+import { AddressAutofill } from '@mapbox/search-js-react'
+
 import 'react-calendar/dist/Calendar.css';
 import "./BookingPageDateLocation.css"
 import "./BookingPage.css"
+import { api_key } from './config/config';
+import { act } from 'react-dom/test-utils';
 
 
 class BookingPageDateLocation extends Component<BookingPageDateLocationProps, BookingPageDateLocationState> {
@@ -53,6 +58,10 @@ class BookingPageDateLocation extends Component<BookingPageDateLocationProps, Bo
             },
             bookingDetails: {
                 location: null,
+                suburb: null,
+                state: null,
+                postcode: null,
+                country: null,
                 dateTime: null,
                 name: null,
                 timePeriod: null
@@ -179,23 +188,62 @@ class BookingPageDateLocation extends Component<BookingPageDateLocationProps, Bo
         this.calendarRef.current.value = currentDate.toISOString(); // convert back to ISO string and set as value
     }
 
-    updateBooking(payload: any, action: 'name' | 'location' | 'dateTime' | 'timePeriod') {
-        if (action == 'dateTime') {
-            payload = format(
-                parseISO(payload),
-                'yyyy-MM-dd'
-            );
+    updateBooking(payload: any, action: 'name' | 'location' | 'dateTime' | 'timePeriod' | 'suburb' | 'state' | 'postcode' | 'country') {
+      
+      //Check if autocomplete is running - update location.value to show on input form
+      if (action == 'suburb' || action == 'state' || action == 'country' || action == 'postcode') {
+        let suburb = ''
+        let postalcode = ''
+        if (action == 'suburb'){
+          suburb = payload
+        }else{
+          suburb = this.state.bookingDetails.suburb ?? ''
         }
-
+        if (action == 'postcode') {
+          postalcode = payload
+        }else{
+          postalcode = this.state.bookingDetails.postcode ?? ''
+        }
+        
         this.setState({
-            ...this.state,
-            bookingDetails: {
-                ...this.state.bookingDetails,
-                [action]: payload
-            }
+          ...this.state,
+          bookingDetails: {
+              ...this.state.bookingDetails,
+              location: `${suburb}, ${postalcode}`,
+              [action]: payload
+          }
         })
+      }else if (action == 'location') {
 
-        this.changeInputBorderValidStyle(true, action);
+        //Reset location state.
+        this.setState({
+          ...this.state,
+          bookingDetails: {
+              ...this.state.bookingDetails,
+              suburb: null,
+              state: null,
+              postcode: null,
+              country: null,
+              [action]: payload
+          }
+      })
+      }else{
+        if (action == 'dateTime') {
+          payload = format(
+              parseISO(payload),
+              'yyyy-MM-dd'
+          );
+      }
+
+      this.setState({
+          ...this.state,
+          bookingDetails: {
+              ...this.state.bookingDetails,
+              [action]: payload
+          }
+      })
+      }
+      this.changeInputBorderValidStyle(true, action);
     }
 
     resetInputFields(): BookingDetails {
@@ -214,7 +262,10 @@ class BookingPageDateLocation extends Component<BookingPageDateLocationProps, Bo
                         bookingDetails: {
                             ...this.state.bookingDetails,
                             dateTime: null,
-                            location: null,
+                            suburb: null,
+                            state: null,
+                            postcode: null,
+                            country: null,
                             name: null
                         }
                     })
@@ -224,6 +275,7 @@ class BookingPageDateLocation extends Component<BookingPageDateLocationProps, Bo
 
         return bookingDetails;
     }
+
 
     render(): React.ReactNode {
         return (
@@ -267,25 +319,57 @@ class BookingPageDateLocation extends Component<BookingPageDateLocationProps, Bo
                                     placeholder="Event" />
                             </div>
 
-
-                            <div className="button-with-icon">
+                            
+                                
+                              <div className="button-with-icon">
                                 <div
                                     id="booking-page-location-input-icon"
                                     className="icon-with-outline">
                                     <IonIcon className="button-icons"
-                                        icon={compassOutline}
+                                         icon={compassOutline}
                                     />
                                 </div>
-                                <input
-                                    type="text"
-                                    onChange={(e) => {
-                                        this.updateBooking(e.target.value, 'location');
+                                <form>
+                                  <div>
+                                    <AddressAutofill accessToken={api_key}>
+                                        <input
+                                            type="text"
+                                            onChange={(e) => {
+                                                this.updateBooking(e.target.value, 'location');
+                                            }}
+                                            value={this.state.bookingDetails.location ?? ''}
+                                            className="booking-page-input"
+                                            id="booking-page-location-input"
+                                            placeholder="Where" />
+                                    </AddressAutofill>
+                                  </div>
+                                  
+                                  <div className='hidden'>
+                                    <input type='text' autoComplete='postal-code' id='postalcode-input' 
+                                      onChange={(e) => {
+                                        this.updateBooking(e.target.value, 'postcode');
                                     }}
-                                    value={this.state.bookingDetails.location ?? ''}
-                                    className="booking-page-input"
-                                    id="booking-page-location-input"
-                                    placeholder="Where" />
-                            </div>
+                                    disabled/>
+                                    <input type='text' autoComplete='address-level1' id='state-input' 
+                                      onChange={(e) => {
+                                        this.updateBooking(e.target.value, 'state');
+                                    }}
+                                    disabled/>
+                                    <input type='text' autoComplete='address-level2' id='suburb-input' 
+                                      onChange={(e) => {
+                                        this.updateBooking(e.target.value, 'suburb');
+                                    }}
+                                    disabled/>
+                                    <input type='text' autoComplete='country-name' id='country-input' 
+                                      onChange={(e) => {
+                                        this.updateBooking(e.target.value, 'country');
+                                    }}
+                                    disabled/>
+                                  </div>
+                                </form>
+                              </div>
+                              
+                            
                             <div className="button-with-icon">
                                 <div
                                     id="booking-page-time-period-input-icon"

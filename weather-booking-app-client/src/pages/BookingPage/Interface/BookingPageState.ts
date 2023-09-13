@@ -6,6 +6,16 @@ import { TimePeriod } from "../../../endpoint-caller/interfaces/enums/TimePeriod
 type BookingDetails = {
   dateTime: string | null;
   location: string | null;
+  suburb: string | null;
+  state: string| null;
+  postcode: string| null;
+  country: string| null;
+  // location: {
+  //   suburb: string | null,
+  //   state: string | null,
+  //   postcode: string| null,
+  //   country: string|null
+  // } | null;
   name: string | null;
   timePeriod: TimePeriod | null;
 };
