@@ -17,9 +17,10 @@ import {
 import BookingDetailsImage from "./BookingDetailsImage";
 import { BookingResponse } from "../../endpoint-caller/interfaces/bookings/BookingResponse";
 import { WeatherOption } from "../../endpoint-caller/interfaces/bookings/WeatherOption";
+import { Location } from "../../endpoint-caller/interfaces/locations/Location";
 
 interface ShareCardProps {
-  location: number;
+  location: Location;
   date: string;
   weather_option: WeatherOption;
 }

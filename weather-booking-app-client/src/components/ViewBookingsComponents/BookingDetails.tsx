@@ -1,37 +1,10 @@
 import { useContext, useEffect, useRef, useState } from "react";
 import "./BookingDetails.css";
-import {
-  IonButton,
-  IonCard,
-  IonCardContent,
-  IonCardSubtitle,
-  IonCardTitle,
-  IonIcon,
-  IonImg,
-  IonTitle,
-  IonModal,
-  IonHeader,
-  IonToolbar,
-  IonButtons,
-} from "@ionic/react";
+import { IonButton, IonCard, IonCardContent, IonCardSubtitle, IonCardTitle, IonIcon, IonImg } from "@ionic/react";
 import { chevronBackOutline, arrowForwardOutline, thumbsDownSharp, thumbsUpSharp } from "ionicons/icons";
 import WeatherImageMapper from "../../utility/WeatherImageMapper";
 import { BookingResponse } from "../../endpoint-caller/interfaces/bookings/BookingResponse";
-import { AppContext } from "../../stores/app-context";
 import formatDate from "../../utility/formatDate";
-import BookingDetailsImage from "../ShareComponents/BookingDetailsImage";
-import {
-  FacebookShareButton,
-  WhatsappShareButton,
-  WhatsappIcon,
-  FacebookIcon,
-  TwitterShareButton,
-  TwitterIcon,
-  RedditShareButton,
-  RedditIcon,
-  EmailShareButton,
-  EmailIcon,
-} from "react-share";
 import { toBlob } from "html-to-image";
 import ShareCard from "../ShareComponents/ShareCard";
 
@@ -41,8 +14,6 @@ interface BookingDetailsProps {
 }
 
 const BookingDetails: React.FC<BookingDetailsProps> = (props) => {
-  const appCtx = useContext(AppContext);
-
   // Completed Booking Details Logic
   const [thumbUp, setThumbUp] = useState<boolean | null>(null);
   const handleThumbUpClick = () => {
@@ -69,7 +40,7 @@ const BookingDetails: React.FC<BookingDetailsProps> = (props) => {
           <div className="booking-details-content">
             <div className="booking-details-details">
               <IonCardTitle className="booking-details-details__title">
-                {appCtx.locations.length !== 0 && appCtx.locations[props.bookingDetails.location - 1].suburb}
+                {props.bookingDetails.location.suburb}, {props.bookingDetails.location.state}
               </IonCardTitle>
               <IonCardSubtitle className="booking-details-details__subtitle">
                 {formatDate(props.bookingDetails.date)}
