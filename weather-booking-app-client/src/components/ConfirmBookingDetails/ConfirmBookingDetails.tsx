@@ -83,7 +83,12 @@ const ConfirmBookingDetails: React.FC<ConfirmBookingDetailsProps> = (props) => {
             </div>
           </div>
           <ShareCard
-            location={1}
+            location={{
+              suburb: props.weatherBookingDetails.bookingDetails.suburb!,
+              state: props.weatherBookingDetails.bookingDetails.state!,
+              postcode: props.weatherBookingDetails.bookingDetails.postcode!,
+              country: props.weatherBookingDetails.bookingDetails.country!,
+            }}
             date={props.weatherBookingDetails.bookingDetails.dateTime!}
             weather_option={{
               weather: props.weatherBookingDetails.selectedWeatherOption,
