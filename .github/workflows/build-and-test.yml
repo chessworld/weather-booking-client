@@ -21,13 +21,10 @@ jobs:
         node-version: 18
 
     - name: Change working directory
-      run: cd weather-booking-app-client
+      run: cd weather-booking-app-client/weather-booking-app-client
 
     - name: see files in folder
-      run: |
-        apt update
-        apt install tree
-        tree . 
+      run: ls
 
     - name: Setup npm
       run: npm install -g npm@8.19.2
