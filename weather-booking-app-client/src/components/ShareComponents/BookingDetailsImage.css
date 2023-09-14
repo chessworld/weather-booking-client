@@ -1,0 +1,37 @@
+.booking-details-image-card {
+  background: #a8c8ed;
+  outline-style: solid;
+  width: 90vw;
+  color: white;
+  position: relative;
+  margin-top: 2rem;
+  display: flex;
+  justify-content: center;
+}
+
+.booking-details-image-details {
+  display: inline-block;
+  width: 60%;
+  position: relative;
+  bottom: 20%;
+  vertical-align: top;
+  padding-top: 1rem;
+}
+
+.booking-details-image-details__title {
+  font-weight: bold;
+}
+
+.booking-details-image-details__subtitle {
+  color: #5f5f5f;
+}
+
+.booking-details-image-img-container {
+  display: inline-block;
+  width: 40%;
+  vertical-align: top;
+}
+
+.booking-details-image-img {
+  width: 100%;
+}

@@ -44,6 +44,43 @@
   /* align-items: flex-start; */
 }
 
+.result-container {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  z-index: 20;
+  align-items: center;
+}
+.result-message {
+  color: white;
+}
+
+.result-result-icon {
+  color: #4bb543 !important;
+  z-index: 20;
+  border-radius: 50%;
+  font-size: 1.6rem;
+  margin: 0;
+  padding: 4px;
+}
+
+.result-success-icon {
+  color: #4bb543 !important;
+  border-radius: 50%;
+  z-index: 20 !important;
+  font-size: 1.6rem;
+  margin: 0;
+  padding: 4px;
+}
+
+.result-fail-icon {
+  color: #ff0000;
+  border-radius: 50%;
+  font-size: 1.6rem;
+  margin: 0;
+  padding: 4px;
+}
+
 .container-root {
   display: flex;
   flex-direction: row;

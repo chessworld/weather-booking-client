@@ -14,14 +14,13 @@ export default class BookingEndpoint {
     return locationData;
   }
 
-  static createBooking = (
+  static createBooking = async (
     userId: string,
-    location: Location, 
+    location: Location,
     date: string,
     timePeriod: string,
     weatherOption: WeatherOption
   ) => {
-
     const body = {
       location: location,
       date: date,
@@ -29,7 +28,7 @@ export default class BookingEndpoint {
       weather_option: weatherOption,
     };
 
-    console.log(JSON.stringify( body ));
+    console.log(JSON.stringify(body));
     ApiService.post(`/bookings/user/${userId}/`, { ...body });
   };
 }

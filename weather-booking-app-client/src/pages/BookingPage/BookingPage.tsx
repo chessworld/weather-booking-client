@@ -108,8 +108,7 @@ class BookingPage extends Component<BookingPageProps, BookingPageState> {
     this.toggleConfirmation();
   }
 
-
-  book(): void {
+  async book(): Promise<void> {
     if (!this.state.bookingDetails && !isBookingDetails(this.state.bookingDetails)) {
       console.error("Invalid state object");
       this.props.history.push("/");
@@ -123,16 +122,16 @@ class BookingPage extends Component<BookingPageProps, BookingPageState> {
     }
 
     //let stateString: string = this.state.bookingDetails.state ?? 'Victoria'
-    let stateString = abbrState(this.state.bookingDetails.state ?? 'Victoria', 'abbr')
-    
-    const location: Location = {
-      suburb: this.state.bookingDetails.suburb ?? '',
-      state: stateString ?? '',
-      postcode: this.state.bookingDetails.postcode ?? '',
-      country: this.state.bookingDetails.country ?? ''
-    }
+    let stateString = abbrState(this.state.bookingDetails.state ?? "Victoria", "abbr");
 
-    BookingEndpoint.createBooking(
+    const location: Location = {
+      suburb: this.state.bookingDetails.suburb ?? "",
+      state: stateString ?? "",
+      postcode: this.state.bookingDetails.postcode ?? "",
+      country: this.state.bookingDetails.country ?? "",
+    };
+
+    await BookingEndpoint.createBooking(
       appCtx.userId,
       location,
       this.state.bookingDetails.dateTime ?? "",
@@ -143,6 +142,7 @@ class BookingPage extends Component<BookingPageProps, BookingPageState> {
         temperature: this.state.selectedTemperatureOption,
       }
     );
+    setTimeout(() => {}, 500);
 
     this.redirectToBookListPage();
 

@@ -3,40 +3,39 @@
 /*****************************************************************************/
 
 .slide-up-panel {
-    background: rgba(255, 255, 255, 0.9) !important;
-    backdrop-filter: blur(10px);
-    -webkit-backdrop-filter: blur(10px);
-    z-index: 3 !important;
-    justify-content: space-between;
-    height: 80vh !important;
-    flex-direction: column;
-    align-items: center;
-    border-radius: 3.5vw 3.5vw 0 0;
-    overflow-y: scroll;
-    padding-bottom: 1vh;
+  background: rgb(255, 255, 255) !important;
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  z-index: 3 !important;
+  justify-content: space-between;
+  height: 80vh !important;
+  flex-direction: column;
+  align-items: center;
+  border-radius: 3.5vw 3.5vw 0 0;
+  overflow-y: scroll;
+  padding-bottom: 1vh;
 }
 
 .slide-up-panel-icon {
-    width: 10vw;
-    color: #555;
-    height: 10vw;
-    max-width: 50px;
-    max-height: 50px;
-    padding: 0px .5rem .5rem .5rem;
-    margin: -.5rem;
+  width: 10vw;
+  color: #555;
+  height: 10vw;
+  max-width: 50px;
+  max-height: 50px;
+  padding: 0px 0.5rem 0.5rem 0.5rem;
+  margin: -0.5rem;
 }
 
-
 .hide-slide-up-panel {
-    transition: transform .5s ease-in-out;
-    transform: translateY(100%) !important
+  transition: transform 0.5s ease-in-out;
+  transform: translateY(100%) !important;
 }
 
 .drag-handle {
-    width: 100vw;
-    height: 8vh;
-    display: flex;
-    flex-direction: column;
-    justify-content: flex-start;
-    align-items: center;
+  width: 100vw;
+  height: 8vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  align-items: center;
 }
