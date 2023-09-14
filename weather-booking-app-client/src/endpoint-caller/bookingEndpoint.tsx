@@ -1,5 +1,6 @@
 import ApiService from "./apiService";
 import { BookingResponse } from "./interfaces/bookings/BookingResponse";
+import { StatsResponse } from "./interfaces/bookings/StatsResponse";
 import { WeatherOption } from "./interfaces/bookings/WeatherOption";
 import { Location } from "./interfaces/locations/Location";
 
@@ -14,6 +15,11 @@ export default class BookingEndpoint {
     return locationData;
   }
 
+  static async getStats(): Promise<StatsResponse[]> {
+    const statList = await ApiService.get("/stats/").then((response) => response.data);
+    return statList;
+  }
+  
   static createBooking = async (
     userId: string,
     location: Location,
