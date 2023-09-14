@@ -21,15 +21,9 @@ jobs:
         node-version: 18
 
     - name: Change working directory
-      run: cd weather-booking-app-client
-
-    - name: Setup npm
-      run: npm install -g npm@8.19.2
-
-    - name: Install Dependencies
       run: |
-        npm install
+        cd weather-booking-app-client
+        npm install -g npm@8.19.2
         npm ci
+        npm run test
 
-    - name: Run Tests
-      run: npm run test 
