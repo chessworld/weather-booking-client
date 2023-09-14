@@ -19,14 +19,14 @@ export default class BookingEndpoint {
     const statList = await ApiService.get("/stats/").then((response) => response.data);
     return statList;
   }
-
-  static createBooking = (
+  
+  static createBooking = async (
     userId: string,
-    location: number, date: string,
+    location: Location,
+    date: string,
     timePeriod: string,
     weatherOption: WeatherOption
   ) => {
-
     const body = {
       location: location,
       date: date,
@@ -34,7 +34,7 @@ export default class BookingEndpoint {
       weather_option: weatherOption,
     };
 
-    console.log(JSON.stringify( body ));
+    console.log(JSON.stringify(body));
     ApiService.post(`/bookings/user/${userId}/`, { ...body });
   };
 }

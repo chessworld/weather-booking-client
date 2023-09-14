@@ -1,0 +1,35 @@
+name: Run Tests
+
+on:
+  push:
+    branches:
+      - main
+
+permissions:
+  contents: read
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+
+    steps:
+    - uses: actions/checkout@v2
+
+    - name: Use Node.js 18
+      uses: actions/setup-node@v1
+      with:
+        node-version: 18
+
+    - name: Change working directory
+      run: cd weather-booking-app-client
+
+    - name: Setup npm
+      run: npm install -g npm@8.19.2
+
+    - name: Install Dependencies
+      run: |
+        npm install
+        npm ci
+
+    - name: Run Tests
+      run: npm run test 

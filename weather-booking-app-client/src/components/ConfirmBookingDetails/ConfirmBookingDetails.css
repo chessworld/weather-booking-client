@@ -15,19 +15,21 @@
 }
 
 .booking-details-card {
-  background: transparent;
+  background: #a8c8ed97 !important;
   outline-style: solid;
   width: 90vw;
   color: white;
   position: relative;
-  margin: 2rem 1rem;
+  padding: 1rem;
+  border-radius: 12px;
+  /* margin: 2rem 1rem; */
 }
 
 .booking-details-title {
   /* font-weight: 700; */
   font-size: 5vw;
   margin: 0.5vh 0 0.5vh 0;
-  padding: 0px 15px;
+  padding: 0px 1.5rem;
   font-weight: bold;
   position: relative;
   width: 100vw;

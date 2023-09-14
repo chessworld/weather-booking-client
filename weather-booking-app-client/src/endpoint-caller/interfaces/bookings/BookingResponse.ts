@@ -2,10 +2,11 @@ import { WeatherOption } from "./WeatherOption";
 import { TimePeriod } from "../enums/TimePeriod";
 import { BookingStatus } from "../enums/BookingStatus";
 import { BookingResult } from "../enums/BookingResult";
+import { Location } from "../locations/Location";
 export interface BookingResponse {
   id: string;
   user: string;
-  location: number;
+  location: Location;
   date: string;
   time_period: TimePeriod;
   weather_option: WeatherOption;

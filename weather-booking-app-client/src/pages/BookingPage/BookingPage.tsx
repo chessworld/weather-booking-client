@@ -20,6 +20,8 @@ import { WindLevel } from "../../endpoint-caller/interfaces/enums/WindLevel";
 import { TemperatureLevel } from "../../endpoint-caller/interfaces/enums/TemperatureLevel";
 import { BookingWeatherOption } from "./Interface/BookingWeatherOptions";
 import { chevronBackOutline } from "ionicons/icons";
+import { Location } from "../../endpoint-caller/interfaces/locations/Location";
+import { abbrState } from "./State";
 
 class BookingPage extends Component<BookingPageProps, BookingPageState> {
   static contextType = AppContext;
@@ -106,7 +108,7 @@ class BookingPage extends Component<BookingPageProps, BookingPageState> {
     this.toggleConfirmation();
   }
 
-  book(): void {
+  async book(): Promise<void> {
     if (!this.state.bookingDetails && !isBookingDetails(this.state.bookingDetails)) {
       console.error("Invalid state object");
       this.props.history.push("/");
@@ -119,13 +121,19 @@ class BookingPage extends Component<BookingPageProps, BookingPageState> {
       return;
     }
 
-    BookingEndpoint.createBooking(
+    //let stateString: string = this.state.bookingDetails.state ?? 'Victoria'
+    let stateString = abbrState(this.state.bookingDetails.state ?? "Victoria", "abbr");
+
+    const location: Location = {
+      suburb: this.state.bookingDetails.suburb ?? "",
+      state: stateString ?? "",
+      postcode: this.state.bookingDetails.postcode ?? "",
+      country: this.state.bookingDetails.country ?? "",
+    };
+
+    await BookingEndpoint.createBooking(
       appCtx.userId,
-      appCtx.locations.findIndex((location) => {
-        return (
-          location.suburb === this.state.bookingDetails.location && this.state.bookingDetails.location.toLowerCase()
-        );
-      }) + 1,
+      location,
       this.state.bookingDetails.dateTime ?? "",
       this.state.bookingDetails.timePeriod ?? "",
       {
@@ -134,6 +142,7 @@ class BookingPage extends Component<BookingPageProps, BookingPageState> {
         temperature: this.state.selectedTemperatureOption,
       }
     );
+    setTimeout(() => {}, 500);
 
     this.redirectToBookListPage();
 
