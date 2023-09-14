@@ -31,7 +31,7 @@ const ShareCard: React.FC<ShareCardProps> = (props) => {
   const shareImageRef = useRef<any>(null);
 
   let newFile: Blob | null = null;
-  let shareUrl: string = "google.com";
+  let shareUrl: string = "https://ko-fi.com/";
   // useEffect(() => {
   //   console.log(shareImageRef);
   //   console.log(shareImageRef.current);
@@ -62,14 +62,14 @@ const ShareCard: React.FC<ShareCardProps> = (props) => {
           <IonIcon icon={arrowForwardOutline}></IonIcon>
         </IonButton>
       </IonCard>
-      <IonModal ref={shareModal} trigger="open-share-modal" initialBreakpoint={0.6} breakpoints={[0, 0.25, 0.5, 0.75]}>
+      <IonModal ref={shareModal} trigger="open-share-modal" initialBreakpoint={0.5} breakpoints={[0, 0.25, 0.5, 0.75]}>
         <IonCardContent className="share-modal-content">
           <div ref={shareImageRef}>
             <BookingDetailsImage {...props} />
           </div>
-          <IonButton onClick={() => shareModal.current?.dismiss()} className="download-button">
+          {/* <IonButton onClick={() => shareModal.current?.dismiss()} className="download-button">
             Download as PNG
-          </IonButton>
+          </IonButton> */}
           <h2 style={{ fontWeight: "bold" }}>Share</h2>
           <div>
             <WhatsappShareButton url={shareUrl} title={shareMessage}>

@@ -189,13 +189,13 @@ body {
 }
 
 .storm .cloud {
-    --shadow: #c9e8de;
-    --ring: #f0f2f0;
-    background-color: var(--shadow);
-    font-size: 1.3em;
-    left: 50%;
-    will-change: background-color, transform, opacity;
-    animation: flash 2300ms infinite linear, move 3700ms infinite linear;
+  --shadow: #c9e8de;
+  --ring: #f0f2f0;
+  background-color: var(--shadow);
+  font-size: 1.3em;
+  left: 50%;
+  will-change: background-color, transform, opacity;
+  animation: flash 2300ms infinite linear, move 3700ms infinite linear;
 }
 
 .storm ul {
@@ -385,7 +385,6 @@ body {
   text-align: center;
   color: #e0e0e0;
 }
-
 
 .item3 {
   display: flex;
