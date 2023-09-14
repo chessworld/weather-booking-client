@@ -23,8 +23,11 @@ jobs:
     - name: Change working directory
       run: cd weather-booking-app-client
 
-    - name: see contents
-      run: ls
+    - name: see files in folder
+      run: |
+        apt update
+        apt install tree
+        tree . 
 
     - name: Setup npm
       run: npm install -g npm@8.19.2
