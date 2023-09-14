@@ -17,6 +17,9 @@ jobs:
       with:
         node-version: 18
 
+    - name: Change working directory
+      run: cd weather-booking-client
+
     - name: Install Dependencies
       run: npm ci
 
