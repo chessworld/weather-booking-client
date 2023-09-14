@@ -26,10 +26,10 @@ jobs:
     - name: Setup npm
       run: npm install -g npm@8.19.2
 
-    name: Install Dependencies
-    run: |
-      npm install
-      npm ci
+    - name: Install Dependencies
+      run: |
+        npm install
+        npm ci
 
     - name: Run Tests
       run: npm run test 
