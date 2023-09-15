@@ -22,9 +22,14 @@ const StatisticsPage: React.FC = () => {
     const appCtx = useContext(AppContext);
     
     // Get stats data
-    BookingEndpoint.getStats().then((stats) => {
-        setStatListData(stats);
-            });
+    useEffect(() => {
+        if (statListData.length == 0) {
+            BookingEndpoint.getStats().then((stats) => {
+                setStatListData(stats);
+                    });
+        }
+        
+    })
 
     // Get user data set
     useEffect(() => {
@@ -58,7 +63,7 @@ const StatisticsPage: React.FC = () => {
     var bookingAmountData = BookingAmountData
     var bookingAcurracyData = BookingAccuracyData
 
-    if (statListData.length == 0) {
+    if (statListData.length == 0 && userData == undefined) {
         return (
             <IonPage>
                 <IonContent fullscreen>
@@ -101,7 +106,7 @@ const StatisticsPage: React.FC = () => {
                     break;
                 }
                 case "Pending": {
-                    dataAcc[2] += 1;
+                    //Not tracking pending
                     break;
                 }
                 default: {
