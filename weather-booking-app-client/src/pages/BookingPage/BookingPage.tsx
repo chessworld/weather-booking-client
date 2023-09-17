@@ -163,9 +163,6 @@ class BookingPage extends Component<BookingPageProps, BookingPageState> {
   render(): React.ReactNode {
     return (
       <IonPage keep-alive="false">
-        <IonButton onClick={() => this.props.history.goBack()} className="booking-page-back-button invisible-button">
-          <IonIcon icon={chevronBackOutline} slot="icon-only"></IonIcon>
-        </IonButton>
         <IonToast
           isOpen={this.state.toast.showToast}
           onDidDismiss={() =>
@@ -191,8 +188,19 @@ class BookingPage extends Component<BookingPageProps, BookingPageState> {
               />
             </SlideUpPanel>
           }
+          <h2 className="booking-page-date-location-title">Book Your Weather</h2>
 
           <div className="page-content">
+            <div className="step-two-heading-container">
+              <IonButton
+                onClick={() => this.props.history.goBack()}
+                className="booking-page-back-button invisible-button"
+              >
+                <IonIcon icon={chevronBackOutline} slot="icon-only"></IonIcon>
+              </IonButton>
+              <h3 className="step-two-heading">Step 2 - Create Your Perfect Weather</h3>
+            </div>
+
             <div className="input-container">
               {/* Vertical Buttons */}
               <div className="button-container">

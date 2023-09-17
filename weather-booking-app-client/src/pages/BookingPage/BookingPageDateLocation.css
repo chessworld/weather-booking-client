@@ -15,16 +15,69 @@
   margin-left: 4vw;
   font-weight: 900;
 }
-
+.booking-page-date-location-title {
+  z-index: 1;
+  font-size: 5vw;
+  margin: 0.5vh 0 0.5vh 0;
+  padding: 0px 15px;
+  font-weight: bold;
+  position: relative;
+  top: 1rem;
+  margin-bottom: 1rem;
+}
 .booking-page-input {
-  border: 1px solid #888;
-  border-left: none;
+  border: none;
   border-radius: 0 var(--border-rad) var(--border-rad) 0;
   height: var(--booking-page-input-height);
   outline: none;
   width: var(--booking-page-input-width);
   padding-left: 2vw;
   transition: var(--booking-page-input-transition);
+}
+
+.timeperiod-container {
+  width: 85vw;
+  border-radius: 12px;
+  display: flex;
+  gap: 0.5rem;
+}
+
+.timeperiod-button {
+  border-radius: 12px;
+  background-color: white;
+  color: #555;
+  min-width: 5rem;
+}
+
+.segment-button-checked {
+  background-color: #555;
+  color: white;
+  border: none;
+  outline: none;
+  --indicator-color: transparent;
+}
+
+.timeperiod-button p {
+  margin: 0;
+  font-size: 0.7rem;
+  font-weight: bold;
+  text-transform: none;
+}
+
+.timeperiod-button.selected {
+}
+
+.time-period-icon {
+  font-size: 1.5rem;
+}
+
+.dice-button {
+  width: fit-content;
+  height: auto;
+  color: #555;
+  position: absolute;
+  right: 2rem;
+  font-size: 1rem;
 }
 
 .booking-page-input:focus {
@@ -41,21 +94,21 @@
 }
 
 .input-fields-container {
-  background: rgba(255, 255, 255, 0.4);
-  border: 0.5px solid #333;
-  backdrop-filter: blur(10px);
-  -webkit-backdrop-filter: blur(10px);
   display: flex;
-  position: absolute;
-  bottom: 4vh;
   flex-direction: column;
   align-items: center;
   justify-content: flex-start;
-  padding-top: 2vh;
   border-radius: 4vw;
-  box-shadow: 2px 2px 8px #888;
   width: 95vw;
   height: 65vh;
+}
+
+.step-heading {
+  font-weight: bold;
+  align-self: flex-start;
+  margin: 0;
+  margin-left: 2rem;
+  font-size: 1.1rem;
 }
 
 div:has(> input[type="text"]),
@@ -72,11 +125,12 @@ div:has(> ion-select) {
 /*****************************************************************************/
 
 .react-calendar {
-  width: 100vw !important;
-  padding: 1rem;
+  width: 85vw !important;
+  max-height: 20rem;
+  margin-top: 1rem;
   border-radius: 5px;
   color: #222;
-  background: transparent;
+  /* background: transparent; */
   border: none;
 }
 
@@ -87,10 +141,6 @@ div:has(> ion-select) {
   display: flex;
   flex-direction: column;
   align-items: center;
-}
-
-.calendar-only-container {
-  width: 100vw;
 }
 
 .button-icons {
@@ -117,8 +167,6 @@ div:has(> ion-select) {
   display: flex;
   justify-content: center;
   align-items: center;
-  border: var(--booking-page-input-border);
-  border-right: none;
   transition: var(--booking-page-input-transition);
 }
 
@@ -158,8 +206,6 @@ ion-select {
   /* --placeholder-opacity: 1; */
   width: var(--booking-page-input-width);
   height: var(--booking-page-input-height);
-  border: var(--booking-page-input-border);
-  border-left: none;
   flex-direction: row;
   align-items: flex-end;
   justify-content: flex-end;
