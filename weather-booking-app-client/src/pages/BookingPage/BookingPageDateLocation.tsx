@@ -360,7 +360,7 @@ class BookingPageDateLocation extends Component<BookingPageDateLocationProps, Bo
                 </IonButton>
               </div>
 
-              <div className="button-with-icon">
+              <div className="button-with-icon" style={{ paddingBottom: "1rem" }}>
                 <div id="booking-page-location-input-icon" className="icon-with-outline">
                   <IonIcon className="button-icons" icon={compassOutline} />
                 </div>

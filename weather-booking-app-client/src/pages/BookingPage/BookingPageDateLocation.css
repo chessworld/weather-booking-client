@@ -64,9 +64,6 @@
   text-transform: none;
 }
 
-.timeperiod-button.selected {
-}
-
 .time-period-icon {
   font-size: 1.5rem;
 }
@@ -87,7 +84,6 @@
 .booking-page-date-location-container {
   height: 80vh;
   display: flex;
-  margin-top: 5vh;
   flex-direction: column;
   justify-content: flex-start;
   align-items: center;
@@ -106,8 +102,7 @@
 .step-heading {
   font-weight: bold;
   align-self: flex-start;
-  margin: 0;
-  margin-left: 2rem;
+  margin: 2rem 0 0 2rem;
   font-size: 1.1rem;
 }
 
