@@ -1,4 +1,5 @@
 import { BookingDetails } from "./BookingPageState"
+import { Location } from "../../../endpoint-caller/interfaces/locations/Location"
 
 interface BookingPageDateLocationState {
     bookingPageInputIds: {
@@ -19,7 +20,8 @@ interface BookingPageDateLocationState {
         toastDuration: number,
         toastMessage: string
     },
-    bookingDetails: BookingDetails
+    bookingDetails: BookingDetails,
+    locationSuggestions: Location[],
 }
 
 export default BookingPageDateLocationState;
