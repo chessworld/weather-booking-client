@@ -32,8 +32,10 @@ import DeviceManager from "../../device/DeviceManager";
 import SlideUpPanel from "../../components/SlideUpPanel/SlideUpPanel";
 import { diceOutline } from "ionicons/icons";
 
-//Autocomplete functionality
-import { AddressAutofill } from "@mapbox/search-js-react";
+//Location search functionality
+import { Location } from "../../endpoint-caller/interfaces/locations/Location";
+import LocationSearchEndpoint from "../../endpoint-caller/locationEndpoint";
+import { debounce } from "../../utility/debounceDelay";
 
 import "react-calendar/dist/Calendar.css";
 import "./BookingPageDateLocation.css";
@@ -90,6 +92,7 @@ class BookingPageDateLocation extends Component<BookingPageDateLocationProps, Bo
         name: null,
         timePeriod: null,
       },
+      locationSuggestions: [],
     };
 
     this.panelRef = createRef();
@@ -238,23 +241,23 @@ class BookingPageDateLocation extends Component<BookingPageDateLocationProps, Bo
     //Check if autocomplete is running - update location.value to show on input form
     if (action == "suburb" || action == "state" || action == "country" || action == "postcode") {
       let suburb = "";
-      let postalcode = "";
+      let postcode = "";
       if (action == "suburb") {
         suburb = payload;
       } else {
         suburb = this.state.bookingDetails.suburb ?? "";
       }
       if (action == "postcode") {
-        postalcode = payload;
+        postcode = payload;
       } else {
-        postalcode = this.state.bookingDetails.postcode ?? "";
+        postcode = this.state.bookingDetails.postcode ?? "";
       }
 
       this.setState({
         ...this.state,
         bookingDetails: {
           ...this.state.bookingDetails,
-          location: `${suburb}, ${postalcode}`,
+          // location: `${suburb}, ${postcode}`,
           [action]: payload,
         },
       });
@@ -316,6 +319,42 @@ class BookingPageDateLocation extends Component<BookingPageDateLocationProps, Bo
     return bookingDetails;
   }
 
+  getLocationSuggestions = debounce(async (query: string) => {
+    this.updateLocationSuggestions([]);
+    if (query.length >= 4) {
+      await LocationSearchEndpoint.searchLocations(query).then((locationList) =>
+        this.updateLocationSuggestions(locationList)
+      );
+    }
+  }, 1000);
+
+  handleLocationSearch(query: string) {
+    this.updateBooking(query, "location");
+    this.getLocationSuggestions(query);
+  }
+
+  updateLocationSuggestions(suggestions: Location[]) {
+    this.setState({
+      ...this.state,
+      locationSuggestions: suggestions,
+    });
+  }
+
+  handleSuggestionSelect(location: Location) {
+    console.log(location);
+    this.setState({
+      ...this.state,
+      bookingDetails: {
+        ...this.state.bookingDetails,
+        suburb: location.suburb,
+        postcode: location.postcode,
+        state: location.state,
+        country: location.country,
+        location: location.suburb + ", " + location.postcode + " " + location.state,
+      },
+    });
+  }
+
   render(): React.ReactNode {
     return (
       <IonPage keep-alive="false">
@@ -365,59 +404,26 @@ class BookingPageDateLocation extends Component<BookingPageDateLocationProps, Bo
                   <IonIcon className="button-icons" icon={compassOutline} />
                 </div>
                 <form>
-                  <div>
-                    <AddressAutofill accessToken={api_key}>
-                      <input
-                        type="text"
-                        onChange={(e) => {
-                          this.updateBooking(e.target.value, "location");
-                        }}
-                        value={this.state.bookingDetails.location ?? ""}
-                        className="booking-page-input"
-                        id="booking-page-location-input"
-                        placeholder="Where"
-                      />
-                    </AddressAutofill>
-                  </div>
-
-                  <div className="hidden">
-                    <input
-                      type="text"
-                      autoComplete="postal-code"
-                      id="postalcode-input"
-                      onChange={(e) => {
-                        this.updateBooking(e.target.value, "postcode");
-                      }}
-                      disabled
-                    />
-                    <input
-                      type="text"
-                      autoComplete="address-level1"
-                      id="state-input"
-                      onChange={(e) => {
-                        this.updateBooking(e.target.value, "state");
-                      }}
-                      disabled
-                    />
-                    <input
-                      type="text"
-                      autoComplete="address-level2"
-                      id="suburb-input"
-                      onChange={(e) => {
-                        this.updateBooking(e.target.value, "suburb");
-                      }}
-                      disabled
-                    />
-                    <input
-                      type="text"
-                      autoComplete="country-name"
-                      id="country-input"
-                      onChange={(e) => {
-                        this.updateBooking(e.target.value, "country");
-                      }}
-                      disabled
-                    />
-                  </div>
+                  <input
+                    type="text"
+                    onChange={(e) => {
+                      this.handleLocationSearch(e.target.value);
+                    }}
+                    value={this.state.bookingDetails.location ?? ""}
+                    className="booking-page-input"
+                    id="booking-page-location-input"
+                    placeholder="Where"
+                    autoComplete="off"
+                  />
+                  {this.state.locationSuggestions.length > 0 && (
+                    <ul className="suggestion-list">
+                      {this.state.locationSuggestions.map((location, index) => (
+                        <li key={index} onTouchEnd={() => this.handleSuggestionSelect(location)}>
+                          {location.suburb}, {location.postcode} {location.state}
+                        </li>
+                      ))}
+                    </ul>
+                  )}
                 </form>
               </div>
               <div className="button-with-icon">

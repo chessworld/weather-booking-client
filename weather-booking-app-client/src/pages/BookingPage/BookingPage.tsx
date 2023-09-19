@@ -121,12 +121,9 @@ class BookingPage extends Component<BookingPageProps, BookingPageState> {
       return;
     }
 
-    //let stateString: string = this.state.bookingDetails.state ?? 'Victoria'
-    let stateString = abbrState(this.state.bookingDetails.state ?? "Victoria", "abbr");
-
     const location: Location = {
       suburb: this.state.bookingDetails.suburb ?? "",
-      state: stateString ?? "",
+      state: this.state.bookingDetails.state ?? "",
       postcode: this.state.bookingDetails.postcode ?? "",
       country: this.state.bookingDetails.country ?? "",
     };

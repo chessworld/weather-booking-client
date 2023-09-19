@@ -106,6 +106,50 @@
   font-size: 1.1rem;
 }
 
+form {
+  position: relative;
+}
+
+.suggestion-list {
+  display: none;
+  list-style-type: none;
+  margin: 0;
+  padding: 5px 0;
+  border: 1px solid #888;
+  border-radius: 0 0 var(--border-rad) var(--border-rad);
+  max-height: 200px;
+  overflow-y: auto;
+  box-shadow: 2px 2px 8px #aaa;
+  background-color: #fff;
+  color: black;
+
+  position: absolute;
+  top: calc(100% - 10px);
+  left: 0;
+  width: var(--booking-page-input-width);
+  z-index: 10;
+}
+
+.booking-page-input:focus + .suggestion-list {
+  display: block;
+}
+
+.suggestion-list li {
+  padding: 10px 16px;
+  cursor: pointer;
+  border-top: 1px solid #eee;
+  transition: background-color 0.2s ease;
+}
+
+.suggestion-list li:first-child {
+  border-top: none;
+}
+
+.suggestion-list li:hover {
+  background-color: #f5f5f5;
+  font-weight: 600;
+}
+
 div:has(> input[type="text"]),
 div:has(> select) {
   margin-top: 2vh;
