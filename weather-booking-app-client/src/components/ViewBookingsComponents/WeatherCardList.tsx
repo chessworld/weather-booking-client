@@ -6,12 +6,21 @@ import WeatherImageMapper from "../../utility/WeatherImageMapper";
 import { BookingResponse } from "../../endpoint-caller/interfaces/bookings/BookingResponse";
 import formatDate from "../../utility/formatDate";
 import { happyOutline, sadOutline } from "ionicons/icons";
+import { Link } from "react-router-dom";
 
 const WeatherCardList: React.FC<{ bookingListData: BookingResponse[]; openBookingDetails: (id: number) => void }> = (
   props
 ) => {
   return (
     <IonList className="weather-list" lines="none">
+      {props.bookingListData.length === 0 && (
+        <div className="no-bookings-container">
+          <p className="no-bookings-subtitle">You have no bookings</p>
+          <Link to="/bookingPageDateLocation" style={{ textDecoration: "none" }}>
+            <button className="book-button">Book Weather Now!</button>
+          </Link>
+        </div>
+      )}
       <div className="weather-list-container">
         {props.bookingListData.map((bookingDetails, id: number) => (
           <IonItem key={id} onClick={() => props.openBookingDetails(id + 1)} className="weather-booking-item">

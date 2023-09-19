@@ -1,9 +1,5 @@
 @import url("https://fonts.googleapis.com/css2?family=Roboto&display=swap");
 
-body {
-  font-family: "Roboto", sans-serif;
-}
-
 :root {
   --hud-border-radius: 1.5em;
   --hud-width: 85vw;

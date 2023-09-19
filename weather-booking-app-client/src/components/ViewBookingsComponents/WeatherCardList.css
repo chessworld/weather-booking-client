@@ -1,3 +1,11 @@
+.no-bookings-container {
+  padding: 2rem 5rem;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 1rem;
+}
+
 .weather-list-container {
   display: flex;
   flex-direction: column;

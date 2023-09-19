@@ -33,7 +33,7 @@
 }
 
 .booking-details-card {
-  background: transparent;
+  background: transparent !important;
   outline-style: solid;
   width: 90vw;
   color: white;
