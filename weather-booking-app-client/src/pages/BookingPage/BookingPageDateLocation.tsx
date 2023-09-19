@@ -297,13 +297,18 @@ class BookingPageDateLocation extends Component<BookingPageDateLocationProps, Bo
   }
 
   handleSuggestionSelect(location: Location) {
-    console.log(location);
-    this.updateBooking(location.suburb + ', ' + location.state, "location")
-    console.log(location);
-    this.updateBooking(location.state, "state");
-    this.updateBooking(location.country, "country");
-    this.updateBooking(location.suburb, "suburb");
-    this.updateBooking(location.postcode, "postcode");
+    console.log(location)
+    this.setState({
+      ...this.state,
+      bookingDetails: {
+        ...this.state.bookingDetails,
+        suburb: location.suburb,
+        postcode: location.postcode,
+        state: location.state,
+        country: location.country,
+        location: location.suburb + ', ' + location.postcode + ' ' + location.state,
+      }
+    })
   }
 
   render(): React.ReactNode {
@@ -367,7 +372,7 @@ class BookingPageDateLocation extends Component<BookingPageDateLocationProps, Bo
                           key={index}
                           onTouchEnd={() => this.handleSuggestionSelect(location)}
                           >
-                          {location.suburb}, {location.state}
+                          {location.suburb}, {location.postcode} {location.state}
                         </li>
                       ))}
                     </ul>
