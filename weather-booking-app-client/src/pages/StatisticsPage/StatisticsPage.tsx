@@ -1,7 +1,7 @@
 import React, { useContext, useState, useEffect } from 'react';
 import { Chart, registerables} from 'chart.js';
 import { Bar, Line, Doughnut, Radar } from 'react-chartjs-2';
-import { IonPage } from '@ionic/react';
+import { IonButton, IonInput, IonPage } from '@ionic/react';
 import './StatisticsPage.css';
 import { IonContent } from '@ionic/react';
 import { AppContext} from '../../stores/app-context';
@@ -13,10 +13,67 @@ import { UserEndpointResponse } from '../../endpoint-caller/interfaces/users/Use
 import { BookingAmountData } from './ChartData/BookingAmountData';
 import { BookingAccuracyData } from './ChartData/BookingAccuracyData';
 
+
+
 const StatisticsPage: React.FC = () => {
 
-    
     // API Logic: Get statistic data
+    const nameField = document.getElementById('nameField') as HTMLInputElement
+    const editName = () => {
+        if (nameField.disabled == true){
+            nameField.disabled = false
+        }else{
+            //Patch user here.
+            nameField.disabled = true
+        }
+    }
+
+    const barchartdata = {
+        labels: ['January', 'February', 'March', 'April', 'May', 'June', 'July'],
+        datasets: [
+          {
+            label: 'Dataset 1',
+            data: [10, 20, 15, 30, 40, 20, 45],
+            backgroundColor: 'rgb(255, 99, 132)',
+            stack: 'Stack 0',
+          },
+          {
+            label: 'Dataset 2',
+            data: [-10, -20, -15, -30, -40, -20, -45],
+            backgroundColor: 'rgb(75, 192, 192)',
+            stack: 'Stack 0',
+          },
+        //   {
+        //     label: 'Dataset 3',
+        //     data: [10, 20, -15, -30, 40, 20, 45],
+        //     backgroundColor: 'rgb(53, 162, 235)',
+        //     stack: 'Stack 1',
+        //   },
+        ],
+      };
+    
+    const stacked_barchart_options = {
+        plugins: {
+          title: {
+            display: true,
+            text: 'Chart.js Bar Chart - Stacked',
+          },
+        },
+        responsive: true,
+        interaction: {
+          mode: 'index' as const,
+          intersect: false,
+        },
+        scales: {
+          x: {
+            stacked: true,
+          },
+          y: {
+            stacked: true,
+          },
+        },
+    };
+
     const [statListData, setStatListData] = useState<StatsResponse[]>([]);
     const [userData, setUserData] = useState<UserEndpointResponse>();
     const appCtx = useContext(AppContext);
@@ -30,7 +87,6 @@ const StatisticsPage: React.FC = () => {
         }
         
     })
-
     // Get user data set
     useEffect(() => {
         if (appCtx.userId !== "") {
@@ -42,9 +98,9 @@ const StatisticsPage: React.FC = () => {
 
     //Update user name
     const welcomeH1 = document.getElementById("welcome-h1") as HTMLElement
-    if (userData != undefined){
-        welcomeH1.innerHTML = `Hi ${userData.name as string}!`
-    }
+    // if (userData != undefined){
+    //     welcomeH1.innerHTML = `Hi ${userData.name as string}!`
+    // }
 
     // Stats options
     Chart.register(...registerables)
@@ -85,8 +141,7 @@ const StatisticsPage: React.FC = () => {
 
         //Update total booking stat
         const totalBooking = document.getElementById("total-bookings") as HTMLElement
-        totalBooking.innerHTML = statListData.length.toString()
-
+        //totalBooking.innerHTML = statListData.length.toString()
         //Populate stats
         let dataAcc = [0,0,0]
         let dataAmount = [0,0,0,0,0,0,0]
@@ -138,67 +193,52 @@ const StatisticsPage: React.FC = () => {
 
         const acuracyValue = document.getElementById('acuracy-value-percentage') as HTMLElement
         let perc = ((dataAcc[0])/(dataAcc[0] + dataAcc[1]))*100
-        if (isNaN(perc)) {
-            acuracyValue.innerHTML = `-`
-        }else{
-            acuracyValue.innerHTML = `${perc.toFixed(0)}%`
+        // if (isNaN(perc)) {
+        //     acuracyValue.innerHTML = `-`
+        // }else{
+        //     acuracyValue.innerHTML = `${perc.toFixed(0)}%`
+        //}
+
+        //Start of new code
+        var bookingAmount = statListData.length.toString()
+        if (userData != undefined){
+            nameField.value = userData.name as string
+            // userField = userData.name as string
         }
+
+        
+        // const labels = ['January', 'February', 'March', 'April', 'May', 'June', 'July'];
+        
+        
+        
     }
 
+    //Hi luyang please help with css :) refer to discord for the layout
     return (
         <IonPage>
             <IonContent fullscreen>
-                <div className='welcome-view'>
-                    <div className='welcome-card'>
-                        <div className='card-content'>
-                            <h1 id='card-header'>No sun tommorow?</h1>
-                            <div id='card-subtitle'>Lets fix that</div>
-                            <Link to="/bookingPageDateLocation" style={{ textDecoration: 'none' }}>
-                                <button className='booknow-button'>
-                                    Start Booking
-                                </button>
-                            </Link>
-                            </div>
-                        </div>
-                    <div>
-                        <h1 className='page-header' id="welcome-h1"> </h1>
-                        <div className='page-body'>
-                            Have a nice day 
-                        </div>
-                    </div>
+                <div>
+                    Hi <input type='text' id='nameField' disabled></input> 
+                    <button onClick={editName}>Edit name</button>
                 </div>
                 <div>
-                    <h1 className='page-header'>App statistics</h1>
+                    Maybe some feedback 
                 </div>
-                <div className='statistic-page-graphs'>    
-                    <div className='statistic-page-streaks'>
-                        <div className='statistic-page-current-streak'>
-                            Total bookings made
-                            <span className="statistic-page-number" style={{ background: 'rgba(118, 115, 220, .6)' }} id="total-bookings">
-                                -
-                            </span>
-                        </div>     
-                    </div>
-                    <div className='graph-title'>
-                        Most booked day
-                    </div> 
-                    
-                    <div className="booking-amount-graph-container">
-                       <Line data={bookingAmountData} options={chartOptions} />
-                    </div>
-
-                    <div className="most-guessed-weather-container">
-                        <div className="graph-title">Booking Accuracy</div>
-                        <div className="acuracy-graph-content">
-                            <Doughnut options={doughnutChartOptions} data={bookingAcurracyData} />
-                            <div className="acuracy-value" id='acuracy-value-percentage'>
-                                -
-                            </div>
-                        </div>
-                                
-                    </div>
+                <div>
+                    MR Bluesky
                 </div>
-                    
+                <div>
+                    Kofi Link here
+                </div>
+                <div>
+                    {bookingAmount}
+                </div>
+                <div>
+                    Graph data to show dropdown
+                </div>
+                <div>
+                <Bar data={barchartdata} options={stacked_barchart_options} />
+                </div>
             </IonContent>
             
         </IonPage>
