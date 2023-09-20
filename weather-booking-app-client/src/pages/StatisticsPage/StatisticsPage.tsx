@@ -18,15 +18,7 @@ import { BookingAccuracyData } from './ChartData/BookingAccuracyData';
 const StatisticsPage: React.FC = () => {
 
     // API Logic: Get statistic data
-    const nameField = document.getElementById('nameField') as HTMLInputElement
-    const editName = () => {
-        if (nameField.disabled == true){
-            nameField.disabled = false
-        }else{
-            //Patch user here.
-            nameField.disabled = true
-        }
-    }
+   
 
     const barchartdata = {
         labels: ['January', 'February', 'March', 'April', 'May', 'June', 'July'],
@@ -77,6 +69,21 @@ const StatisticsPage: React.FC = () => {
     const [statListData, setStatListData] = useState<StatsResponse[]>([]);
     const [userData, setUserData] = useState<UserEndpointResponse>();
     const appCtx = useContext(AppContext);
+
+    const nameField = document.getElementById('nameField') as HTMLInputElement
+    const editName = () => {
+        if (nameField.disabled == true){
+            nameField.disabled = false
+        }else{
+            var updatedName = nameField.value as string
+            if (userData == undefined){
+                console.log("Cannot edit name")
+            }else{
+                UserEndpoint.patchUserName(userData?.id as string, updatedName)
+            }
+            nameField.disabled = true
+        }
+    }
     
     // Get stats data
     useEffect(() => {
