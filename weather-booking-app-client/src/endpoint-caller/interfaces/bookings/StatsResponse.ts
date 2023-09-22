@@ -3,6 +3,7 @@ import { TimePeriod } from "../enums/TimePeriod";
 import { BookingStatus } from "../enums/BookingStatus";
 import { BookingResult } from "../enums/BookingResult";
 import { Location } from "../locations/Location";
+
 export interface StatsResponse {
   location: Location;
   date: string;

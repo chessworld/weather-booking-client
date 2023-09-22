@@ -1,75 +1,41 @@
 import React, { useContext, useState, useEffect, useRef } from 'react';
 import { Chart, registerables} from 'chart.js';
-import { Bar, Line, Doughnut, Radar } from 'react-chartjs-2';
-import { IonButton, IonInput, IonPage, IonSelect } from '@ionic/react';
-import './StatisticsPage.css';
+import { Bar } from 'react-chartjs-2';
+import { IonPage, IonSelect } from '@ionic/react';
 import { IonContent } from '@ionic/react';
-import { AppContext} from '../../stores/app-context';
 import UserEndpoint from '../../endpoint-caller/userEndpoint';
+import { AppContext } from '../../stores/app-context';
 import BookingEndpoint from '../../endpoint-caller/bookingEndpoint';
-import { Link } from 'react-router-dom';
 import { StatsResponse } from '../../endpoint-caller/interfaces/bookings/StatsResponse';
 import { UserEndpointResponse } from '../../endpoint-caller/interfaces/users/UserEndpointResponse';
-import { BookingAmountData } from './ChartData/BookingAmountData';
-import { BookingAccuracyData } from './ChartData/BookingAccuracyData';
 import { StackedBarChartData, dataField, dataInput } from './ChartData/StackedBarChartData';
-import { WeatherTypes } from '../../endpoint-caller/interfaces/enums/WeatherType';
-import { TimePeriods } from '../../endpoint-caller/interfaces/enums/TimePeriod';
-import { WindLevels } from '../../endpoint-caller/interfaces/enums/WindLevel';
-import { TemperatureLevels } from '../../endpoint-caller/interfaces/enums/TemperatureLevel';
-import { set } from 'date-fns';
+import { WeatherTypes, WeatherType } from '../../endpoint-caller/interfaces/enums/WeatherType';
+import { TimePeriods, TimePeriod } from '../../endpoint-caller/interfaces/enums/TimePeriod';
+import { WindLevels, WindLevel } from '../../endpoint-caller/interfaces/enums/WindLevel';
+import { TemperatureLevels, TemperatureLevel } from '../../endpoint-caller/interfaces/enums/TemperatureLevel';
+import './StatisticsPage.css';
 
 type GraphData = "weather" | "time" | "wind" | "temperature"
-const GraphDatas = ["weather", "time", "wind", "temperature"]
+
 
 const StatisticsPage: React.FC = () => {
+    const editableNameField = useRef<null | HTMLInputElement>(null);
 
-    
-    // Bar chart dataa
+    // Bar chart data
     Chart.register(...registerables)
-    //StackedBarChartData holds stacked bar chart data.
-    const emptyDataInput: dataInput = {
-            dataName: '',
-            dataLabel: [],
-            dataCount: [],
-    }
+
+    const appCtx = useContext(AppContext);
+
     const emptyDataField: dataField = {
         labels: [],
         datasets: []
     }
 
-    const [isLoading, setIsLoading] = useState<boolean>(true);
-    const hasRun = useRef(false);
-    const [selectedValue, setSelectedValue] = useState('weather');
-    const [statListData, setStatListData] = useState<StatsResponse[]>([]);
-    const [userData, setUserData] = useState<UserEndpointResponse>();
-    const appCtx = useContext(AppContext);
     const [chartData, setChartData] = useState<dataField>(emptyDataField)
     const stackedBarChartData = new StackedBarChartData()
+    const [currentGraphSelection, setCurrentGraphSelection] = useState<GraphData>("weather");
     const nameField = document.getElementById('nameField') as HTMLInputElement
-    
-    
-
-    const weatherData = {
-        dataName: 'Weather',
-        dataLabel: WeatherTypes,
-        dataCount: WeatherTypes.map(() => 0),
-    }
-    const timeData = {
-        dataName: 'Time',
-        dataLabel: TimePeriods,
-        dataCount: TimePeriods.map(() => 0),
-    }
-    const windData = {
-        dataName: 'Wind',
-        dataLabel: WindLevels,
-        dataCount: WindLevels.map(() => 0),
-    }
-    const temperatureData = {
-        dataName: 'Temperature',
-        dataLabel: TemperatureLevels,
-        dataCount: TemperatureLevels.map(() => 0),
-    }
+    const [userData, setUserData] = useState<UserEndpointResponse>();
 
     //Edit name function called when EditName button is called
     const editName = () => {
@@ -79,139 +45,126 @@ const StatisticsPage: React.FC = () => {
             var updatedName = nameField.value as string
             if (userData == undefined){
                 console.log("Cannot edit name")
-            }else{
+            } else {
                 UserEndpoint.patchUserName(userData?.id as string, updatedName)
             }
             nameField.disabled = true
         }
     }
 
-    //TODO: change graph data according to 
-    const changeGraphData = (value: string) => {
-        switch (value.toLocaleLowerCase()){
-            case "weather": {
-                stackedBarChartData.initialiseStatsData(weatherData)
-                setChartData(stackedBarChartData.getData())
-                break;
-            }
-            case "time": {
-                stackedBarChartData.initialiseStatsData(timeData)
-                setChartData(stackedBarChartData.getData())
-                break;
-            }
-                
-            case "wind": {
-                stackedBarChartData.initialiseStatsData(windData)
-                setChartData(stackedBarChartData.getData())
-                break;
-            }
-            case "temperature": {
-                stackedBarChartData.initialiseStatsData(temperatureData)
-                setChartData(stackedBarChartData.getData())
-                break;
-            }
-        }
+    const changeGraphData = (value: GraphData) => {
+        setCurrentGraphSelection(value);
     }
+
+    const initializeTally = <T extends string>(typeArray: T[]): { [key in T]: number } => {
+        return typeArray.reduce((acc, curr) => {
+            acc[curr] = 0;
+            return acc;
+        }, {} as { [key in T]: number });
+    };
+
+
+    const getWeatherTally = (weatherType: GraphData, stats: StatsResponse[]) => {
+        const labels: string[] = [];
+        const data: number[] = [];
+
+        const graphDataToTallyKeysMap = {
+            weather: WeatherTypes,
+            time: TimePeriods,
+            wind: WindLevels,
+            temperature: TemperatureLevels
+        }
+
+        const tally = initializeTally(graphDataToTallyKeysMap[weatherType]);
+
+        stats.forEach(item => {
+            switch (weatherType) {
+                case "weather":
+                    tally[item.weather_option.weather]++;
+                    break;
+                case "time":
+                    tally[item.time_period]++;
+                    break;
+                case "wind":
+                    tally[item.weather_option.wind]++;
+                    break;
+                case "temperature":
+                    tally[item.weather_option.temperature]++;
+                    break;
+            }
+        });
+
+        Object.keys(tally).forEach((key) => {
+            data.push(tally[key]);
+            labels.push(key);
+        });
+
+        return {
+            labels: labels,
+            datasets: [{
+                label: weatherType,
+                data: data,
+                backgroundColor: '#1e90ff',
+                stack: 'Stack 0',
+            }]
+        };
+    };
 
     // Get stats data
     useEffect(() => {
-        if (statListData.length == 0) {
-            BookingEndpoint.getStats().then((stats) => {
-                setStatListData(stats);
-                    });
-        }
-    })
+        BookingEndpoint.getStats().then((stats) => {
+            setChartData(() => getWeatherTally(currentGraphSelection, stats));
+        });
+    }, [currentGraphSelection])
+
     // Get user data set
     useEffect(() => {
         if (appCtx.userId !== "") {
-        UserEndpoint.getUser(appCtx.userId).then((user) => {
-            setUserData(user);
+            UserEndpoint.getUser(appCtx.userId).then((user) => {
+                setUserData(user);
+
+                if (user.name)
+                    editableNameField.current!.value = user.name;
             });
-                }
+        }
+
     }, [appCtx.userId]);
 
-    useEffect(() => {
-        setIsLoading(statListData.length == 0 && userData == undefined && nameField == null);
-    }, [statListData, userData, nameField])
-
-    useEffect(() => {
-        if(!isLoading && !hasRun.current) {
-            console.log(weatherData)
-            stackedBarChartData.initialiseStatsData(weatherData);
-            setChartData(stackedBarChartData.getData());
-            hasRun.current = true  
-        }
-    }, [isLoading, weatherData]);
-
-    
-    //Update booking amount 
-    var bookingAmount = statListData.length.toString()
-    if (nameField != null && userData != undefined){
-        nameField.value = userData.name as string
-    }
-    // populate record data
-    for (let stat of statListData){
-        var bookedWeather = stat.weather_option.weather
-        var bookedTime = stat.time_period
-        var bookedWind = stat.weather_option.wind
-        var bookedTempt = stat.weather_option.temperature
-            
-        //Add data to all dataInput
-        weatherData.dataCount[weatherData.dataLabel.indexOf(bookedWeather)] += 1
-        timeData.dataCount[timeData.dataLabel.indexOf(bookedTime)] += 1
-        windData.dataCount[windData.dataLabel.indexOf(bookedWind)] += 1
-        temperatureData.dataCount[temperatureData.dataLabel.indexOf(bookedTempt)] += 1
-        //console.log(`${bookedWeather}, ${bookedTime}, ${bookedWind}, ${bookedTempt}`)
-    }   
-    
-    console.log(weatherData)
-    
-    // stackedBarChartData.initialiseStatsData(weatherData)
-    // setChartData(stackedBarChartData.getData())
-    //Hi luyang please help with css :) refer to discord for the layout
     return (
         <IonPage>
             <IonContent fullscreen>
-                {isLoading ? (
-                <div className='loader-container'>
-                    <div className='spinner'></div>
-                </div>
-                ) : (
-                <>
-                    <div>
-                        Hi <input type='text' id='nameField' disabled></input> 
-                        <button onClick={editName}>Edit name</button>
-                    </div>
-                    <div>
-                        Maybe some feedback 
-                    </div>
-                    <div>
-                        MR Bluesky
-                    </div>
-                    <div>
-                        Kofi Link here
-                    </div>
-                    <div>
-                        {bookingAmount}
-                    </div>
-                    <div>
-                        <select onChange={(e) => {
-                                changeGraphData(e.target.value);
-                                setSelectedValue(e.target.value);
-                            }}
-                        >
-                            <option value="weather">Weather</option>
-                            <option value="time">Time</option>
-                            <option value="wind">Wind</option>
-                            <option value="temperature">Temperature</option>
-                        </select>
-                    </div>
-                    <div>
-                        <Bar data={chartData} options={stackedBarChartData.getOption()} />
-                    </div>
-                </>
-                )}
-                
+                {
+                    chartData.datasets.length == 0 ? (
+                        <div className='loader-container'>
+                            <div className='spinner' />
+                        </div>
+                    ) : (
+                        <>
+                            <div>
+                                Hi <input ref={editableNameField} type='text' id='nameField' disabled></input>
+                                <button onClick={editName}>Edit name</button>
+                            </div>
+                            <div>Maybe some feedback</div>
+                            <div>MR Bluesky</div>
+                            <div>Kofi Link here</div>
+                            <div>{/* bookingAmount */}</div>
+                            <div>
+                                <select
+                                    onChange={(e) => {
+                                        changeGraphData(e.target.value as GraphData);
+                                    }} >
+                                    <option value="weather">Weather</option>
+                                    <option value="time">Time</option>
+                                    <option value="wind">Wind</option>
+                                    <option value="temperature">Temperature</option>
+                                </select>
+                            </div>
+                            <div>
+                                <Bar data={chartData} options={stackedBarChartData.getOption()} />
+                            </div>
+                        </>
+                    )}
+
             </IonContent>
         </IonPage>
     );
