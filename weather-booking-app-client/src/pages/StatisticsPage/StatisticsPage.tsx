@@ -1,5 +1,5 @@
 import React, { useContext, useState, useEffect, useRef } from 'react';
-import { Chart, registerables} from 'chart.js';
+import { Chart, registerables } from 'chart.js';
 import { Bar } from 'react-chartjs-2';
 import { IonPage, IonSelect } from '@ionic/react';
 import { IonContent } from '@ionic/react';
@@ -8,7 +8,8 @@ import { AppContext } from '../../stores/app-context';
 import BookingEndpoint from '../../endpoint-caller/bookingEndpoint';
 import { StatsResponse } from '../../endpoint-caller/interfaces/bookings/StatsResponse';
 import { UserEndpointResponse } from '../../endpoint-caller/interfaces/users/UserEndpointResponse';
-import { StackedBarChartData, dataField, dataInput } from './ChartData/StackedBarChartData';
+import GraphDataField from './Interface/GraphDataField';
+import ChartOptionConfig from "./Interface/ChartOptionConfig";
 import { WeatherTypes, WeatherType } from '../../endpoint-caller/interfaces/enums/WeatherType';
 import { TimePeriods, TimePeriod } from '../../endpoint-caller/interfaces/enums/TimePeriod';
 import { WindLevels, WindLevel } from '../../endpoint-caller/interfaces/enums/WindLevel';
@@ -26,24 +27,23 @@ const StatisticsPage: React.FC = () => {
 
     const appCtx = useContext(AppContext);
 
-    const emptyDataField: dataField = {
+    const emptyDataField: GraphDataField = {
         labels: [],
         datasets: []
     }
 
-    const [chartData, setChartData] = useState<dataField>(emptyDataField)
-    const stackedBarChartData = new StackedBarChartData()
+    const [chartData, setChartData] = useState<GraphDataField>(emptyDataField)
     const [currentGraphSelection, setCurrentGraphSelection] = useState<GraphData>("weather");
     const nameField = document.getElementById('nameField') as HTMLInputElement
     const [userData, setUserData] = useState<UserEndpointResponse>();
 
     //Edit name function called when EditName button is called
     const editName = () => {
-        if (nameField.disabled == true){
+        if (nameField.disabled == true) {
             nameField.disabled = false
-        }else{
+        } else {
             var updatedName = nameField.value as string
-            if (userData == undefined){
+            if (userData == undefined) {
                 console.log("Cannot edit name")
             } else {
                 UserEndpoint.patchUserName(userData?.id as string, updatedName)
@@ -149,10 +149,7 @@ const StatisticsPage: React.FC = () => {
                             <div>Kofi Link here</div>
                             <div>{/* bookingAmount */}</div>
                             <div>
-                                <select
-                                    onChange={(e) => {
-                                        changeGraphData(e.target.value as GraphData);
-                                    }} >
+                                <select onChange={(e) => changeGraphData(e.target.value as GraphData)}>
                                     <option value="weather">Weather</option>
                                     <option value="time">Time</option>
                                     <option value="wind">Wind</option>
@@ -160,7 +157,7 @@ const StatisticsPage: React.FC = () => {
                                 </select>
                             </div>
                             <div>
-                                <Bar data={chartData} options={stackedBarChartData.getOption()} />
+                                <Bar data={chartData} options={ChartOptionConfig} />
                             </div>
                         </>
                     )}
