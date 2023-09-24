@@ -62,7 +62,7 @@ const ShareCard: React.FC<ShareCardProps> = (props) => {
           <IonIcon icon={arrowForwardOutline}></IonIcon>
         </IonButton>
       </IonCard>
-      <IonModal ref={shareModal} trigger="open-share-modal" initialBreakpoint={0.5} breakpoints={[0, 0.25, 0.5, 0.75]}>
+      <IonModal ref={shareModal} trigger="open-share-modal" initialBreakpoint={0.6} breakpoints={[0, 0.25, 0.6, 0.75]}>
         <IonCardContent className="share-modal-content">
           <div ref={shareImageRef}>
             <BookingDetailsImage {...props} />

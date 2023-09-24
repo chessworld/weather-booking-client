@@ -1,23 +1,9 @@
 import { Component, createRef, RefObject } from "react";
 import { format, parseISO } from "date-fns";
+import { IonToast, IonPage, IonDatetime, IonIcon, IonButton, IonSegment, IonSegmentButton } from "@ionic/react";
+import { withRouter } from "react-router-dom";
 import {
-  IonSelectOption,
-  IonText,
-  IonToast,
-  IonSelect,
-  IonPage,
-  IonDatetime,
-  IonIcon,
-  IonButton,
-  IonSegment,
-  IonSegmentButton,
-  IonLabel,
-} from "@ionic/react";
-import { withRouter, RouteComponentProps } from "react-router-dom";
-import {
-  calendarOutline,
   compassOutline,
-  timeOutline,
   bagOutline,
   sunnyOutline,
   moonOutline,
@@ -164,8 +150,8 @@ class BookingPageDateLocation extends Component<BookingPageDateLocationProps, Bo
 
     Object.entries(this.state.bookingDetails).forEach((item: [string, string | null]) => {
       const [key, value] = item;
-
       if (value === "" || value === null) {
+        console.log(key, value);
         inputIsValid = false;
         this.changeInputBorderValidStyle(inputIsValid, key);
         var error = `The ${key} field is empty.`;
@@ -341,7 +327,6 @@ class BookingPageDateLocation extends Component<BookingPageDateLocationProps, Bo
   }
 
   handleSuggestionSelect(location: Location) {
-    console.log(location);
     this.setState({
       ...this.state,
       bookingDetails: {
@@ -456,6 +441,7 @@ class BookingPageDateLocation extends Component<BookingPageDateLocationProps, Bo
                   presentation="date"
                   ref={this.calendarRef}
                   min={new Date().toISOString()}
+                  max={new Date(new Date().setMonth(new Date().getMonth() + 2)).toISOString()}
                   className="react-calendar"
                   onIonChange={(e) => {
                     if (typeof e.detail.value == "string") {
@@ -467,7 +453,7 @@ class BookingPageDateLocation extends Component<BookingPageDateLocationProps, Bo
               <div className="book-buttons-container">
                 <div
                   className="book-button"
-                  onTouchEnd={() => {
+                  onClick={() => {
                     if (this.validateInput()) {
                       this.props.history.push({
                         pathname: "/bookingPage",

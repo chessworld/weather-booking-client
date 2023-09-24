@@ -56,7 +56,7 @@ const ConfirmBookingDetails: React.FC<ConfirmBookingDetailsProps> = (props) => {
   return (
     <>
       <h1 className="booking-details-title">Booking Details</h1>
-      <IonCard className="booking-details-card">
+      <IonCard className="confirm-booking-details-card">
         <IonCardContent className="booking-detail-container">
           <div className="booking-details-content">
             <div className="booking-details-details">
@@ -101,8 +101,6 @@ const ConfirmBookingDetails: React.FC<ConfirmBookingDetailsProps> = (props) => {
       <div
         className="button-container"
         style={{
-          marginBottom: "vh",
-          marginTop: "10vh",
           width: "100vw",
         }}
       >
