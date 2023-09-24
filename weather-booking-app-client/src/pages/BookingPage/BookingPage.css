@@ -69,6 +69,7 @@
   justify-content: space-around;
   align-items: flex-start;
   margin: 0 0 2vh 0;
+  padding: 0 1rem;
 }
 
 .weather-choose-container {
@@ -76,6 +77,7 @@
   flex-direction: column;
   justify-content: center;
   align-items: center;
+  width: 25%;
 }
 
 .weather-choose-text {
@@ -86,7 +88,7 @@
 
 .weather-choose-text-selected {
   font-size: 4vw;
-  font-weight: bold;
+  font-weight: bolder;
   margin-top: 1vh;
   color: rgba(0, 0, 0, 0.516);
 }
@@ -104,7 +106,7 @@
   align-items: center;
   border-radius: 3em !important;
   color: white;
-  width: 21vw;
+  width: 20vw;
   height: 22vh;
   text-align: center;
   /* box-shadow: 0 0 0 0.1em rgba(255, 255, 255, 0.7) inset, 0 0 2em -0.3em var(--shadow) !important; */
@@ -112,7 +114,7 @@
 
 .weather-choose-option-selected {
   box-shadow: 0 0 0 0.2em rgba(255, 255, 255, 0.7) inset, 0 0 2em -0.3em var(--shadow) !important;
-  width: 25vw;
+  width: 24vw;
 }
 
 .weather-icon {
@@ -147,6 +149,7 @@
 .book-button {
   position: relative !important;
   color: white;
+  background: #004fb5;
   background: rgba(0, 0, 0, 0.7);
   backdrop-filter: blur(2px);
   padding: 20px;

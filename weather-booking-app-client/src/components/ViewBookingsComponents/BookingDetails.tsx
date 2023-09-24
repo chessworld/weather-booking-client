@@ -59,8 +59,9 @@ const BookingDetails: React.FC<BookingDetailsProps> = (props) => {
           </div>
 
           <IonCard className="enjoy-weather-card">Enjoy your weather!</IonCard>
-
-          <ShareCard {...props.bookingDetails} />
+          <div className="share-card-container">
+            <ShareCard {...props.bookingDetails} />
+          </div>
         </IonCardContent>
       </IonCard>
 
@@ -71,8 +72,9 @@ const BookingDetails: React.FC<BookingDetailsProps> = (props) => {
             <IonCardContent>
               {props.bookingDetails.result === "Failed" && (
                 <p className="apology-text">
-                  Sorry we couldn't fulfill your request!
-                  <br /> We will try to do better next time. Please give us your feedback.
+                  We're sorry we couldn't fulfill your request...
+                  <br /> We will try to do better next time.
+                  <br /> Please give us your feedback.
                 </p>
               )}
               <IonCard className="enjoy-weather-card feedback-card" id="feedback-card">

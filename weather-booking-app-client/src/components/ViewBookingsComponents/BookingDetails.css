@@ -30,6 +30,7 @@
   font-weight: bold;
   position: relative;
   top: 1rem;
+  padding: 0;
 }
 
 .booking-details-card {
@@ -43,10 +44,17 @@
   justify-content: center;
 }
 
+.share-card-container {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+}
+
 .apology-text {
   color: black;
   border-radius: 12px;
-  text-align: center;
+  font-weight: bold !important;
+  /* text-align: center; */
   padding: 0.5rem;
 }
 
