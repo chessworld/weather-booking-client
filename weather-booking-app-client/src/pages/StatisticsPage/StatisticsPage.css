@@ -2,232 +2,107 @@
 /*                               page fonts                              */
 /*************************************************************************/
 
-.page-header {
-    color: #000;
+.grid-container__wrapper {
+    width: 100vw;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 60vh;
+    flex-direction: column;
+}
+
+.grid-container__wrapper > * {
+    margin: 1vh 0;
+}
+
+.statistics-page__number-of-bookings__wrapper {
+    display: flex;
+    flex-direction: row;
+    width: 100vw;
+    justify-content: center;
+}
+
+.statistics-page__number-of-bookings {
+    display: flex;
+    flex-direction: column;
+    background: #EEE;
+    padding: 10px;
+    border-radius: 12px;
+}
+.statistics-page__number-of-bookings__content {
+    display: flex;
+    justify-content: center;
+    align-items: flex-start;
+}
+.statistics-page__number-of-bookings__wrapper>* {
+    margin: 0 .5vw;
+}
+.statistics-page__number-of-bookings__content>img {
+    height: 30px;
+    width: auto;
+    background: #EEE;
+    border-radius: 100%;
+    padding: 2px;
+}
+
+.statistics-page__large-text {
+    font-weight: bold;
+      font-size: 2rem;
+}
+
+.statistics-page__small-text {
+    font-size: 10px;
+}
+
+.statistics-page__number-of-bookings-description {
+    text-align: center;
+    font-size: .7rem;
+    color: #888;
+}
+
+.svg-class {
+    width: 1.5em; 
+    height: 1.5em;
+    vertical-align: middle;
+    fill: currentColor;
+    overflow: hidden;
+}
+
+.name-field{
+    background-color: white;
+    border: none;
+    border-bottom: #2e2e2e;
+    border-width: 1px;
+    width: 20ch;
+}
+
+.name-field:disabled{
+    background-color: transparent;
+    border: none;
+}
+
+.welcome-user {
+    padding-top: 10px;
+    padding-left: 15px;
+}
+
+.statistic-page-title {
     z-index: 1;
     font-size: 5vw;
-    margin: 0vh 0 0.5vh 0;
-    padding: 12px 0 0px 20px;
-    font-weight: bold;
-    position: relative;
-}
-
-.page-body {
-    color: #000;
-    z-index: 1;
-    font-size: 3.5vw;
-    margin: 0vh 0 0.5vh 0;
-    padding: 0px 20px;
-    position: relative;
-    
-}
-
-.statistic-content {
-    height:70vh;
-}
-
-.period-container{
     margin: 0.5vh 0 0.5vh 0;
     padding: 0px 15px;
+    font-weight: bold;
     position: relative;
     top: 1rem;
     margin-bottom: 1rem;
-    z-index: 1;
-    font-size: 2.5vw
 }
 
-.statistic-content {
-    height: 70vh;
-}
-
-.statistic-page-graphs {
-    display: flex;
-    justify-content: space-around;
-    height: 60vh;
-    flex-direction: column
-}
-
-.statistic-page-streaks {
-    width: 85vw;
-    color: white;
-    display: grid;
-    font-size: 13px;
-    text-align: left;
-}
-
-.statistic-page-number {
-    background: #EE4040;
-    border-radius: 7px;
-    padding: 2px 8px 2px;
-    color: white;
-    margin-left: 5vw;
-    
-}
-
-.statistic-page-current-streak {
-    grid-column-start: 1;
-    grid-column-end: 3;
-    padding: 12px;
-    margin: 18px 4px 0px 4px;
-    background: rgba(10, 124, 235, .6);
-    background: rgba(10, 10, 10, .6);
-    border-radius: 12px
-}
-
-
-.statistic-page-highest-streak {
-    grid-column-start: 3;
-    grid-column-end: 6;
-    padding: 12px;
-    margin: 0px 4px 0px 4px;
-    background: rgba(118, 115, 220, .6);
-    background: rgba(10, 10, 10, .6);
-    border-radius: 12px;
-}
-
-.booking-amount-graph-container {
-    display: flex;
-    justify-content:center;
-    background: rgba(255, 255, 255, .8);
-    opacity: .8;
-    margin: 0 2vh 0 2vh;
-    padding: .5rem;
-    border-radius: 12px;
-    width: 85vw;
-    height: 20vh;
-}
-
-
-.booking-accuracy-graph-container {
-    display: flex;
-    justify-content: center;
-    background: rgba(255, 255, 255, .8);
-    opacity: .8;
-    margin: 0 2vh 0 2vh;
-    padding: .5rem;
-    border-radius: 12px;
-    width: 85vw;
-    height: 20vh;
-}
-
-
-.statistic-page-date {
-    font-size: 10px;
-    margin-top: 1px;
-    color: #2e2e2e;
-    color: #EEE;
-    text-align: left;
-}
-
-
-.most-guessed-weather-container{
-    opacity: .8;
-    height: 20vh;
-    width: 85vw;
-    padding: 0 5vw 4.5vh;
-    border-radius: 12px;
-}
-
-.statistic-page-graphs {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-}
-
-
-.graph-title {
-    text-align: center;
-    /* margin: 2px 0 12px 0; */
-    font-size: 1.90vh;
-    padding: 10px;
-}
-
-.acuracy-graph-content {
-    display: flex;
-    flex-direction: row;
-    height: 16vh;
-    
-}
-
-.acuracy-value {
-    text-align: center;
-    width: 100%;
-    font-size: 10vh;
-    color: #2e2e2e;
-}
-
-.welcome-view {
-    height: 36vh;
-    padding: 3vh 0 0vh;
-}
-
-.welcome-card {
-    box-shadow: rgba(50, 50, 93, 0.25) 0px 2px 5px -1px, rgba(0, 0, 0, 0.3) 0px 1px 3px -1px;
-    border-radius: 25px;
-    background-color: #d0e1f5;
-    background-size: 100%;
-    height: 23vh;
-    width: 95vw;
-    justify-content: center;
-}
-
-.welcome-content {
-    background-color: #a8c8ed;
-    height:36vh;
-}
-
-.card-content {
-    padding: 1.4vh 0 0 20px;
-}
-
-#card-header {
-    color: 	#2e2e2e;
-    font-size: 3.8vh;
+.step-heading {
     font-weight: bold;
-    text-shadow: 3px 3px 2px rgba(41,2,23,0.17);
+    align-self: flex-start;
+    margin: 2rem 0 0 2rem;
+    font-size: 1.1rem;
 }
-
-#card-subtitle {
-    padding-top: 0;
-    color: #383838;
-    font-size: 2.5vh;
-    text-shadow: 3px 3px 2px rgba(41,2,23,0.17);
-}
-
-
-
-.booknow-button {
-    margin-top: 12px;
-    -webkit-border-radius: 28;
-    -moz-border-radius: 28;
-    border-radius: 28px;
-    -webkit-box-shadow: 0px 4px 1px #d0e1f5;
-    -moz-box-shadow: 0px 4px 1px #d0e1f5;
-    box-shadow: 0px 4px 1px #d0e1f5;
-    color: #232323;
-    font-size: 15px;
-    font-weight: 650;
-    padding: 10px 20px 10px 20px;
-    border: solid #2c2c2c 2px;
-    background: #d0e1f5;
-    text-decoration: none;
-
-}
-
-/*****************************************************************************/
-/*                               slide up panel                              */
-/*****************************************************************************/
-
-.slide-up-panel {
-    background: #1e90ff;
-    position: absolute;
-    z-index: 2;
-    bottom: 0;
-    height: 70vh;
-    display: flex;
-    flex-direction: space-evenly;
-}
-
 /*****************************************************************************/
 /*                               Loading screen                              */
 /*****************************************************************************/

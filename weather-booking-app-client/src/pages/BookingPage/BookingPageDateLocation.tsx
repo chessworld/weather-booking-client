@@ -376,7 +376,6 @@ class BookingPageDateLocation extends Component<BookingPageDateLocationProps, Bo
         <Background showClouds={false}>
           {/* <div className="booking-page-date-location-header">Book Unique Weather and Experiences</div> */}
           <h2 className="booking-page-date-location-title">Book Your Weather</h2>
-
           <div className="booking-page-date-location-container">
             <h3 className="step-heading">Step 1 - What, Where and When</h3>
             <div className="input-fields-container">

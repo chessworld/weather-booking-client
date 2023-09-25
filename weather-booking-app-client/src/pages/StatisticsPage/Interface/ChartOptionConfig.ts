@@ -1,4 +1,5 @@
-{
+
+export var ChartOptionConfig = {
     "plugins": {
         "title": {
             "display": true,
