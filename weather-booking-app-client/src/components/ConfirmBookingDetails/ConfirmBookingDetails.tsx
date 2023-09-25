@@ -106,13 +106,7 @@ const ConfirmBookingDetails: React.FC<ConfirmBookingDetailsProps> = (props) => {
           width: "100vw",
         }}
       >
-        <div
-          className="book-button"
-          style={{
-            width: "50vw",
-          }}
-          onTouchEnd={props.book}
-        >
+        <div className="book-button" onTouchEnd={props.book}>
           Confirm
         </div>
       </div>

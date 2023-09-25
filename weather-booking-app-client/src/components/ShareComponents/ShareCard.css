@@ -26,3 +26,17 @@
   --background: white;
   --border-radius: 20px;
 }
+
+.booking-details-image-container {
+  margin-top: 2rem;
+}
+
+.download-button {
+  border-radius: 20px;
+  font-weight: bolder;
+  align-self: center;
+  --background: rgba(0, 0, 0, 0.7);
+  --border-radius: 20px;
+  min-height: 3rem;
+  min-width: 10rem;
+}

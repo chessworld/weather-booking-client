@@ -1,5 +1,5 @@
 import { IonCard, IonButton, IonIcon, IonCardContent, IonModal } from "@ionic/react";
-import { arrowForwardOutline } from "ionicons/icons";
+import { arrowForwardOutline, download } from "ionicons/icons";
 import React, { useRef } from "react";
 import "./ShareCard.css";
 import {
@@ -18,6 +18,7 @@ import BookingDetailsImage from "./BookingDetailsImage";
 import { BookingResponse } from "../../endpoint-caller/interfaces/bookings/BookingResponse";
 import { WeatherOption } from "../../endpoint-caller/interfaces/bookings/WeatherOption";
 import { Location } from "../../endpoint-caller/interfaces/locations/Location";
+import { toBlob, toPng, toJpeg, toSvg } from "html-to-image";
 
 interface ShareCardProps {
   location: Location;
@@ -28,9 +29,9 @@ interface ShareCardProps {
 const ShareCard: React.FC<ShareCardProps> = (props) => {
   const shareModal = useRef<HTMLIonModalElement>(null);
   const shareMessage = "Check out my weather booking!";
-  const shareImageRef = useRef<any>(null);
+  const shareImageRef = useRef<HTMLDivElement>(null);
 
-  let newFile: Blob | null = null;
+  // let newFile: Blob | null = null;
   let shareUrl: string = "https://ko-fi.com/";
   // useEffect(() => {
   //   console.log(shareImageRef);
@@ -53,6 +54,26 @@ const ShareCard: React.FC<ShareCardProps> = (props) => {
   //   text: "image",
   // };
 
+  const downloadPng = () => {
+    if (!shareImageRef.current) return;
+
+    toPng(shareImageRef.current, {
+      canvasWidth: 355,
+      canvasHeight: 260,
+      width: 355,
+      height: 260,
+      style: {
+        position: "absolute",
+        top: "0",
+        right: "12px",
+      },
+    }).then((dataUrl) => {
+      const link = document.createElement("a");
+      link.download = "my-weather-booking.png";
+      link.href = dataUrl;
+      link.click();
+    });
+  };
   return (
     <div>
       <IonCard className="share-card">
@@ -64,12 +85,12 @@ const ShareCard: React.FC<ShareCardProps> = (props) => {
       </IonCard>
       <IonModal ref={shareModal} trigger="open-share-modal" initialBreakpoint={0.6} breakpoints={[0, 0.25, 0.6, 0.75]}>
         <IonCardContent className="share-modal-content">
-          <div ref={shareImageRef}>
+          <div ref={shareImageRef} className="booking-details-image-container">
             <BookingDetailsImage {...props} />
           </div>
-          {/* <IonButton onClick={() => shareModal.current?.dismiss()} className="download-button">
+          <IonButton onClick={() => downloadPng()} className="download-button">
             Download as PNG
-          </IonButton> */}
+          </IonButton>
           <h2 style={{ fontWeight: "bold" }}>Share</h2>
           <div>
             <WhatsappShareButton url={shareUrl} title={shareMessage}>

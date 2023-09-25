@@ -148,16 +148,16 @@
 
 .book-button {
   position: relative !important;
-  background: white !important;
+  background: rgba(0, 0, 0, 0.7) !important;
+  color: white;
   backdrop-filter: blur(2px);
   padding: 1rem 2rem;
-  border-radius: 24px;
+  border-radius: 20px;
   text-align: center;
-  border: 2px solid #ffffff;
   box-shadow: 2px 2px 4px #888;
   letter-spacing: 0.1rem;
+  font-weight: bolder;
   font-size: 1rem;
-  font-weight: 600;
   transition: background 0.5s ease;
 }
 
