@@ -148,15 +148,15 @@
 
 .book-button {
   position: relative !important;
-  color: white;
-  background: #004fb5;
-  background: rgba(0, 0, 0, 0.7);
+  background: white !important;
   backdrop-filter: blur(2px);
-  padding: 20px;
-  border-radius: 2vw;
-  width: 40vw;
+  padding: 1rem 2rem;
+  border-radius: 24px;
   text-align: center;
-  font-size: 0.8rem;
+  border: 2px solid #ffffff;
+  box-shadow: 2px 2px 4px #888;
+  letter-spacing: 0.1rem;
+  font-size: 1rem;
   font-weight: 600;
   transition: background 0.5s ease;
 }
