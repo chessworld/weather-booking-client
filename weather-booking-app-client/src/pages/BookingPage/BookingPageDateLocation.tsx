@@ -151,7 +151,6 @@ class BookingPageDateLocation extends Component<BookingPageDateLocationProps, Bo
     Object.entries(this.state.bookingDetails).forEach((item: [string, string | null]) => {
       const [key, value] = item;
       if (value === "" || value === null) {
-        console.log(key, value);
         inputIsValid = false;
         this.changeInputBorderValidStyle(inputIsValid, key);
         var error = `The ${key} field is empty.`;
@@ -182,6 +181,9 @@ class BookingPageDateLocation extends Component<BookingPageDateLocationProps, Bo
   applyInvalidInputStyle(element: HTMLElement | null, isIconElement?: boolean): void {
     if (element) {
       element.style.borderWidth = isIconElement ? "2px 0px 2px 2px" : "2px 2px 2px 0px";
+      if (element.id === "booking-page-time-period-input" || element.id === "booking-page-date-time-input") {
+        element.style.borderWidth = "2px 2px 2px 2px";
+      }
       element.style.borderStyle = "solid";
       element.style.borderColor = "#DD0000";
     }
@@ -417,6 +419,7 @@ class BookingPageDateLocation extends Component<BookingPageDateLocationProps, Bo
                   onIonChange={(e) => {
                     this.updateBooking(e.target.value, "timePeriod");
                   }}
+                  id={this.state.bookingPageInputIds.timePeriod}
                 >
                   <IonSegmentButton value="Morning" className="timeperiod-button">
                     <IonIcon className="time-period-icon" icon={partlySunnyOutline} />
@@ -448,6 +451,7 @@ class BookingPageDateLocation extends Component<BookingPageDateLocationProps, Bo
                       this.updateBooking(e.detail.value, "dateTime");
                     }
                   }}
+                  id={this.state.bookingPageInputIds.dateTime}
                 ></IonDatetime>
               </div>
               <div className="book-buttons-container">

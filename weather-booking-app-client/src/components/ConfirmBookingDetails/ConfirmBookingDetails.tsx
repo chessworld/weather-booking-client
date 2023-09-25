@@ -56,7 +56,7 @@ const ConfirmBookingDetails: React.FC<ConfirmBookingDetailsProps> = (props) => {
   return (
     <>
       <h1 className="booking-details-title" style={{ padding: "1rem 0 0 1.5rem" }}>
-        Booking Details
+        Confirm Booking
       </h1>
       <IonCard className="confirm-booking-details-card">
         <IonCardContent className="booking-detail-container">
@@ -68,13 +68,13 @@ const ConfirmBookingDetails: React.FC<ConfirmBookingDetailsProps> = (props) => {
               <IonCardSubtitle className="booking-details-details__subtitle">
                 {formatDate(props.weatherBookingDetails.bookingDetails.dateTime as string)}
               </IonCardSubtitle>
-              <p className="booking-details-details__weather"></p>
+              <p className="booking-details-details__weather">
+                {props.weatherBookingDetails.selectedWeatherOption},{" "}
+                {props.weatherBookingDetails.selectedTemperatureOption},{" "}
+                {props.weatherBookingDetails.selectedWindOption}
+              </p>
             </div>
             <div className="booking-details-img-container">
-              {/* <IonImg
-                className="booking-details-img"
-                src={props.weatherBookingDetails.weatherOptions[props.data.selectedWeatherOption].image}
-              /> */}
               <div className="confirm-booking-weather-icon-container">
                 {selectedBookingWeatherOption &&
                   createElement(selectedBookingWeatherOption?.svg, {
