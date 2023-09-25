@@ -1,22 +1,36 @@
 
 export var ChartOptionConfig = {
-    "plugins": {
-        "title": {
-            "display": true,
-            "text": "Chart.js Bar Chart - Stacked"
-        }
-    },
-    "responsive": true,
-    "interaction": {
-        "mode": "index",
-        "intersect": false
-    },
-    "scales": {
-        "x": {
-            "stacked": true
+    plugins: {
+        legend: {
+            display: false
         },
-        "y": {
-            "stacked": true
-        }
+    },
+    
+    responsive: true,
+    interaction: {
+        mode: "index",
+        intersect: false
+    },
+    scales: {
+        x: {
+            border: {
+                display: false
+            },
+            grid: {
+                display: false,
+            },
+            
+        },
+        y: {
+            border: {
+                display: false,
+            },
+            ticks: {
+                stepSize: 3,
+            },
+            grid: {
+                display: false,
+            }
+        },
     }
 }

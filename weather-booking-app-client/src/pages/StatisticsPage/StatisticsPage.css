@@ -160,6 +160,18 @@
   background: transparent;
   border: none;
 }
+
+.bar-graph {
+  margin: 20px;
+}
+
+.weather-selection{
+    padding-top: 50px;
+    width: 85vw;
+    border-radius: 12px;
+    display: flex;
+    gap: 0.5rem;
+}
 /*****************************************************************************/
 /*                               Loading screen                              */
 /*****************************************************************************/
