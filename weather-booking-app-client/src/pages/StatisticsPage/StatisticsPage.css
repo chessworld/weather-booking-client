@@ -2,140 +2,197 @@
 /*                               page fonts                              */
 /*************************************************************************/
 
+.home-page-app-name-container {
+  text-align: center;
+  padding-bottom: 1rem;
+  border-bottom: 1px solid white;
+}
+
+.home-page-app-name {
+  font-weight: bolder;
+  margin-bottom: 0;
+  font-size: 2rem;
+  letter-spacing: 5px;
+}
+
+.home-page-app-hook {
+  font-weight: lighter;
+  font-style: italic;
+  font-size: 0.9rem;
+}
+
 .grid-container__wrapper {
-    width: 100vw;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    height: 60vh;
-    flex-direction: column;
+  width: 100vw;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  margin-top: 1rem;
 }
 
 .grid-container__wrapper > * {
-    margin: 1vh 0;
+  margin: 1vh 0;
+}
+
+.app-icon-container {
+  width: 8rem;
+}
+
+.number-of-bookings-content {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  border: 1px solid white;
+  color: #495057;
+  box-shadow: inset 0 3px 10px 0 white;
+  border-radius: 12px;
+  padding: 2rem;
+}
+
+.number-bookings-text {
+  display: flex;
+  align-items: flex-end;
+  gap: 1rem;
+}
+
+.number-bookings-text h1 {
+  font-size: min(20vw, 10rem);
+  letter-spacing: -0.6rem;
+  font-weight: bold;
+  margin: 0;
+  margin-right: 0.5rem;
+  color: black;
+}
+
+.number-bookings-text p {
+  padding-bottom: 1rem;
 }
 
 .statistics-page__number-of-bookings__wrapper {
-    display: flex;
-    flex-direction: row;
-    width: 100vw;
-    justify-content: center;
+  display: flex;
+  flex-direction: row;
+  width: 100vw;
+  justify-content: center;
 }
 
 .statistics-page__number-of-bookings {
-    display: flex;
-    flex-direction: column;
-    background: #EEE;
-    padding: 10px;
-    border-radius: 12px;
+  display: flex;
+  flex-direction: column;
+  /* background: #eee; */
+  padding: 10px;
+  border-radius: 12px;
 }
 .statistics-page__number-of-bookings__content {
-    display: flex;
-    justify-content: center;
-    align-items: flex-start;
+  display: flex;
+  justify-content: center;
+  align-items: flex-start;
 }
-.statistics-page__number-of-bookings__wrapper>* {
-    margin: 0 .5vw;
-}
-.statistics-page__number-of-bookings__content>img {
-    height: 30px;
-    width: auto;
-    background: #EEE;
-    border-radius: 100%;
-    padding: 2px;
+
+.statistics-page__number-of-bookings__content > img {
+  height: 30px;
+  width: auto;
+  background: #eee;
+  border-radius: 100%;
+  padding: 2px;
 }
 
 .statistics-page__large-text {
-    font-weight: bold;
-      font-size: 2rem;
+  font-weight: bold;
+  font-size: 2rem;
 }
 
 .statistics-page__small-text {
-    font-size: 10px;
+  font-size: 10px;
 }
 
 .statistics-page__number-of-bookings-description {
-    text-align: center;
-    font-size: .7rem;
-    color: #888;
+  text-align: center;
+  font-size: 0.7rem;
+  color: #888;
 }
 
 .svg-class {
-    width: 1.5em; 
-    height: 1.5em;
-    vertical-align: middle;
-    fill: currentColor;
-    overflow: hidden;
+  width: 1.5em;
+  height: 1.5em;
+  vertical-align: middle;
+  fill: currentColor;
+  overflow: hidden;
 }
 
-.name-field{
-    background-color: white;
-    border: none;
-    border-bottom: #2e2e2e;
-    border-width: 1px;
-    width: 20ch;
+.name-field {
+  background-color: white;
+  border: none;
+  border-bottom: #2e2e2e;
+  border-width: 1px;
+  width: 10ch;
 }
 
-.name-field:disabled{
-    background-color: transparent;
-    border: none;
+.name-field:disabled {
+  background-color: transparent;
+  border: none;
 }
 
-.welcome-user {
-    padding-top: 10px;
-    padding-left: 15px;
+.home-page-heading-container {
+  display: flex;
+  align-items: center;
 }
 
 .statistic-page-title {
-    z-index: 1;
-    font-size: 5vw;
-    margin: 0.5vh 0 0.5vh 0;
-    padding: 0px 15px;
-    font-weight: bold;
-    position: relative;
-    top: 1rem;
-    margin-bottom: 1rem;
+  font-size: 5vw;
+  margin: 1rem 0.5rem 0 1rem;
+  font-weight: bold;
+  margin-bottom: 1rem;
+}
+
+.edit-name-button {
+  height: fit-content;
 }
 
 .step-heading {
-    font-weight: bold;
-    align-self: flex-start;
-    margin: 2rem 0 0 2rem;
-    font-size: 1.1rem;
+  font-weight: bold;
+  align-self: flex-start;
+  margin: 2rem 0 0 2rem;
+  font-size: 1.1rem;
+}
+
+.home-page-select-option {
+  background: transparent;
+  border: none;
 }
 /*****************************************************************************/
 /*                               Loading screen                              */
 /*****************************************************************************/
 
 .hidden {
-    display: none;
+  display: none;
 }
 
 /*Source: https://stackabuse.com/how-to-create-a-loading-animation-in-react-from-scratch/*/
 .loader-container {
-    width: 100%;
-    height: 100vh;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    position: fixed;
-    z-index: 1;
+  width: 100%;
+  height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  position: fixed;
+  z-index: 1;
 }
 
 .spinner {
-    width: 64px;
-    height: 64px;
-    border: 8px solid;
-    border-color: #2e2e2e transparent #2e2e2e transparent;
-    border-radius: 50%;
-    animation: spin-anim 1.2s linear infinite;
+  width: 64px;
+  height: 64px;
+  border: 8px solid;
+  border-color: #2e2e2e transparent #2e2e2e transparent;
+  border-radius: 50%;
+  animation: spin-anim 1.2s linear infinite;
 }
 
 @keyframes spin-anim {
-    0% {
-        transform: rotate(0deg);
-    }
-    100% {
-        transform: rotate(360deg);
-    }
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
 }
