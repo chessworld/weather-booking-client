@@ -55,8 +55,10 @@ const ConfirmBookingDetails: React.FC<ConfirmBookingDetailsProps> = (props) => {
 
   return (
     <>
-      <h1 className="booking-details-title">Booking Details</h1>
-      <IonCard className="booking-details-card">
+      <h1 className="booking-details-title" style={{ padding: "1rem 0 0 1.5rem" }}>
+        Confirm Booking
+      </h1>
+      <IonCard className="confirm-booking-details-card">
         <IonCardContent className="booking-detail-container">
           <div className="booking-details-content">
             <div className="booking-details-details">
@@ -66,13 +68,13 @@ const ConfirmBookingDetails: React.FC<ConfirmBookingDetailsProps> = (props) => {
               <IonCardSubtitle className="booking-details-details__subtitle">
                 {formatDate(props.weatherBookingDetails.bookingDetails.dateTime as string)}
               </IonCardSubtitle>
-              <p className="booking-details-details__weather"></p>
+              <p className="booking-details-details__weather">
+                {props.weatherBookingDetails.selectedWeatherOption},{" "}
+                {props.weatherBookingDetails.selectedTemperatureOption},{" "}
+                {props.weatherBookingDetails.selectedWindOption}
+              </p>
             </div>
             <div className="booking-details-img-container">
-              {/* <IonImg
-                className="booking-details-img"
-                src={props.weatherBookingDetails.weatherOptions[props.data.selectedWeatherOption].image}
-              /> */}
               <div className="confirm-booking-weather-icon-container">
                 {selectedBookingWeatherOption &&
                   createElement(selectedBookingWeatherOption?.svg, {
@@ -101,18 +103,10 @@ const ConfirmBookingDetails: React.FC<ConfirmBookingDetailsProps> = (props) => {
       <div
         className="button-container"
         style={{
-          marginBottom: "vh",
-          marginTop: "10vh",
           width: "100vw",
         }}
       >
-        <div
-          className="book-button"
-          style={{
-            width: "50vw",
-          }}
-          onTouchEnd={props.book}
-        >
+        <div className="book-button" onTouchEnd={props.book}>
           Confirm
         </div>
       </div>

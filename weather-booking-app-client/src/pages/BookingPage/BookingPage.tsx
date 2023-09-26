@@ -4,11 +4,10 @@ import BookingEndpoint from "../../endpoint-caller/bookingEndpoint";
 import BookingPageProps from "./Interface/BookingPageProps";
 import { BookingPageState, isBookingDetails } from "./Interface/BookingPageState";
 import ConfirmBookingDetails from "../../components/ConfirmBookingDetails/ConfirmBookingDetails";
-import React from "react";
 import { withRouter } from "react-router-dom";
 import WeatherHud from "../../components/BookWeatherComponents/WeatherHud";
-import { Component } from "react";
-import { IonToast, IonRange, IonPage, IonButton, IonIcon } from "@ionic/react";
+import { Component, RefObject } from "react";
+import { IonToast, IonRange, IonPage, IonButton, IonIcon, IonModal } from "@ionic/react";
 import Cloudy from "../../components/weatherAnimatedIcons/Cloudy";
 import Sunny from "../../components/weatherAnimatedIcons/Sunny";
 import Rainy from "../../components/weatherAnimatedIcons/Rainy";
@@ -22,9 +21,11 @@ import { BookingWeatherOption } from "./Interface/BookingWeatherOptions";
 import { chevronBackOutline } from "ionicons/icons";
 import { Location } from "../../endpoint-caller/interfaces/locations/Location";
 import { abbrState } from "./State";
+import React from "react";
 
 class BookingPage extends Component<BookingPageProps, BookingPageState> {
   static contextType = AppContext;
+  confirmBookingModal: RefObject<HTMLIonModalElement> = React.createRef<HTMLIonModalElement>();
 
   constructor(props: BookingPageProps) {
     super(props);
@@ -175,16 +176,19 @@ class BookingPage extends Component<BookingPageProps, BookingPageState> {
         />
 
         <Background showClouds={false}>
-          {
-            <SlideUpPanel showPanel={this.state.showConfirmation}>
-              <ConfirmBookingDetails
-                weatherBookingDetails={this.state}
-                weatherOptions={this.weatherOptions}
-                closeBookingDetail={this.toggleConfirmation}
-                book={this.book}
-              />
-            </SlideUpPanel>
-          }
+          <IonModal
+            ref={this.confirmBookingModal}
+            trigger="open-confirm-booking-modal"
+            initialBreakpoint={0.7}
+            breakpoints={[0, 0.25, 0.7, 0.75]}
+          >
+            <ConfirmBookingDetails
+              weatherBookingDetails={this.state}
+              weatherOptions={this.weatherOptions}
+              closeBookingDetail={this.toggleConfirmation}
+              book={this.book}
+            />
+          </IonModal>
           <h2 className="booking-page-date-location-title">Book Your Weather</h2>
 
           <div className="page-content">
@@ -286,10 +290,10 @@ class BookingPage extends Component<BookingPageProps, BookingPageState> {
             />
 
             {/* Book Button */}
-            <div className="book-buttons-container">
-              <div onTouchEnd={this.clickBooking} className="book-button">
+            <div className="book-buttons-container" style={{ margin: "0" }}>
+              <button onClick={this.clickBooking} className="book-button" id="open-confirm-booking-modal">
                 Book
-              </div>
+              </button>
             </div>
           </div>
         </Background>

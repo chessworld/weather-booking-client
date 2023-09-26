@@ -1,23 +1,9 @@
 import { Component, createRef, RefObject } from "react";
 import { format, parseISO } from "date-fns";
+import { IonToast, IonPage, IonDatetime, IonIcon, IonButton, IonSegment, IonSegmentButton } from "@ionic/react";
+import { withRouter } from "react-router-dom";
 import {
-  IonSelectOption,
-  IonText,
-  IonToast,
-  IonSelect,
-  IonPage,
-  IonDatetime,
-  IonIcon,
-  IonButton,
-  IonSegment,
-  IonSegmentButton,
-  IonLabel,
-} from "@ionic/react";
-import { withRouter, RouteComponentProps } from "react-router-dom";
-import {
-  calendarOutline,
   compassOutline,
-  timeOutline,
   bagOutline,
   sunnyOutline,
   moonOutline,
@@ -164,7 +150,6 @@ class BookingPageDateLocation extends Component<BookingPageDateLocationProps, Bo
 
     Object.entries(this.state.bookingDetails).forEach((item: [string, string | null]) => {
       const [key, value] = item;
-
       if (value === "" || value === null) {
         inputIsValid = false;
         this.changeInputBorderValidStyle(inputIsValid, key);
@@ -196,6 +181,9 @@ class BookingPageDateLocation extends Component<BookingPageDateLocationProps, Bo
   applyInvalidInputStyle(element: HTMLElement | null, isIconElement?: boolean): void {
     if (element) {
       element.style.borderWidth = isIconElement ? "2px 0px 2px 2px" : "2px 2px 2px 0px";
+      if (element.id === "booking-page-time-period-input" || element.id === "booking-page-date-time-input") {
+        element.style.borderWidth = "2px 2px 2px 2px";
+      }
       element.style.borderStyle = "solid";
       element.style.borderColor = "#DD0000";
     }
@@ -341,7 +329,6 @@ class BookingPageDateLocation extends Component<BookingPageDateLocationProps, Bo
   }
 
   handleSuggestionSelect(location: Location) {
-    console.log(location);
     this.setState({
       ...this.state,
       bookingDetails: {
@@ -431,6 +418,7 @@ class BookingPageDateLocation extends Component<BookingPageDateLocationProps, Bo
                   onIonChange={(e) => {
                     this.updateBooking(e.target.value, "timePeriod");
                   }}
+                  id={this.state.bookingPageInputIds.timePeriod}
                 >
                   <IonSegmentButton value="Morning" className="timeperiod-button">
                     <IonIcon className="time-period-icon" icon={partlySunnyOutline} />
@@ -455,18 +443,20 @@ class BookingPageDateLocation extends Component<BookingPageDateLocationProps, Bo
                   presentation="date"
                   ref={this.calendarRef}
                   min={new Date().toISOString()}
+                  max={new Date(new Date().setMonth(new Date().getMonth() + 2)).toISOString()}
                   className="react-calendar"
                   onIonChange={(e) => {
                     if (typeof e.detail.value == "string") {
                       this.updateBooking(e.detail.value, "dateTime");
                     }
                   }}
+                  id={this.state.bookingPageInputIds.dateTime}
                 ></IonDatetime>
               </div>
               <div className="book-buttons-container">
                 <div
                   className="book-button"
-                  onTouchEnd={() => {
+                  onClick={() => {
                     if (this.validateInput()) {
                       this.props.history.push({
                         pathname: "/bookingPage",

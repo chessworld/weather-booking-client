@@ -3,12 +3,14 @@
   border-radius: 10px;
   color: black;
   margin-top: 2rem;
-  background-image: url("../../assets/share_now.png");
+  background-image: url("../../assets/share_booking_banner.png");
   background-size: cover;
   position: relative;
-  background-position: left 90% bottom 50%;
+  background-position: left 70% top 1rem;
   white-space: normal;
   padding: 1rem 0.8rem;
+  background-color: #addec9;
+  background-repeat: no-repeat;
 }
 
 .share-card__title {
@@ -23,4 +25,18 @@
   color: black;
   --background: white;
   --border-radius: 20px;
+}
+
+.booking-details-image-container {
+  margin-top: 2rem;
+}
+
+.download-button {
+  border-radius: 20px;
+  font-weight: bolder;
+  align-self: center;
+  --background: rgba(0, 0, 0, 0.7);
+  --border-radius: 20px;
+  min-height: 3rem;
+  min-width: 10rem;
 }
