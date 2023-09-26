@@ -1,208 +1,205 @@
-import React, { useContext, useState, useEffect } from 'react';
-import { Chart, registerables} from 'chart.js';
-import { Bar, Line, Doughnut, Radar } from 'react-chartjs-2';
-import { IonPage } from '@ionic/react';
-import './StatisticsPage.css';
-import { IonContent } from '@ionic/react';
-import { AppContext} from '../../stores/app-context';
-import UserEndpoint from '../../endpoint-caller/userEndpoint';
-import BookingEndpoint from '../../endpoint-caller/bookingEndpoint';
-import { Link } from 'react-router-dom';
-import { StatsResponse } from '../../endpoint-caller/interfaces/bookings/StatsResponse';
-import { UserEndpointResponse } from '../../endpoint-caller/interfaces/users/UserEndpointResponse';
-import { BookingAmountData } from './ChartData/BookingAmountData';
-import { BookingAccuracyData } from './ChartData/BookingAccuracyData';
+import React, { useContext, useState, useEffect, useRef } from "react";
+import { Chart, registerables } from "chart.js";
+import { Bar } from "react-chartjs-2";
+import { IonPage } from "@ionic/react";
+import { IonContent, IonSegment, IonSegmentButton, IonIcon } from "@ionic/react";
+import UserEndpoint from "../../endpoint-caller/userEndpoint";
+import { AppContext } from "../../stores/app-context";
+import BookingEndpoint from "../../endpoint-caller/bookingEndpoint";
+import { StatsResponse } from "../../endpoint-caller/interfaces/bookings/StatsResponse";
+import { UserEndpointResponse } from "../../endpoint-caller/interfaces/users/UserEndpointResponse";
+import GraphDataField from "./Interface/GraphDataField";
+import { ChartOptionConfig } from "./Interface/ChartOptionConfig";
+import { WeatherTypes } from "../../endpoint-caller/interfaces/enums/WeatherType";
+import { TimePeriods } from "../../endpoint-caller/interfaces/enums/TimePeriod";
+import { WindLevels } from "../../endpoint-caller/interfaces/enums/WindLevel";
+import { TemperatureLevels } from "../../endpoint-caller/interfaces/enums/TemperatureLevel";
+import "./StatisticsPage.css";
+import Kofi from "../../components/ShareComponents/Kofi";
+
+import { timeOutline, trailSignOutline, thermometerOutline, sunnyOutline } from "ionicons/icons";
+
+type GraphData = "weather" | "time" | "wind" | "temperature";
 
 const StatisticsPage: React.FC = () => {
+  const editableNameField = useRef<null | HTMLInputElement>(null);
 
-    
-    // API Logic: Get statistic data
-    const [statListData, setStatListData] = useState<StatsResponse[]>([]);
-    const [userData, setUserData] = useState<UserEndpointResponse>();
-    const appCtx = useContext(AppContext);
-    
-    // Get stats data
-    useEffect(() => {
-        if (statListData.length == 0) {
-            BookingEndpoint.getStats().then((stats) => {
-                setStatListData(stats);
-                    });
-        }
-        
-    })
+  // Bar chart data
+  Chart.register(...registerables);
 
-    // Get user data set
-    useEffect(() => {
-        if (appCtx.userId !== "") {
-        UserEndpoint.getUser(appCtx.userId).then((user) => {
-            setUserData(user);
-            });
-                }
-    }, [appCtx.userId]);
+  const appCtx = useContext(AppContext);
 
-    //Update user name
-    const welcomeH1 = document.getElementById("welcome-h1") as HTMLElement
-    if (userData != undefined){
-        welcomeH1.innerHTML = `Hi ${userData.name as string}!`
+  const emptyDataField: GraphDataField = {
+    labels: [],
+    datasets: [],
+  };
+
+  const [chartData, setChartData] = useState<GraphDataField>(emptyDataField);
+  const [currentGraphSelection, setCurrentGraphSelection] = useState<GraphData>("weather");
+  const nameField = document.getElementById("nameField") as HTMLInputElement;
+  const [userData, setUserData] = useState<UserEndpointResponse>();
+
+  //Edit name function called when EditName button is called
+  const editName = () => {
+    if (nameField.disabled == true) {
+      nameField.disabled = false;
+    } else {
+      var updatedName = nameField.value as string;
+      if (userData == undefined) {
+        console.log("Cannot edit name");
+      } else {
+        UserEndpoint.patchUserName(userData?.id as string, updatedName);
+      }
+      nameField.disabled = true;
     }
+  };
 
-    // Stats options
-    Chart.register(...registerables)
-    var chartOptions = {
-        responsive: true,
-        maintainAspectRatio: false
+  const changeGraphData = (value: GraphData) => {
+    setCurrentGraphSelection(value);
+  };
+
+  const initializeTally = <T extends string>(typeArray: T[]): { [key in T]: number } => {
+    return typeArray.reduce((acc, curr) => {
+      acc[curr] = 0;
+      return acc;
+    }, {} as { [key in T]: number });
+  };
+
+  const getWeatherTally = (weatherType: GraphData, stats: StatsResponse[]) => {
+    const labels: string[] = [];
+    const data: number[] = [];
+
+    const graphDataToTallyKeysMap = {
+      weather: WeatherTypes,
+      time: TimePeriods,
+      wind: WindLevels,
+      temperature: TemperatureLevels,
+    };
+    const tally = initializeTally(graphDataToTallyKeysMap[weatherType]);
+
+    stats.forEach((item) => {
+      switch (weatherType) {
+        case "weather":
+          tally[item.weather_option.weather]++;
+          break;
+        case "time":
+          tally[item.time_period]++;
+          break;
+        case "wind":
+          tally[item.weather_option.wind]++;
+          break;
+        case "temperature":
+          tally[item.weather_option.temperature]++;
+          break;
+      }
+    });
+
+    Object.keys(tally).forEach((key) => {
+      data.push(tally[key]);
+      labels.push(key);
+    });
+
+    return {
+      labels: labels,
+      datasets: [
+        {
+          label: weatherType,
+          data: data,
+          backgroundColor: "#29abe0",
+          borderWidth: 0,
+          borderRadius: 10,
+          borderSkipped: false,
+          barPercentage: 0.4,
+          categoryPercentage: 0.4,
+          borderDash: [5, 5],
+        },
+      ],
+    };
+  };
+
+  // Get stats data
+  useEffect(() => {
+    BookingEndpoint.getStats().then((stats) => {
+      setChartData(() => getWeatherTally(currentGraphSelection, stats));
+    });
+  }, [currentGraphSelection]);
+
+  // Get user data set
+  useEffect(() => {
+    if (appCtx.userId !== "") {
+      UserEndpoint.getUser(appCtx.userId).then((user) => {
+        setUserData(user);
+        if (user.name) editableNameField.current!.value = user.name;
+      });
     }
-    var doughnutChartOptions = {
-        plugins: {
-            legend: {
-                display: false,
-                    }
-                }
-    }
-    // NOTE: To add more chart data checkout react-chartjs2 docs and add them seperately in ChartData folder
-    var bookingAmountData = BookingAmountData
-    var bookingAcurracyData = BookingAccuracyData
+  }, [appCtx.userId]);
 
-    if (statListData.length == 0 && userData == undefined) {
-        return (
-            <IonPage>
-                <IonContent fullscreen>
-                    {/* Innerhtml that were updated in function must be declared and hid, TODO: Improve this one*/}
-                    <div className='hidden'>
-                        <h1 className='page-header' id="welcome-h1"> </h1>
-                        <span className="statistic-page-number" style={{ background: 'rgba(118, 115, 220, .6)' }} id="total-bookings">-</span>
-                        <div className="acuracy-value" id='acuracy-value-percentage'>-</div>
-                    </div>
-                    <div className='loader-container'>
-                        <div className='spinner'></div>
-                    </div>
-                    
-                </IonContent>
-            </IonPage>
-            
-        )
-    }else{
-
-        //Update total booking stat
-        const totalBooking = document.getElementById("total-bookings") as HTMLElement
-        totalBooking.innerHTML = statListData.length.toString()
-
-        //Populate stats
-        let dataAcc = [0,0,0]
-        let dataAmount = [0,0,0,0,0,0,0]
-        for (var booking of statListData) {
-
-            //Increment dataAmount 
-            let date = new Date(booking.date)
-            dataAmount[date.getDay()] += 1
-            //TODO: Count accuracy 
-            switch (booking.result) {
-                case "Successful": {
-                    dataAcc[0] += 1;
-                    break;
-                }
-                case "Failed": {
-                    dataAcc[1] += 1;
-                    break;
-                }
-                case "Pending": {
-                    //Not tracking pending
-                    break;
-                }
-                default: {
-                    //nothing
-                    break;
-                }
-            }
-        }
-
-        //Update chart data
-        var updatedAmountDataset = {
-            ...bookingAmountData.datasets[0],
-            data: dataAmount
-        }
-        bookingAmountData = {
-            ...bookingAmountData,
-            datasets: [updatedAmountDataset]
-        }
-
-        var updatedAcuracyDataset = {
-            ...bookingAcurracyData.datasets[0],
-            data: dataAcc
-        }
-        bookingAcurracyData = {
-            ...bookingAcurracyData,
-            datasets: [updatedAcuracyDataset]
-
-        }
-
-        const acuracyValue = document.getElementById('acuracy-value-percentage') as HTMLElement
-        let perc = ((dataAcc[0])/(dataAcc[0] + dataAcc[1]))*100
-        if (isNaN(perc)) {
-            acuracyValue.innerHTML = `-`
-        }else{
-            acuracyValue.innerHTML = `${perc.toFixed(0)}%`
-        }
-    }
-
-    return (
-        <IonPage>
-            <IonContent fullscreen>
-                <div className='welcome-view'>
-                    <div className='welcome-card'>
-                        <div className='card-content'>
-                            <h1 id='card-header'>No sun tommorow?</h1>
-                            <div id='card-subtitle'>Lets fix that</div>
-                            <Link to="/bookingPageDateLocation" style={{ textDecoration: 'none' }}>
-                                <button className='booknow-button'>
-                                    Start Booking
-                                </button>
-                            </Link>
-                            </div>
-                        </div>
-                    <div>
-                        <h1 className='page-header' id="welcome-h1"> </h1>
-                        <div className='page-body'>
-                            Have a nice day 
-                        </div>
-                    </div>
+  return (
+    <IonPage>
+      <IonContent fullscreen>
+        {chartData.datasets.length == 0 ? (
+          <div className="loader-container">
+            <div className="spinner" />
+          </div>
+        ) : (
+          <>
+            {/* <div style={{ display: "flex", justifyContent: "center" }}>
+              <div className="home-page-app-name-container">
+                <h1 className="home-page-app-name">Mr Bluesky</h1>
+                <p className="home-page-app-hook">Book your perfect weather</p>
+              </div>
+            </div> */}
+            <div className="grid-container__wrapper">
+              <div className="app-icon-container">
+                <img src="src/assets/mr_bluesky_logo_and_name.png" />
+              </div>
+              <div className="number-of-bookings-content">
+                <p>We've made</p>
+                <div className="number-bookings-text">
+                  <h1>
+                    {chartData.datasets.length == 1
+                      ? chartData.datasets[0].data.reduce((sum, current) => sum + current, 0)
+                      : 0}
+                  </h1>
                 </div>
-                <div>
-                    <h1 className='page-header'>App statistics</h1>
-                </div>
-                <div className='statistic-page-graphs'>    
-                    <div className='statistic-page-streaks'>
-                        <div className='statistic-page-current-streak'>
-                            Total bookings made
-                            <span className="statistic-page-number" style={{ background: 'rgba(118, 115, 220, .6)' }} id="total-bookings">
-                                -
-                            </span>
-                        </div>     
-                    </div>
-                    <div className='graph-title'>
-                        Most booked day
-                    </div> 
-                    
-                    <div className="booking-amount-graph-container">
-                       <Line data={bookingAmountData} options={chartOptions} />
-                    </div>
-
-                    <div className="most-guessed-weather-container">
-                        <div className="graph-title">Booking Accuracy</div>
-                        <div className="acuracy-graph-content">
-                            <Doughnut options={doughnutChartOptions} data={bookingAcurracyData} />
-                            <div className="acuracy-value" id='acuracy-value-percentage'>
-                                -
-                            </div>
-                        </div>
-                                
-                    </div>
-                </div>
-                    
-            </IonContent>
-            
-        </IonPage>
-    );
-
-}
+                <p>Bookings this month</p>
+              </div>
+              <div className="statistics-page__buy-me-a-kofi">
+                <Kofi color="#29abe0" id="D1D1PFTTH" label="Support Us on Ko-fi"></Kofi>
+              </div>
+            </div>
+            <div>{/* bookingAmount */}</div>
+            <div style={{ display: "flex", justifyContent: "center" }}>
+              <IonSegment
+                className="weather-selection"
+                onIonChange={(e) => changeGraphData(e.target.value as GraphData)}
+                value={currentGraphSelection}
+              >
+                <IonSegmentButton value="weather" className="timeperiod-button">
+                  <IonIcon className="time-period-icon" icon={sunnyOutline} />
+                  <p>Weather</p>
+                </IonSegmentButton>
+                <IonSegmentButton value="time" className="timeperiod-button">
+                  <IonIcon className="time-period-icon" icon={timeOutline} />
+                  <p>Time</p>
+                </IonSegmentButton>
+                <IonSegmentButton value="wind" className="timeperiod-button">
+                  <IonIcon className="time-period-icon" icon={trailSignOutline} />
+                  <p>Wind</p>
+                </IonSegmentButton>
+                <IonSegmentButton value="temperature" className="timeperiod-button">
+                  <IonIcon className="time-period-icon" icon={thermometerOutline} />
+                  <p>Tempt</p>
+                </IonSegmentButton>
+              </IonSegment>
+            </div>
+            <div className="bar-graph">
+              <Bar data={chartData} options={ChartOptionConfig} />
+            </div>
+          </>
+        )}
+      </IonContent>
+    </IonPage>
+  );
+};
 export default StatisticsPage;

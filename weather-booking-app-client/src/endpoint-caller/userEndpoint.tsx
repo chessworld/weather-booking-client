@@ -27,6 +27,15 @@ class UserEndpoint {
     }).then((response) => response.data);
     return response;
   }
+
+  static async patchUserName(userId: string, name: string): Promise<UserEndpointResponse> {
+    const response = ApiService.patch(`/users/${userId}/`, { name: name})
+      .then((response) => response.data)
+      .catch((error) => {
+        console.log(error);
+      });
+      return response;
+  }
 }
 
 export default UserEndpoint;
