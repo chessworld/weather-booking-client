@@ -1,28 +1,23 @@
-import React, { useContext, useState, useEffect, useRef } from 'react';
-import { Chart, registerables } from 'chart.js';
-import { Bar } from 'react-chartjs-2';
-import {IonPage} from '@ionic/react';
-import { IonContent, IonSegment, IonSegmentButton, IonIcon } from '@ionic/react';
-import UserEndpoint from '../../endpoint-caller/userEndpoint';
-import { AppContext } from '../../stores/app-context';
-import BookingEndpoint from '../../endpoint-caller/bookingEndpoint';
-import { StatsResponse } from '../../endpoint-caller/interfaces/bookings/StatsResponse';
-import { UserEndpointResponse } from '../../endpoint-caller/interfaces/users/UserEndpointResponse';
-import GraphDataField from './Interface/GraphDataField';
-import { ChartOptionConfig } from './Interface/ChartOptionConfig';
-import { WeatherTypes} from '../../endpoint-caller/interfaces/enums/WeatherType';
-import { TimePeriods} from '../../endpoint-caller/interfaces/enums/TimePeriod';
-import { WindLevels} from '../../endpoint-caller/interfaces/enums/WindLevel';
-import { TemperatureLevels} from '../../endpoint-caller/interfaces/enums/TemperatureLevel';
-import './StatisticsPage.css';
-import Kofi from '../../components/ShareComponents/Kofi';
+import React, { useContext, useState, useEffect, useRef } from "react";
+import { Chart, registerables } from "chart.js";
+import { Bar } from "react-chartjs-2";
+import { IonPage } from "@ionic/react";
+import { IonContent, IonSegment, IonSegmentButton, IonIcon } from "@ionic/react";
+import UserEndpoint from "../../endpoint-caller/userEndpoint";
+import { AppContext } from "../../stores/app-context";
+import BookingEndpoint from "../../endpoint-caller/bookingEndpoint";
+import { StatsResponse } from "../../endpoint-caller/interfaces/bookings/StatsResponse";
+import { UserEndpointResponse } from "../../endpoint-caller/interfaces/users/UserEndpointResponse";
+import GraphDataField from "./Interface/GraphDataField";
+import { ChartOptionConfig } from "./Interface/ChartOptionConfig";
+import { WeatherTypes } from "../../endpoint-caller/interfaces/enums/WeatherType";
+import { TimePeriods } from "../../endpoint-caller/interfaces/enums/TimePeriod";
+import { WindLevels } from "../../endpoint-caller/interfaces/enums/WindLevel";
+import { TemperatureLevels } from "../../endpoint-caller/interfaces/enums/TemperatureLevel";
+import "./StatisticsPage.css";
+import Kofi from "../../components/ShareComponents/Kofi";
 
-import {
-    timeOutline,
-    trailSignOutline,
-    thermometerOutline,
-    sunnyOutline,
-  } from "ionicons/icons";
+import { timeOutline, trailSignOutline, thermometerOutline, sunnyOutline } from "ionicons/icons";
 
 type GraphData = "weather" | "time" | "wind" | "temperature";
 
@@ -104,21 +99,23 @@ const StatisticsPage: React.FC = () => {
       labels.push(key);
     });
 
-        return {
-            labels: labels,
-            datasets: [{
-                label: weatherType,
-                data: data,
-                backgroundColor: '#29abe0',
-                borderWidth: 0,
-                borderRadius: 10,
-                borderSkipped: false,
-                barPercentage: 0.4,
-                categoryPercentage: 0.4,
-                borderDash: [5, 5]
-            }]
-        };
+    return {
+      labels: labels,
+      datasets: [
+        {
+          label: weatherType,
+          data: data,
+          backgroundColor: "#29abe0",
+          borderWidth: 0,
+          borderRadius: 10,
+          borderSkipped: false,
+          barPercentage: 0.4,
+          categoryPercentage: 0.4,
+          borderDash: [5, 5],
+        },
+      ],
     };
+  };
 
   // Get stats data
   useEffect(() => {
@@ -146,15 +143,15 @@ const StatisticsPage: React.FC = () => {
           </div>
         ) : (
           <>
-            <div style={{ display: "flex", justifyContent: "center" }}>
+            {/* <div style={{ display: "flex", justifyContent: "center" }}>
               <div className="home-page-app-name-container">
                 <h1 className="home-page-app-name">Mr Bluesky</h1>
                 <p className="home-page-app-hook">Book your perfect weather</p>
               </div>
-            </div>
+            </div> */}
             <div className="grid-container__wrapper">
               <div className="app-icon-container">
-                <img src="src/assets/icons/sun_cloud_rain.png" />
+                <img src="src/assets/mr_bluesky_logo_and_name.png" />
               </div>
               <div className="number-of-bookings-content">
                 <p>We've made</p>
@@ -174,29 +171,29 @@ const StatisticsPage: React.FC = () => {
             <div>{/* bookingAmount */}</div>
             <div style={{ display: "flex", justifyContent: "center" }}>
               <IonSegment
-                  className="weather-selection"
-                  onIonChange={(e) => changeGraphData(e.target.value as GraphData)}
-                  value={currentGraphSelection}
-                >
-                  <IonSegmentButton value="weather" className="timeperiod-button">
-                    <IonIcon className="time-period-icon" icon={sunnyOutline} />
-                    <p>Weather</p>
-                  </IonSegmentButton>
-                  <IonSegmentButton value="time" className="timeperiod-button">
-                    <IonIcon className="time-period-icon" icon={timeOutline} />
-                    <p>Time</p>
-                  </IonSegmentButton>
-                  <IonSegmentButton value="wind" className="timeperiod-button">
-                    <IonIcon className="time-period-icon" icon={trailSignOutline} />
-                    <p>Wind</p>
-                  </IonSegmentButton>
-                  <IonSegmentButton value="temperature" className="timeperiod-button">
-                    <IonIcon className="time-period-icon" icon={thermometerOutline} />
-                    <p>Tempt</p>
-                  </IonSegmentButton>
-                </IonSegment>
+                className="weather-selection"
+                onIonChange={(e) => changeGraphData(e.target.value as GraphData)}
+                value={currentGraphSelection}
+              >
+                <IonSegmentButton value="weather" className="timeperiod-button">
+                  <IonIcon className="time-period-icon" icon={sunnyOutline} />
+                  <p>Weather</p>
+                </IonSegmentButton>
+                <IonSegmentButton value="time" className="timeperiod-button">
+                  <IonIcon className="time-period-icon" icon={timeOutline} />
+                  <p>Time</p>
+                </IonSegmentButton>
+                <IonSegmentButton value="wind" className="timeperiod-button">
+                  <IonIcon className="time-period-icon" icon={trailSignOutline} />
+                  <p>Wind</p>
+                </IonSegmentButton>
+                <IonSegmentButton value="temperature" className="timeperiod-button">
+                  <IonIcon className="time-period-icon" icon={thermometerOutline} />
+                  <p>Tempt</p>
+                </IonSegmentButton>
+              </IonSegment>
             </div>
-            <div className='bar-graph'>
+            <div className="bar-graph">
               <Bar data={chartData} options={ChartOptionConfig} />
             </div>
           </>

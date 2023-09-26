@@ -27,7 +27,6 @@
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  margin-top: 1rem;
 }
 
 .grid-container__wrapper > * {
@@ -35,7 +34,7 @@
 }
 
 .app-icon-container {
-  width: 8rem;
+  width: 20rem;
 }
 
 .number-of-bookings-content {
@@ -165,12 +164,12 @@
   margin: 20px;
 }
 
-.weather-selection{
-    padding-top: 50px;
-    width: 85vw;
-    border-radius: 12px;
-    display: flex;
-    gap: 0.5rem;
+.weather-selection {
+  padding-top: 50px;
+  width: 85vw;
+  border-radius: 12px;
+  display: flex;
+  gap: 0.5rem;
 }
 /*****************************************************************************/
 /*                               Loading screen                              */

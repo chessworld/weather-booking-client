@@ -31,6 +31,7 @@ import "@ionic/react/css/display.css";
 /* Theme variables */
 import "./theme/variables.css";
 import "./components/ScreenComponents/NavBar.css";
+import LandingPage from "./pages/LandingPage";
 setupIonicReact();
 
 const App: React.FC = () => {
@@ -63,6 +64,9 @@ const App: React.FC = () => {
               </Route>
               <Route exact path="/testHarness">
                 <TestHarness />
+              </Route>
+              <Route exact path="/landingPage">
+                <LandingPage />
               </Route>
               <Route path="/booking-details" component={BookingDetails} />
             </AppContextProvider>
