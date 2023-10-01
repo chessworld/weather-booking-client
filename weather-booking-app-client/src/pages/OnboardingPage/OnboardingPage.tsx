@@ -59,7 +59,7 @@ class OnboardingPage extends Component<RouteComponentProps, IOnboardPageState> {
           </div>
           <div className="onboarding-page-text">
             <div className="onboarding-page-button" onTouchEnd={() => this.setUserCompletedTutorial()}>
-              Book Now
+              Lets Go!
             </div>
           </div>
         </>,

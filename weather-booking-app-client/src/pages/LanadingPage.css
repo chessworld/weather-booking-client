@@ -1,3 +1,8 @@
+.landing-page-filter {
+  /* background-image: linear-gradient(rgba(135, 206, 235, 0.2), rgba(135, 206, 235, 0.2)); */
+  height: 100%;
+}
+
 .landing-page-content {
   display: flex;
   flex-direction: column;

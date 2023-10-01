@@ -58,15 +58,11 @@ const ShareCard: React.FC<ShareCardProps> = (props) => {
     if (!shareImageRef.current) return;
 
     toPng(shareImageRef.current, {
-      canvasWidth: 355,
-      canvasHeight: 260,
-      width: 355,
+      canvasWidth: 142,
+      canvasHeight: 104,
+      width: 354,
       height: 260,
-      style: {
-        position: "absolute",
-        top: "0",
-        right: "12px",
-      },
+      backgroundColor: "transparent",
     }).then((dataUrl) => {
       const link = document.createElement("a");
       link.download = "my-weather-booking.png";

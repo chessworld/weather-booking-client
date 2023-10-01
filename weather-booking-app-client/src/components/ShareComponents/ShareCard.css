@@ -29,6 +29,8 @@
 
 .booking-details-image-container {
   margin-top: 2rem;
+  width: fit-content;
+  height: fit-content;
 }
 
 .download-button {

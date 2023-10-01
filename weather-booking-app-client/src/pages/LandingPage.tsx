@@ -8,9 +8,9 @@ const LandingPage: React.FC = () => {
   return (
     <IonPage>
       <Background showClouds={true}>
-        <div className="landing-page-content">
+        <div className="landing-page-content landing-page-filter">
           <div className="landing-page-app-icon-container">
-            <img src="src/assets/mr_bluesky_logo_and_name.png" />
+            <img src="src/assets/mr_bluesky_logo_and_name_2.png" />
           </div>
           <div className="landing-page-buttons">
             <Link to="/bookingPageDateLocation">
