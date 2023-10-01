@@ -1,7 +1,7 @@
 import React, { useContext, useState, useEffect, useRef } from "react";
 import { Chart, registerables } from "chart.js";
 import { Bar } from "react-chartjs-2";
-import { IonPage } from "@ionic/react";
+import { IonButton, IonInput, IonPage } from "@ionic/react";
 import { IonContent, IonSegment, IonSegmentButton, IonIcon } from "@ionic/react";
 import UserEndpoint from "../../endpoint-caller/userEndpoint";
 import { AppContext } from "../../stores/app-context";
@@ -17,12 +17,20 @@ import { TemperatureLevels } from "../../endpoint-caller/interfaces/enums/Temper
 import "./StatisticsPage.css";
 import Kofi from "../../components/ShareComponents/Kofi";
 
-import { timeOutline, trailSignOutline, thermometerOutline, sunnyOutline } from "ionicons/icons";
+import {
+  timeOutline,
+  trailSignOutline,
+  thermometerOutline,
+  sunnyOutline,
+  createOutline,
+  checkmarkOutline,
+} from "ionicons/icons";
 
 type GraphData = "weather" | "time" | "wind" | "temperature";
 
 const StatisticsPage: React.FC = () => {
   const editableNameField = useRef<null | HTMLInputElement>(null);
+  const [isEditingName, setIsEditingName] = useState(false);
 
   // Bar chart data
   Chart.register(...registerables);
@@ -41,17 +49,20 @@ const StatisticsPage: React.FC = () => {
 
   //Edit name function called when EditName button is called
   const editName = () => {
-    if (nameField.disabled == true) {
-      nameField.disabled = false;
+    if (userData == undefined || !editableNameField.current?.value.trim()) {
+      console.log("Cannot edit name");
     } else {
-      var updatedName = nameField.value as string;
-      if (userData == undefined) {
-        console.log("Cannot edit name");
-      } else {
-        UserEndpoint.patchUserName(userData?.id as string, updatedName);
-      }
-      nameField.disabled = true;
+      userData.name = editableNameField.current!.value;
+      UserEndpoint.patchUserName(userData?.id as string, editableNameField.current!.value);
     }
+  };
+
+  //Toggle isEditingName
+  const toggleIsEditingName = () => {
+    if (isEditingName) {
+      editName();
+    }
+    setIsEditingName(!isEditingName);
   };
 
   const changeGraphData = (value: GraphData) => {
@@ -149,9 +160,26 @@ const StatisticsPage: React.FC = () => {
                 <p className="home-page-app-hook">Book your perfect weather</p>
               </div>
             </div> */}
+            <div className="welcome-container">
+              <h2 className="welcome-text">
+                Welcome{" "}
+                {!isEditingName ? (
+                  userData?.name
+                ) : (
+                  <input ref={editableNameField} type="text" id="nameField" placeholder={userData?.name}></input>
+                )}
+              </h2>
+              <IonButton className="invisible-button home-page-edit-button" onClick={toggleIsEditingName}>
+                {!isEditingName ? (
+                  <IonIcon icon={createOutline} slot="icon-only"></IonIcon>
+                ) : (
+                  <IonIcon icon={checkmarkOutline} slot="icon-only"></IonIcon>
+                )}
+              </IonButton>
+            </div>
             <div className="grid-container__wrapper">
               <div className="app-icon-container">
-                <img src="src/assets/mr_bluesky_logo_and_name.png" />
+                <img src="src/assets/mr_bluesky_logo.png" />
               </div>
               <div className="number-of-bookings-content">
                 <p>We've made</p>

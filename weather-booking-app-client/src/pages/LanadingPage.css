@@ -16,10 +16,33 @@
 }
 
 .landing-page-button {
+  width: 100%;
   color: white;
-  background-color: #29abe0;
-  padding: 0.8rem 0;
+  background-color: rgb(41, 171, 224);
+  box-shadow: 0 3px 10px #0000004d;
+  padding: 1.2rem 1rem;
   border-radius: 7px;
   font-family: "Quicksand", Helvetica, Century Gothic, sans-serif !important;
   font-weight: 700;
+  font-size: 1rem;
+}
+
+.landing-page-button--inverse {
+  width: 100%;
+  color: rgb(41, 171, 224);
+  background-color: white;
+  box-shadow: 0 3px 10px #0000004d;
+  padding: 1.2rem 1rem;
+  border-radius: 7px;
+  font-family: "Quicksand", Helvetica, Century Gothic, sans-serif !important;
+  font-weight: 700;
+  font-size: 1rem;
+}
+
+.or-text {
+  text-align: center;
+  font-weight: bold;
+
+  margin: 0;
+  padding: 0.5rem 0;
 }

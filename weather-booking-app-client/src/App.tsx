@@ -45,7 +45,7 @@ const App: React.FC = () => {
                 <BookingPageDateLocation key={Date.now()} />
               </Route>
               <Route exact path="/">
-                <Redirect to="/bookingPageDateLocation" />
+                <Redirect to="/landingPage" />
               </Route>
               <Route exact path="/bookingPage">
                 <BookingPage key={Date.now()} />

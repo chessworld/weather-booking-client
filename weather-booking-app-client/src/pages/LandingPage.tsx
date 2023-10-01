@@ -2,6 +2,7 @@ import { IonPage } from "@ionic/react";
 import Background from "../components/ScreenComponents/Background";
 import "./LanadingPage.css";
 import Kofi from "../components/ShareComponents/Kofi";
+import { Link } from "react-router-dom";
 
 const LandingPage: React.FC = () => {
   return (
@@ -12,9 +13,16 @@ const LandingPage: React.FC = () => {
             <img src="src/assets/mr_bluesky_logo_and_name.png" />
           </div>
           <div className="landing-page-buttons">
-            <button className="landing-page-button">Book Now</button>
-            <button className="landing-page-button">Check out our Stats</button>
-            <Kofi color="#29abe0" id="D1D1PFTTH" label="Support Us on Ko-fi"></Kofi>
+            <Link to="/bookingPageDateLocation">
+              <button className="landing-page-button">Make a Booking!</button>
+            </Link>
+            <Link to="/statisticPage">
+              <button className="landing-page-button--inverse">Check out our Stats</button>
+            </Link>
+            <p className="or-text">OR</p>
+            <div>
+              <Kofi color="#29abe0" id="D1D1PFTTH" label="Support Us on Ko-fi"></Kofi>
+            </div>
           </div>
         </div>
       </Background>

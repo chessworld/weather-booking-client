@@ -9,6 +9,7 @@ import {
   moonOutline,
   partlySunnyOutline,
   cloudyNightOutline,
+  diceOutline,
 } from "ionicons/icons";
 import { BookingDetails } from "./Interface/BookingPageState";
 import Background from "../../components/ScreenComponents/Background";
@@ -16,8 +17,6 @@ import BookingPageDateLocationProps from "./Interface/BookingPageDateLocationPro
 import BookingPageDateLocationState from "./Interface/BookingPageDateLocationState";
 import DeviceManager from "../../device/DeviceManager";
 import SlideUpPanel from "../../components/SlideUpPanel/SlideUpPanel";
-import { diceOutline } from "ionicons/icons";
-
 //Location search functionality
 import { Location } from "../../endpoint-caller/interfaces/locations/Location";
 import LocationSearchEndpoint from "../../endpoint-caller/locationEndpoint";
@@ -42,8 +41,8 @@ class BookingPageDateLocation extends Component<BookingPageDateLocationProps, Bo
     "Camping",
     "Skiing",
     "Surfing",
-    "Party",
-    "Celebration",
+    "Fun Night Out",
+    "Outdoor Celebration",
   ];
 
   constructor(props: BookingPageDateLocationProps) {

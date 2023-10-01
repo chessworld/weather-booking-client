@@ -4,13 +4,13 @@
 
 .home-page-app-name-container {
   text-align: center;
-  padding-bottom: 1rem;
+  padding: 0.5rem 0;
   border-bottom: 1px solid white;
 }
 
 .home-page-app-name {
   font-weight: bolder;
-  margin-bottom: 0;
+  margin: 0;
   font-size: 2rem;
   letter-spacing: 5px;
 }
@@ -19,6 +19,23 @@
   font-weight: lighter;
   font-style: italic;
   font-size: 0.9rem;
+}
+
+.welcome-container {
+  padding-left: 1rem;
+  display: flex;
+  align-items: center;
+}
+
+.welcome-text {
+  font-weight: bold;
+  font-size: 1.2rem;
+}
+
+.home-page-edit-button {
+  width: fit-content;
+  color: black;
+  padding-top: 0.4rem;
 }
 
 .grid-container__wrapper {
@@ -30,11 +47,12 @@
 }
 
 .grid-container__wrapper > * {
-  margin: 1vh 0;
+  /* margin: 1vh 0; */
+  margin: 0.5rem;
 }
 
 .app-icon-container {
-  width: 20rem;
+  width: 8rem;
 }
 
 .number-of-bookings-content {
@@ -58,7 +76,7 @@
 .number-bookings-text h1 {
   font-size: min(20vw, 10rem);
   letter-spacing: -0.6rem;
-  font-weight: bold;
+  font-weight: lighter;
   margin: 0;
   margin-right: 0.5rem;
   color: black;
@@ -165,7 +183,7 @@
 }
 
 .weather-selection {
-  padding-top: 50px;
+  padding-top: 2rem;
   width: 85vw;
   border-radius: 12px;
   display: flex;
