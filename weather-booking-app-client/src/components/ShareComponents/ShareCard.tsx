@@ -28,7 +28,7 @@ interface ShareCardProps {
 
 const ShareCard: React.FC<ShareCardProps> = (props) => {
   const shareModal = useRef<HTMLIonModalElement>(null);
-  const shareMessage = "Check out my weather booking!";
+  const shareMessage = "Check out my weather booking on Mr Bluesky!";
   const shareImageRef = useRef<HTMLDivElement>(null);
 
   // let newFile: Blob | null = null;
