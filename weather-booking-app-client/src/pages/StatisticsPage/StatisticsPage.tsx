@@ -140,7 +140,9 @@ const StatisticsPage: React.FC = () => {
     if (appCtx.userId !== "") {
       UserEndpoint.getUser(appCtx.userId).then((user) => {
         setUserData(user);
-        if (user.name) editableNameField.current!.value = user.name;
+        if (user.name && editableNameField.current) {
+          editableNameField.current.value = user.name;
+        }
       });
     }
   }, [appCtx.userId]);

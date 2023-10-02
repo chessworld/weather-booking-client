@@ -25,8 +25,6 @@ import { debounce } from "../../utility/debounceDelay";
 import "react-calendar/dist/Calendar.css";
 import "./BookingPageDateLocation.css";
 import "./BookingPage.css";
-import { api_key } from "./config/config";
-import { act } from "react-dom/test-utils";
 
 class BookingPageDateLocation extends Component<BookingPageDateLocationProps, BookingPageDateLocationState> {
   panelRef: RefObject<any>;
@@ -462,6 +460,10 @@ class BookingPageDateLocation extends Component<BookingPageDateLocationProps, Bo
                         state: this.resetInputFields(),
                       });
                     }
+                  }}
+                  style={{
+                    bottom: "10px",
+                    position: "relative",
                   }}
                 >
                   Next

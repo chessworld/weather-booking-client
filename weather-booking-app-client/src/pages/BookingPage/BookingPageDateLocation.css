@@ -59,6 +59,10 @@
   --indicator-color: transparent;
 }
 
+.timeperiod-container {
+  background: transparent;
+}
+
 .timeperiod-button p {
   margin: 0;
   font-size: 0.7rem;
