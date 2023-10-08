@@ -1,7 +1,7 @@
 .booking-details-image-card {
   outline-style: solid;
   width: 90vw;
-  color: white;
+  color: transparent;
   position: relative;
   display: flex;
   justify-content: center;
