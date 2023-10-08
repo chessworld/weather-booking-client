@@ -4,11 +4,13 @@ import WeatherImageMapper from "../../utility/WeatherImageMapper";
 import "./BookingDetailsImage.css";
 import { WeatherOption } from "../../endpoint-caller/interfaces/bookings/WeatherOption";
 import { Location } from "../../endpoint-caller/interfaces/locations/Location";
+import { TimePeriod } from "../../endpoint-caller/interfaces/enums/TimePeriod";
 
 interface BookingDetailsImageProps {
   location: Location;
   date: string;
   weather_option: WeatherOption;
+  time_period: TimePeriod;
 }
 
 const BookingDetailsImage: React.FC<BookingDetailsImageProps> = (props) => {
@@ -45,10 +47,10 @@ const BookingDetailsImage: React.FC<BookingDetailsImageProps> = (props) => {
               {props.location.suburb}, {props.location.state}
             </IonCardTitle>
             <IonCardSubtitle className="booking-details-image-details__subtitle" style={{ color: textColor }}>
-              {formatDate(props.date)}
+              {props.weather_option.weather}, {props.weather_option.temperature}, {props.weather_option.wind}
             </IonCardSubtitle>
             <IonCardSubtitle className="booking-details-image-details__subtitle" style={{ color: textColor }}>
-              {props.weather_option.weather}, {props.weather_option.temperature}, {props.weather_option.wind}
+              {formatDate(props.date, props.time_period)}
             </IonCardSubtitle>
           </div>
           <div className="booking-details-image-img-container">

@@ -43,11 +43,11 @@ const BookingDetails: React.FC<BookingDetailsProps> = (props) => {
                 {props.bookingDetails.location.suburb}, {props.bookingDetails.location.state}
               </IonCardTitle>
               <IonCardSubtitle className="booking-details-details__subtitle">
-                {formatDate(props.bookingDetails.date)}
-              </IonCardSubtitle>
-              <IonCardSubtitle className="booking-details-details__subtitle">
                 {props.bookingDetails.weather_option.weather}, {props.bookingDetails.weather_option.temperature},{" "}
                 {props.bookingDetails.weather_option.wind}
+              </IonCardSubtitle>
+              <IonCardSubtitle className="booking-details-details__subtitle">
+                {formatDate(props.bookingDetails.date, props.bookingDetails.time_period)}
               </IonCardSubtitle>
             </div>
             <div className="booking-details-img-container">

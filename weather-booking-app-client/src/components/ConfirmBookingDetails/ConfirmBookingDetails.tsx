@@ -65,14 +65,17 @@ const ConfirmBookingDetails: React.FC<ConfirmBookingDetailsProps> = (props) => {
               <IonCardTitle className="booking-details-details__title">
                 {props.weatherBookingDetails.bookingDetails.location}
               </IonCardTitle>
-              <IonCardSubtitle className="booking-details-details__subtitle">
-                {formatDate(props.weatherBookingDetails.bookingDetails.dateTime as string)}
-              </IonCardSubtitle>
-              <p className="booking-details-details__weather">
+              <IonCardSubtitle className="booking-details-details__weather">
                 {props.weatherBookingDetails.selectedWeatherOption},{" "}
                 {props.weatherBookingDetails.selectedTemperatureOption},{" "}
                 {props.weatherBookingDetails.selectedWindOption}
-              </p>
+              </IonCardSubtitle>
+              <IonCardSubtitle className="booking-details-details__subtitle">
+                {formatDate(
+                  props.weatherBookingDetails.bookingDetails.dateTime as string,
+                  props.weatherBookingDetails.bookingDetails.timePeriod!
+                )}
+              </IonCardSubtitle>
             </div>
             <div className="booking-details-img-container">
               <div className="confirm-booking-weather-icon-container">
@@ -97,6 +100,7 @@ const ConfirmBookingDetails: React.FC<ConfirmBookingDetailsProps> = (props) => {
               temperature: props.weatherBookingDetails.selectedTemperatureOption,
               wind: props.weatherBookingDetails.selectedWindOption,
             }}
+            time_period={props.weatherBookingDetails.bookingDetails.timePeriod!}
           />
         </IonCardContent>
       </IonCard>

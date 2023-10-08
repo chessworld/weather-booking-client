@@ -139,12 +139,13 @@ class BookingPage extends Component<BookingPageProps, BookingPageState> {
         wind: this.state.selectedWindOption,
         temperature: this.state.selectedTemperatureOption,
       }
-    );
-    setTimeout(() => {}, 500);
+    ).then(() => {
+      setTimeout(() => {
+        this.redirectToBookListPage();
+      }, 1000);
 
-    this.redirectToBookListPage();
-
-    this.showToast("Booking has been successfully created");
+      this.showToast("Booking has been successfully created");
+    });
   }
 
   redirectToBookListPage(): void {

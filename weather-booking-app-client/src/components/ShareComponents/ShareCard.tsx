@@ -19,11 +19,13 @@ import { BookingResponse } from "../../endpoint-caller/interfaces/bookings/Booki
 import { WeatherOption } from "../../endpoint-caller/interfaces/bookings/WeatherOption";
 import { Location } from "../../endpoint-caller/interfaces/locations/Location";
 import { toBlob, toPng, toJpeg, toSvg } from "html-to-image";
+import { TimePeriod } from "../../endpoint-caller/interfaces/enums/TimePeriod";
 
 interface ShareCardProps {
   location: Location;
   date: string;
   weather_option: WeatherOption;
+  time_period: TimePeriod;
 }
 
 const ShareCard: React.FC<ShareCardProps> = (props) => {
