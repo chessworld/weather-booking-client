@@ -40,7 +40,13 @@ const BookingDetailsImage: React.FC<BookingDetailsImageProps> = (props) => {
       className={`booking-details-image-card hud-background ${bookingDetailsImageClass}`}
       style={{ color: `${textColor} !important` }}
     >
-      <IonCardContent>
+      <IonCardContent
+        style={{
+          display: "flex",
+          flexDirection: "column",
+          alignItems: "center",
+        }}
+      >
         <div>
           <div className="booking-details-image-details">
             <IonCardTitle className="booking-details-image-details__title" style={{ color: textColor }}>
@@ -57,7 +63,15 @@ const BookingDetailsImage: React.FC<BookingDetailsImageProps> = (props) => {
             <IonImg className="booking-details-image-img" src={WeatherImageMapper[props.weather_option.weather]} />
           </div>
         </div>
-        <IonCard className="enjoy-weather-card">Enjoy your weather!</IonCard>
+        <IonCard
+          className="enjoy-weather-card"
+          style={{
+            marginTop: "1rem",
+          }}
+        >
+          <p>Enjoy your</p>
+          <p>Weather</p>
+        </IonCard>
       </IonCardContent>
     </IonCard>
   );

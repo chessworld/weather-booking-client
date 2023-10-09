@@ -61,8 +61,8 @@ const ConfirmBookingDetails: React.FC<ConfirmBookingDetailsProps> = (props) => {
       <IonCard className="confirm-booking-details-card">
         <IonCardContent className="booking-detail-container">
           <div className="booking-details-content">
-            <div className="booking-details-details">
-              <IonCardTitle className="booking-details-details__title">
+            <div className="booking-details-details" style={{ paddingTop: 0 }}>
+              <IonCardTitle className="booking-details-details__title" style={{ fontSize: "1rem" }}>
                 {props.weatherBookingDetails.bookingDetails.location}
               </IonCardTitle>
               <IonCardSubtitle className="booking-details-details__weather">

@@ -82,26 +82,17 @@ class BookingPageDateLocation extends Component<BookingPageDateLocationProps, Bo
     this.calendarRef = createRef();
   }
 
-  componentDidUpdate(
-    prevProps: Readonly<BookingPageDateLocationProps>,
-    prevState: Readonly<BookingPageDateLocationState>,
-    snapshot?: any
-  ): void {
-    for (const key in prevState) {
-      if ((prevState as any)[key] !== (this.state as any)[key]) {
-        console.log("changed property:", key, "from", (prevState as any)[key], "to", (this.state as any)[key]);
-      }
-    }
-  }
-
-  async componentDidMount() {
-    /* this.deviceManager = await DeviceManager.getInstance(); */
-    /* this.deviceManager.checkUserCompletedTutorial().then((completed) => {
-     *     if (!completed) {
-     *         this.props.history.push('/onBoardingPage');
-     *     }
-     * }); */
-  }
+  // componentDidUpdate(
+  //   prevProps: Readonly<BookingPageDateLocationProps>,
+  //   prevState: Readonly<BookingPageDateLocationState>,
+  //   snapshot?: any
+  // ): void {
+  //   for (const key in prevState) {
+  //     if ((prevState as any)[key] !== (this.state as any)[key]) {
+  //       console.log("changed property:", key, "from", (prevState as any)[key], "to", (this.state as any)[key]);
+  //     }
+  //   }
+  // }
 
   toggleShowCalendar(): void {
     this.setState({
@@ -307,7 +298,7 @@ class BookingPageDateLocation extends Component<BookingPageDateLocationProps, Bo
   getLocationSuggestions = debounce(async (query: string) => {
     this.updateLocationSuggestions([]);
     if (query.length >= 4) {
-      await LocationSearchEndpoint.searchLocations(query).then((locationList) =>
+      await LocationSearchEndpoint.searchLocations(encodeURIComponent(query.trim())).then((locationList) =>
         this.updateLocationSuggestions(locationList)
       );
     }
