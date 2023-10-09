@@ -79,7 +79,7 @@ const BookingDetails: React.FC<BookingDetailsProps> = (props) => {
                   <br /> Please give us your feedback.
                 </p>
               )}
-              <IonCard className="enjoy-weather-card feedback-card" id="feedback-card">
+              <IonCard className="feedback-card" id="feedback-card">
                 <IonCardTitle className="feedback-title">Did you enjoy your weather?</IonCardTitle>
                 <div className="thumb-group">
                   <IonButton className="thumb-button invisible-button" onClick={() => handleThumbUpClick()}>
