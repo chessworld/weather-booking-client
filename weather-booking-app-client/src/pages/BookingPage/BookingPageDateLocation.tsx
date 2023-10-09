@@ -430,7 +430,7 @@ class BookingPageDateLocation extends Component<BookingPageDateLocationProps, Bo
                 <IonDatetime
                   presentation="date"
                   ref={this.calendarRef}
-                  min={new Date().toISOString()}
+                  min={new Date(new Date().setDate(new Date().getDate() + 1)).toISOString()}
                   max={new Date(new Date().setMonth(new Date().getMonth() + 2)).toISOString()}
                   className="react-calendar"
                   onIonChange={(e) => {
