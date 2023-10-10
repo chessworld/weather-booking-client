@@ -26,6 +26,7 @@ interface ShareCardProps {
   date: string;
   weather_option: WeatherOption;
   time_period: TimePeriod;
+  booking_name: string;
 }
 
 const ShareCard: React.FC<ShareCardProps> = (props) => {

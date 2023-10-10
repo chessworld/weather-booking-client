@@ -59,7 +59,7 @@ const BookingDetails: React.FC<BookingDetailsProps> = (props) => {
           </div>
           <IonCard className="enjoy-weather-card">
             <p>Enjoy your</p>
-            <p>Weather</p>
+            <p>{props.bookingDetails.booking_name}</p>
           </IonCard>
           <div className="share-card-container">
             <ShareCard {...props.bookingDetails} />

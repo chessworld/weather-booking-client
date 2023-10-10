@@ -101,6 +101,7 @@ const ConfirmBookingDetails: React.FC<ConfirmBookingDetailsProps> = (props) => {
               wind: props.weatherBookingDetails.selectedWindOption,
             }}
             time_period={props.weatherBookingDetails.bookingDetails.timePeriod!}
+            booking_name={props.weatherBookingDetails.bookingDetails.name!}
           />
         </IonCardContent>
       </IonCard>

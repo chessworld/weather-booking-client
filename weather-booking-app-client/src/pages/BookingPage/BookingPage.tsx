@@ -131,6 +131,7 @@ class BookingPage extends Component<BookingPageProps, BookingPageState> {
 
     await BookingEndpoint.createBooking(
       appCtx.userId,
+      this.state.bookingDetails.name ?? "",
       location,
       this.state.bookingDetails.dateTime ?? "",
       this.state.bookingDetails.timePeriod ?? "",

@@ -35,12 +35,13 @@ class BookingPageDateLocation extends Component<BookingPageDateLocationProps, Bo
     "Beach Day",
     "Cozy night in",
     "Picnic",
-    "Hiking",
-    "Camping",
+    "Hike",
+    "Camping Trip",
     "Skiing",
     "Surfing",
     "Fun Night Out",
     "Outdoor Celebration",
+    "Graduation",
   ];
 
   constructor(props: BookingPageDateLocationProps) {

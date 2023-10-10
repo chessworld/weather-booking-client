@@ -11,6 +11,7 @@ interface BookingDetailsImageProps {
   date: string;
   weather_option: WeatherOption;
   time_period: TimePeriod;
+  booking_name: string;
 }
 
 const BookingDetailsImage: React.FC<BookingDetailsImageProps> = (props) => {
@@ -70,7 +71,7 @@ const BookingDetailsImage: React.FC<BookingDetailsImageProps> = (props) => {
           }}
         >
           <p>Enjoy your</p>
-          <p>Weather</p>
+          <p>{props.booking_name}</p>
         </IonCard>
       </IonCardContent>
     </IonCard>
