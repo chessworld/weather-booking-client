@@ -7,7 +7,17 @@ import ConfirmBookingDetails from "../../components/ConfirmBookingDetails/Confir
 import { withRouter } from "react-router-dom";
 import WeatherHud from "../../components/BookWeatherComponents/WeatherHud";
 import { Component, RefObject } from "react";
-import { IonHeader, IonToolbar, IonTitle, IonToast, IonRange, IonPage, IonButton, IonIcon, IonModal } from "@ionic/react";
+import {
+  IonHeader,
+  IonToolbar,
+  IonTitle,
+  IonToast,
+  IonRange,
+  IonPage,
+  IonButton,
+  IonIcon,
+  IonModal,
+} from "@ionic/react";
 import Cloudy from "../../components/weatherAnimatedIcons/Cloudy";
 import Sunny from "../../components/weatherAnimatedIcons/Sunny";
 import Rainy from "../../components/weatherAnimatedIcons/Rainy";
@@ -147,161 +157,164 @@ class BookingPage extends Component<BookingPageProps, BookingPageState> {
     });
   }
 
-    redirectToBookListPage(): void {
-        this.props.history.push("/viewBookingsPage");
-    }
+  redirectToBookListPage(): void {
+    this.props.history.push("/viewBookingsPage");
+  }
 
-    toggleConfirmation(): void {
-        this.setState({
-            ...this.state,
-            showConfirmation: !this.state.showConfirmation,
-        });
-    }
+  toggleConfirmation(): void {
+    this.setState({
+      ...this.state,
+      showConfirmation: !this.state.showConfirmation,
+    });
+  }
 
-    render(): React.ReactNode {
-        return (
-            <IonPage keep-alive="false">
-                <IonHeader className="ion-no-border" translucent={true}>
-                    <IonToolbar>
-                        <IonTitle>Book Your Weather</IonTitle>
-                    </IonToolbar>
-                </IonHeader>
-                <IonToast
-                    isOpen={this.state.toast.showToast}
-                    onDidDismiss={() =>
-                        this.setState({
-                            toast: {
-                                toastMessage: "",
-                                showToast: false,
-                            },
-                        })
-                    }
-                    message={this.state.toast.toastMessage}
-                    duration={1000}
-                />
+  render(): React.ReactNode {
+    return (
+      <IonPage keep-alive="false">
+        <IonHeader className="ion-no-border transparent page-header" translucent={true}>
+          <IonToolbar className="transparent">
+            <IonTitle className="page-title">Book your Weather</IonTitle>
+          </IonToolbar>
+        </IonHeader>
+        <IonToast
+          isOpen={this.state.toast.showToast}
+          onDidDismiss={() =>
+            this.setState({
+              toast: {
+                toastMessage: "",
+                showToast: false,
+              },
+            })
+          }
+          message={this.state.toast.toastMessage}
+          duration={1000}
+        />
 
-                <Background showClouds={false}>
-                    <IonModal
-                        ref={this.confirmBookingModal}
-                        trigger="open-confirm-booking-modal"
-                        initialBreakpoint={0.7}
-                        breakpoints={[0, 0.25, 0.7, 0.75]}
+        <Background showClouds={false}>
+          <IonModal
+            ref={this.confirmBookingModal}
+            trigger="open-confirm-booking-modal"
+            initialBreakpoint={0.7}
+            breakpoints={[0, 0.25, 0.7, 0.75]}
+          >
+            <ConfirmBookingDetails
+              weatherBookingDetails={this.state}
+              weatherOptions={this.weatherOptions}
+              closeBookingDetail={this.toggleConfirmation}
+              book={this.book}
+            />
+          </IonModal>
+          {/* <h2 className="booking-page-date-location-title">Book Your Weather</h2> */}
+
+          <div className="page-content">
+            <div className="step-two-heading-container">
+              <IonButton
+                onClick={() => this.props.history.goBack()}
+                className="booking-page-back-button invisible-button"
+              >
+                <IonIcon icon={chevronBackOutline} slot="icon-only"></IonIcon>
+              </IonButton>
+              <h3 className="step-two-heading">Step 2 - Create Your Perfect Weather</h3>
+            </div>
+
+            <div className="input-container">
+              {/* Vertical Buttons */}
+              <div className="button-container">
+                {this.weatherOptions.map((weatherOption: BookingWeatherOption, i: number) => {
+                  return (
+                    <div
+                      className={`weather-choose-container`}
+                      key={`${i}`}
+                      onClick={() => {
+                        this.handleWeatherSelectionUpdate(weatherOption.name);
+                      }}
                     >
-                        <ConfirmBookingDetails
-                            weatherBookingDetails={this.state}
-                            weatherOptions={this.weatherOptions}
-                            closeBookingDetail={this.toggleConfirmation}
-                            book={this.book}
-                        />
-                    </IonModal>
-                    <h2 className="booking-page-date-location-title">Book Your Weather</h2>
-
-                    <div className="page-content">
-                        <div className="step-two-heading-container">
-                            <IonButton
-                                onClick={() => this.props.history.goBack()}
-                                className="booking-page-back-button invisible-button"
-                            >
-                                <IonIcon icon={chevronBackOutline} slot="icon-only"></IonIcon>
-                            </IonButton>
-                            <h3 className="step-two-heading">Step 2 - Create Your Perfect Weather</h3>
-                        </div>
-
-                        <div className="input-container">
-                            {/* Vertical Buttons */}
-                            <div className="button-container">
-                                {this.weatherOptions.map((weatherOption: BookingWeatherOption, i: number) => {
-                                    return (
-                                        <div
-                                            className={`weather-choose-container`}
-                                            key={`${i}`}
-                                            onClick={() => {
-                                                this.handleWeatherSelectionUpdate(weatherOption.name);
-                                            }}
-                                        >
-                                            <div
-                                                className={`hud-background weather-choose-option ${this.weatherOptions[i].backgroundClassName
-                                                    } ${this.weatherOptions[i].name == this.state.selectedWeatherOption
-                                                        ? "weather-choose-option-selected"
-                                                        : "no-animation"
-                                                    }`}
-                                            >
-                                                {React.createElement(weatherOption.svg, {
-                                                    showAnimation: this.weatherOptions[i].name === this.state.selectedWeatherOption,
-                                                    className: "weather-icon",
-                                                })}
-                                            </div>
-                                            <span
-                                                className={`${this.weatherOptions[i].name == this.state.selectedWeatherOption
-                                                        ? "weather-choose-text-selected"
-                                                        : "weather-choose-text"
-                                                    }`}
-                                            >
-                                                {weatherOption.name}
-                                            </span>
-                                        </div>
-                                    );
-                                })}
-                            </div>
-
-                            {/* Sliders */}
-                            <div className="slider-container">
-                                <span className="weather-slider-text">Temperature</span>
-                                <IonRange
-                                    className="weather-slider"
-                                    ticks={true}
-                                    snaps={true}
-                                    min={0}
-                                    max={this.temperatureOptions.length - 1}
-                                    onIonChange={(e: any) => {
-                                        this.setState((prev) => {
-                                            return {
-                                                ...prev,
-                                                selectedTemperatureOption: this.temperatureOptions[e.detail.value],
-                                            };
-                                        });
-                                    }}
-                                ></IonRange>
-
-                                <span className="weather-slider-text">Wind</span>
-
-                                <IonRange
-                                    className="weather-slider"
-                                    ticks={true}
-                                    snaps={true}
-                                    min={0}
-                                    onIonChange={(e: any) => {
-                                        this.setState((prev) => {
-                                            return { ...prev, selectedWindOption: this.windOptions[e.detail.value] };
-                                        });
-                                    }}
-                                    max={this.windOptions.length - 1}
-                                />
-                            </div>
-                        </div>
-
-                        {/* Weatherhud */}
-                        <WeatherHud
-                            weatherData={this.state}
-                            weatherOptions={this.weatherOptions}
-                            windOptions={this.windOptions}
-                            temperatureOptions={this.temperatureOptions}
-                            isWindy={
-                                this.state.selectedWindOption !== "No Wind" // If wind is more than 1, it is windy
-                            }
-                        />
-
-                        {/* Book Button */}
-                        <div className="book-buttons-container" style={{ margin: "0" }}>
-                            <button onClick={this.clickBooking} className="book-button" id="open-confirm-booking-modal">
-                                Book
-                            </button>
-                        </div>
+                      <div
+                        className={`hud-background weather-choose-option ${
+                          this.weatherOptions[i].backgroundClassName
+                        } ${
+                          this.weatherOptions[i].name == this.state.selectedWeatherOption
+                            ? "weather-choose-option-selected"
+                            : "no-animation"
+                        }`}
+                      >
+                        {React.createElement(weatherOption.svg, {
+                          showAnimation: this.weatherOptions[i].name === this.state.selectedWeatherOption,
+                          className: "weather-icon",
+                        })}
+                      </div>
+                      <span
+                        className={`${
+                          this.weatherOptions[i].name == this.state.selectedWeatherOption
+                            ? "weather-choose-text-selected"
+                            : "weather-choose-text"
+                        }`}
+                      >
+                        {weatherOption.name}
+                      </span>
                     </div>
-                </Background>
-            </IonPage>
-        );
-    }
+                  );
+                })}
+              </div>
+
+              {/* Sliders */}
+              <div className="slider-container">
+                <span className="weather-slider-text">Temperature</span>
+                <IonRange
+                  className="weather-slider"
+                  ticks={true}
+                  snaps={true}
+                  min={0}
+                  max={this.temperatureOptions.length - 1}
+                  onIonChange={(e: any) => {
+                    this.setState((prev) => {
+                      return {
+                        ...prev,
+                        selectedTemperatureOption: this.temperatureOptions[e.detail.value],
+                      };
+                    });
+                  }}
+                ></IonRange>
+
+                <span className="weather-slider-text">Wind</span>
+
+                <IonRange
+                  className="weather-slider"
+                  ticks={true}
+                  snaps={true}
+                  min={0}
+                  onIonChange={(e: any) => {
+                    this.setState((prev) => {
+                      return { ...prev, selectedWindOption: this.windOptions[e.detail.value] };
+                    });
+                  }}
+                  max={this.windOptions.length - 1}
+                />
+              </div>
+            </div>
+
+            {/* Weatherhud */}
+            <WeatherHud
+              weatherData={this.state}
+              weatherOptions={this.weatherOptions}
+              windOptions={this.windOptions}
+              temperatureOptions={this.temperatureOptions}
+              isWindy={
+                this.state.selectedWindOption !== "No Wind" // If wind is more than 1, it is windy
+              }
+            />
+
+            {/* Book Button */}
+            <div className="book-buttons-container" style={{ margin: "0" }}>
+              <button onClick={this.clickBooking} className="book-button" id="open-confirm-booking-modal">
+                Book
+              </button>
+            </div>
+          </div>
+        </Background>
+      </IonPage>
+    );
+  }
 }
 
 export default withRouter(BookingPage);

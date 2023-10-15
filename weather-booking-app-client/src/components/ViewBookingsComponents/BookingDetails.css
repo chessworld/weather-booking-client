@@ -10,7 +10,7 @@
 
 .booking-details-back-button {
   width: fit-content;
-  color: black;
+  --color: black;
   padding-top: 1rem;
   position: relative;
   left: -1rem;
@@ -39,7 +39,7 @@
   width: 90vw;
   color: white;
   position: relative;
-  margin: 2rem 0;
+  margin: 1rem 0;
   display: flex;
   justify-content: center;
 }

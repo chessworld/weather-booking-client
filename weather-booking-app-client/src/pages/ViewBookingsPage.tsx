@@ -1,4 +1,17 @@
-import { IonHeader, IonToolbar, IonTitle, IonContent, IonPage, IonTabBar, IonTabButton, IonLabel, IonImg } from "@ionic/react";
+import {
+  IonHeader,
+  IonToolbar,
+  IonTitle,
+  IonContent,
+  IonPage,
+  IonTabBar,
+  IonTabButton,
+  IonLabel,
+  IonImg,
+  IonButton,
+  IonIcon,
+} from "@ionic/react";
+import { chevronBackOutline } from "ionicons/icons";
 import "./ViewBookingsPage.css";
 import BookingDetails from "../components/ViewBookingsComponents/BookingDetails";
 import BookingEndpoint from "../endpoint-caller/bookingEndpoint";
@@ -36,80 +49,84 @@ const ViewBookingsPage: React.FC = () => {
 
   // JSX Logic
   const selectedTabHeader = (
-        <IonTabBar slot="top" className="bookings-tab-bar">
-            <IonTabButton
-                className={`bookings-tab ${selectedTab === "Upcoming" ? "bookings-tab-selected" : ""}`}
-                tab="Upcoming"
-                onClick={() => handleTabChange("Upcoming")}
-                selected={selectedTab === "Upcoming"}
-            >
-                <IonLabel className="bookings-tab__text">Upcoming</IonLabel>
-            </IonTabButton>
+    <IonTabBar slot="top" className="bookings-tab-bar">
+      <IonTabButton
+        className={`bookings-tab ${selectedTab === "Upcoming" ? "bookings-tab-selected" : ""}`}
+        tab="Upcoming"
+        onClick={() => handleTabChange("Upcoming")}
+        selected={selectedTab === "Upcoming"}
+      >
+        <IonLabel className="bookings-tab__text">Upcoming</IonLabel>
+      </IonTabButton>
 
-            <IonTabButton
-                className={`bookings-tab ${selectedTab === "Completed" ? "bookings-tab-selected" : ""}`}
-                tab="Completed"
-                onClick={() => handleTabChange("Completed")}
-                selected={selectedTab === "Completed"}
-            >
-                <IonLabel className="bookings-tab__text">Completed</IonLabel>
-            </IonTabButton>
-        </IonTabBar>
-    );
+      <IonTabButton
+        className={`bookings-tab ${selectedTab === "Completed" ? "bookings-tab-selected" : ""}`}
+        tab="Completed"
+        onClick={() => handleTabChange("Completed")}
+        selected={selectedTab === "Completed"}
+      >
+        <IonLabel className="bookings-tab__text">Completed</IonLabel>
+      </IonTabButton>
+    </IonTabBar>
+  );
 
-    // Show Booking Details if booking is selected
-    if (selectedBooking) {
-        return (
-            <IonPage>
-                <IonHeader className="ion-no-border" translucent={true}>
-                    <IonToolbar>
-                        <IonTitle>Your Bookings Details</IonTitle>
-                    </IonToolbar>
-                </IonHeader>
-                <IonContent fullscreen>
-                    <BookingDetails
-                        bookingDetails={
-                            bookingListData.filter((bookingDetails) => bookingDetails.status === selectedTab)[selectedBooking - 1]
-                        }
-                        closeBookingDetails={handleBookingClick}
-                    />
-                </IonContent>
-            </IonPage>
-        );
-    }
-
-    // Show weather card list if no booking is selected
+  // Show Booking Details if booking is selected
+  if (selectedBooking) {
     return (
-        <IonPage>
-            <IonHeader className="ion-no-border" translucent={true}>
-                <IonToolbar>
-                    <IonTitle>Your Bookings</IonTitle>
-                </IonToolbar>
-            </IonHeader>
-            {selectedTabHeader}
-            <IonContent fullscreen>
-                {selectedTab === "Upcoming" ? (
-                    <WeatherCardList
-                        bookingListData={bookingListData.filter((bookingDetails) => bookingDetails.status === "Upcoming")}
-                        openBookingDetails={handleBookingClick}
-                        key="upcoming"
-                    />
-                ) : (
-                    <div>
-                        <WeatherCardList
-                            bookingListData={bookingListData.filter((bookingDetails) => bookingDetails.status === "Completed")}
-                            openBookingDetails={handleBookingClick}
-                            key="completed"
-                        />
-                        <a href="https://ko-fi.com/" className="coffee-img-container">
-                            <p className="coffee-text">Support Us!</p>
-                            <IonImg src={coffee} className="coffee-img"></IonImg>
-                        </a>
-                    </div>
-                )}
-            </IonContent>
-        </IonPage>
+      <IonPage>
+        <IonHeader className="ion-no-border transparent page-header" translucent={true}>
+          <IonToolbar className="transparent">
+            <div className="booking-details-toolbar">
+              <IonButton onClick={() => handleBookingClick(0)} className="booking-details-back-button invisible-button">
+                <IonIcon icon={chevronBackOutline} slot="icon-only"></IonIcon>
+              </IonButton>
+            </div>
+          </IonToolbar>
+        </IonHeader>
+        <IonContent fullscreen>
+          <BookingDetails
+            bookingDetails={
+              bookingListData.filter((bookingDetails) => bookingDetails.status === selectedTab)[selectedBooking - 1]
+            }
+            closeBookingDetails={handleBookingClick}
+          />
+        </IonContent>
+      </IonPage>
     );
+  }
+
+  // Show weather card list if no booking is selected
+  return (
+    <IonPage>
+      <IonHeader className="ion-no-border transparent page-header" translucent={true}>
+        <IonToolbar className="transparent">
+          <IonTitle className="page-title">Your Bookings</IonTitle>
+        </IonToolbar>
+      </IonHeader>
+      {selectedTabHeader}
+      <IonContent fullscreen>
+        {selectedTab === "Upcoming" ? (
+          <WeatherCardList
+            bookingListData={bookingListData.filter((bookingDetails) => bookingDetails.status === "Upcoming")}
+            openBookingDetails={handleBookingClick}
+            key="upcoming"
+          />
+        ) : (
+          <div>
+            <WeatherCardList
+              bookingListData={bookingListData.filter((bookingDetails) => bookingDetails.status === "Completed")}
+              openBookingDetails={handleBookingClick}
+              key="completed"
+            />
+            <a href="https://ko-fi.com/" className="coffee-img-container">
+              <p className="coffee-text">Support Us!</p>
+              <IonImg src={coffee} className="coffee-img"></IonImg>
+            </a>
+          </div>
+        )}
+      </IonContent>
+    </IonPage>
+  );
 };
 
 export default ViewBookingsPage;

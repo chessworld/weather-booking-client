@@ -1,7 +1,6 @@
 /*************************************************************************/
 /*                               page fonts                              */
 /*************************************************************************/
-
 .home-page-app-name-container {
   text-align: center;
   padding: 0.5rem 0;
@@ -28,7 +27,7 @@
 }
 
 .welcome-text {
-  font-weight: bold;
+  font-weight: 550;
   font-size: 1.2rem;
 }
 
@@ -169,7 +168,7 @@
 .step-heading {
   font-weight: bold;
   align-self: flex-start;
-  margin: 2rem 0 0 2rem;
+  margin: 1rem 0 0 2rem;
   font-size: 1.1rem;
 }
 

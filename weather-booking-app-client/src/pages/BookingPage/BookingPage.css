@@ -14,7 +14,7 @@
 }
 
 .hud-background {
-    overflow: hidden;
+  overflow: hidden;
 }
 
 .font-inverted {
@@ -33,7 +33,7 @@
   height: 80vh;
   gap: 2rem;
   align-items: center;
-  margin: 4vh 0 1vh 0;
+  /* margin: 4vh 0 1vh 0; */
 }
 
 .step-two-heading-container {
