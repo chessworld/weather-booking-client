@@ -12,7 +12,6 @@ import Cloudy from "../../components/weatherAnimatedIcons/Cloudy";
 import Sunny from "../../components/weatherAnimatedIcons/Sunny";
 import Rainy from "../../components/weatherAnimatedIcons/Rainy";
 import Stormy from "../../components/weatherAnimatedIcons/Stormy";
-import SlideUpPanel from "../../components/SlideUpPanel/SlideUpPanel";
 import { AppContext, AppContextInterface } from "../../stores/app-context";
 import { WeatherType } from "../../endpoint-caller/interfaces/enums/WeatherType";
 import { WindLevel } from "../../endpoint-caller/interfaces/enums/WindLevel";
@@ -20,132 +19,133 @@ import { TemperatureLevel } from "../../endpoint-caller/interfaces/enums/Tempera
 import { BookingWeatherOption } from "./Interface/BookingWeatherOptions";
 import { chevronBackOutline } from "ionicons/icons";
 import { Location } from "../../endpoint-caller/interfaces/locations/Location";
-import { abbrState } from "./State";
 import React from "react";
 
 class BookingPage extends Component<BookingPageProps, BookingPageState> {
-    static contextType = AppContext;
-    confirmBookingModal: RefObject<HTMLIonModalElement> = React.createRef<HTMLIonModalElement>();
+  static contextType = AppContext;
+  confirmBookingModal: RefObject<HTMLIonModalElement> = React.createRef<HTMLIonModalElement>();
 
-    constructor(props: BookingPageProps) {
-        super(props);
+  constructor(props: BookingPageProps) {
+    super(props);
 
-        if (!isBookingDetails(this.props.location.state)) {
-            this.props.history.push("/");
-            throw new Error("Invalid state object");
-        }
-
-        this.state = {
-            bookingDetails: {
-                ...this.props.location.state,
-            },
-            selectedWeatherOption: "Cloudy",
-            selectedWindOption: "No Wind",
-            selectedTemperatureOption: "Cool",
-            showSuggestions: false,
-            locationSuggestions: [],
-            toast: {
-                showToast: false,
-                toastMessage: "",
-            },
-            showConfirmation: false, // Default of show confirmation should be set to false
-        };
-
-        // Bindings
-        this.clickBooking = this.clickBooking.bind(this);
-        this.toggleConfirmation = this.toggleConfirmation.bind(this);
-        this.book = this.book.bind(this);
+    if (!isBookingDetails(this.props.location.state)) {
+      this.props.history.push("/");
+      throw new Error("Invalid state object");
     }
 
-    weatherOptions: BookingWeatherOption[] = [
-        {
-            name: "Cloudy",
-            effectClassName: "cloud",
-            backgroundClassName: "perfect",
-            svg: Cloudy,
-        },
-        {
-            name: "Sunny",
-            effectClassName: "sun",
-            backgroundClassName: "sunny",
-            svg: Sunny,
-        },
-        {
-            name: "Rainy",
-            effectClassName: "rain",
-            backgroundClassName: "rainy",
-            svg: Rainy,
-        },
-        {
-            name: "Stormy",
-            effectClassName: "storm",
-            backgroundClassName: "stormy",
-            svg: Stormy,
-        },
-    ];
-    temperatureOptions: TemperatureLevel[] = ["Cool", "Warm", "Hot"];
-    windOptions: WindLevel[] = ["No Wind", "Calm", "Windy"];
+    this.state = {
+      bookingDetails: {
+        ...this.props.location.state,
+      },
+      selectedWeatherOption: "Cloudy",
+      selectedWindOption: "No Wind",
+      selectedTemperatureOption: "Cool",
+      showSuggestions: false,
+      locationSuggestions: [],
+      toast: {
+        showToast: false,
+        toastMessage: "",
+      },
+      showConfirmation: false, // Default of show confirmation should be set to false
+    };
 
-    showToast(message: string): void {
-        this.setState({
-            ...this.state,
-            toast: {
-                showToast: true,
-                toastMessage: message,
-            },
-        });
+    // Bindings
+    this.clickBooking = this.clickBooking.bind(this);
+    this.toggleConfirmation = this.toggleConfirmation.bind(this);
+    this.book = this.book.bind(this);
+  }
+
+  weatherOptions: BookingWeatherOption[] = [
+    {
+      name: "Cloudy",
+      effectClassName: "cloud",
+      backgroundClassName: "perfect",
+      svg: Cloudy,
+    },
+    {
+      name: "Sunny",
+      effectClassName: "sun",
+      backgroundClassName: "sunny",
+      svg: Sunny,
+    },
+    {
+      name: "Rainy",
+      effectClassName: "rain",
+      backgroundClassName: "rainy",
+      svg: Rainy,
+    },
+    {
+      name: "Stormy",
+      effectClassName: "storm",
+      backgroundClassName: "stormy",
+      svg: Stormy,
+    },
+  ];
+  temperatureOptions: TemperatureLevel[] = ["Cool", "Warm", "Hot"];
+  windOptions: WindLevel[] = ["No Wind", "Calm", "Windy"];
+
+  showToast(message: string): void {
+    this.setState({
+      ...this.state,
+      toast: {
+        showToast: true,
+        toastMessage: message,
+      },
+    });
+  }
+
+  handleWeatherSelectionUpdate(weatherTypeSelected: WeatherType) {
+    this.setState((prev) => {
+      return {
+        ...prev,
+        selectedWeatherOption: weatherTypeSelected,
+      };
+    });
+  }
+
+  clickBooking(): void {
+    this.toggleConfirmation();
+  }
+
+  async book(): Promise<void> {
+    if (!this.state.bookingDetails && !isBookingDetails(this.state.bookingDetails)) {
+      console.error("Invalid state object");
+      this.props.history.push("/");
+    }
+    const appCtx = this.context as AppContextInterface;
+
+    //Form Validation
+    if (!this.state.selectedWeatherOption || !this.state.selectedWindOption || !this.state.selectedTemperatureOption) {
+      this.showToast("Please select all options");
+      return;
     }
 
-    handleWeatherSelectionUpdate(weatherTypeSelected: WeatherType) {
-        this.setState((prev) => {
-            return {
-                ...prev,
-                selectedWeatherOption: weatherTypeSelected,
-            };
-        });
-    }
+    const location: Location = {
+      suburb: this.state.bookingDetails.suburb ?? "",
+      state: this.state.bookingDetails.state ?? "",
+      postcode: this.state.bookingDetails.postcode ?? "",
+      country: this.state.bookingDetails.country ?? "",
+    };
 
-    clickBooking(): void {
-        this.toggleConfirmation();
-    }
-
-    async book(): Promise<void> {
-        if (!this.state.bookingDetails && !isBookingDetails(this.state.bookingDetails)) {
-            console.error("Invalid state object");
-            this.props.history.push("/");
-        }
-        const appCtx = this.context as AppContextInterface;
-
-        //Form Validation
-        if (!this.state.selectedWeatherOption || !this.state.selectedWindOption || !this.state.selectedTemperatureOption) {
-            this.showToast("Please select all options");
-            return;
-        }
-
-        const location: Location = {
-            suburb: this.state.bookingDetails.suburb ?? "",
-            state: this.state.bookingDetails.state ?? "",
-            postcode: this.state.bookingDetails.postcode ?? "",
-            country: this.state.bookingDetails.country ?? "",
-        };
-
-        await BookingEndpoint.createBooking(
-            appCtx.userId,
-            location,
-            this.state.bookingDetails.dateTime ?? "",
-            this.state.bookingDetails.timePeriod ?? "",
-            {
-                weather: this.state.selectedWeatherOption,
-                wind: this.state.selectedWindOption,
-                temperature: this.state.selectedTemperatureOption,
-            }
-        );
-        setTimeout(() => {}, 500);
-
+    await BookingEndpoint.createBooking(
+      appCtx.userId,
+      this.state.bookingDetails.name ?? "",
+      location,
+      this.state.bookingDetails.dateTime ?? "",
+      this.state.bookingDetails.timePeriod ?? "",
+      {
+        weather: this.state.selectedWeatherOption,
+        wind: this.state.selectedWindOption,
+        temperature: this.state.selectedTemperatureOption,
+      }
+    ).then(() => {
+      setTimeout(() => {
         this.redirectToBookListPage();
+      }, 1000);
 
-        this.showToast("Booking has been successfully created");
-    }
+      this.showToast("Booking has been successfully created");
+    });
+  }
 
     redirectToBookListPage(): void {
         this.props.history.push("/viewBookingsPage");
@@ -166,7 +166,6 @@ class BookingPage extends Component<BookingPageProps, BookingPageState> {
                         <IonTitle>Book Your Weather</IonTitle>
                     </IonToolbar>
                 </IonHeader>
-
                 <IonToast
                     isOpen={this.state.toast.showToast}
                     onDidDismiss={() =>
@@ -195,6 +194,7 @@ class BookingPage extends Component<BookingPageProps, BookingPageState> {
                             book={this.book}
                         />
                     </IonModal>
+                    <h2 className="booking-page-date-location-title">Book Your Weather</h2>
 
                     <div className="page-content">
                         <div className="step-two-heading-container">
@@ -226,17 +226,15 @@ class BookingPage extends Component<BookingPageProps, BookingPageState> {
                                                         : "no-animation"
                                                     }`}
                                             >
-                                                {
-                                                    React.createElement(weatherOption.svg, {
-                                                        showAnimation: this.weatherOptions[i].name === this.state.selectedWeatherOption,
-                                                        className: "weather-icon",
-                                                    })
-                                                }
+                                                {React.createElement(weatherOption.svg, {
+                                                    showAnimation: this.weatherOptions[i].name === this.state.selectedWeatherOption,
+                                                    className: "weather-icon",
+                                                })}
                                             </div>
                                             <span
                                                 className={`${this.weatherOptions[i].name == this.state.selectedWeatherOption
-                                                    ? "weather-choose-text-selected"
-                                                    : "weather-choose-text"
+                                                        ? "weather-choose-text-selected"
+                                                        : "weather-choose-text"
                                                     }`}
                                             >
                                                 {weatherOption.name}

@@ -5,6 +5,7 @@ import { BookingResult } from "../enums/BookingResult";
 import { Location } from "../locations/Location";
 export interface BookingResponse {
   id: string;
+  booking_name: string;
   user: string;
   location: Location;
   date: string;

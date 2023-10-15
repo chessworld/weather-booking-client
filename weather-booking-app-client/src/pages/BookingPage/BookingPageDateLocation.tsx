@@ -1,6 +1,6 @@
 import { Component, createRef, RefObject } from "react";
 import { format, parseISO } from "date-fns";
-import { IonHeader, IonToolbar, IonTitle , IonToast, IonPage, IonDatetime, IonIcon, IonButton, IonSegment, IonSegmentButton } from "@ionic/react";
+import { IonHeader, IonToolbar, IonTitle, IonToast, IonPage, IonDatetime, IonIcon, IonButton, IonSegment, IonSegmentButton } from "@ionic/react";
 import { withRouter } from "react-router-dom";
 import {
   compassOutline,
@@ -16,7 +16,6 @@ import Background from "../../components/ScreenComponents/Background";
 import BookingPageDateLocationProps from "./Interface/BookingPageDateLocationProps";
 import BookingPageDateLocationState from "./Interface/BookingPageDateLocationState";
 import DeviceManager from "../../device/DeviceManager";
-import SlideUpPanel from "../../components/SlideUpPanel/SlideUpPanel";
 //Location search functionality
 import { Location } from "../../endpoint-caller/interfaces/locations/Location";
 import LocationSearchEndpoint from "../../endpoint-caller/locationEndpoint";
@@ -35,12 +34,13 @@ class BookingPageDateLocation extends Component<BookingPageDateLocationProps, Bo
     "Beach Day",
     "Cozy night in",
     "Picnic",
-    "Hiking",
-    "Camping",
+    "Hike",
+    "Camping Trip",
     "Skiing",
     "Surfing",
     "Fun Night Out",
     "Outdoor Celebration",
+    "Graduation",
   ];
 
   constructor(props: BookingPageDateLocationProps) {
@@ -80,27 +80,6 @@ class BookingPageDateLocation extends Component<BookingPageDateLocationProps, Bo
 
     this.panelRef = createRef();
     this.calendarRef = createRef();
-  }
-
-  componentDidUpdate(
-    prevProps: Readonly<BookingPageDateLocationProps>,
-    prevState: Readonly<BookingPageDateLocationState>,
-    snapshot?: any
-  ): void {
-    for (const key in prevState) {
-      if ((prevState as any)[key] !== (this.state as any)[key]) {
-        console.log("changed property:", key, "from", (prevState as any)[key], "to", (this.state as any)[key]);
-      }
-    }
-  }
-
-  async componentDidMount() {
-    /* this.deviceManager = await DeviceManager.getInstance(); */
-    /* this.deviceManager.checkUserCompletedTutorial().then((completed) => {
-     *     if (!completed) {
-     *         this.props.history.push('/onBoardingPage');
-     *     }
-     * }); */
   }
 
   toggleShowCalendar(): void {
@@ -307,7 +286,7 @@ class BookingPageDateLocation extends Component<BookingPageDateLocationProps, Bo
   getLocationSuggestions = debounce(async (query: string) => {
     this.updateLocationSuggestions([]);
     if (query.length >= 4) {
-      await LocationSearchEndpoint.searchLocations(query).then((locationList) =>
+      await LocationSearchEndpoint.searchLocations(encodeURIComponent(query.trim())).then((locationList) =>
         this.updateLocationSuggestions(locationList)
       );
     }
@@ -339,8 +318,8 @@ class BookingPageDateLocation extends Component<BookingPageDateLocationProps, Bo
     });
   }
 
-    render(): React.ReactNode {
-        return (
+  render(): React.ReactNode {
+    return (
             <IonPage keep-alive="false">
                 <IonHeader className="ion-no-border" translucent={true}>
                     <IonToolbar>
@@ -363,6 +342,8 @@ class BookingPageDateLocation extends Component<BookingPageDateLocationProps, Bo
                 />
 
                 <Background showClouds={false}>
+                    {/* <div className="booking-page-date-location-header">Book Unique Weather and Experiences</div> */}
+                    <h2 className="booking-page-date-location-title">Book Your Weather</h2>
                     <div className="booking-page-date-location-container">
                         <h3 className="step-heading">Step 1 - What, Where and When</h3>
                         <div className="input-fields-container">
@@ -442,7 +423,7 @@ class BookingPageDateLocation extends Component<BookingPageDateLocationProps, Bo
                                 <IonDatetime
                                     presentation="date"
                                     ref={this.calendarRef}
-                                    min={new Date().toISOString()}
+                                    min={new Date(new Date().setDate(new Date().getDate() + 1)).toISOString()}
                                     max={new Date(new Date().setMonth(new Date().getMonth() + 2)).toISOString()}
                                     className="react-calendar"
                                     onIonChange={(e) => {
