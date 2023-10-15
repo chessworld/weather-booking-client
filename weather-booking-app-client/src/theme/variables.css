@@ -2,8 +2,8 @@
 http://ionicframework.com/docs/theming/ */
 
 .transparent {
-  --background: transparent;
-  background: transparent;
+  --background: #a8c8ed;
+  background: #a8c8ed;
 }
 
 .page-header {
