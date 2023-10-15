@@ -22,6 +22,7 @@ npm run build
 npx cap copy
 npx cap add ios
 npx cap open ios
+
 ```
 
 Running the App on ios with hot reload for debugging purposes
@@ -29,4 +30,18 @@ Running the App on ios with hot reload for debugging purposes
 ```sh
 ionic serve
 ionic capacitor run ios -l --external
+```
+
+Build and Running the App on android emulator
+```sh
+npx cap add android
+npx cap open android
+
+```
+
+Running the App on android with hot reload for debugging purposes
+
+```sh
+ionic serve
+ionic capacitor run android -l --external
 ```

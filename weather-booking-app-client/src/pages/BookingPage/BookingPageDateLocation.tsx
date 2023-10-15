@@ -1,6 +1,6 @@
 import { Component, createRef, RefObject } from "react";
 import { format, parseISO } from "date-fns";
-import { IonToast, IonPage, IonDatetime, IonIcon, IonButton, IonSegment, IonSegmentButton } from "@ionic/react";
+import { IonHeader, IonToolbar, IonTitle , IonToast, IonPage, IonDatetime, IonIcon, IonButton, IonSegment, IonSegmentButton } from "@ionic/react";
 import { withRouter } from "react-router-dom";
 import {
   compassOutline,
@@ -339,142 +339,145 @@ class BookingPageDateLocation extends Component<BookingPageDateLocationProps, Bo
     });
   }
 
-  render(): React.ReactNode {
-    return (
-      <IonPage keep-alive="false">
-        <IonToast
-          isOpen={this.state.toast.showToast}
-          onDidDismiss={() =>
-            this.setState({
-              toast: {
-                ...this.state.toast,
-                toastMessage: "",
-                showToast: false,
-              },
-            })
-          }
-          message={this.state.toast.toastMessage}
-          duration={1000}
-        />
-
-        <Background showClouds={false}>
-          {/* <div className="booking-page-date-location-header">Book Unique Weather and Experiences</div> */}
-          <h2 className="booking-page-date-location-title">Book Your Weather</h2>
-          <div className="booking-page-date-location-container">
-            <h3 className="step-heading">Step 1 - What, Where and When</h3>
-            <div className="input-fields-container">
-              <div className="button-with-icon">
-                <div id="booking-page-name-input-icon" className="icon-with-outline">
-                  <IonIcon className="button-icons" icon={bagOutline} />
-                </div>
-                <input
-                  type="text"
-                  onChange={(e) => {
-                    this.updateBooking(e.target.value, "name");
-                  }}
-                  value={this.state.bookingDetails.name ?? ""}
-                  id={this.state.bookingPageInputIds.name}
-                  className="booking-page-input"
-                  placeholder="Event"
-                ></input>
-                <IonButton onClick={() => this.generateRandomEvent()} className="dice-button invisible-button">
-                  <IonIcon icon={diceOutline} slot="icon-only"></IonIcon>
-                </IonButton>
-              </div>
-
-              <div className="button-with-icon" style={{ paddingBottom: "1rem" }}>
-                <div id="booking-page-location-input-icon" className="icon-with-outline">
-                  <IonIcon className="button-icons" icon={compassOutline} />
-                </div>
-                <form>
-                  <input
-                    type="text"
-                    onChange={(e) => {
-                      this.handleLocationSearch(e.target.value);
-                    }}
-                    value={this.state.bookingDetails.location ?? ""}
-                    className="booking-page-input"
-                    id="booking-page-location-input"
-                    placeholder="Where"
-                    autoComplete="off"
-                  />
-                  {this.state.locationSuggestions.length > 0 && (
-                    <ul className="suggestion-list">
-                      {this.state.locationSuggestions.map((location, index) => (
-                        <li key={index} onTouchEnd={() => this.handleSuggestionSelect(location)}>
-                          {location.suburb}, {location.postcode} {location.state}
-                        </li>
-                      ))}
-                    </ul>
-                  )}
-                </form>
-              </div>
-              <div className="button-with-icon">
-                <IonSegment
-                  className="timeperiod-container"
-                  onIonChange={(e) => {
-                    this.updateBooking(e.target.value, "timePeriod");
-                  }}
-                  id={this.state.bookingPageInputIds.timePeriod}
-                >
-                  <IonSegmentButton value="Morning" className="timeperiod-button">
-                    <IonIcon className="time-period-icon" icon={partlySunnyOutline} />
-                    <p>Morning</p>
-                  </IonSegmentButton>
-                  <IonSegmentButton value="Afternoon" className="timeperiod-button">
-                    <IonIcon className="time-period-icon" icon={sunnyOutline} />
-                    <p>Afternoon</p>
-                  </IonSegmentButton>
-                  <IonSegmentButton value="Evening" className="timeperiod-button">
-                    <IonIcon className="time-period-icon" icon={cloudyNightOutline} />
-                    <p>Evening</p>
-                  </IonSegmentButton>
-                  <IonSegmentButton value="Night" className="timeperiod-button">
-                    <IonIcon className="time-period-icon" icon={moonOutline} />
-                    <p>Night</p>
-                  </IonSegmentButton>
-                </IonSegment>
-              </div>
-              <div className="calendar-container">
-                <IonDatetime
-                  presentation="date"
-                  ref={this.calendarRef}
-                  min={new Date().toISOString()}
-                  max={new Date(new Date().setMonth(new Date().getMonth() + 2)).toISOString()}
-                  className="react-calendar"
-                  onIonChange={(e) => {
-                    if (typeof e.detail.value == "string") {
-                      this.updateBooking(e.detail.value, "dateTime");
+    render(): React.ReactNode {
+        return (
+            <IonPage keep-alive="false">
+                <IonHeader className="ion-no-border" translucent={true}>
+                    <IonToolbar>
+                        <IonTitle>Book Your Weather</IonTitle>
+                    </IonToolbar>
+                </IonHeader>
+                <IonToast
+                    isOpen={this.state.toast.showToast}
+                    onDidDismiss={() =>
+                        this.setState({
+                            toast: {
+                                ...this.state.toast,
+                                toastMessage: "",
+                                showToast: false,
+                            },
+                        })
                     }
-                  }}
-                  id={this.state.bookingPageInputIds.dateTime}
-                ></IonDatetime>
-              </div>
-              <div className="book-buttons-container">
-                <div
-                  className="book-button"
-                  onClick={() => {
-                    if (this.validateInput()) {
-                      this.props.history.push({
-                        pathname: "/bookingPage",
-                        state: this.resetInputFields(),
-                      });
-                    }
-                  }}
-                  style={{
-                    bottom: "10px",
-                    position: "relative",
-                  }}
-                >
-                  Next
-                </div>
-              </div>
-            </div>
-          </div>
-        </Background>
-      </IonPage>
-    );
-  }
+                    message={this.state.toast.toastMessage}
+                    duration={1000}
+                />
+
+                <Background showClouds={false}>
+                    <div className="booking-page-date-location-container">
+                        <h3 className="step-heading">Step 1 - What, Where and When</h3>
+                        <div className="input-fields-container">
+                            <div className="button-with-icon">
+                                <div id="booking-page-name-input-icon" className="icon-with-outline">
+                                    <IonIcon className="button-icons" icon={bagOutline} />
+                                </div>
+                                <input
+                                    type="text"
+                                    onChange={(e) => {
+                                        this.updateBooking(e.target.value, "name");
+                                    }}
+                                    value={this.state.bookingDetails.name ?? ""}
+                                    id={this.state.bookingPageInputIds.name}
+                                    className="booking-page-input"
+                                    placeholder="Event"
+                                ></input>
+                                <IonButton onClick={() => this.generateRandomEvent()} className="dice-button invisible-button">
+                                    <IonIcon icon={diceOutline} slot="icon-only"></IonIcon>
+                                </IonButton>
+                            </div>
+
+                            <div className="button-with-icon" style={{ paddingBottom: "1rem" }}>
+                                <div id="booking-page-location-input-icon" className="icon-with-outline">
+                                    <IonIcon className="button-icons" icon={compassOutline} />
+                                </div>
+                                <form>
+                                    <input
+                                        type="text"
+                                        onChange={(e) => {
+                                            this.handleLocationSearch(e.target.value);
+                                        }}
+                                        value={this.state.bookingDetails.location ?? ""}
+                                        className="booking-page-input"
+                                        id="booking-page-location-input"
+                                        placeholder="Where"
+                                        autoComplete="off"
+                                    />
+                                    {this.state.locationSuggestions.length > 0 && (
+                                        <ul className="suggestion-list">
+                                            {this.state.locationSuggestions.map((location, index) => (
+                                                <li key={index} onTouchEnd={() => this.handleSuggestionSelect(location)}>
+                                                    {location.suburb}, {location.postcode} {location.state}
+                                                </li>
+                                            ))}
+                                        </ul>
+                                    )}
+                                </form>
+                            </div>
+                            <div className="button-with-icon">
+                                <IonSegment
+                                    className="timeperiod-container"
+                                    onIonChange={(e) => {
+                                        this.updateBooking(e.target.value, "timePeriod");
+                                    }}
+                                    id={this.state.bookingPageInputIds.timePeriod}
+                                >
+                                    <IonSegmentButton value="Morning" className="timeperiod-button">
+                                        <IonIcon className="time-period-icon" icon={partlySunnyOutline} />
+                                        <p>Morning</p>
+                                    </IonSegmentButton>
+                                    <IonSegmentButton value="Afternoon" className="timeperiod-button">
+                                        <IonIcon className="time-period-icon" icon={sunnyOutline} />
+                                        <p>Afternoon</p>
+                                    </IonSegmentButton>
+                                    <IonSegmentButton value="Evening" className="timeperiod-button">
+                                        <IonIcon className="time-period-icon" icon={cloudyNightOutline} />
+                                        <p>Evening</p>
+                                    </IonSegmentButton>
+                                    <IonSegmentButton value="Night" className="timeperiod-button">
+                                        <IonIcon className="time-period-icon" icon={moonOutline} />
+                                        <p>Night</p>
+                                    </IonSegmentButton>
+                                </IonSegment>
+                            </div>
+                            <div className="calendar-container">
+                                <IonDatetime
+                                    presentation="date"
+                                    ref={this.calendarRef}
+                                    min={new Date().toISOString()}
+                                    max={new Date(new Date().setMonth(new Date().getMonth() + 2)).toISOString()}
+                                    className="react-calendar"
+                                    onIonChange={(e) => {
+                                        if (typeof e.detail.value == "string") {
+                                            this.updateBooking(e.detail.value, "dateTime");
+                                        }
+                                    }}
+                                    id={this.state.bookingPageInputIds.dateTime}
+                                ></IonDatetime>
+                            </div>
+                            <div className="book-buttons-container">
+                                <div
+                                    className="book-button"
+                                    onClick={() => {
+                                        if (this.validateInput()) {
+                                            this.props.history.push({
+                                                pathname: "/bookingPage",
+                                                state: this.resetInputFields(),
+                                            });
+                                        }
+                                    }}
+                                    style={{
+                                        bottom: "10px",
+                                        position: "relative",
+                                    }}
+                                >
+                                    Next
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </Background>
+            </IonPage>
+        );
+    }
 }
 
 export default withRouter(BookingPageDateLocation);
