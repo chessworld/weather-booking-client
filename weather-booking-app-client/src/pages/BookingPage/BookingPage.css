@@ -13,6 +13,10 @@
     1.5px 1.5px 0 rgba(0, 0, 0, 0.5) !important;
 }
 
+.hud-background {
+  overflow: hidden;
+}
+
 .font-inverted {
   color: #222 !important;
   text-shadow: -0.5px -0.5px 0 rgba(255, 255, 255, 0.5), 0.5px -0.5px 0 rgba(255, 255, 255, 0.5),
@@ -29,7 +33,7 @@
   height: 80vh;
   gap: 2rem;
   align-items: center;
-  margin: 4vh 0 1vh 0;
+  /* margin: 4vh 0 1vh 0; */
 }
 
 .step-two-heading-container {
@@ -74,6 +78,8 @@
 
 .weather-choose-container {
   display: flex;
+  position: relative;
+  overflow: hidden;
   flex-direction: column;
   justify-content: center;
   align-items: center;
@@ -109,7 +115,6 @@
   width: 20vw;
   height: 22vh;
   text-align: center;
-  /* box-shadow: 0 0 0 0.1em rgba(255, 255, 255, 0.7) inset, 0 0 2em -0.3em var(--shadow) !important; */
 }
 
 .weather-choose-option-selected {
@@ -118,11 +123,7 @@
 }
 
 .weather-icon {
-  display: flex;
-  justify-content: center;
-  align-items: center;
   width: 60%;
-  height: 100%;
 }
 
 .weather-slider {
@@ -166,10 +167,6 @@
 }
 
 .selector-container {
-  width: 78vw;
-}
-
-.selector-container {
   width: 80vw;
 }
 
@@ -178,6 +175,7 @@ ion-select {
   padding: 0px 2.5vw 0px 2.5vw;
   height: 1.5vh;
   border-radius: 4px;
+  position: relative;
   display: flex;
   justify-content: center;
   align-items: center;
@@ -220,7 +218,7 @@ ion-range {
 
 .no-animation,
 .no-animation *,
-.no-animation::before,
+.no-anisation::before,
 .no-animation::after,
 .no-animation *::before,
 .no-animation *::after {

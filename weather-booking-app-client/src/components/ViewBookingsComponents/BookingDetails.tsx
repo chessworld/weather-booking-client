@@ -25,16 +25,23 @@ const BookingDetails: React.FC<BookingDetailsProps> = (props) => {
 
   return (
     <div className="booking-details-container">
-      <div className="booking-details-toolbar">
+      {/* <div className="booking-details-toolbar">
         <IonButton
           onClick={() => props.closeBookingDetails(0)}
           className="booking-details-back-button invisible-button"
         >
           <IonIcon icon={chevronBackOutline} slot="icon-only"></IonIcon>
         </IonButton>
-      </div>
+      </div> */}
 
-      <h1 className="booking-details-title">Booking Details</h1>
+      <h1
+        className="booking-details-title"
+        style={{
+          paddingBottom: "1rem",
+        }}
+      >
+        Booking Details
+      </h1>
       <IonCard className="booking-details-card">
         <IonCardContent>
           <div className="booking-details-content">
@@ -69,7 +76,14 @@ const BookingDetails: React.FC<BookingDetailsProps> = (props) => {
 
       {props.bookingDetails.status === "Completed" && (
         <div>
-          <h1 className="booking-details-title"> Feedback</h1>
+          <h1
+            className="booking-details-title"
+            style={{
+              paddingBottom: "1rem",
+            }}
+          >
+            Feedback
+          </h1>
           <IonCard className="booking-details-card">
             <IonCardContent>
               {props.bookingDetails.result === "Failed" && (

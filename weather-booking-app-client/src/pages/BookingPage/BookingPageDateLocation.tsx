@@ -1,6 +1,17 @@
 import { Component, createRef, RefObject } from "react";
 import { format, parseISO } from "date-fns";
-import { IonToast, IonPage, IonDatetime, IonIcon, IonButton, IonSegment, IonSegmentButton } from "@ionic/react";
+import {
+  IonHeader,
+  IonToolbar,
+  IonTitle,
+  IonToast,
+  IonPage,
+  IonDatetime,
+  IonIcon,
+  IonButton,
+  IonSegment,
+  IonSegmentButton,
+} from "@ionic/react";
 import { withRouter } from "react-router-dom";
 import {
   compassOutline,
@@ -16,7 +27,6 @@ import Background from "../../components/ScreenComponents/Background";
 import BookingPageDateLocationProps from "./Interface/BookingPageDateLocationProps";
 import BookingPageDateLocationState from "./Interface/BookingPageDateLocationState";
 import DeviceManager from "../../device/DeviceManager";
-import SlideUpPanel from "../../components/SlideUpPanel/SlideUpPanel";
 //Location search functionality
 import { Location } from "../../endpoint-caller/interfaces/locations/Location";
 import LocationSearchEndpoint from "../../endpoint-caller/locationEndpoint";
@@ -82,18 +92,6 @@ class BookingPageDateLocation extends Component<BookingPageDateLocationProps, Bo
     this.panelRef = createRef();
     this.calendarRef = createRef();
   }
-
-  // componentDidUpdate(
-  //   prevProps: Readonly<BookingPageDateLocationProps>,
-  //   prevState: Readonly<BookingPageDateLocationState>,
-  //   snapshot?: any
-  // ): void {
-  //   for (const key in prevState) {
-  //     if ((prevState as any)[key] !== (this.state as any)[key]) {
-  //       console.log("changed property:", key, "from", (prevState as any)[key], "to", (this.state as any)[key]);
-  //     }
-  //   }
-  // }
 
   toggleShowCalendar(): void {
     this.setState({
@@ -334,6 +332,11 @@ class BookingPageDateLocation extends Component<BookingPageDateLocationProps, Bo
   render(): React.ReactNode {
     return (
       <IonPage keep-alive="false">
+        <IonHeader className="ion-no-border transparent page-header" translucent={true}>
+          <IonToolbar className="transparent">
+            <IonTitle className="page-title">Book your Weather</IonTitle>
+          </IonToolbar>
+        </IonHeader>
         <IonToast
           isOpen={this.state.toast.showToast}
           onDidDismiss={() =>
@@ -351,7 +354,7 @@ class BookingPageDateLocation extends Component<BookingPageDateLocationProps, Bo
 
         <Background showClouds={false}>
           {/* <div className="booking-page-date-location-header">Book Unique Weather and Experiences</div> */}
-          <h2 className="booking-page-date-location-title">Book Your Weather</h2>
+          {/* <h2 className="booking-page-date-location-title">Book Your Weather</h2> */}
           <div className="booking-page-date-location-container">
             <h3 className="step-heading">Step 1 - What, Where and When</h3>
             <div className="input-fields-container">

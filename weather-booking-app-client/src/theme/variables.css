@@ -1,6 +1,20 @@
 /* Ionic Variables and Theming. For more info, please see:
 http://ionicframework.com/docs/theming/ */
 
+.transparent {
+  --background: #a8c8ed;
+  background: #a8c8ed;
+}
+
+.page-header {
+  padding-left: 1rem;
+}
+
+.page-title {
+  font-weight: bold;
+  color: black;
+}
+
 /** Ionic CSS Variables **/
 :root {
   /** primary **/

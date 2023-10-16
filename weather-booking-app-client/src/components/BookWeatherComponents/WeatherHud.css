@@ -299,50 +299,48 @@
 
 .rainy::before {
   content: "";
+  display: block;
   position: absolute;
-  top: 0;
-  left: -50%;
-  right: 0;
-  bottom: 0;
+  left: -25%;
   width: 200%;
   height: 100%;
   background-image: radial-gradient(1px 1px at 50% 20%, #fff, rgba(0, 0, 0, 0)),
-    radial-gradient(1px 1px at 60% 40%, #fff, rgba(0, 0, 0, 0)),
-    radial-gradient(1px 1px at 56% 35%, #fff, rgba(0, 0, 0, 0)),
-    radial-gradient(1px 1px at 90% 80%, #fff, rgba(0, 0, 0, 0)),
-    radial-gradient(3px 3px at 99% 99%, #fff, rgba(0, 0, 0, 0)),
-    radial-gradient(2px 2px at 80% 87%, #fff, rgba(0, 0, 0, 0)),
-    radial-gradient(2px 2px at 12% 5%, #fff, rgba(0, 0, 0, 0)),
-    radial-gradient(2px 2px at 37% 35%, #fff, rgba(0, 0, 0, 0)),
-    radial-gradient(1px 1px at 30% 65%, #fff, rgba(0, 0, 0, 0)),
-    radial-gradient(2px 2px at 15% 05%, #fff, rgba(0, 0, 0, 0)),
-    radial-gradient(2px 2px at 37% 35%, #fff, rgba(0, 0, 0, 0)),
-    radial-gradient(2px 2px at 65% 47%, #fff, rgba(0, 0, 0, 0)),
-    radial-gradient(1px 1px at 42% 29%, #fff, rgba(0, 0, 0, 0)),
-    radial-gradient(1px 1px at 73% 56%, #fff, rgba(0, 0, 0, 0)),
-    radial-gradient(1px 1px at 24% 19%, #fff, rgba(0, 0, 0, 0)),
-    radial-gradient(2px 2px at 31% 47%, #fff, rgba(0, 0, 0, 0)),
-    radial-gradient(1px 1px at 18% 39%, #fff, rgba(0, 0, 0, 0)),
-    radial-gradient(1px 1px at 50% 20%, #fff, rgba(0, 0, 0, 0)),
-    radial-gradient(1px 1px at 30% 65%, #fff, rgba(0, 0, 0, 0)),
-    radial-gradient(2px 2px at 15% 05%, #fff, rgba(0, 0, 0, 0)),
-    radial-gradient(2px 2px at 37% 35%, #fff, rgba(0, 0, 0, 0)),
-    radial-gradient(2px 2px at 65% 47%, #fff, rgba(0, 0, 0, 0)),
-    radial-gradient(1px 1px at 42% 29%, #fff, rgba(0, 0, 0, 0)),
-    radial-gradient(1px 1px at 73% 56%, #fff, rgba(0, 0, 0, 0)),
-    radial-gradient(1px 1px at 24% 19%, #fff, rgba(0, 0, 0, 0)),
-    radial-gradient(2px 2px at 31% 47%, #fff, rgba(0, 0, 0, 0)),
-    radial-gradient(1px 1px at 18% 39%, #fff, rgba(0, 0, 0, 0)),
-    radial-gradient(1px 1px at 60% 80%, #fff, rgba(0, 0, 0, 0)),
-    radial-gradient(1px 1px at 10% 90%, #fff, rgba(0, 0, 0, 0)),
-    radial-gradient(2px 2px at 85% 10%, #fff, rgba(0, 0, 0, 0)),
-    radial-gradient(2px 2px at 45% 75%, #fff, rgba(0, 0, 0, 0)),
-    radial-gradient(2px 2px at 25% 60%, #fff, rgba(0, 0, 0, 0)),
-    radial-gradient(1px 1px at 55% 30%, #fff, rgba(0, 0, 0, 0)),
-    radial-gradient(1px 1px at 90% 70%, #fff, rgba(0, 0, 0, 0)),
-    radial-gradient(1px 1px at 10% 50%, #fff, rgba(0, 0, 0, 0)),
-    radial-gradient(2px 2px at 30% 20%, #fff, rgba(0, 0, 0, 0)),
-    radial-gradient(1px 1px at 70% 40%, #fff, rgba(0, 0, 0, 0));
+                    radial-gradient(1px 1px at 60% 40%, #fff, rgba(0, 0, 0, 0)),
+                    radial-gradient(1px 1px at 56% 35%, #fff, rgba(0, 0, 0, 0)),
+                    radial-gradient(1px 1px at 90% 80%, #fff, rgba(0, 0, 0, 0)),
+                    radial-gradient(3px 3px at 99% 99%, #fff, rgba(0, 0, 0, 0)),
+                    radial-gradient(2px 2px at 80% 87%, #fff, rgba(0, 0, 0, 0)),
+                    radial-gradient(2px 2px at 12% 5%, #fff, rgba(0, 0, 0, 0)),
+                    radial-gradient(2px 2px at 37% 35%, #fff, rgba(0, 0, 0, 0)),
+                    radial-gradient(1px 1px at 30% 65%, #fff, rgba(0, 0, 0, 0)),
+                    radial-gradient(2px 2px at 15% 05%, #fff, rgba(0, 0, 0, 0)),
+                    radial-gradient(2px 2px at 37% 35%, #fff, rgba(0, 0, 0, 0)),
+                    radial-gradient(2px 2px at 65% 47%, #fff, rgba(0, 0, 0, 0)),
+                    radial-gradient(1px 1px at 42% 29%, #fff, rgba(0, 0, 0, 0)),
+                    radial-gradient(1px 1px at 73% 56%, #fff, rgba(0, 0, 0, 0)),
+                    radial-gradient(1px 1px at 24% 19%, #fff, rgba(0, 0, 0, 0)),
+                    radial-gradient(2px 2px at 31% 47%, #fff, rgba(0, 0, 0, 0)),
+                    radial-gradient(1px 1px at 18% 39%, #fff, rgba(0, 0, 0, 0)),
+                    radial-gradient(1px 1px at 50% 20%, #fff, rgba(0, 0, 0, 0)),
+                    radial-gradient(1px 1px at 30% 65%, #fff, rgba(0, 0, 0, 0)),
+                    radial-gradient(2px 2px at 15% 05%, #fff, rgba(0, 0, 0, 0)),
+                    radial-gradient(2px 2px at 37% 35%, #fff, rgba(0, 0, 0, 0)),
+                    radial-gradient(2px 2px at 65% 47%, #fff, rgba(0, 0, 0, 0)),
+                    radial-gradient(1px 1px at 42% 29%, #fff, rgba(0, 0, 0, 0)),
+                    radial-gradient(1px 1px at 73% 56%, #fff, rgba(0, 0, 0, 0)),
+                    radial-gradient(1px 1px at 24% 19%, #fff, rgba(0, 0, 0, 0)),
+                    radial-gradient(2px 2px at 31% 47%, #fff, rgba(0, 0, 0, 0)),
+                    radial-gradient(1px 1px at 18% 39%, #fff, rgba(0, 0, 0, 0)),
+                    radial-gradient(1px 1px at 60% 80%, #fff, rgba(0, 0, 0, 0)),
+                    radial-gradient(1px 1px at 10% 90%, #fff, rgba(0, 0, 0, 0)),
+                    radial-gradient(2px 2px at 85% 10%, #fff, rgba(0, 0, 0, 0)),
+                    radial-gradient(2px 2px at 45% 75%, #fff, rgba(0, 0, 0, 0)),
+                    radial-gradient(2px 2px at 25% 60%, #fff, rgba(0, 0, 0, 0)),
+                    radial-gradient(1px 1px at 55% 30%, #fff, rgba(0, 0, 0, 0)),
+                    radial-gradient(1px 1px at 90% 70%, #fff, rgba(0, 0, 0, 0)),
+                    radial-gradient(1px 1px at 10% 50%, #fff, rgba(0, 0, 0, 0)),
+                    radial-gradient(2px 2px at 30% 20%, #fff, rgba(0, 0, 0, 0)),
+                    radial-gradient(1px 1px at 70% 40%, #fff, rgba(0, 0, 0, 0));
   background-repeat: repeat;
   will-change: transform;
   transform-origin: center center;
@@ -350,77 +348,77 @@
 }
 
 .weather-hud-grid {
-  width: var(--hud-width);
-  max-width: var(--hud-max-width);
-  min-width: var(--hud-min-width);
-  display: grid;
-  grid-template-columns: auto auto auto;
-  gap: 0.2em;
-  /* background-color: #2196F3; */
-  padding: 10px;
-  /* border: 1px solid black; */
+    width: var(--hud-width);
+    max-width: var(--hud-max-width);
+    min-width: var(--hud-min-width);
+    display: grid;
+    grid-template-columns: auto auto auto;
+    gap: 0.2em;
+    /* background-color: #2196F3; */
+    padding: 10px;
+    /* border: 1px solid black; */
 }
 
 .item1 {
-  text-align: center;
-  font-size: 1.4em;
-  grid-column-start: 4;
-  letter-spacing: 0.02em;
-  grid-column-end: 6;
-  text-align: center;
-  color: #e0e0e0;
+    text-align: center;
+    font-size: 1.4em;
+    grid-column-start: 4;
+    letter-spacing: 0.02em;
+    grid-column-end: 6;
+    text-align: center;
+    color: #e0e0e0;
 }
 
 .item2 {
-  text-align: center;
-  letter-spacing: 0.02em;
-  font-size: 1.2em;
-  width: 5em;
-  grid-column-start: 4;
-  grid-column-end: 6;
-  text-align: center;
-  color: #e0e0e0;
+    text-align: center;
+    letter-spacing: 0.02em;
+    font-size: 1.2em;
+    width: 5em;
+    grid-column-start: 4;
+    grid-column-end: 6;
+    text-align: center;
+    color: #e0e0e0;
 }
 
 .item3 {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  grid-row-start: 1;
-  grid-row-end: 10;
-  grid-column-start: 7;
-  grid-column-end: 40;
-  z-index: 3;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    grid-row-start: 1;
+    grid-row-end: 10;
+    grid-column-start: 7;
+    grid-column-end: 40;
+    z-index: 3;
 }
 
 .hud-icon-container {
-  display: flex;
-  justify-content: center;
-  width: 30vw;
-  object-fit: cover; /* optional: this prevents distortion */
+    display: flex;
+    justify-content: center;
+    width: 30vw;
+    object-fit: cover; /* optional: this prevents distortion */
 }
 
 .item4 {
-  grid-row-start: 0;
-  grid-row-end: 5;
-  grid-column-start: 6;
-  grid-column-end: 40;
-  z-index: 3;
-  color: #e0e0e0;
+    grid-row-start: 0;
+    grid-row-end: 5;
+    grid-column-start: 6;
+    grid-column-end: 40;
+    z-index: 3;
+    color: #e0e0e0;
 }
 
 .hud-temperature-text {
-  background: linear-gradient(
-    250.02deg,
-    rgba(255, 255, 255, 0.91) 8.16%,
-    rgba(255, 255, 255, 0.54) 37.22%,
-    #ffffff 51.09%,
-    rgba(255, 255, 255, 0.46) 90.73%
-  );
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-  background-clip: text;
-  font-size: 2.5em;
-  text-align: center;
-  letter-spacing: 0.03em;
+    background: linear-gradient(
+        250.02deg,
+        rgba(255, 255, 255, 0.91) 8.16%,
+        rgba(255, 255, 255, 0.54) 37.22%,
+        #ffffff 51.09%,
+        rgba(255, 255, 255, 0.46) 90.73%
+    );
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    font-size: 2.5em;
+    text-align: center;
+    letter-spacing: 0.03em;
 }

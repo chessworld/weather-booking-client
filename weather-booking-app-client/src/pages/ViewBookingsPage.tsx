@@ -1,4 +1,17 @@
-import { IonContent, IonPage, IonTabBar, IonTabButton, IonLabel, IonImg } from "@ionic/react";
+import {
+  IonHeader,
+  IonToolbar,
+  IonTitle,
+  IonContent,
+  IonPage,
+  IonTabBar,
+  IonTabButton,
+  IonLabel,
+  IonImg,
+  IonButton,
+  IonIcon,
+} from "@ionic/react";
+import { chevronBackOutline } from "ionicons/icons";
 import "./ViewBookingsPage.css";
 import BookingDetails from "../components/ViewBookingsComponents/BookingDetails";
 import BookingEndpoint from "../endpoint-caller/bookingEndpoint";
@@ -35,7 +48,6 @@ const ViewBookingsPage: React.FC = () => {
   };
 
   // JSX Logic
-  const yourBookingsHeading = <h1 className="bookings-list-title">Your Bookings</h1>;
   const selectedTabHeader = (
     <IonTabBar slot="top" className="bookings-tab-bar">
       <IonTabButton
@@ -62,6 +74,15 @@ const ViewBookingsPage: React.FC = () => {
   if (selectedBooking) {
     return (
       <IonPage>
+        <IonHeader className="ion-no-border transparent page-header" translucent={true}>
+          <IonToolbar className="transparent">
+            <div className="booking-details-toolbar">
+              <IonButton onClick={() => handleBookingClick(0)} className="booking-details-back-button invisible-button">
+                <IonIcon icon={chevronBackOutline} slot="icon-only"></IonIcon>
+              </IonButton>
+            </div>
+          </IonToolbar>
+        </IonHeader>
         <IonContent fullscreen>
           <BookingDetails
             bookingDetails={
@@ -77,9 +98,12 @@ const ViewBookingsPage: React.FC = () => {
   // Show weather card list if no booking is selected
   return (
     <IonPage>
-      {yourBookingsHeading}
+      <IonHeader className="ion-no-border transparent page-header" translucent={true}>
+        <IonToolbar className="transparent">
+          <IonTitle className="page-title">Your Bookings</IonTitle>
+        </IonToolbar>
+      </IonHeader>
       {selectedTabHeader}
-
       <IonContent fullscreen>
         {selectedTab === "Upcoming" ? (
           <WeatherCardList

@@ -1,8 +1,18 @@
 import React, { useContext, useState, useEffect, useRef } from "react";
 import { Chart, registerables } from "chart.js";
 import { Bar } from "react-chartjs-2";
-import { IonButton, IonInput, IonPage } from "@ionic/react";
-import { IonContent, IonSegment, IonSegmentButton, IonIcon } from "@ionic/react";
+import {
+  IonContent,
+  IonSegment,
+  IonSegmentButton,
+  IonIcon,
+  IonHeader,
+  IonToolbar,
+  IonTitle,
+  IonButton,
+  IonInput,
+  IonPage,
+} from "@ionic/react";
 import UserEndpoint from "../../endpoint-caller/userEndpoint";
 import { AppContext } from "../../stores/app-context";
 import BookingEndpoint from "../../endpoint-caller/bookingEndpoint";
@@ -156,12 +166,11 @@ const StatisticsPage: React.FC = () => {
           </div>
         ) : (
           <>
-            {/* <div style={{ display: "flex", justifyContent: "center" }}>
-              <div className="home-page-app-name-container">
-                <h1 className="home-page-app-name">Mr Bluesky</h1>
-                <p className="home-page-app-hook">Book your perfect weather</p>
-              </div>
-            </div> */}
+            <IonHeader className="ion-no-border transparent page-header" translucent={true}>
+              <IonToolbar className="transparent">
+                <IonTitle className="page-title">Our Stats</IonTitle>
+              </IonToolbar>
+            </IonHeader>
             <div className="welcome-container">
               <h2 className="welcome-text">
                 Welcome{" "}

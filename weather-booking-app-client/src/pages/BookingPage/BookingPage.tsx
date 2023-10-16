@@ -7,12 +7,21 @@ import ConfirmBookingDetails from "../../components/ConfirmBookingDetails/Confir
 import { withRouter } from "react-router-dom";
 import WeatherHud from "../../components/BookWeatherComponents/WeatherHud";
 import { Component, RefObject } from "react";
-import { IonToast, IonRange, IonPage, IonButton, IonIcon, IonModal } from "@ionic/react";
+import {
+  IonHeader,
+  IonToolbar,
+  IonTitle,
+  IonToast,
+  IonRange,
+  IonPage,
+  IonButton,
+  IonIcon,
+  IonModal,
+} from "@ionic/react";
 import Cloudy from "../../components/weatherAnimatedIcons/Cloudy";
 import Sunny from "../../components/weatherAnimatedIcons/Sunny";
 import Rainy from "../../components/weatherAnimatedIcons/Rainy";
 import Stormy from "../../components/weatherAnimatedIcons/Stormy";
-import SlideUpPanel from "../../components/SlideUpPanel/SlideUpPanel";
 import { AppContext, AppContextInterface } from "../../stores/app-context";
 import { WeatherType } from "../../endpoint-caller/interfaces/enums/WeatherType";
 import { WindLevel } from "../../endpoint-caller/interfaces/enums/WindLevel";
@@ -20,7 +29,6 @@ import { TemperatureLevel } from "../../endpoint-caller/interfaces/enums/Tempera
 import { BookingWeatherOption } from "./Interface/BookingWeatherOptions";
 import { chevronBackOutline } from "ionicons/icons";
 import { Location } from "../../endpoint-caller/interfaces/locations/Location";
-import { abbrState } from "./State";
 import React from "react";
 
 class BookingPage extends Component<BookingPageProps, BookingPageState> {
@@ -163,6 +171,11 @@ class BookingPage extends Component<BookingPageProps, BookingPageState> {
   render(): React.ReactNode {
     return (
       <IonPage keep-alive="false">
+        <IonHeader className="ion-no-border transparent page-header" translucent={true}>
+          <IonToolbar className="transparent">
+            <IonTitle className="page-title">Book your Weather</IonTitle>
+          </IonToolbar>
+        </IonHeader>
         <IonToast
           isOpen={this.state.toast.showToast}
           onDidDismiss={() =>
@@ -191,7 +204,7 @@ class BookingPage extends Component<BookingPageProps, BookingPageState> {
               book={this.book}
             />
           </IonModal>
-          <h2 className="booking-page-date-location-title">Book Your Weather</h2>
+          {/* <h2 className="booking-page-date-location-title">Book Your Weather</h2> */}
 
           <div className="page-content">
             <div className="step-two-heading-container">
