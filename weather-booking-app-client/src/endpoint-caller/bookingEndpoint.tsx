@@ -19,9 +19,10 @@ export default class BookingEndpoint {
     const statList = await ApiService.get("/stats/").then((response) => response.data);
     return statList;
   }
-  
+
   static createBooking = async (
     userId: string,
+    bookingName: string,
     location: Location,
     date: string,
     timePeriod: string,
@@ -29,6 +30,7 @@ export default class BookingEndpoint {
   ) => {
     const body = {
       location: location,
+      booking_name: bookingName,
       date: date,
       time_period: timePeriod,
       weather_option: weatherOption,

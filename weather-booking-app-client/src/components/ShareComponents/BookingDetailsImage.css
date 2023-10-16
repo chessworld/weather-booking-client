@@ -10,8 +10,6 @@
 .booking-details-image-details {
   display: inline-block;
   width: 60%;
-  position: relative;
-  bottom: 20%;
   vertical-align: top;
   padding-top: 1rem;
 }

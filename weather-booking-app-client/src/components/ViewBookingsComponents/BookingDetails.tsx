@@ -43,11 +43,11 @@ const BookingDetails: React.FC<BookingDetailsProps> = (props) => {
                 {props.bookingDetails.location.suburb}, {props.bookingDetails.location.state}
               </IonCardTitle>
               <IonCardSubtitle className="booking-details-details__subtitle">
-                {formatDate(props.bookingDetails.date)}
-              </IonCardSubtitle>
-              <IonCardSubtitle className="booking-details-details__subtitle">
                 {props.bookingDetails.weather_option.weather}, {props.bookingDetails.weather_option.temperature},{" "}
                 {props.bookingDetails.weather_option.wind}
+              </IonCardSubtitle>
+              <IonCardSubtitle className="booking-details-details__subtitle">
+                {formatDate(props.bookingDetails.date, props.bookingDetails.time_period)}
               </IonCardSubtitle>
             </div>
             <div className="booking-details-img-container">
@@ -57,8 +57,10 @@ const BookingDetails: React.FC<BookingDetailsProps> = (props) => {
               />
             </div>
           </div>
-
-          <IonCard className="enjoy-weather-card">Enjoy your weather!</IonCard>
+          <IonCard className="enjoy-weather-card">
+            <p>Enjoy your</p>
+            <p>{props.bookingDetails.booking_name}</p>
+          </IonCard>
           <div className="share-card-container">
             <ShareCard {...props.bookingDetails} />
           </div>
@@ -77,7 +79,7 @@ const BookingDetails: React.FC<BookingDetailsProps> = (props) => {
                   <br /> Please give us your feedback.
                 </p>
               )}
-              <IonCard className="enjoy-weather-card feedback-card" id="feedback-card">
+              <IonCard className="feedback-card" id="feedback-card">
                 <IonCardTitle className="feedback-title">Did you enjoy your weather?</IonCardTitle>
                 <div className="thumb-group">
                   <IonButton className="thumb-button invisible-button" onClick={() => handleThumbUpClick()}>

@@ -4,11 +4,14 @@ import WeatherImageMapper from "../../utility/WeatherImageMapper";
 import "./BookingDetailsImage.css";
 import { WeatherOption } from "../../endpoint-caller/interfaces/bookings/WeatherOption";
 import { Location } from "../../endpoint-caller/interfaces/locations/Location";
+import { TimePeriod } from "../../endpoint-caller/interfaces/enums/TimePeriod";
 
 interface BookingDetailsImageProps {
   location: Location;
   date: string;
   weather_option: WeatherOption;
+  time_period: TimePeriod;
+  booking_name: string;
 }
 
 const BookingDetailsImage: React.FC<BookingDetailsImageProps> = (props) => {
@@ -38,24 +41,38 @@ const BookingDetailsImage: React.FC<BookingDetailsImageProps> = (props) => {
       className={`booking-details-image-card hud-background ${bookingDetailsImageClass}`}
       style={{ color: `${textColor} !important` }}
     >
-      <IonCardContent>
+      <IonCardContent
+        style={{
+          display: "flex",
+          flexDirection: "column",
+          alignItems: "center",
+        }}
+      >
         <div>
           <div className="booking-details-image-details">
             <IonCardTitle className="booking-details-image-details__title" style={{ color: textColor }}>
               {props.location.suburb}, {props.location.state}
             </IonCardTitle>
             <IonCardSubtitle className="booking-details-image-details__subtitle" style={{ color: textColor }}>
-              {formatDate(props.date)}
+              {props.weather_option.weather}, {props.weather_option.temperature}, {props.weather_option.wind}
             </IonCardSubtitle>
             <IonCardSubtitle className="booking-details-image-details__subtitle" style={{ color: textColor }}>
-              {props.weather_option.weather}, {props.weather_option.temperature}, {props.weather_option.wind}
+              {formatDate(props.date, props.time_period)}
             </IonCardSubtitle>
           </div>
           <div className="booking-details-image-img-container">
             <IonImg className="booking-details-image-img" src={WeatherImageMapper[props.weather_option.weather]} />
           </div>
         </div>
-        <IonCard className="enjoy-weather-card">Enjoy your weather!</IonCard>
+        <IonCard
+          className="enjoy-weather-card"
+          style={{
+            marginTop: "1rem",
+          }}
+        >
+          <p>Enjoy your</p>
+          <p>{props.booking_name}</p>
+        </IonCard>
       </IonCardContent>
     </IonCard>
   );
