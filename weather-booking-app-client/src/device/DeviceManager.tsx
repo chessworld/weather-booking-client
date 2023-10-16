@@ -87,6 +87,11 @@ class DeviceManager implements IDeviceManager {
                 value: user.id,
             });
         }
+        const deviceId = await Preferences.get({ key: "deviceId" });
+
+        if (deviceId.value) {
+            return deviceId.value;
+        }
 
         throw new Error("Failed to create a new device ID");
     }

@@ -151,7 +151,7 @@ const StatisticsPage: React.FC = () => {
     <IonPage>
       <IonContent fullscreen>
         {chartData.datasets.length == 0 ? (
-          <div className="loader-container">
+          <div className="loader-container" data-testid="loading-spinner">
             <div className="spinner" />
           </div>
         ) : (
@@ -195,7 +195,7 @@ const StatisticsPage: React.FC = () => {
                 <p>Bookings this month</p>
               </div>
               <div className="statistics-page__buy-me-a-kofi">
-                <Kofi color="#29abe0" id="D1D1PFTTH" label="Support Us on Ko-fi"></Kofi>
+                <Kofi color="#29abe0" id="D1D1PFTTH" label="Support Us on Ko-fi" data-testid="my-kofi"></Kofi>
               </div>
             </div>
             <div>{/* bookingAmount */}</div>
@@ -205,19 +205,19 @@ const StatisticsPage: React.FC = () => {
                 onIonChange={(e) => changeGraphData(e.target.value as GraphData)}
                 value={currentGraphSelection}
               >
-                <IonSegmentButton value="weather" className="timeperiod-button">
+                <IonSegmentButton data-testid="segment-button-weather" value="weather" className="timeperiod-button">
                   <IonIcon className="time-period-icon" icon={sunnyOutline} />
                   <p>Weather</p>
                 </IonSegmentButton>
-                <IonSegmentButton value="time" className="timeperiod-button">
+                <IonSegmentButton data-testid="segment-button-time" value="time" className="timeperiod-button">
                   <IonIcon className="time-period-icon" icon={timeOutline} />
                   <p>Time</p>
                 </IonSegmentButton>
-                <IonSegmentButton value="wind" className="timeperiod-button">
+                <IonSegmentButton data-testid="segment-button-wind" value="wind" className="timeperiod-button">
                   <IonIcon className="time-period-icon" icon={trailSignOutline} />
                   <p>Wind</p>
                 </IonSegmentButton>
-                <IonSegmentButton value="temperature" className="timeperiod-button">
+                <IonSegmentButton data-testid="segment-button-tempt" value="temperature" className="timeperiod-button">
                   <IonIcon className="time-period-icon" icon={thermometerOutline} />
                   <p>Tempt</p>
                 </IonSegmentButton>

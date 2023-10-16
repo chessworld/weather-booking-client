@@ -417,19 +417,19 @@ class BookingPageDateLocation extends Component<BookingPageDateLocationProps, Bo
                   }}
                   id={this.state.bookingPageInputIds.timePeriod}
                 >
-                  <IonSegmentButton value="Morning" className="timeperiod-button">
+                  <IonSegmentButton data-testid="segment-button-morning" value="Morning" className="timeperiod-button">
                     <IonIcon className="time-period-icon" icon={partlySunnyOutline} />
                     <p>Morning</p>
                   </IonSegmentButton>
-                  <IonSegmentButton value="Afternoon" className="timeperiod-button">
+                  <IonSegmentButton data-testid="segment-button-afternoon" value="Afternoon" className="timeperiod-button">
                     <IonIcon className="time-period-icon" icon={sunnyOutline} />
                     <p>Afternoon</p>
                   </IonSegmentButton>
-                  <IonSegmentButton value="Evening" className="timeperiod-button">
+                  <IonSegmentButton data-testid="segment-button-evening" value="Evening" className="timeperiod-button">
                     <IonIcon className="time-period-icon" icon={cloudyNightOutline} />
                     <p>Evening</p>
                   </IonSegmentButton>
-                  <IonSegmentButton value="Night" className="timeperiod-button">
+                  <IonSegmentButton data-testid="segment-button-night" value="Night" className="timeperiod-button">
                     <IonIcon className="time-period-icon" icon={moonOutline} />
                     <p>Night</p>
                   </IonSegmentButton>

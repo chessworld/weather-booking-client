@@ -24,6 +24,8 @@ export default defineConfig({
       '@': path.resolve(__dirname, './src'),
     },
     globals: true,
+    environment: "jsdom",
+    setupFiles: "./src/setupTests.ts",
     //environment: 'happy-dom',
   },
 })
