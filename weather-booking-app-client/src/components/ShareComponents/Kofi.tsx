@@ -1,6 +1,6 @@
 import React from "react";
 
-import "./KoFi.css";
+import "./Kofi.css";
 
 interface KofiProp {
     color: string,
